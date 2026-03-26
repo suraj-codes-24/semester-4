@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TAFL Unit 3 — Part 3</title>
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1a1a2e;--ink2:#2c2c54;--blue:#1565C0;--red:#b71c1c;--green:#1b5e20;--purple:#4a148c;--teal:#006064;--orange:#e65100;--line:#c5cae9;--page:#fafaf7;--highlight:#fff9c4;--box-blue:#e8f4fd;--box-green:#e8f5e9;--box-red:#fce4ec;--box-purple:#f3e5f5;--box-orange:#fff3e0;--box-teal:#e0f7fa;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#ddd;font-family:'Kalam',cursive;color:var(--ink);padding:20px;}
+.part-nav{max-width:820px;margin:0 auto 20px;display:flex;gap:8px;flex-wrap:wrap;}
+.part-nav a{padding:6px 18px;border-radius:20px;font-size:13px;font-weight:700;text-decoration:none;border:2px solid #bbb;color:#666;background:#fff;}
+.part-nav a.active{background:var(--green);color:#fff;border-color:var(--green);}
+.part-nav .unit-label{font-size:13px;font-weight:700;color:#888;padding:6px 4px;align-self:center;}
+.cover-page{background:linear-gradient(135deg,#1b5e20 0%,#2e7d32 60%,#006064 100%);max-width:820px;margin:0 auto 40px;border-radius:8px;padding:70px 60px;text-align:center;color:#fff;box-shadow:0 4px 24px rgba(0,0,0,0.3);position:relative;overflow:hidden;}
+.cover-page::before{content:'';position:absolute;top:-50px;right:-50px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,0.05);}
+.cover-eyebrow{font-size:13px;letter-spacing:3px;opacity:0.6;margin-bottom:12px;}
+.cover-title{font-size:38px;font-weight:700;line-height:1.2;margin-bottom:8px;}
+.cover-sub{font-size:17px;opacity:0.8;margin-bottom:8px;}
+.cover-part{display:inline-block;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);border-radius:20px;padding:4px 20px;font-size:14px;margin-bottom:28px;}
+.cover-div{width:60px;height:3px;background:rgba(255,255,255,0.35);margin:0 auto 22px;border-radius:2px;}
+.cover-toc{text-align:left;background:rgba(255,255,255,0.1);border-radius:8px;padding:18px 26px;display:inline-block;min-width:400px;}
+.cover-toc-item{font-size:14px;line-height:32px;display:flex;justify-content:space-between;gap:20px;}
+.cover-toc-sep{border-top:1px solid rgba(255,255,255,0.25);margin:8px 0;}
+.page{background:var(--page);max-width:820px;margin:0 auto 36px;border-radius:4px;box-shadow:0 2px 16px rgba(0,0,0,0.16);padding:58px 68px 68px 88px;position:relative;min-height:1040px;background-image:repeating-linear-gradient(transparent,transparent 31px,var(--line) 31px,var(--line) 32px);background-position:0 54px;}
+.page::before{content:'';position:absolute;left:70px;top:0;bottom:0;width:1.5px;background:#ef9a9a;opacity:0.65;}
+.holes{position:absolute;left:16px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-around;padding:36px 0;}
+.hole{width:22px;height:22px;border-radius:50%;background:#ddd;border:1.5px solid #bdbdbd;}
+.page-num{position:absolute;bottom:26px;right:48px;font-size:13px;color:#9e9e9e;}
+.page-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
+.date-tag{font-size:13px;color:#9e9e9e;}
+.unit-badge{color:#fff;font-size:13px;padding:2px 14px;border-radius:20px;font-weight:700;}
+.ub-green{background:var(--green);}
+.ub-blue{background:var(--blue);}
+.ub-purple{background:var(--purple);}
+.ub-teal{background:var(--teal);}
+.ub-orange{background:var(--orange);}
+.ub-red{background:var(--red);}
+h1.section-title{font-size:23px;font-weight:700;color:var(--ink2);text-align:center;margin:8px 0 4px;text-decoration:underline;text-underline-offset:5px;}
+h2.topic{font-size:17px;font-weight:700;color:var(--blue);margin:18px 0 6px;border-bottom:1.5px solid var(--blue);padding-bottom:2px;display:inline-block;}
+h3.sub{font-size:15px;font-weight:700;color:var(--purple);margin:12px 0 4px;}
+p,li{font-size:15px;line-height:30px;}
+.divider{border:none;border-top:1px dashed #b0bec5;margin:14px 0 10px;}
+.def-box{background:var(--box-blue);border-left:4px solid var(--blue);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
+.rule-box{background:var(--box-green);border:1.5px solid #81c784;border-radius:6px;padding:10px 16px;margin:10px 0;font-size:14.5px;line-height:28px;}
+.note-box{background:var(--highlight);border-left:4px solid #f9a825;border-radius:0 6px 6px 0;padding:8px 14px;margin:8px 0 10px;font-size:14px;line-height:26px;}
+.purple-box{background:var(--box-purple);border-left:4px solid var(--purple);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
+.orange-box{background:var(--box-orange);border-left:4px solid var(--orange);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
+.teal-box{background:var(--box-teal);border-left:4px solid var(--teal);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
+.qbox{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:12px 16px;margin:10px 0;}
+.q-label{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:4px;}
+.q-step{font-size:14px;color:var(--green);margin-top:4px;line-height:26px;}
+.q-ans{font-size:15px;color:var(--red);font-family:'Patrick Hand',cursive;margin-top:4px;line-height:28px;}
+.exam-q-box{background:#fff8f8;border:2px solid var(--red);border-radius:8px;padding:12px 16px;margin:10px 0;}
+.eq-label{font-size:13px;font-weight:700;color:var(--red);margin-bottom:4px;}
+.formula{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--blue);}
+ul.plain{list-style:none;padding-left:4px;}
+ul.plain li::before{content:'→ ';color:var(--blue);font-weight:700;}
+ul.plain li{font-size:15px;line-height:30px;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0;}
+.step-card{background:var(--box-purple);border-left:4px solid var(--purple);padding:8px 14px;margin:5px 0;border-radius:0 6px 6px 0;}
+.step-head{font-size:14px;font-weight:700;color:var(--purple);}
+.step-body{font-size:13.5px;line-height:24px;color:var(--ink2);}
+table.tt{width:100%;border-collapse:collapse;margin:8px 0;font-size:14px;}
+table.tt th{background:var(--blue);color:#fff;padding:7px 10px;text-align:center;}
+table.tt td{padding:6px 10px;border-bottom:1px solid #e0e0e0;line-height:26px;}
+table.tt tr:nth-child(even) td{background:#f5f5f5;}
+.rev-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0;}
+.rev-card{background:#fff;border:1.5px solid var(--blue);border-radius:8px;padding:10px 14px;}
+.rev-head{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:6px;border-bottom:1px solid #e3e3e3;padding-bottom:4px;}
+.rev-item{font-size:13px;line-height:26px;font-family:'Patrick Hand',cursive;color:var(--ink2);}
+.form-box{background:var(--blue);color:#fff;border-radius:8px;padding:12px 18px;text-align:center;font-family:'Patrick Hand',cursive;font-size:19px;margin:12px 0;}
+.cnf-rule{background:#fff;border:2px solid var(--teal);border-radius:6px;padding:8px 16px;margin:6px 0;font-family:'Patrick Hand',cursive;font-size:16px;text-align:center;}
+.gnf-rule{background:#fff;border:2px solid var(--orange);border-radius:6px;padding:8px 16px;margin:6px 0;font-family:'Patrick Hand',cursive;font-size:16px;text-align:center;}
+</style>
+</head>
+<body>
+
+<div class="part-nav">
+  <a href="../index.html">&#8617; Units</a>
+  <span class="unit-label">Unit 3 · CFG &amp; Grammars</span>
+  <a href="part1.html">Part 1</a>
+  <a href="part2.html">Part 2</a>
+  <a href="part3.html" class="active">Part 3</a>
+</div>
+
+<div class="cover-page">
+  <div class="cover-eyebrow">THEORY OF AUTOMATA &amp; FORMAL LANGUAGES · UNIT 3</div>
+  <div class="cover-title">Simplification &amp; Normal Forms</div>
+  <div class="cover-sub">CNF · GNF · Quick Revision</div>
+  <div class="cover-part">Part 3 of 3 — Advanced</div>
+  <div class="cover-div"></div>
+  <div class="cover-toc">
+    <div class="cover-toc-item"><span>§9 — Simplification of CFG</span><span>4 pages</span></div>
+    <div class="cover-toc-item"><span>§10 — Chomsky Normal Form (CNF)</span><span>4 pages</span></div>
+    <div class="cover-toc-item"><span>§11 — Greibach Normal Form (GNF)</span><span>4 pages</span></div>
+    <div class="cover-toc-item"><span>§12 — Quick Revision: All of Unit 3</span><span>2 pages</span></div>
+    <div class="cover-toc-sep"></div>
+    <div class="cover-toc-item"><strong><span>Total</span><span>14 pages</span></strong></div>
+  </div>
+</div>
+
+<!-- ══════════ SECTION 9 ══════════ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 3 · Part 3</span><span class="unit-badge ub-green">SECTION 9</span></div>
+  <h1 class="section-title"><span class="sn" style="color:var(--green);">§9</span> Simplification of CFG</h1>
+  <hr class="divider">
+
+  <h2 class="topic">1. Why Simplify?</h2>
+  <div class="def-box">
+    A CFG may contain <strong>unnecessary productions</strong> that complicate analysis but don't affect the language. Simplification removes these, making the grammar cleaner for Normal Form conversion.<br><br>
+    Three types of simplifications:<br>
+    ① Eliminating <strong>ε-productions</strong> &nbsp;&nbsp; ② Eliminating <strong>Unit Productions</strong> &nbsp;&nbsp; ③ Eliminating <strong>Useless Productions</strong>
+  </div>
+
+  <h2 class="topic">2. Eliminating ε-Productions</h2>
+  <div class="def-box">
+    A variable A is <strong>nullable</strong> if A ⇒* ε (can derive empty string).<br><br>
+    An <strong>ε-production</strong> is a rule of the form A → ε.
+  </div>
+
+  <div class="orange-box">
+    <strong>Algorithm to remove ε-productions:</strong>
+    <ul class="plain" style="margin-top:6px;">
+      <li><strong>Step 1:</strong> Find all nullable variables (those that can derive ε)</li>
+      <li><strong>Step 2:</strong> For each production, add new versions with each nullable variable either present or absent</li>
+      <li><strong>Step 3:</strong> Remove all ε-productions (except S→ε if ε ∈ L(G))</li>
+    </ul>
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">Q — Remove ε-productions: S→ABC; A→BC|a; B→bAC|ε; C→CAB|ε</div>
+    <div class="q-step"><strong>Step 1 — Find nullable variables:</strong> B→ε ✓, C→ε ✓, A→BC (B,C both nullable) → A nullable ✓, S→ABC (all nullable) → S nullable ✓</div>
+    <div class="q-step"><strong>Step 2 — Generate new productions for S→ABC (A,B,C all nullable):</strong></div>
+    <div class="q-ans" style="font-size:14px;line-height:26px;">
+      S → ABC | BC | AC | AB | A | B | C | ε<br>
+      A → BC | a | C | B<br>
+      B → bAC | bA | bC | b<br>
+      C → CAB | CA | CB | AB | C | A | B<br>
+      <span style="color:var(--green);font-size:13px;">(Remove all X→ε entries from final grammar)</span>
+    </div>
+  </div>
+
+  <div class="page-num">1 / 4</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 3 · §9</span><span class="unit-badge ub-green">SIMPLIFICATION</span></div>
+
+  <h2 class="topic">3. Eliminating Unit Productions</h2>
+  <div class="def-box">
+    A <strong>unit production</strong> is a production of the form <span class="formula">A → B</span> where both A and B are non-terminals. These can complicate proofs but are sometimes useful in creating unambiguous grammars.
+  </div>
+
+  <div class="orange-box">
+    <strong>Algorithm to remove unit productions:</strong>
+    <ul class="plain" style="margin-top:6px;">
+      <li><strong>Step 1:</strong> Find all unit pairs (A, B) — where A ⇒* B through unit productions</li>
+      <li><strong>Step 2:</strong> For each unit pair (A, B): add A → α for every B → α that is a NON-unit production</li>
+      <li><strong>Step 3:</strong> Remove all unit productions A → B from the grammar</li>
+    </ul>
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">Q — Remove unit productions: S → Aa|B; B → A|bb; A → a|bc|B</div>
+    <div class="q-step"><strong>Unit pairs:</strong> (S,B), (B,A), (A,B), (S,A) [transitively via S→B→A]</div>
+    <div class="q-step"><strong>For each pair, add non-unit productions:</strong></div>
+    <div class="q-ans" style="font-size:14px;line-height:26px;">
+      (S,B): add S→bb (from B→bb)<br>
+      (B,A): add B→a|bc (from A→a|bc)<br>
+      (A,B): add A→bb (from B→bb)<br>
+      (S,A): add S→a|bc (from A→a|bc)<br><br>
+      <strong>Final grammar (no unit productions):</strong><br>
+      S → Aa | bb | a | bc<br>
+      B → bb | a | bc<br>
+      A → a | bc | bb
+    </div>
+  </div>
+
+  <div class="page-num">2 / 4</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 3 · §9</span><span class="unit-badge ub-green">USELESS PRODS</span></div>
+
+  <h2 class="topic">4. Eliminating Useless Productions</h2>
+  <div class="def-box">
+    A symbol X is <strong>useful</strong> if:<br>
+    ① X is <em>generating</em>: X ⇒* w (derives some terminal string) AND<br>
+    ② X is <em>reachable</em>: S ⇒* αXβ (reachable from start symbol S)<br><br>
+    A symbol that is NOT both generating AND reachable is <strong>useless</strong>.
+  </div>
+
+  <div class="orange-box">
+    <strong>Algorithm (4 steps):</strong>
+    <ul class="plain" style="margin-top:6px;">
+      <li><strong>Step 1:</strong> S₁ = set of all terminal symbols (they are generating by definition)</li>
+      <li><strong>Step 2:</strong> S₂ = S₁ ∪ {NTs that directly derive terminals only} → "directly terminates"</li>
+      <li><strong>Step 3:</strong> Add NTs whose ALL RHS symbols are in S₂ → repeat until stable</li>
+      <li><strong>Step 4:</strong> Check reachability from S — remove any NT not reachable from S. Result = useful symbols only.</li>
+    </ul>
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">Q — Remove useless: S → AB|a; A → BC|b; B → aB|aC; C → abCA|abb; D → bD|ac</div>
+    <div class="q-step"><strong>Step 1:</strong> S₁ = {a,b} (terminal symbols)</div>
+    <div class="q-step"><strong>Step 2:</strong> Who directly derives terminals? A→b ✓, S→a ✓, D→ac ✓, C→abb ✓</div>
+    <div class="q-step"><strong>Step 3:</strong> B→aC (A and C now in S₂? C yes, need A in S₂ first... A→b ✓ so A∈S₂). B→aB? B needs B... → Actually B derives: B→aB|aC. Since C∈S₂ and a is terminal: B→aC → B∈S₂ ✓</div>
+    <div class="q-ans" style="font-size:14px;line-height:26px;">
+      Generating: S, A, B, C (all derive terminals). D generates ac ✓ too.<br>
+      Reachable from S: S→AB: A,B reachable. S→a. A→BC: B,C reachable. D not reachable from S!<br>
+      <strong>Remove D</strong> (not reachable). Final grammar: S→AB|a; A→BC|b; B→aB|aC; C→abCA|abb
+    </div>
+  </div>
+
+  <div class="page-num">3 / 4</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 3 · §9</span><span class="unit-badge ub-green">PRACTICE</span></div>
+
+  <h2 class="topic">5. Practice Questions — §9</h2>
+
+  <div class="exam-q-box">
+    <div class="eq-label">Q1 — Remove ε-productions: S → aSB|a|Ab; A → ε; B → bBB|ε</div>
+    <div class="q-step">Nullable variables: A→ε ✓, B→ε ✓. Is S nullable? S→aSB (S needs itself, not directly). S is not nullable.</div>
+    <div class="q-ans" style="font-size:14px;line-height:28px;">
+      <strong>New productions (each nullable can be present or absent):</strong><br>
+      S → aSB | aS | aB | a | Ab | b &nbsp;&nbsp;[A,B both nullable → include versions without each]<br>
+      A → (removed — only had A→ε)<br>
+      B → bBB | bB | bB | b &nbsp;&nbsp;[B nullable: bBB→bBB|bB]<br>
+      Simplified:<br>
+      S → aSB | aS | aB | a | Ab | b<br>
+      B → bBB | bB | b
+    </div>
+  </div>
+
+  <div class="exam-q-box">
+    <div class="eq-label">Q2 — Remove unit productions and useless symbols: S → AB; A → a; B → C; C → D; D → b</div>
+    <div class="q-step">Unit pairs: (B,C), (C,D). Chain: B→C→D→b. Also B⇒*b transitively.</div>
+    <div class="q-ans" style="font-size:14px;line-height:28px;">
+      Unit productions: B→C, C→D — remove these.<br>
+      Add: B→b (from D→b via chain), C→b (from D→b)<br>
+      Now: S→AB; A→a; B→b; C→b; D→b<br>
+      Check useless: C and D reachable from S? S→AB, no path to C or D → useless!<br>
+      <strong>Final grammar: S → AB; A → a; B → b</strong><br>
+      Language: {ab}
+    </div>
+  </div>
+
+  <div class="page-num">4 / 4</div>
+</div>
+
+<!-- ══════════ SECTION 10 ══════════ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 3 · Part 3</span><span class="unit-badge ub-teal">SECTION 10</span></div>
+  <h1 class="section-title"><span class="sn" style="color:var(--teal);">§10</span> Chomsky Normal Form (CNF)</h1>
+  <hr class="divider">
+
+  <h2 class="topic">1. Definition of CNF</h2>
+  <div class="def-box">
+    A CFG is in <strong>Chomsky Normal Form (CNF)</strong> if every production is of the form:<br><br>
+    <div class="two-col" style="margin-top:6px;">
+      <div class="cnf-rule">NT → T &nbsp;&nbsp;(single terminal)</div>
+      <div class="cnf-rule">NT → NT &nbsp;NT &nbsp;&nbsp;(exactly two non-terminals)</div>
+    </div>
+    OR: &nbsp;<span class="formula">S → ε</span> &nbsp;if ε ∈ L(G)<br><br>
+    where NT = Non-Terminal, T = Terminal.
+  </div>
+
+  <h2 class="topic">2. Steps to Convert CFG to CNF</h2>
+  <div class="step-card"><div class="step-head">Step 1</div><div class="step-body">Eliminate all ε-productions (find nullable variables, generate new rules)</div></div>
+  <div class="step-card"><div class="step-head">Step 2</div><div class="step-body">Eliminate all unit productions (A→B type)</div></div>
+  <div class="step-card"><div class="step-head">Step 3</div><div class="step-body">Eliminate all useless symbols and productions</div></div>
+  <div class="step-card"><div class="step-head">Step 4</div><div class="step-body">For each production A → a₁a₂…aₙ (n≥2): replace each terminal aᵢ with a new NT Rᵢ, add rule Rᵢ → aᵢ</div></div>
+  <div class="step-card"><div class="step-head">Step 5</div><div class="step-body">For each remaining production with 3+ NTs, break into binary: A→X₁X₂…Xₙ becomes A→X₁Y₁, Y₁→X₂Y₂, …, Yₙ₋₂→Xₙ₋₁Xₙ</div></div>
+
+  <div class="page-num">1 / 4</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 3 · §10</span><span class="unit-badge ub-teal">CNF</span></div>
+
+  <h2 class="topic">3. CNF Conversion — Worked Example 1</h2>
+  <div class="qbox">
+    <div class="q-label">Convert to CNF: S → aAD; A → aB; A → bAB; B → b; D → d</div>
+    <div class="q-step"><strong>Step 1,2,3:</strong> No ε, unit, or useless productions here.</div>
+    <div class="q-step"><strong>Step 4: Replace terminals in long productions with new NTs</strong></div>
+    <div class="q-ans" style="font-size:14px;line-height:26px;">
+      S → aAD: 'a' is terminal in 3-symbol RHS → introduce R₁→a<br>
+      A → aB: 'a' is terminal in 2-symbol RHS → introduce R₁→a<br>
+      A → bAB: 'b' is terminal → introduce R₂→b<br><br>
+      After step 4:<br>
+      S → R₁AD &nbsp;&nbsp;(still 3 NTs — need step 5)<br>
+      A → R₁B &nbsp;&nbsp;&nbsp;(2 NTs ✓)<br>
+      A → R₂AB &nbsp;&nbsp;(3 NTs — need step 5)<br>
+      R₁ → a &nbsp;&nbsp;R₂ → b &nbsp;&nbsp;B → b &nbsp;&nbsp;D → d
+    </div>
+    <div class="q-step"><strong>Step 5: Break 3-NT productions into binary</strong></div>
+    <div class="q-ans" style="font-size:14px;line-height:26px;">
+      S → R₁AD → S → R₁X₁; X₁ → AD<br>
+      A → R₂AB → A → R₂Y₁; Y₁ → AB<br><br>
+      <strong>Final CNF:</strong><br>
+      S → R₁X₁ &nbsp;|&nbsp; X₁ → AD &nbsp;|&nbsp; A → R₁B | R₂Y₁ &nbsp;|&nbsp; Y₁ → AB<br>
+      R₁ → a &nbsp;|&nbsp; R₂ → b &nbsp;|&nbsp; B → b &nbsp;|&nbsp; D → d
+    </div>
+  </div>
+
+  <div class="page-num">2 / 4</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 3 · §10</span><span class="unit-badge ub-teal">CNF EXAMPLE</span></div>
+
+  <h2 class="topic">4. CNF Conversion — Worked Example 2</h2>
+  <div class="qbox">
+    <div class="q-label">Convert to CNF: S → aAbB; A → aA|a; B → bB|b (no simplification needed)</div>
+    <div class="q-step"><strong>S → aAbB:</strong> has terminals a,b in 4-symbol production. Replace terminals:</div>
+    <div class="q-ans" style="font-size:14px;line-height:28px;">
+      Introduce: Rₐ→a, R_b→b<br>
+      S → Rₐ A R_b B (4 NTs — break into binary)<br><br>
+      S → Rₐ X₁; X₁ → A X₂; X₂ → R_b B<br><br>
+      A → aA: replace a → Rₐ A (already 2 NTs ✓ after: A → Rₐ A)<br>
+      A → a: just one terminal ✓ keep: A → a... wait, that's NT→T ✓ (one terminal = CNF ✓)<br>
+      B → bB: B → R_b B ✓<br>
+      B → b: terminal only ✓<br><br>
+      <strong>Final CNF:</strong><br>
+      S → Rₐ X₁ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X₁ → A X₂ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X₂ → R_b B<br>
+      A → Rₐ A | a &nbsp;&nbsp;B → R_b B | b<br>
+      Rₐ → a &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;R_b → b
+    </div>
+  </div>
+
+  <h2 class="topic">5. Practice Questions — §10</h2>
+
+  <div class="exam-q-box">
+    <div class="eq-label">Q1 — Convert to CNF: S → aAb; A → Aa|ε</div>
+    <div class="q-step">First: A→ε means A is nullable. Apply ε-removal, then convert.</div>
+    <div class="q-ans" style="font-size:14px;line-height:28px;">
+      <strong>Step 1 (ε-removal):</strong> A nullable. S→aAb → add S→ab (with A absent)<br>
+      S → aAb | ab; A → Aa | a (removed A→ε)<br><br>
+      <strong>Step 4 (replace terminals):</strong> Rₐ→a, R_b→b<br>
+      S → Rₐ A R_b | Rₐ R_b; A → A Rₐ | a<br><br>
+      <strong>Step 5 (break 3-NTs):</strong><br>
+      S → Rₐ X₁; X₁ → A R_b &nbsp;|&nbsp; S → Rₐ R_b ✓<br>
+      A → A Rₐ ✓ &nbsp;| A → a ✓<br>
+      <strong>CNF:</strong> S→Rₐ X₁|Rₐ R_b; X₁→AR_b; A→ARₐ|a; Rₐ→a; R_b→b
+    </div>
+  </div>
+
+  <div class="exam-q-box">
+    <div class="eq-label">Q2 — Is this in CNF? S → AB; A → a; B → bB|b. If not, convert.</div>
+    <div class="q-step">Check: S→AB ✓ (NT NT). A→a ✓ (single T). B→bB — 'b' is terminal in 2-symbol RHS → NOT CNF. B→b ✓.</div>
+    <div class="q-ans">
+      NOT in CNF. Fix: Introduce R_b → b<br>
+      B → R_b B | b ← now CNF ✓<br>
+      <strong>CNF:</strong> S→AB; A→a; B→R_b B|b; R_b→b
+    </div>
+  </div>
+
+  <div class="page-num">3 / 4</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 3 · §10</span><span class="unit-badge ub-teal">CNF ADVANCED</span></div>
+
+  <h2 class="topic">6. CNF — Advanced Example (Full Pipeline)</h2>
+  <div class="qbox">
+    <div class="q-label">Convert to CNF: S → aAbB; A → aA|a; B → bB|b (complete steps)</div>
+    <div class="q-step">This grammar has no ε or unit productions, no useless symbols. Go directly to step 4.</div>
+    <div class="q-ans" style="font-size:14px;line-height:28px;">
+      S → aAbB: 4 symbols (mixed terminals+NTs)<br>
+      Introduce: R₁→a, R₂→b<br>
+      Step 4: S → R₁AR₂B (4 NTs)<br>
+      A → aA → R₁A (2 NTs ✓); A → a ✓<br>
+      B → bB → R₂B (2 NTs ✓); B → b ✓<br><br>
+      Step 5: S → R₁AR₂B → S → R₁X; X → AR₂B → X → AY; Y → R₂B<br><br>
+      <strong>Final CNF:</strong><br>
+      S → R₁X &nbsp;&nbsp;X → AY &nbsp;&nbsp;Y → R₂B<br>
+      A → R₁A | a &nbsp;&nbsp;B → R₂B | b<br>
+      R₁ → a &nbsp;&nbsp;R₂ → b
+    </div>
+  </div>
+
+  <div class="note-box"><strong>★ CNF Key Points:</strong> Every CFG can be converted to CNF. CNF is used in CYK parsing algorithm. In CNF: parse trees are always binary trees. Max string derivable in exactly n steps has length n (for NT→T rules).</div>
+
+  <div class="page-num">4 / 4</div>
+</div>
+
+<!-- ══════════ SECTION 11 ══════════ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 3 · Part 3</span><span class="unit-badge ub-orange">SECTION 11</span></div>
+  <h1 class="section-title"><span class="sn" style="color:var(--orange);">§11</span> Greibach Normal Form (GNF)</h1>
+  <hr class="divider">
+
+  <h2 class="topic">1. Definition of GNF</h2>
+  <div class="def-box">
+    A CFG is in <strong>Greibach Normal Form (GNF)</strong> if every production is of the form:<br><br>
+    <div class="two-col" style="margin-top:6px;">
+      <div class="gnf-rule">NT → a K &nbsp;where a∈T, K∈(V_N)*</div>
+      <div class="gnf-rule">NT → T &nbsp;(single terminal)</div>
+    </div>
+    OR: S → ε if ε ∈ L(G)<br><br>
+    ★ Every production <strong>starts with exactly one terminal</strong> followed by zero or more non-terminals.
+  </div>
+
+  <h2 class="topic">2. Removing Left Recursion (needed for GNF)</h2>
+  <div class="def-box">
+    <strong>Left Recursion:</strong> A production A → Aα | β is left recursive (A appears at the start of RHS).<br><br>
+    To remove: Replace with right recursion:<br>
+    A → Aα | β &nbsp;&nbsp;⟺&nbsp;&nbsp; A → βZ; Z → αZ | α
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">Remove left recursion: E → E+T | T</div>
+    <div class="q-ans">
+      E → TZ &nbsp;&nbsp;&nbsp;(β = T, move to front)<br>
+      Z → +TZ | +T &nbsp;&nbsp;&nbsp;(α = +T, create Z for right recursion)
+    </div>
+    <div class="q-step">E → Tz | T is equivalent: E → TZ; Z → +TZ | ε. Without ε: Z → +TZ | +T</div>
+  </div>
+
+  <h2 class="topic">3. Steps to Convert to GNF</h2>
+  <div class="step-card"><div class="step-head">Step 1</div><div class="step-body">Rename variables as A₁, A₂, …, Aₙ in order</div></div>
+  <div class="step-card"><div class="step-head">Step 2</div><div class="step-body">For each Aᵢ, ensure that all productions Aᵢ → Aⱼα have j > i (no left recursion). If Aᵢ → Aⱼα and j ≤ i, substitute Aⱼ's productions into it.</div></div>
+  <div class="step-card"><div class="step-head">Step 3</div><div class="step-body">Remove direct left recursion (using the A→βZ trick)</div></div>
+  <div class="step-card"><div class="step-head">Step 4</div><div class="step-body">Work backwards: substitute to make every production start with a terminal</div></div>
+
+  <div class="page-num">1 / 4</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 3 · §11</span><span class="unit-badge ub-orange">GNF</span></div>
+
+  <h2 class="topic">4. GNF Worked Example 1</h2>
+  <div class="qbox">
+    <div class="q-label">Convert to GNF: S → aB|ab; A → aAB|a; B → ABb|b</div>
+    <div class="q-step"><strong>Step 1:</strong> Rename: S→A₁, A→A₂, B→A₃</div>
+    <div class="q-ans" style="font-size:14px;line-height:28px;">
+      A₁ → aA₃ | ab<br>
+      A₂ → aA₂A₃ | a<br>
+      A₃ → A₂A₃b | b<br><br>
+      A₃ starts with A₂ (j=2 < i=3) → substitute A₂:<br>
+      A₃ → (aA₂A₃)A₃b | aA₃b | b<br>
+      A₃ → aA₂A₃A₃b | aA₃b | b ✓ (all start with terminal now)<br><br>
+      <strong>GNF (rename back):</strong><br>
+      S → aB | ab<br>
+      A → aAB | a<br>
+      B → aABBb | aBb | b ✓ all start with terminal
+    </div>
+  </div>
+
+  <h2 class="topic">5. GNF Worked Example 2 — Left Recursion Removal</h2>
+  <div class="qbox">
+    <div class="q-label">Convert to GNF: S → SoS|1o1</div>
+    <div class="q-step">S → SoS is left recursive. Remove using Z trick:</div>
+    <div class="q-ans" style="font-size:14px;line-height:28px;">
+      S has: α = oS, β = 1o1<br>
+      S → 1o1Z | 1o1 &nbsp;&nbsp;(β starts every production)<br>
+      Z → oSZ | oS &nbsp;&nbsp;&nbsp;(right recursive Z)<br><br>
+      But 'o' and '1' are terminals. Check GNF form:<br>
+      S → 1 Rₒ 1 Z | 1 Rₒ 1 &nbsp;&nbsp;(need to handle multi-char terminal sequences)<br>
+      In simplified notation:<br>
+      S → 01Z | 01<br>
+      Z → 0SZ | 0S &nbsp;&nbsp;← GNF ✓ (starts with terminal 0)
+    </div>
+  </div>
+
+  <div class="page-num">2 / 4</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 3 · §11</span><span class="unit-badge ub-orange">GNF ADVANCED</span></div>
+
+  <h2 class="topic">6. Full GNF Conversion — Complete Pipeline</h2>
+  <div class="qbox">
+    <div class="q-label">Convert to GNF: S → AA | a; A → SS | b</div>
+    <div class="q-step"><strong>Step 1:</strong> S→A₁, A→A₂</div>
+    <div class="q-step"><strong>Step 2:</strong> A₁→A₂A₂|a (A₂ has index 2>1, so OK). A₂→A₁A₁|b — A₁ has index 1 &lt; 2! Substitute A₁:</div>
+    <div class="q-ans" style="font-size:14px;line-height:28px;">
+      A₂ → A₁A₁ | b<br>
+      Substitute A₁ → A₂A₂|a into A₂→A₁A₁:<br>
+      A₂ → (A₂A₂)A₁ | aA₁ | b<br>
+      A₂ → A₂A₂A₁ | aA₁ | b<br><br>
+      <strong>Step 3: Remove left recursion from A₂:</strong><br>
+      A₂ → aA₁Z | bZ | aA₁ | b &nbsp;&nbsp;(using β = aA₁|b)<br>
+      Z → A₂A₁Z | A₂A₁<br><br>
+      <strong>Step 4: Back-substitute into A₁:</strong><br>
+      A₁ → A₂A₂ | a → substitute A₂:<br>
+      A₁ → (aA₁Z)A₂ | (bZ)A₂ | (aA₁)A₂ | bA₂ | a<br><br>
+      <strong>GNF:</strong><br>
+      A₁ → aA₁ZA₂ | bZA₂ | aA₁A₂ | bA₂ | a<br>
+      A₂ → aA₁Z | bZ | aA₁ | b<br>
+      Z → A₂A₁Z | A₂A₁ → (substitute A₂ here too for complete GNF)
+    </div>
+  </div>
+
+  <div class="page-num">3 / 4</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 3 · §11</span><span class="unit-badge ub-orange">PRACTICE</span></div>
+
+  <h2 class="topic">7. CNF vs GNF Comparison</h2>
+  <table class="tt">
+    <tr><th>Property</th><th>CNF</th><th>GNF</th></tr>
+    <tr><td>Production form</td><td>NT→T or NT→NT NT</td><td>NT→a(NT)* i.e. starts with terminal</td></tr>
+    <tr><td>Tree shape</td><td>Binary tree</td><td>Every internal node has terminal child</td></tr>
+    <tr><td>Left recursion</td><td>Allowed (if converted)</td><td>Must be removed</td></tr>
+    <tr><td>Uses</td><td>CYK parsing, proofs</td><td>Top-down parsing, LL parsers</td></tr>
+    <tr><td>Steps needed</td><td>Simplify + replace terminals + binarise</td><td>Simplify + renumber + remove left recursion + substitute</td></tr>
+  </table>
+
+  <h2 class="topic">8. Practice Questions — §11</h2>
+
+  <div class="exam-q-box">
+    <div class="eq-label">Q1 — Convert to GNF: S → aB|ab; B → ABb|b; A → aAB|a</div>
+    <div class="q-step">Check if already in GNF: S→aB ✓ starts with 'a'; S→ab — need A_b→b... S→aR_b? Actually S→ab means 2 terminals, but GNF allows NT→aK where K can be empty. ab = a followed by b but b must be wrapped as NT. Hmm — simplify:</div>
+    <div class="q-ans" style="font-size:14px;line-height:26px;">
+      S → aB ✓ (terminal a then NT B)<br>
+      S → ab — introduce Rb→b: S → aRb ✓<br>
+      A → aAB ✓ &nbsp;&nbsp;A → a ✓<br>
+      B → ABb — A is NT first, not terminal. NOT GNF! Substitute A:<br>
+      B → (aAB)Bb | aBb | b<br>
+      B → aABBb | aBb | b ✓ (all start with terminal 'a' or 'b')
+    </div>
+  </div>
+
+  <div class="exam-q-box">
+    <div class="eq-label">Q2 — Remove left recursion: E → E+T|T; T → T*F|F; F → (E)|id</div>
+    <div class="q-ans" style="font-size:14px;line-height:28px;">
+      E → E+T | T → remove E-left recursion:<br>
+      E → TZ &nbsp;|&nbsp; Z → +TZ | +T<br><br>
+      T → T*F | F → remove T-left recursion:<br>
+      T → FW &nbsp;|&nbsp; W → *FW | *F<br><br>
+      F → (E) | id → no left recursion ✓<br><br>
+      <strong>Result (no left recursion, ready for GNF):</strong><br>
+      E → TZ | T; Z → +TZ | +T<br>
+      T → FW | F; W → *FW | *F<br>
+      F → (E) | id
+    </div>
+  </div>
+
+  <div class="page-num">4 / 4</div>
+</div>
+
+<!-- ══════════ SECTION 12 — QUICK REVISION ══════════ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 3 · Part 3</span><span class="unit-badge ub-purple">SECTION 12</span></div>
+  <h1 class="section-title"><span class="sn" style="color:var(--purple);">§12</span> Quick Revision — All of Unit 3</h1>
+  <hr class="divider">
+
+  <div class="rev-grid">
+    <div class="rev-card">
+      <div class="rev-head">Grammar G = (V_N, T, P, S)</div>
+      <div class="rev-item">V_N = Non-Terminals (can rewrite)</div>
+      <div class="rev-item">T = Terminals (cannot rewrite)</div>
+      <div class="rev-item">P = Production Rules</div>
+      <div class="rev-item">S = Start Symbol</div>
+      <div class="rev-item">V = V_N ∪ T (total alphabet)</div>
+    </div>
+    <div class="rev-card">
+      <div class="rev-head">Chomsky Types</div>
+      <div class="rev-item">Type 0: u→v (unrestricted)</div>
+      <div class="rev-item">Type 1: αAβ→αγβ (CSG)</div>
+      <div class="rev-item">Type 2: A→α (CFG)</div>
+      <div class="rev-item">Type 3: A→xB or A→x (Regular)</div>
+    </div>
+    <div class="rev-card">
+      <div class="rev-head">CFG Derivations</div>
+      <div class="rev-item">LMD: expand LEFTMOST NT always</div>
+      <div class="rev-item">RMD: expand RIGHTMOST NT always</div>
+      <div class="rev-item">Parse tree: unique structure</div>
+      <div class="rev-item">1 LMD ↔ 1 parse tree (bijection)</div>
+    </div>
+    <div class="rev-card">
+      <div class="rev-head">Ambiguity</div>
+      <div class="rev-item">Ambiguous: ≥2 distinct LMDs for some w</div>
+      <div class="rev-item">Equivalently: ≥2 parse trees for w</div>
+      <div class="rev-item">Inherently ambiguous: ALL grammars are ambiguous</div>
+      <div class="rev-item">Fix: add precedence/associativity</div>
+    </div>
+    <div class="rev-card">
+      <div class="rev-head">Regular Grammar</div>
+      <div class="rev-item">Right linear: A→xB or A→x</div>
+      <div class="rev-item">Left linear: A→Bx or A→x</div>
+      <div class="rev-item">Must be ONLY right OR only left</div>
+      <div class="rev-item">Linear = at most one NT per RHS</div>
+    </div>
+    <div class="rev-card">
+      <div class="rev-head">FA ↔ Grammar</div>
+      <div class="rev-item">FSA→Grammar: state = NT, δ(q,a)=p → q→aP (or q→aP|a if p is final)</div>
+      <div class="rev-item">Grammar→FSA: NT = state, create final state F for terminal-only rules</div>
+    </div>
+    <div class="rev-card">
+      <div class="rev-head">CFG Simplification</div>
+      <div class="rev-item">① ε-removal: find nullable NTs, expand all subsets</div>
+      <div class="rev-item">② Unit removal: find (A,B) pairs, add non-unit versions</div>
+      <div class="rev-item">③ Useless removal: check generating + reachable</div>
+    </div>
+    <div class="rev-card">
+      <div class="rev-head">CNF Rules</div>
+      <div class="rev-item">NT → T (single terminal)</div>
+      <div class="rev-item">NT → NT NT (exactly two NTs)</div>
+      <div class="rev-item">S → ε only if ε∈L(G)</div>
+      <div class="rev-item">Steps: simplify → replace T → binarise</div>
+    </div>
+    <div class="rev-card">
+      <div class="rev-head">GNF Rules</div>
+      <div class="rev-item">NT → a K (terminal then NTs)</div>
+      <div class="rev-item">NT → T (single terminal)</div>
+      <div class="rev-item">Every prod starts with terminal!</div>
+      <div class="rev-item">Remove left recursion first</div>
+    </div>
+    <div class="rev-card">
+      <div class="rev-head">Left Recursion Removal</div>
+      <div class="rev-item">A → Aα | β</div>
+      <div class="rev-item">becomes:</div>
+      <div class="rev-item">A → βZ | β</div>
+      <div class="rev-item">Z → αZ | α</div>
+    </div>
+  </div>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 3 · §12</span><span class="unit-badge ub-purple">KEY FORMULAS</span></div>
+
+  <h2 class="topic">Key Grammar Patterns for Exam</h2>
+  <table class="tt">
+    <tr><th style="width:40%;">Language Pattern</th><th>CFG</th></tr>
+    <tr><td>aⁿbⁿ (balanced)</td><td>S → aSb | ab</td></tr>
+    <tr><td>aⁿb²ⁿ</td><td>S → aSbb | abb</td></tr>
+    <tr><td>aⁿbᵐ (independent)</td><td>S → AB; A → aA|a; B → bB|b</td></tr>
+    <tr><td>aⁿbaⁿ (palindrome-like)</td><td>S → aSa | aba</td></tr>
+    <tr><td>wcwᴿ</td><td>S → aSa | bSb | c</td></tr>
+    <tr><td>aⁿbᵐcᵐdⁿ</td><td>S → AB; A → aAb|ab; B → cBd|cd</td></tr>
+    <tr><td>L₁ ∪ L₂</td><td>S → S₁|S₂ (separate sub-grammars)</td></tr>
+    <tr><td>Kleene star L*</td><td>S → S₁S|ε or S → LS|ε where L generates L₁</td></tr>
+  </table>
+
+  <h2 class="topic">Common Exam Mistakes to Avoid</h2>
+  <div class="note-box">
+    <ul class="plain">
+      <li>Mixing right and left linear in SAME grammar → NOT Regular (it's Linear/CFG)</li>
+      <li>In LMD: always expand the LEFTMOST variable — don't skip any</li>
+      <li>In CNF: A→aB is NOT CNF (terminal in 2-symbol production needs Rₐ→a)</li>
+      <li>In GNF: productions must start with EXACTLY ONE terminal</li>
+      <li>Ambiguity requires two DISTINCT LMDs — not just two different strings</li>
+      <li>ε-removal: S→ε stays if ε∈L(G), otherwise remove it</li>
+      <li>Useless = NOT generating OR NOT reachable (either condition = useless)</li>
+    </ul>
+  </div>
+
+  <h2 class="topic">Final Summary — Normal Forms</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:10px 0;">
+    <div style="background:var(--box-teal);border:1.5px solid var(--teal);border-radius:8px;padding:10px 12px;text-align:center;">
+      <div style="font-weight:700;color:var(--teal);margin-bottom:6px;">CNF</div>
+      <div style="font-family:'Patrick Hand',cursive;font-size:14px;line-height:24px;">A → BC<br>A → a<br>(Binary tree)</div>
+    </div>
+    <div style="background:var(--box-orange);border:1.5px solid var(--orange);border-radius:8px;padding:10px 12px;text-align:center;">
+      <div style="font-weight:700;color:var(--orange);margin-bottom:6px;">GNF</div>
+      <div style="font-family:'Patrick Hand',cursive;font-size:14px;line-height:24px;">A → aα<br>A → a<br>(Terminal first)</div>
+    </div>
+    <div style="background:var(--box-green);border:1.5px solid var(--green);border-radius:8px;padding:10px 12px;text-align:center;">
+      <div style="font-weight:700;color:var(--green);margin-bottom:6px;">Left Rec Removal</div>
+      <div style="font-family:'Patrick Hand',cursive;font-size:14px;line-height:24px;">A→Aα|β<br>→ A→βZ<br>&nbsp;&nbsp;&nbsp;Z→αZ|α</div>
+    </div>
+  </div>
+
+  <div class="rule-box" style="margin-top:10px;">
+    <strong>★ Conversion Order for GNF:</strong><br>
+    <span style="font-family:'Patrick Hand',cursive;font-size:16px;">
+    Original CFG → Simplify (ε, unit, useless) → Renumber variables → Eliminate left recursion → Back-substitute → GNF ✓
+    </span>
+  </div>
+
+  <div class="page-num">2 / 2</div>
+</div>
+
+</body>
+</html>

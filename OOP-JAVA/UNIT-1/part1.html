@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OOP in Java — Unit 1 | Part 1</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Kalam:wght@300;400;700&family=Patrick+Hand&family=Special+Elite&display=swap');
+
+  :root {
+    --paper: #fdf9f0;
+    --paper2: #fefcf5;
+    --ink: #1a1a2e;
+    --ink-light: #2d2d4e;
+    --blue: #1a56db;
+    --blue-light: #dbeafe;
+    --green: #0d6b3f;
+    --green-light: #d1fae5;
+    --orange: #c05621;
+    --orange-light: #fef3c7;
+    --purple: #5b21b6;
+    --purple-light: #ede9fe;
+    --red: #b91c1c;
+    --red-light: #fee2e2;
+    --teal: #0e7490;
+    --teal-light: #cffafe;
+    --rule-line: #c8d8e8;
+    --margin-line: #f4a0a0;
+    --hole-bg: #e8e0d0;
+    --shadow: rgba(0,0,0,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #c8c0b0;
+    background-image: 
+      radial-gradient(circle at 20% 50%, rgba(120,100,80,0.15) 0%, transparent 60%),
+      radial-gradient(circle at 80% 20%, rgba(100,120,80,0.1) 0%, transparent 50%);
+    font-family: 'Kalam', cursive;
+    color: var(--ink);
+    padding: 20px 0 40px;
+    min-height: 100vh;
+  }
+
+  /* ── PART NAV ── */
+  .part-nav {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    padding: 0 16px;
+  }
+  .part-nav a {
+    font-family: 'Caveat', cursive;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 7px 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    background: rgba(255,255,255,0.5);
+    color: #555;
+    border: 2px solid rgba(255,255,255,0.7);
+    transition: all 0.2s;
+  }
+  .part-nav a.active {
+    background: var(--blue);
+    color: #fff;
+    border-color: var(--blue);
+    box-shadow: 0 4px 12px rgba(26,86,219,0.4);
+  }
+  .part-nav a:hover:not(.active) { background: rgba(255,255,255,0.8); color: #333; }
+
+  /* ── PAGE ── */
+  .page {
+    width: 760px;
+    max-width: 98vw;
+    margin: 0 auto 28px;
+    background: var(--paper);
+    border-radius: 3px;
+    box-shadow: 4px 4px 14px var(--shadow), 0 1px 3px rgba(0,0,0,0.12);
+    position: relative;
+    padding: 36px 44px 44px 80px;
+    min-height: 600px;
+    background-image:
+      repeating-linear-gradient(
+        transparent,
+        transparent 31px,
+        var(--rule-line) 31px,
+        var(--rule-line) 32px
+      );
+    background-position: 0 64px;
+  }
+  .page::before {
+    content: '';
+    position: absolute;
+    left: 68px;
+    top: 0; bottom: 0;
+    width: 2px;
+    background: var(--margin-line);
+    opacity: 0.7;
+  }
+
+  /* ── HOLES ── */
+  .holes {
+    position: absolute;
+    left: 18px;
+    top: 0; bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 32px;
+  }
+  .hole {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--hole-bg);
+    border: 1.5px solid #b8a898;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+  }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .date-tag {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.72rem;
+    color: var(--teal);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .unit-badge {
+    font-family: 'Caveat', cursive;
+    font-size: 0.85rem;
+    font-weight: 700;
+    background: var(--blue);
+    color: white;
+    padding: 2px 12px;
+    border-radius: 10px;
+    letter-spacing: 0.08em;
+  }
+
+  /* ── SECTION TITLE ── */
+  .section-title {
+    font-family: 'Caveat', cursive;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 8px 0 4px;
+    line-height: 1.2;
+  }
+  .sn {
+    font-family: 'Special Elite', cursive;
+    color: var(--blue);
+    margin-right: 6px;
+    font-size: 1.7rem;
+  }
+  .divider {
+    border: none;
+    border-top: 2.5px solid var(--blue);
+    margin: 6px 0 18px;
+    border-radius: 2px;
+  }
+
+  /* ── HEADINGS ── */
+  h2.topic {
+    font-family: 'Caveat', cursive;
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: var(--blue);
+    margin: 20px 0 8px;
+    padding-bottom: 3px;
+    border-bottom: 1.5px dashed var(--rule-line);
+  }
+  h3.sub {
+    font-family: 'Kalam', cursive;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--purple);
+    margin: 14px 0 6px;
+  }
+
+  /* ── BOXES ── */
+  .def-box, .rule-box, .note-box, .purple-box, .orange-box {
+    border-radius: 8px;
+    padding: 13px 16px;
+    margin: 14px 0;
+    position: relative;
+    font-size: 0.97rem;
+    line-height: 1.65;
+  }
+  .def-box {
+    background: var(--blue-light);
+    border-left: 4px solid var(--blue);
+  }
+  .def-box::before {
+    content: '📘 Definition';
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 0.82rem;
+    color: var(--blue);
+    display: block;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .rule-box {
+    background: var(--green-light);
+    border-left: 4px solid var(--green);
+  }
+  .rule-box::before {
+    content: '📗 Key Result';
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 0.82rem;
+    color: var(--green);
+    display: block;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .note-box {
+    background: var(--red-light);
+    border-left: 4px solid var(--red);
+  }
+  .note-box::before {
+    content: '⚠️ Exam Tip / Warning';
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 0.82rem;
+    color: var(--red);
+    display: block;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .purple-box {
+    background: var(--purple-light);
+    border-left: 4px solid var(--purple);
+  }
+  .purple-box::before {
+    content: '💡 Important';
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 0.82rem;
+    color: var(--purple);
+    display: block;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .orange-box {
+    background: var(--orange-light);
+    border-left: 4px solid var(--orange);
+  }
+  .orange-box::before {
+    content: '🔧 Procedure / Algorithm';
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 0.82rem;
+    color: var(--orange);
+    display: block;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* ── Q BOX ── */
+  .qbox {
+    background: #fffbf0;
+    border: 1.5px solid #e4cc88;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin: 14px 0;
+    font-size: 0.96rem;
+  }
+  .q-label {
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--orange);
+    margin-bottom: 6px;
+  }
+  .q-step {
+    margin: 5px 0;
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.6;
+    color: var(--ink-light);
+  }
+  .q-step::before { content: '→'; position: absolute; left: 0; color: var(--blue); font-weight: 700; }
+  .q-ans {
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--green);
+    margin-top: 8px;
+    padding-top: 6px;
+    border-top: 1px dashed #e4cc88;
+  }
+
+  /* ── PLAIN LIST ── */
+  ul.plain { list-style: none; padding-left: 0; margin: 8px 0; }
+  ul.plain li {
+    padding: 4px 0 4px 22px;
+    position: relative;
+    line-height: 1.6;
+    font-size: 0.97rem;
+  }
+  ul.plain li::before { content: '→'; position: absolute; left: 2px; color: var(--blue); font-weight: 700; }
+
+  /* ── FORMULA ── */
+  .formula {
+    font-family: 'Special Elite', cursive;
+    background: rgba(91,33,182,0.09);
+    color: var(--purple);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.95em;
+    display: inline-block;
+  }
+  pre.code-block {
+    background: #1e1e2e;
+    color: #cdd6f4;
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.82rem;
+    line-height: 1.7;
+    margin: 12px 0;
+    overflow-x: auto;
+    border-left: 4px solid var(--blue);
+  }
+  .kw { color: #89b4fa; font-weight: bold; }
+  .cm { color: #6c7086; font-style: italic; }
+  .st { color: #a6e3a1; }
+  .nm { color: #fab387; }
+  .tp { color: #f38ba8; }
+
+  /* ── TWO-COL ── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 12px 0;
+  }
+  @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* ── VS BOX ── */
+  .vs-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin: 12px 0;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1.5px solid #d0d0d0;
+    font-size: 0.93rem;
+  }
+  .vs-left { background: #e8f0fe; padding: 12px 14px; border-right: 1.5px solid #d0d0d0; }
+  .vs-right { background: #e6f4ea; padding: 12px 14px; }
+  .vs-left strong, .vs-right strong {
+    font-family: 'Caveat', cursive;
+    font-size: 1.05rem;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .vs-left strong { color: var(--blue); }
+  .vs-right strong { color: var(--green); }
+
+  /* ── TABLE ── */
+  table.tt {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    margin: 12px 0;
+  }
+  table.tt th {
+    background: var(--blue);
+    color: white;
+    padding: 8px 12px;
+    text-align: left;
+    font-family: 'Caveat', cursive;
+    font-size: 1rem;
+  }
+  table.tt td {
+    padding: 7px 12px;
+    border-bottom: 1px solid var(--rule-line);
+  }
+  table.tt tr:nth-child(even) td { background: rgba(26,86,219,0.04); }
+  table.tt tr:hover td { background: rgba(26,86,219,0.08); }
+
+  /* ── STEP CARDS ── */
+  .step-card {
+    display: flex;
+    gap: 12px;
+    margin: 10px 0;
+    align-items: flex-start;
+  }
+  .step-head {
+    background: var(--blue);
+    color: white;
+    border-radius: 50%;
+    width: 32px; height: 32px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 1rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .step-body { flex: 1; line-height: 1.65; font-size: 0.97rem; }
+
+  /* ── PAGE NUM ── */
+  .page-num {
+    position: absolute;
+    bottom: 14px;
+    right: 22px;
+    font-family: 'Caveat', cursive;
+    font-size: 0.85rem;
+    color: #999;
+  }
+
+  /* ── COVER PAGE ── */
+  .cover-page {
+    width: 760px;
+    max-width: 98vw;
+    margin: 0 auto 28px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    border-radius: 6px;
+    box-shadow: 6px 6px 20px rgba(0,0,0,0.35);
+    padding: 50px 60px 50px 80px;
+    position: relative;
+    overflow: hidden;
+    color: white;
+    min-height: 440px;
+  }
+  .cover-page::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 280px; height: 280px;
+    background: radial-gradient(circle, rgba(26,86,219,0.35) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .cover-page::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 40px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(91,33,182,0.25) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .cover-holes {
+    position: absolute;
+    left: 18px; top: 0; bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 32px;
+  }
+  .cover-subject {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.78rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #89b4fa;
+    margin-bottom: 8px;
+    position: relative; z-index: 1;
+  }
+  .cover-title {
+    font-family: 'Caveat', cursive;
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 6px;
+    position: relative; z-index: 1;
+  }
+  .cover-unit {
+    font-family: 'Kalam', cursive;
+    font-size: 1.15rem;
+    color: #a6e3a1;
+    margin-bottom: 4px;
+    position: relative; z-index: 1;
+  }
+  .cover-subtitle {
+    font-family: 'Kalam', cursive;
+    font-size: 1rem;
+    color: #cba6f7;
+    margin-bottom: 28px;
+    position: relative; z-index: 1;
+  }
+  .cover-part-badge {
+    display: inline-block;
+    background: var(--blue);
+    color: white;
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 6px 20px;
+    border-radius: 20px;
+    margin-bottom: 28px;
+    position: relative; z-index: 1;
+    letter-spacing: 0.06em;
+  }
+  .cover-toc {
+    position: relative; z-index: 1;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    padding-top: 18px;
+  }
+  .cover-toc h3 {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #89b4fa;
+    margin-bottom: 12px;
+  }
+  .toc-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+    border-bottom: 1px dotted rgba(255,255,255,0.12);
+  }
+  .toc-sec {
+    font-family: 'Caveat', cursive;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #f5f5f5;
+  }
+  .toc-sec span.toc-num {
+    color: #89b4fa;
+    margin-right: 8px;
+    font-family: 'Special Elite', cursive;
+  }
+  .toc-pages {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.75rem;
+    color: #a6adc8;
+    background: rgba(255,255,255,0.07);
+    padding: 2px 8px;
+    border-radius: 8px;
+  }
+
+  /* ── HIGHLIGHT ── */
+  .hl-yellow { background: #fff176; border-radius: 3px; padding: 0 3px; }
+  .hl-blue { background: #bbdefb; border-radius: 3px; padding: 0 3px; }
+  .hl-green { background: #c8e6c9; border-radius: 3px; padding: 0 3px; }
+
+  p { line-height: 1.7; margin: 8px 0; font-size: 0.97rem; }
+  strong { color: var(--ink); }
+</style>
+</head>
+<body>
+
+<!-- ══════════ PART NAV ══════════ -->
+<nav class="part-nav">
+        <a href="../index.html">&#8617; Units</a>
+  <a href="part1.html" class="active">◆ Part 1 — Intro &amp; Fundamentals</a>
+  <a href="part2.html">◆ Part 2 — OOP Concepts</a>
+  <a href="part3.html">◆ Part 3 — Packages &amp; Revision</a>
+</nav>
+
+<!-- ══════════ COVER PAGE ══════════ -->
+<div class="cover-page">
+  <div class="cover-holes">
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+  </div>
+  <div class="cover-subject">Object-Oriented Programming in Java</div>
+  <div class="cover-title">Unit 1 Notes</div>
+  <div class="cover-unit">Unit 1 — Introduction to Java &amp; OOP</div>
+  <div class="cover-subtitle">Introduction · Java Fundamentals · Programming Structures</div>
+  <div class="cover-part-badge">📒 Part 1 of 3</div>
+  <div class="cover-toc">
+    <h3>Contents — Part 1</h3>
+    <div class="toc-row">
+      <div class="toc-sec"><span class="toc-num">§1</span> Why Java? History &amp; Overview</div>
+      <div class="toc-pages">2 pages</div>
+    </div>
+    <div class="toc-row">
+      <div class="toc-sec"><span class="toc-num">§2</span> JVM, JRE &amp; Java Environment</div>
+      <div class="toc-pages">2 pages</div>
+    </div>
+    <div class="toc-row">
+      <div class="toc-sec"><span class="toc-num">§3</span> Java Source File Structure &amp; Compilation</div>
+      <div class="toc-pages">2 pages</div>
+    </div>
+    <div class="toc-row">
+      <div class="toc-sec"><span class="toc-num">§4</span> Data Types, Variables &amp; Operators</div>
+      <div class="toc-pages">3 pages</div>
+    </div>
+    <div class="toc-row">
+      <div class="toc-sec"><span class="toc-num">§5</span> Control Flow &amp; Arrays</div>
+      <div class="toc-pages">2 pages</div>
+    </div>
+    <div class="toc-row">
+      <div class="toc-sec"><span class="toc-num">§6</span> Strings in Java</div>
+      <div class="toc-pages">2 pages</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     §1 — WHY JAVA? HISTORY & OVERVIEW (2 pages)
+══════════════════════════════════════════════════════ -->
+
+<!-- §1 Page 1 -->
+<div class="page">
+  <div class="holes">
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+  </div>
+  <div class="page-header">
+    <span class="date-tag">OOP in Java — Unit 1</span>
+    <span class="unit-badge">SECTION 1</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§1</span> Why Java? History &amp; Overview</h1>
+  <hr class="divider">
+
+  <h2 class="topic">Why Java?</h2>
+  <div class="purple-box">
+    Java is the most widely used programming language for enterprise, Android, and web backend development. It solves a classic problem: write once, run anywhere (WORA).
+  </div>
+  <ul class="plain">
+    <li><strong>Platform Independent:</strong> Java code compiles to bytecode, not native machine code. Any device with a JVM can run it.</li>
+    <li><strong>Object-Oriented:</strong> Everything is modelled as objects — mirrors the real world.</li>
+    <li><strong>Robust &amp; Secure:</strong> Strong type checking, exception handling, no pointer arithmetic, sandbox execution.</li>
+    <li><strong>Multithreaded:</strong> Built-in support for concurrent programming.</li>
+    <li><strong>Rich API &amp; Ecosystem:</strong> Huge standard library, frameworks (Spring, Hibernate), tools.</li>
+    <li><strong>Open Source:</strong> OpenJDK is freely available.</li>
+  </ul>
+
+  <h2 class="topic">History of Java</h2>
+  <table class="tt">
+    <tr><th>Year</th><th>Milestone</th></tr>
+    <tr><td>1991</td><td>Project "Green" started by James Gosling at Sun Microsystems. Language first called <em>Oak</em>.</td></tr>
+    <tr><td>1995</td><td>Oak renamed <strong>Java</strong>. Java 1.0 released publicly. Applets popularised web interactivity.</td></tr>
+    <tr><td>1996</td><td>JDK 1.0 — first official release.</td></tr>
+    <tr><td>1998</td><td>Java 2 (J2SE 1.2) — Collections framework, Swing GUI.</td></tr>
+    <tr><td>2004</td><td>Java 5 — Generics, Annotations, Autoboxing, Enhanced for-loop.</td></tr>
+    <tr><td>2014</td><td>Java 8 — Lambda expressions, Streams, java.time API.</td></tr>
+    <tr><td>2017+</td><td>6-month release cadence. Java 21 is the current LTS (2023).</td></tr>
+  </table>
+
+  <div class="def-box">
+    <strong>James Gosling</strong> is known as the <em>Father of Java</em>. The name "Java" is said to be inspired by Java coffee from Indonesia.
+  </div>
+
+  <div class="note-box">
+    Exams often ask: "Who created Java?", "What was it originally called?", "What does WORA mean?" — Know these!
+  </div>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<!-- §1 Page 2 -->
+<div class="page">
+  <div class="holes">
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+  </div>
+  <div class="page-header">
+    <span class="date-tag">OOP in Java — Unit 1</span>
+    <span class="unit-badge">SECTION 1</span>
+  </div>
+
+  <h2 class="topic">Java Editions / Platforms</h2>
+  <div class="two-col">
+    <div class="def-box">
+      <strong>Java SE</strong> (Standard Edition)<br>
+      Core Java — the language fundamentals, base libraries. What we study in this course.
+    </div>
+    <div class="def-box">
+      <strong>Java EE / Jakarta EE</strong> (Enterprise Edition)<br>
+      Web apps, servlets, JSP, EJB, microservices.
+    </div>
+    <div class="def-box">
+      <strong>Java ME</strong> (Micro Edition)<br>
+      Embedded/mobile devices with limited resources.
+    </div>
+    <div class="def-box">
+      <strong>Android SDK</strong><br>
+      Based on Java. Most widely used mobile platform.
+    </div>
+  </div>
+
+  <h2 class="topic">Key Java Features at a Glance</h2>
+  <table class="tt">
+    <tr><th>Feature</th><th>What it means</th></tr>
+    <tr><td>Simple</td><td>Syntax similar to C/C++ but no pointers, operator overloading, etc.</td></tr>
+    <tr><td>Object-Oriented</td><td>Based on classes and objects; supports all 4 OOP pillars.</td></tr>
+    <tr><td>Platform Independent</td><td>Compiled to bytecode; JVM interprets on any OS.</td></tr>
+    <tr><td>Compiled + Interpreted</td><td>.java → compiler → .class (bytecode) → JVM → machine code.</td></tr>
+    <tr><td>Robust</td><td>Strong type-checking, exception handling, garbage collection.</td></tr>
+    <tr><td>Secure</td><td>Bytecode verifier, security manager, no unsafe memory access.</td></tr>
+    <tr><td>Distributed</td><td>Built-in networking via java.net; RMI support.</td></tr>
+    <tr><td>Multithreaded</td><td>Thread class and Runnable interface built-in.</td></tr>
+    <tr><td>Dynamic</td><td>Classes loaded on demand at runtime (class loader).</td></tr>
+  </table>
+
+  <div class="rule-box">
+    Java = <span class="formula">Compiled language</span> (produces bytecode) + <span class="formula">Interpreted language</span> (JVM interprets bytecode). This dual nature gives it both performance and portability.
+  </div>
+
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     §2 — JVM, JRE & JAVA ENVIRONMENT (2 pages)
+══════════════════════════════════════════════════════ -->
+
+<!-- §2 Page 1 -->
+<div class="page">
+  <div class="holes">
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+  </div>
+  <div class="page-header">
+    <span class="date-tag">OOP in Java — Unit 1</span>
+    <span class="unit-badge">SECTION 2</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§2</span> JVM, JRE &amp; Java Environment</h1>
+  <hr class="divider">
+
+  <h2 class="topic">The Big Three — JDK, JRE, JVM</h2>
+  <div class="purple-box">
+    Think of it as nested boxes: <strong>JDK ⊇ JRE ⊇ JVM</strong>
+  </div>
+
+  <div class="def-box">
+    <strong>JVM — Java Virtual Machine</strong><br>
+    An abstract machine that provides a runtime environment to execute Java bytecode. It is <em>platform-specific</em> (different JVMs for Windows, Linux, Mac) but the bytecode it runs is <em>platform-independent</em>.
+  </div>
+
+  <div class="def-box">
+    <strong>JRE — Java Runtime Environment</strong><br>
+    JVM + Java class libraries + supporting files. Needed to <em>run</em> Java programs. End users need JRE, not JDK.
+  </div>
+
+  <div class="def-box">
+    <strong>JDK — Java Development Kit</strong><br>
+    JRE + compiler (javac) + debugger + javadoc + other tools. Needed to <em>develop</em> Java programs.
+  </div>
+
+  <h2 class="topic">JVM Architecture</h2>
+  <div class="orange-box">
+    Three main subsystems inside the JVM:
+    <div class="step-card" style="margin-top:10px">
+      <div class="step-head">1</div>
+      <div class="step-body"><strong>Class Loader Subsystem</strong> — Loads .class files into memory. Three loaders: Bootstrap → Extension → Application.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-head">2</div>
+      <div class="step-body"><strong>Memory Areas</strong> — Method Area (class data), Heap (objects), Stack (frames/local vars), PC Register, Native Method Stack.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-head">3</div>
+      <div class="step-body"><strong>Execution Engine</strong> — Interpreter (executes bytecode line by line) + JIT Compiler (compiles hot code to native for speed) + Garbage Collector.</div>
+    </div>
+  </div>
+
+  <div class="note-box">
+    <strong>JIT vs Interpreter:</strong> Interpreter translates bytecode line-by-line (slow). JIT compiles frequently executed code to native machine code at runtime (fast). This is why Java is much faster than pure interpreted languages.
+  </div>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<!-- §2 Page 2 -->
+<div class="page">
+  <div class="holes">
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+  </div>
+  <div class="page-header">
+    <span class="date-tag">OOP in Java — Unit 1</span>
+    <span class="unit-badge">SECTION 2</span>
+  </div>
+
+  <h2 class="topic">Java Memory Areas (Runtime Data Areas)</h2>
+  <table class="tt">
+    <tr><th>Area</th><th>Stores</th><th>Shared?</th></tr>
+    <tr><td><strong>Method Area</strong></td><td>Class metadata, static variables, constant pool</td><td>Shared (all threads)</td></tr>
+    <tr><td><strong>Heap</strong></td><td>All objects and instance variables</td><td>Shared (all threads)</td></tr>
+    <tr><td><strong>Stack</strong></td><td>Method frames, local variables, partial results</td><td>Per thread</td></tr>
+    <tr><td><strong>PC Register</strong></td><td>Address of current executing instruction</td><td>Per thread</td></tr>
+    <tr><td><strong>Native Method Stack</strong></td><td>Native (C/C++) method calls</td><td>Per thread</td></tr>
+  </table>
+
+  <h2 class="topic">Garbage Collection</h2>
+  <div class="def-box">
+    <strong>Garbage Collector (GC)</strong> — Automatic memory management. JVM automatically reclaims memory occupied by objects that are no longer referenced. Programmers don't need to manually free memory (unlike C/C++).
+  </div>
+  <ul class="plain">
+    <li>GC runs in the background as a daemon thread.</li>
+    <li>You can suggest (not force) GC with <span class="formula">System.gc()</span> — not guaranteed.</li>
+    <li>Common GC algorithms: Serial, Parallel, G1 (Garbage First), ZGC.</li>
+  </ul>
+
+  <h2 class="topic">Java Environment Setup</h2>
+  <div class="orange-box">
+    Steps to set up Java development environment:
+    <div class="step-card" style="margin-top:8px">
+      <div class="step-head">1</div>
+      <div class="step-body">Download and install <strong>JDK</strong> from oracle.com or adoptium.net.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-head">2</div>
+      <div class="step-body">Set <strong>JAVA_HOME</strong> environment variable → path to JDK installation.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-head">3</div>
+      <div class="step-body">Add <span class="formula">%JAVA_HOME%\bin</span> (Windows) or <span class="formula">$JAVA_HOME/bin</span> (Linux/Mac) to <strong>PATH</strong>.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-head">4</div>
+      <div class="step-body">Verify: open terminal → <span class="formula">java -version</span> and <span class="formula">javac -version</span>.</div>
+    </div>
+  </div>
+
+  <div class="note-box">
+    <strong>Common exam question:</strong> "What is the difference between JDK, JRE, and JVM?" — Memorise: JDK = develop + run; JRE = run only; JVM = virtual machine inside JRE that executes bytecode.
+  </div>
+
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     §3 — SOURCE FILE STRUCTURE & COMPILATION (2 pages)
+══════════════════════════════════════════════════════ -->
+
+<!-- §3 Page 1 -->
+<div class="page">
+  <div class="holes">
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+  </div>
+  <div class="page-header">
+    <span class="date-tag">OOP in Java — Unit 1</span>
+    <span class="unit-badge">SECTION 3</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§3</span> Java Source File Structure &amp; Compilation</h1>
+  <hr class="divider">
+
+  <h2 class="topic">Rules for a Java Source File</h2>
+  <div class="rule-box">
+    A Java source file follows strict structural rules:
+    <ul class="plain" style="margin-top:6px">
+      <li>File extension must be <span class="formula">.java</span></li>
+      <li>File name must <strong>exactly match</strong> the <code>public</code> class name (case-sensitive).</li>
+      <li>At most <strong>one public class</strong> per file.</li>
+      <li>Can have multiple non-public classes in the same file.</li>
+      <li><strong>Package statement</strong> (if present) must be the very first line.</li>
+      <li><strong>Import statements</strong> come after package, before class declaration.</li>
+    </ul>
+  </div>
+
+  <h2 class="topic">Structure of a Java Source File</h2>
+  <pre class="code-block"><span class="cm">// 1. Package declaration (optional, must be first)</span>
+<span class="kw">package</span> com.example.myapp;
+
+<span class="cm">// 2. Import statements (optional)</span>
+<span class="kw">import</span> java.util.Scanner;
+<span class="kw">import</span> java.util.*;          <span class="cm">// wildcard import</span>
+<span class="kw">import static</span> java.lang.Math.PI;  <span class="cm">// static import</span>
+
+<span class="cm">// 3. Class declaration (filename must match public class name)</span>
+<span class="kw">public class</span> <span class="tp">HelloWorld</span> {
+
+    <span class="cm">// 4. Main method — entry point of the program</span>
+    <span class="kw">public static void</span> main(String[] args) {
+        System.out.println(<span class="st">"Hello, World!"</span>);
+    }
+}</pre>
+
+  <h2 class="topic">The main() Method Signature — Explained</h2>
+  <div class="def-box">
+    <span class="formula">public static void main(String[] args)</span>
+    <ul class="plain" style="margin-top:6px">
+      <li><strong>public</strong> — JVM must be able to call it from outside the class.</li>
+      <li><strong>static</strong> — JVM calls it without creating an object of the class.</li>
+      <li><strong>void</strong> — returns nothing to the JVM.</li>
+      <li><strong>main</strong> — fixed name recognised by JVM as entry point.</li>
+      <li><strong>String[] args</strong> — command-line arguments passed as an array of strings.</li>
+    </ul>
+  </div>
+
+  <div class="note-box">
+    <strong>Common mistake:</strong> Writing <code>Main</code> or <code>MAIN</code> instead of <code>main</code> — Java is case-sensitive! Also, <code>String args[]</code> is also valid syntax (C-style array declaration).
+  </div>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<!-- §3 Page 2 -->
+<div class="page">
+  <div class="holes">
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+  </div>
+  <div class="page-header">
+    <span class="date-tag">OOP in Java — Unit 1</span>
+    <span class="unit-badge">SECTION 3</span>
+  </div>
+
+  <h2 class="topic">Java Compilation &amp; Execution Process</h2>
+  <div class="orange-box">
+    <div class="step-card">
+      <div class="step-head">1</div>
+      <div class="step-body"><strong>Write:</strong> Create <span class="formula">HelloWorld.java</span> in any text editor or IDE.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-head">2</div>
+      <div class="step-body"><strong>Compile:</strong> <span class="formula">javac HelloWorld.java</span> → produces <span class="formula">HelloWorld.class</span> (bytecode).</div>
+    </div>
+    <div class="step-card">
+      <div class="step-head">3</div>
+      <div class="step-body"><strong>Run:</strong> <span class="formula">java HelloWorld</span> → JVM loads &amp; executes the .class file. Note: no .class extension in the run command!</div>
+    </div>
+  </div>
+
+  <div class="vs-box">
+    <div class="vs-left">
+      <strong>Compilation (javac)</strong>
+      Source code (.java)<br>
+      → Syntax checked<br>
+      → Translated to Bytecode (.class)<br>
+      → Stored on disk<br>
+      Platform-independent output
+    </div>
+    <div class="vs-right">
+      <strong>Execution (java / JVM)</strong>
+      Bytecode (.class)<br>
+      → Class loaded by Class Loader<br>
+      → Bytecode verified<br>
+      → JIT compiled to native code<br>
+      → Runs on specific OS/hardware
+    </div>
+  </div>
+
+  <h2 class="topic">Types of Comments</h2>
+  <pre class="code-block"><span class="cm">// Single-line comment — use for brief notes</span>
+
+<span class="cm">/* Multi-line comment
+   spans several lines */</span>
+
+<span class="cm">/**
+ * Documentation comment (Javadoc)
+ * Used to generate HTML API documentation.
+ * @param args command-line arguments
+ * @return void
+ */</span>
+<span class="kw">public static void</span> main(String[] args) { ... }</pre>
+
+  <div class="qbox">
+    <div class="q-label">🧪 Exam Q: What happens if the filename doesn't match the public class name?</div>
+    <div class="q-step">The compiler throws an error: <em>"class HelloWorld is public, should be declared in a file named HelloWorld.java"</em></div>
+    <div class="q-ans">✓ Rule: filename = public class name (case-sensitive), extension = .java</div>
+  </div>
+
+  <div class="note-box">
+    <strong>Important:</strong> If there is no public class in the file, the filename can be anything (still must end in .java). The JVM starts execution from the class whose name you provide in <span class="formula">java ClassName</span>.
+  </div>
+
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     §4 — DATA TYPES, VARIABLES & OPERATORS (3 pages)
+══════════════════════════════════════════════════════ -->
+
+<!-- §4 Page 1 -->
+<div class="page">
+  <div class="holes">
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+  </div>
+  <div class="page-header">
+    <span class="date-tag">OOP in Java — Unit 1</span>
+    <span class="unit-badge">SECTION 4</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§4</span> Data Types, Variables &amp; Operators</h1>
+  <hr class="divider">
+
+  <h2 class="topic">Primitive Data Types (8 types)</h2>
+  <table class="tt">
+    <tr><th>Type</th><th>Size</th><th>Range</th><th>Default</th><th>Example</th></tr>
+    <tr><td><strong>byte</strong></td><td>1 byte (8 bits)</td><td>−128 to 127</td><td>0</td><td><code>byte b = 100;</code></td></tr>
+    <tr><td><strong>short</strong></td><td>2 bytes</td><td>−32,768 to 32,767</td><td>0</td><td><code>short s = 500;</code></td></tr>
+    <tr><td><strong>int</strong></td><td>4 bytes</td><td>−2³¹ to 2³¹−1 (~±2 billion)</td><td>0</td><td><code>int x = 42;</code></td></tr>
+    <tr><td><strong>long</strong></td><td>8 bytes</td><td>−2⁶³ to 2⁶³−1</td><td>0L</td><td><code>long l = 100L;</code></td></tr>
+    <tr><td><strong>float</strong></td><td>4 bytes</td><td>~±3.4×10³⁸</td><td>0.0f</td><td><code>float f = 3.14f;</code></td></tr>
+    <tr><td><strong>double</strong></td><td>8 bytes</td><td>~±1.8×10³⁰⁸</td><td>0.0d</td><td><code>double d = 3.14;</code></td></tr>
+    <tr><td><strong>char</strong></td><td>2 bytes</td><td>0 to 65,535 (Unicode)</td><td>'\u0000'</td><td><code>char c = 'A';</code></td></tr>
+    <tr><td><strong>boolean</strong></td><td>~1 bit</td><td>true / false</td><td>false</td><td><code>boolean ok = true;</code></td></tr>
+  </table>
+
+  <div class="note-box">
+    <strong>Key differences from C/C++:</strong> In Java, <code>char</code> is 2 bytes (Unicode, not ASCII). <code>boolean</code> is NOT an integer (0/1 doesn't work as boolean). All numeric types have fixed sizes — they don't depend on the OS.
+  </div>
+
+  <h2 class="topic">Reference (Non-Primitive) Types</h2>
+  <div class="def-box">
+    Reference types store a <em>memory address</em> (reference to an object), not the actual value. Includes: <strong>String</strong>, arrays, classes, interfaces, enums. Default value = <strong>null</strong>.
+  </div>
+  <div class="vs-box">
+    <div class="vs-left">
+      <strong>Primitive Types</strong>
+      Stored directly in stack memory<br>
+      Hold actual values<br>
+      Cannot be null<br>
+      e.g., int, double, boolean
+    </div>
+    <div class="vs-right">
+      <strong>Reference Types</strong>
+      Stored in heap; reference in stack<br>
+      Hold address of object<br>
+      Can be null<br>
+      e.g., String, int[], MyClass
+    </div>
+  </div>
+
+  <div class="page-num">1 / 3</div>
+</div>
+
+<!-- §4 Page 2 -->
+<div class="page">
+  <div class="holes">
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+  </div>
+  <div class="page-header">
+    <span class="date-tag">OOP in Java — Unit 1</span>
+    <span class="unit-badge">SECTION 4</span>
+  </div>
+
+  <h2 class="topic">Variables</h2>
+  <div class="def-box">
+    A <strong>variable</strong> is a named memory location that holds a value of a specific data type.
+    <br>Syntax: <span class="formula">dataType variableName = value;</span>
+  </div>
+
+  <h3 class="sub">Types of Variables</h3>
+  <div class="orange-box">
+    <div class="step-card">
+      <div class="step-head">1</div>
+      <div class="step-body"><strong>Local Variable:</strong> Declared inside a method/block. Must be initialised before use. No default value. Stored in stack. Scope = that block only.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-head">2</div>
+      <div class="step-body"><strong>Instance Variable (Field):</strong> Declared inside a class but outside methods. Each object gets its own copy. Has default value. Stored in heap.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-head">3</div>
+      <div class="step-body"><strong>Static Variable (Class Variable):</strong> Declared with <code>static</code> keyword. Shared by all instances of the class. Stored in Method Area. Exists for lifetime of class.</div>
+    </div>
+  </div>
+
+  <pre class="code-block"><span class="kw">public class</span> <span class="tp">Variables</span> {
+    <span class="kw">static int</span> count = <span class="nm">0</span>;        <span class="cm">// static variable — shared</span>
+    String name;                   <span class="cm">// instance variable — per object</span>
+
+    <span class="kw">void</span> display() {
+        <span class="kw">int</span> x = <span class="nm">10</span>;              <span class="cm">// local variable</span>
+        System.out.println(x + name + count);
+    }
+}</pre>
+
+  <h2 class="topic">Type Casting</h2>
+  <div class="rule-box">
+    <strong>Widening (Implicit):</strong> smaller type → larger type. Done automatically. No data loss.<br>
+    <span class="formula">byte → short → int → long → float → double</span><br><br>
+    <strong>Narrowing (Explicit):</strong> larger type → smaller type. Must be done manually. May lose data.<br>
+    <span class="formula">double d = 9.7; int i = (int) d;  // i = 9 (truncated)</span>
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">🧪 Example: Type casting</div>
+    <div class="q-step"><code>int i = 300; byte b = (byte) i;</code> — What is b?</div>
+    <div class="q-step">300 in binary is 100101100. byte only keeps last 8 bits = 00101100 = 44.</div>
+    <div class="q-ans">✓ b = 44 (data loss due to narrowing)</div>
+  </div>
+
+  <div class="page-num">2 / 3</div>
+</div>
+
+<!-- §4 Page 3 -->
+<div class="page">
+  <div class="holes">
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+  </div>
+  <div class="page-header">
+    <span class="date-tag">OOP in Java — Unit 1</span>
+    <span class="unit-badge">SECTION 4</span>
+  </div>
+
+  <h2 class="topic">Operators in Java</h2>
+  <table class="tt">
+    <tr><th>Category</th><th>Operators</th><th>Notes</th></tr>
+    <tr><td><strong>Arithmetic</strong></td><td>+ − * / %</td><td>% = modulo (remainder). Integer division truncates.</td></tr>
+    <tr><td><strong>Assignment</strong></td><td>= += −= *= /= %=</td><td>x += 5 is shorthand for x = x + 5.</td></tr>
+    <tr><td><strong>Relational</strong></td><td>== != &gt; &lt; &gt;= &lt;=</td><td>Return boolean. Use == for primitives, .equals() for objects.</td></tr>
+    <tr><td><strong>Logical</strong></td><td>&amp;&amp; || !</td><td>&amp;&amp; = AND (short-circuit), || = OR (short-circuit), ! = NOT.</td></tr>
+    <tr><td><strong>Bitwise</strong></td><td>&amp; | ^ ~ &lt;&lt; &gt;&gt; &gt;&gt;&gt;</td><td>Works on bits. &gt;&gt;&gt; = unsigned right shift.</td></tr>
+    <tr><td><strong>Unary</strong></td><td>++ −− + − !</td><td>Pre: ++x (increment then use); Post: x++ (use then increment).</td></tr>
+    <tr><td><strong>Ternary</strong></td><td>? :</td><td><span class="formula">condition ? valueIfTrue : valueIfFalse</span></td></tr>
+    <tr><td><strong>instanceof</strong></td><td>instanceof</td><td>Tests if object is an instance of a class/interface.</td></tr>
+  </table>
+
+  <div class="qbox">
+    <div class="q-label">🧪 Pre vs Post Increment Tricky Example</div>
+    <div class="q-step"><code>int a = 5; int b = ++a; // b = 6, a = 6</code></div>
+    <div class="q-step"><code>int a = 5; int b = a++; // b = 5, a = 6</code></div>
+    <div class="q-ans">✓ Pre-increment: increment first, then assign. Post-increment: assign first, then increment.</div>
+  </div>
+
+  <div class="note-box">
+    <strong>Common trap — == vs .equals():</strong><br>
+    <code>String s1 = "hello"; String s2 = "hello"; s1 == s2</code> → may be <code>true</code> (string pool).<br>
+    <code>String s1 = new String("hello"); String s2 = new String("hello"); s1 == s2</code> → <code>false</code> (different objects).<br>
+    Always use <code>.equals()</code> to compare String content!
+  </div>
+
+  <div class="rule-box">
+    <strong>Operator Precedence (high to low, simplified):</strong><br>
+    <span class="formula">() [] .</span> → <span class="formula">++ --</span> (unary) → <span class="formula">* / %</span> → <span class="formula">+ -</span> → <span class="formula">&lt;&lt; &gt;&gt;</span> → <span class="formula">&lt; &gt; == !=</span> → <span class="formula">&amp;</span> → <span class="formula">^</span> → <span class="formula">|</span> → <span class="formula">&amp;&amp;</span> → <span class="formula">||</span> → <span class="formula">?:</span> → <span class="formula">=</span>
+  </div>
+
+  <div class="page-num">3 / 3</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     §5 — CONTROL FLOW & ARRAYS (2 pages)
+══════════════════════════════════════════════════════ -->
+
+<!-- §5 Page 1 -->
+<div class="page">
+  <div class="holes">
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+  </div>
+  <div class="page-header">
+    <span class="date-tag">OOP in Java — Unit 1</span>
+    <span class="unit-badge">SECTION 5</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§5</span> Control Flow &amp; Arrays</h1>
+  <hr class="divider">
+
+  <h2 class="topic">Control Flow Statements</h2>
+
+  <h3 class="sub">Decision Making</h3>
+  <pre class="code-block"><span class="cm">// if-else</span>
+<span class="kw">if</span> (score >= <span class="nm">90</span>) { grade = <span class="st">'A'</span>; }
+<span class="kw">else if</span> (score >= <span class="nm">75</span>) { grade = <span class="st">'B'</span>; }
+<span class="kw">else</span> { grade = <span class="st">'C'</span>; }
+
+<span class="cm">// switch — works with int, char, String (Java 7+), enum</span>
+<span class="kw">switch</span> (day) {
+    <span class="kw">case</span> <span class="nm">1</span>: System.out.println(<span class="st">"Monday"</span>); <span class="kw">break</span>;
+    <span class="kw">case</span> <span class="nm">2</span>: System.out.println(<span class="st">"Tuesday"</span>); <span class="kw">break</span>;
+    <span class="kw">default</span>: System.out.println(<span class="st">"Other"</span>);
+}</pre>
+
+  <div class="note-box">
+    <strong>Forgetting <code>break</code> in switch</strong> causes fall-through — execution continues into the next case. This is a very common bug and a frequent exam trick question!
+  </div>
+
+  <h3 class="sub">Loops</h3>
+  <pre class="code-block"><span class="cm">// for loop</span>
+<span class="kw">for</span> (<span class="kw">int</span> i = <span class="nm">0</span>; i &lt; <span class="nm">5</span>; i++) { System.out.println(i); }
+
+<span class="cm">// while loop — condition checked first (may not execute)</span>
+<span class="kw">while</span> (i &lt; <span class="nm">5</span>) { System.out.println(i); i++; }
+
+<span class="cm">// do-while — executes at least once, then checks condition</span>
+<span class="kw">do</span> { System.out.println(i); i++; } <span class="kw">while</span> (i &lt; <span class="nm">5</span>);
+
+<span class="cm">// enhanced for (for-each) — Java 5+, for arrays and collections</span>
+<span class="kw">int</span>[] arr = {<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>};
+<span class="kw">for</span> (<span class="kw">int</span> x : arr) { System.out.println(x); }</pre>
+
+  <h3 class="sub">Jump Statements</h3>
+  <ul class="plain">
+    <li><span class="formula">break</span> — exits the innermost loop or switch block.</li>
+    <li><span class="formula">continue</span> — skips the rest of the current loop iteration, goes to next iteration.</li>
+    <li><span class="formula">return</span> — exits the current method, optionally returning a value.</li>
+    <li><span class="formula">break label</span> / <span class="formula">continue label</span> — jumps to a labelled outer loop.</li>
+  </ul>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<!-- §5 Page 2 -->
+<div class="page">
+  <div class="holes">
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+  </div>
+  <div class="page-header">
+    <span class="date-tag">OOP in Java — Unit 1</span>
+    <span class="unit-badge">SECTION 5</span>
+  </div>
+
+  <h2 class="topic">Arrays</h2>
+  <div class="def-box">
+    An <strong>array</strong> is a fixed-size, ordered collection of elements of the <em>same data type</em>. Arrays in Java are <em>objects</em> stored in the heap.
+  </div>
+
+  <pre class="code-block"><span class="cm">// 1D Array Declaration + Allocation + Initialization</span>
+<span class="kw">int</span>[] marks = <span class="kw">new int</span>[<span class="nm">5</span>];           <span class="cm">// creates array of 5 ints, default=0</span>
+marks[<span class="nm">0</span>] = <span class="nm">85</span>; marks[<span class="nm">1</span>] = <span class="nm">90</span>;      <span class="cm">// manual assignment</span>
+
+<span class="kw">int</span>[] scores = {<span class="nm">85</span>, <span class="nm">90</span>, <span class="nm">78</span>, <span class="nm">92</span>, <span class="nm">88</span>}; <span class="cm">// array literal</span>
+
+<span class="cm">// Length property</span>
+System.out.println(scores.length);   <span class="cm">// 5 (not a method, it's a field!)</span>
+
+<span class="cm">// 2D Array</span>
+<span class="kw">int</span>[][] matrix = <span class="kw">new int</span>[<span class="nm">3</span>][<span class="nm">4</span>];     <span class="cm">// 3 rows, 4 columns</span>
+<span class="kw">int</span>[][] grid = {{<span class="nm">1</span>,<span class="nm">2</span>},{<span class="nm">3</span>,<span class="nm">4</span>},{<span class="nm">5</span>,<span class="nm">6</span>}}; <span class="cm">// 3×2 array literal</span>
+
+<span class="cm">// Jagged Array — rows of different lengths</span>
+<span class="kw">int</span>[][] jagged = <span class="kw">new int</span>[<span class="nm">3</span>][];
+jagged[<span class="nm">0</span>] = <span class="kw">new int</span>[<span class="nm">2</span>];
+jagged[<span class="nm">1</span>] = <span class="kw">new int</span>[<span class="nm">4</span>];</pre>
+
+  <div class="rule-box">
+    <strong>Key Array Facts:</strong>
+    <ul class="plain" style="margin-top:6px">
+      <li>Array index starts at <strong>0</strong>. Last element = <span class="formula">arr[arr.length - 1]</span></li>
+      <li>Accessing out-of-bounds index throws <span class="formula">ArrayIndexOutOfBoundsException</span></li>
+      <li>Arrays are <strong>objects</strong> — <span class="formula">int[] x = new int[5]</span> allocates on heap.</li>
+      <li><span class="formula">Arrays.sort(arr)</span> sorts in ascending order (java.util.Arrays).</li>
+      <li><span class="formula">Arrays.copyOf(arr, len)</span> creates a new array copy.</li>
+    </ul>
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">🧪 Find max element in an array</div>
+    <div class="q-step">int max = arr[0];</div>
+    <div class="q-step">Loop: for(int x : arr) { if(x &gt; max) max = x; }</div>
+    <div class="q-ans">✓ O(n) time — must examine every element once.</div>
+  </div>
+
+  <div class="note-box">
+    <strong>Array vs ArrayList:</strong> Arrays have fixed size. ArrayList (java.util) is dynamic — grows automatically. Exams may ask when to use which.
+  </div>
+
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     §6 — STRINGS IN JAVA (2 pages)
+══════════════════════════════════════════════════════ -->
+
+<!-- §6 Page 1 -->
+<div class="page">
+  <div class="holes">
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+  </div>
+  <div class="page-header">
+    <span class="date-tag">OOP in Java — Unit 1</span>
+    <span class="unit-badge">SECTION 6</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§6</span> Strings in Java</h1>
+  <hr class="divider">
+
+  <h2 class="topic">String Basics</h2>
+  <div class="def-box">
+    <strong>String</strong> is a class in <code>java.lang</code> that represents a sequence of characters. Strings in Java are <span class="hl-yellow">immutable</span> — once created, their value cannot be changed.
+  </div>
+
+  <pre class="code-block"><span class="cm">// Two ways to create a String</span>
+String s1 = <span class="st">"Hello"</span>;              <span class="cm">// String literal — uses String Pool</span>
+String s2 = <span class="kw">new</span> String(<span class="st">"Hello"</span>); <span class="cm">// Always creates new object in heap</span>
+
+<span class="cm">// String Pool: JVM keeps a pool of unique string literals</span>
+String a = <span class="st">"Java"</span>;
+String b = <span class="st">"Java"</span>;
+System.out.println(a == b);        <span class="cm">// true — same object from pool!</span>
+System.out.println(a.equals(b));   <span class="cm">// true — same content</span></pre>
+
+  <h2 class="topic">Important String Methods</h2>
+  <table class="tt">
+    <tr><th>Method</th><th>Returns</th><th>Description</th></tr>
+    <tr><td><code>length()</code></td><td>int</td><td>Number of characters</td></tr>
+    <tr><td><code>charAt(i)</code></td><td>char</td><td>Character at index i</td></tr>
+    <tr><td><code>substring(s)</code></td><td>String</td><td>From index s to end</td></tr>
+    <tr><td><code>substring(s,e)</code></td><td>String</td><td>From s (inclusive) to e (exclusive)</td></tr>
+    <tr><td><code>indexOf(str)</code></td><td>int</td><td>First occurrence index, −1 if not found</td></tr>
+    <tr><td><code>toUpperCase()</code></td><td>String</td><td>Convert to uppercase</td></tr>
+    <tr><td><code>toLowerCase()</code></td><td>String</td><td>Convert to lowercase</td></tr>
+    <tr><td><code>trim()</code></td><td>String</td><td>Remove leading and trailing spaces</td></tr>
+    <tr><td><code>replace(old,new)</code></td><td>String</td><td>Replace all occurrences</td></tr>
+    <tr><td><code>equals(str)</code></td><td>boolean</td><td>Compare content (case-sensitive)</td></tr>
+    <tr><td><code>equalsIgnoreCase(str)</code></td><td>boolean</td><td>Compare ignoring case</td></tr>
+    <tr><td><code>contains(seq)</code></td><td>boolean</td><td>Check if substring present</td></tr>
+    <tr><td><code>split(regex)</code></td><td>String[]</td><td>Split by delimiter</td></tr>
+    <tr><td><code>concat(str)</code></td><td>String</td><td>Append string (same as +)</td></tr>
+    <tr><td><code>compareTo(str)</code></td><td>int</td><td>Lexicographic comparison. 0=equal, neg=less, pos=greater</td></tr>
+  </table>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<!-- §6 Page 2 -->
+<div class="page">
+  <div class="holes">
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+  </div>
+  <div class="page-header">
+    <span class="date-tag">OOP in Java — Unit 1</span>
+    <span class="unit-badge">SECTION 6</span>
+  </div>
+
+  <h2 class="topic">String Immutability &amp; StringBuilder</h2>
+  <div class="purple-box">
+    Because Strings are immutable, operations like concatenation create new String objects. In a loop, this is very inefficient. Use <strong>StringBuilder</strong> (or StringBuffer for thread-safety) instead.
+  </div>
+  <pre class="code-block"><span class="cm">// Inefficient — creates many intermediate String objects</span>
+String result = <span class="st">""</span>;
+<span class="kw">for</span>(<span class="kw">int</span> i = <span class="nm">0</span>; i &lt; <span class="nm">1000</span>; i++) result += i;
+
+<span class="cm">// Efficient — StringBuilder modifies in-place</span>
+StringBuilder sb = <span class="kw">new</span> StringBuilder();
+<span class="kw">for</span>(<span class="kw">int</span> i = <span class="nm">0</span>; i &lt; <span class="nm">1000</span>; i++) sb.append(i);
+String result = sb.toString();</pre>
+
+  <div class="vs-box">
+    <div class="vs-left">
+      <strong>String (immutable)</strong>
+      Thread-safe (no modification)<br>
+      Stored in String Pool<br>
+      + operator creates new object<br>
+      Use for constants / keys
+    </div>
+    <div class="vs-right">
+      <strong>StringBuilder (mutable)</strong>
+      NOT thread-safe<br>
+      Stored in heap<br>
+      .append() modifies in-place<br>
+      Use in loops / heavy concatenation
+    </div>
+  </div>
+
+  <h2 class="topic">String Conversion</h2>
+  <pre class="code-block"><span class="cm">// int to String</span>
+String s = String.valueOf(<span class="nm">42</span>);           <span class="cm">// "42"</span>
+String s = Integer.toString(<span class="nm">42</span>);         <span class="cm">// "42"</span>
+String s = <span class="st">""</span> + <span class="nm">42</span>;                      <span class="cm">// "42" (concatenation trick)</span>
+
+<span class="cm">// String to int</span>
+<span class="kw">int</span> n = Integer.parseInt(<span class="st">"42"</span>);          <span class="cm">// 42</span>
+
+<span class="cm">// String to char array</span>
+<span class="kw">char</span>[] arr = <span class="st">"hello"</span>.toCharArray();
+
+<span class="cm">// char array to String</span>
+String s = <span class="kw">new</span> String(arr);</pre>
+
+  <div class="qbox">
+    <div class="q-label">🧪 Reverse a String (classic exam question)</div>
+    <div class="q-step">Use StringBuilder: <code>new StringBuilder(s).reverse().toString()</code></div>
+    <div class="q-step">Or manually: loop from s.length()-1 to 0, append each char.</div>
+    <div class="q-ans">✓ StringBuilder.reverse() is the clean, efficient one-liner answer.</div>
+  </div>
+
+  <div class="note-box">
+    <strong>StringBuffer vs StringBuilder:</strong> Both are mutable. StringBuffer is <em>thread-safe</em> (synchronized methods) but slower. StringBuilder is faster but NOT thread-safe. For single-threaded use → StringBuilder.
+  </div>
+
+  <div class="page-num">2 / 2</div>
+</div>
+
+<script>
+  // Highlight active nav on load
+  document.querySelectorAll('.part-nav a').forEach(a => {
+    if (a.href === window.location.href) a.classList.add('active');
+  });
+</script>
+</body>
+</html>

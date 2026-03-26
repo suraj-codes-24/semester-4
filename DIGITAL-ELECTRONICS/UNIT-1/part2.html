@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DE Unit 1 — Part 2</title>
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1a1a2e;--ink2:#2c2c54;--blue:#1565C0;--red:#b71c1c;--green:#1b5e20;--purple:#4a148c;--teal:#006064;--orange:#e65100;--line:#c5cae9;--page:#fafaf7;--highlight:#fff9c4;--box-blue:#e8f4fd;--box-green:#e8f5e9;--box-red:#fce4ec;--box-purple:#f3e5f5;--box-orange:#fff3e0;--box-teal:#e0f7fa;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#d6d6d6;font-family:'Kalam',cursive;color:var(--ink);padding:20px;}
+.part-nav{max-width:820px;margin:0 auto 20px;display:flex;gap:8px;flex-wrap:wrap;}
+.part-nav a{padding:6px 18px;border-radius:20px;font-size:13px;font-weight:700;text-decoration:none;border:2px solid #bbb;color:#666;background:#fff;}
+.part-nav a.active{background:var(--red);color:#fff;border-color:var(--red);}
+.part-nav .unit-label{font-size:13px;font-weight:700;color:#888;padding:6px 4px;align-self:center;}
+.cover-page{background:linear-gradient(135deg,#b71c1c 0%,#c62828 60%,#880e4f 100%);max-width:820px;margin:0 auto 40px;border-radius:6px;padding:70px 60px;text-align:center;color:#fff;box-shadow:0 4px 24px rgba(0,0,0,0.3);position:relative;overflow:hidden;}
+.cover-page::before{content:'';position:absolute;top:-50px;right:-50px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,0.05);}
+.cover-eyebrow{font-size:13px;letter-spacing:3px;opacity:0.65;margin-bottom:12px;}
+.cover-title{font-size:36px;font-weight:700;line-height:1.2;margin-bottom:8px;}
+.cover-sub{font-size:16px;opacity:0.8;margin-bottom:8px;}
+.cover-part{display:inline-block;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);border-radius:20px;padding:4px 20px;font-size:14px;margin-bottom:26px;}
+.cover-div{width:60px;height:3px;background:rgba(255,255,255,0.35);margin:0 auto 20px;border-radius:2px;}
+.cover-toc{text-align:left;background:rgba(255,255,255,0.1);border-radius:8px;padding:16px 24px;display:inline-block;min-width:420px;}
+.cover-toc-item{font-size:14px;line-height:32px;display:flex;justify-content:space-between;gap:20px;}
+.cover-toc-sep{border-top:1px solid rgba(255,255,255,0.25);margin:8px 0;}
+.page{background:var(--page);max-width:820px;margin:0 auto 36px;border-radius:4px;box-shadow:0 2px 16px rgba(0,0,0,0.15);padding:56px 66px 66px 86px;position:relative;min-height:1040px;background-image:repeating-linear-gradient(transparent,transparent 31px,var(--line) 31px,var(--line) 32px);background-position:0 52px;}
+.page::before{content:'';position:absolute;left:68px;top:0;bottom:0;width:1.5px;background:#ef9a9a;opacity:0.65;}
+.holes{position:absolute;left:15px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-around;padding:36px 0;}
+.hole{width:22px;height:22px;border-radius:50%;background:#d6d6d6;border:1.5px solid #bdbdbd;}
+.page-num{position:absolute;bottom:24px;right:46px;font-size:13px;color:#9e9e9e;}
+.page-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
+.date-tag{font-size:13px;color:#9e9e9e;}
+.unit-badge{color:#fff;font-size:13px;padding:2px 14px;border-radius:20px;font-weight:700;}
+.ub-red{background:var(--red);}
+.ub-blue{background:var(--blue);}
+.ub-green{background:var(--green);}
+.ub-purple{background:var(--purple);}
+.ub-teal{background:var(--teal);}
+.ub-orange{background:var(--orange);}
+h1.section-title{font-size:22px;font-weight:700;color:var(--ink2);text-align:center;margin:8px 0 4px;text-decoration:underline;text-underline-offset:5px;}
+h2.topic{font-size:17px;font-weight:700;color:var(--blue);margin:18px 0 6px;border-bottom:1.5px solid var(--blue);padding-bottom:2px;display:inline-block;}
+h3.sub{font-size:15px;font-weight:700;color:var(--purple);margin:12px 0 4px;}
+p,li{font-size:15px;line-height:30px;}
+.divider{border:none;border-top:1px dashed #b0bec5;margin:14px 0 10px;}
+.def-box{background:var(--box-blue);border-left:4px solid var(--blue);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
+.rule-box{background:var(--box-green);border:1.5px solid #81c784;border-radius:6px;padding:10px 16px;margin:10px 0;font-size:14.5px;line-height:28px;}
+.note-box{background:var(--highlight);border-left:4px solid #f9a825;border-radius:0 6px 6px 0;padding:8px 14px;margin:8px 0 10px;font-size:14px;line-height:26px;}
+.purple-box{background:var(--box-purple);border-left:4px solid var(--purple);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
+.orange-box{background:var(--box-orange);border-left:4px solid var(--orange);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
+.red-box{background:var(--box-red);border-left:4px solid var(--red);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
+.qbox{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:12px 16px;margin:10px 0;}
+.q-label{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:4px;}
+.q-step{font-size:14px;color:var(--green);margin-top:4px;line-height:26px;}
+.q-ans{font-size:15px;color:var(--red);font-family:'Patrick Hand',cursive;margin-top:4px;line-height:28px;}
+.exam-q-box{background:#fff8f8;border:2px solid var(--red);border-radius:8px;padding:12px 16px;margin:10px 0;}
+.eq-label{font-size:13px;font-weight:700;color:var(--red);margin-bottom:4px;}
+.formula{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--blue);}
+ul.plain{list-style:none;padding-left:4px;}
+ul.plain li::before{content:'→ ';color:var(--blue);font-weight:700;}
+ul.plain li{font-size:15px;line-height:30px;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0;}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:10px 0;}
+table.tt{width:100%;border-collapse:collapse;margin:8px 0;font-size:14px;}
+table.tt th{background:var(--blue);color:#fff;padding:7px 10px;text-align:center;}
+table.tt td{padding:6px 10px;border-bottom:1px solid #e0e0e0;line-height:26px;text-align:center;}
+table.tt tr:nth-child(even) td{background:#f5f5f5;}
+.truth-table{width:auto;border-collapse:collapse;margin:8px auto;font-size:14px;}
+.truth-table th{background:var(--purple);color:#fff;padding:6px 14px;text-align:center;font-size:13px;}
+.truth-table td{padding:5px 14px;border:1px solid #ccc;text-align:center;font-family:'Patrick Hand',cursive;font-size:15px;}
+.gate-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:10px 0;}
+.gate-card{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:10px 12px;text-align:center;}
+.gate-head{font-size:14px;font-weight:700;color:var(--blue);margin-bottom:4px;}
+.gate-symbol{font-family:'Patrick Hand',cursive;font-size:18px;color:var(--purple);margin:4px 0;}
+.gate-expr{font-family:'Patrick Hand',cursive;font-size:15px;color:var(--red);}
+.gate-desc{font-size:12px;color:#555;margin-top:4px;}
+.bool-law{background:#fff;border-left:3px solid var(--blue);padding:4px 12px;margin:3px 0;font-family:'Patrick Hand',cursive;font-size:15px;line-height:26px;}
+.vs-box{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:12px 0;border-radius:8px;overflow:hidden;border:1.5px solid #90caf9;}
+.vs-left{background:var(--box-blue);padding:12px 14px;}
+.vs-right{background:var(--box-purple);padding:12px 14px;border-left:1px solid #90caf9;}
+.vs-head{font-size:15px;font-weight:700;margin-bottom:8px;}
+.vs-item{font-size:14px;line-height:26px;}
+</style>
+</head>
+<body>
+
+<div class="part-nav">
+  <a href="../index.html">&#8617; Units</a>
+  <span class="unit-label">DE / DSD — Unit 1</span>
+  <a href="part1.html">Part 1</a>
+  <a href="part2.html" class="active">Part 2</a>
+  <a href="part3.html">Part 3</a>
+</div>
+
+<div class="cover-page">
+  <div class="cover-eyebrow">DIGITAL ELECTRONICS · UNIT 1 · BEC-302 / BOE-310 / BOE-410</div>
+  <div class="cover-title">Codes, Gates &amp; Boolean Algebra</div>
+  <div class="cover-sub">SOP · POS · Canonical Forms</div>
+  <div class="cover-part">Part 2 of 3 — Intermediate</div>
+  <div class="cover-div"></div>
+  <div class="cover-toc">
+    <div class="cover-toc-item"><span>§5 — Binary Codes (BCD, Excess-3, Gray)</span><span>4 pages</span></div>
+    <div class="cover-toc-item"><span>§6 — Logic Gates (AND, OR, NOT, NAND, NOR, XOR, XNOR)</span><span>3 pages</span></div>
+    <div class="cover-toc-item"><span>§7 — Boolean Algebra &amp; De Morgan's Theorem</span><span>3 pages</span></div>
+    <div class="cover-toc-item"><span>§8 — SOP, POS &amp; Canonical Forms</span><span>3 pages</span></div>
+    <div class="cover-toc-item"><span>Practice Questions (2 per section)</span><span>1 page</span></div>
+    <div class="cover-toc-sep"></div>
+    <div class="cover-toc-item"><strong><span>Total</span><span>14 pages</span></strong></div>
+  </div>
+</div>
+
+<!-- ══════════ SECTION 5 ══════════ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DE — Unit 1 · Part 2</span><span class="unit-badge ub-red">SECTION 5</span></div>
+  <h1 class="section-title"><span style="color:var(--red);">§5</span> Binary Codes &amp; Code Conversion</h1>
+  <hr class="divider">
+
+  <h2 class="topic">1. BCD (Binary Coded Decimal)</h2>
+  <div class="def-box">
+    <strong>BCD</strong> = representation of each <em>decimal digit</em> individually into <strong>4-bit binary</strong>.<br>
+    Weights: <strong>8 4 2 1</strong> (positional weights of the 4 bits).<br>
+    Valid BCD codes: 0000 to 1001 (0–9).<br>
+    <strong>Invalid codes: 1010 to 1111 (10–15)</strong> — these are not valid BCD.
+  </div>
+
+  <table class="tt">
+    <tr><th>Decimal</th><th>BCD (8421)</th><th>Decimal</th><th>BCD (8421)</th></tr>
+    <tr><td>0</td><td>0000</td><td>5</td><td>0101</td></tr>
+    <tr><td>1</td><td>0001</td><td>6</td><td>0110</td></tr>
+    <tr><td>2</td><td>0010</td><td>7</td><td>0111</td></tr>
+    <tr><td>3</td><td>0011</td><td>8</td><td>1000</td></tr>
+    <tr><td>4</td><td>0100</td><td>9</td><td>1001</td></tr>
+  </table>
+
+  <h2 class="topic">2. BCD Addition</h2>
+  <div class="orange-box">
+    <strong>Rules:</strong><br>
+    ① Add the two BCD numbers in binary.<br>
+    ② If sum ≤ 9 (≤1001): result is <strong>valid</strong> — no correction needed.<br>
+    ③ If sum > 9 (≥1010): result is <strong>invalid</strong> — add <strong>6 (0110)</strong> to correct (and handle carry).
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">Q: BCD Addition of 9 + 9</div>
+    <div class="q-step">9 = 1001 in BCD</div>
+    <div class="q-ans" style="font-size:14px;line-height:28px;">
+      &nbsp;&nbsp;1001 (9)<br>
+      + 1001 (9)<br>
+      ————————<br>
+      &nbsp;&nbsp;10010 = 18 → sum > 9 → invalid! Add 0110:<br>
+      &nbsp;&nbsp;10010<br>
+      + &nbsp;&nbsp;0110<br>
+      ————————<br>
+      &nbsp;&nbsp;11000 &nbsp;← carry = 1, remaining = 1000<br>
+      BCD: carry(1) | 1000 → <strong>0001 1000 = 18</strong> ✓
+    </div>
+  </div>
+
+  <div class="page-num">1 / 4</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DE — Unit 1 · §5</span><span class="unit-badge ub-red">CODES</span></div>
+
+  <h2 class="topic">3. Excess-3 Code (XS-3)</h2>
+  <div class="def-box">
+    <strong>Excess-3 code</strong> is a <em>modified form of BCD</em> obtained by adding <strong>3 (0011)</strong> to each BCD code.<br>
+    It is a <em>self-complementing code</em> — 9's complement is obtained by complementing each bit.
+  </div>
+
+  <table class="tt">
+    <tr><th>Decimal</th><th>BCD (8421)</th><th>Excess-3</th></tr>
+    <tr><td>0</td><td>0000 + 3</td><td>0011</td></tr>
+    <tr><td>1</td><td>0001 + 3</td><td>0100</td></tr>
+    <tr><td>2</td><td>0010 + 3</td><td>0101</td></tr>
+    <tr><td>3</td><td>0011 + 3</td><td>0110</td></tr>
+    <tr><td>4</td><td>0100 + 3</td><td>0111</td></tr>
+    <tr><td>5</td><td>0101 + 3</td><td>1000</td></tr>
+    <tr><td>6</td><td>0110 + 3</td><td>1001</td></tr>
+    <tr><td>7</td><td>0111 + 3</td><td>1010</td></tr>
+    <tr><td>8</td><td>1000 + 3</td><td>1011</td></tr>
+    <tr><td>9</td><td>1001 + 3</td><td>1100</td></tr>
+  </table>
+
+  <h2 class="topic">4. Excess-3 Addition</h2>
+  <div class="orange-box">
+    <strong>Rules:</strong><br>
+    ★ Add the Excess-3 codes directly.<br>
+    ★ If <strong>no carry</strong> → subtract 3 (subtract 0011) from the result.<br>
+    ★ If <strong>carry</strong> → add 3 (add 0011) to the result.
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">Q: Excess-3 Addition: 4 + 3 = 7</div>
+    <div class="q-ans" style="font-size:14px;line-height:28px;">
+      4 in XS3 = 0111 &nbsp;&nbsp;(4+3=7)<br>
+      3 in XS3 = 0110 &nbsp;&nbsp;(3+3=6)<br>
+      &nbsp;&nbsp;0111<br>
+      + 0110<br>
+      ———————<br>
+      &nbsp;&nbsp;1101 → no carry → subtract 3: 1101 − 0011 = 1010<br>
+      7 in XS3 = 1010 ✓ (7+3=10=1010)
+    </div>
+  </div>
+
+  <div class="page-num">2 / 4</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DE — Unit 1 · §5</span><span class="unit-badge ub-red">GRAY CODE</span></div>
+
+  <h2 class="topic">5. Gray Code (Cyclic / Unit Distance Code)</h2>
+  <div class="def-box">
+    <strong>Gray code</strong> is a binary code in which <em>only ONE bit changes between successive code words</em>.<br>
+    Also called: <strong>Unit Distance Code</strong> and <strong>Cyclic Code</strong>.<br>
+    Used in: shaft encoders, error minimization, K-maps.
+  </div>
+
+  <div class="def-box" style="margin-top:8px;">
+    <strong>Key XOR fact used in conversions:</strong><br>
+    <span class="formula">A ⊕ B = AB̄ + ĀB</span> &nbsp;&nbsp;(XOR = 1 when inputs differ)<br>
+    XOR truth: 1⊕1=0, 0⊕0=0, 1⊕0=1, 0⊕1=1
+  </div>
+
+  <h3 class="sub">Binary → Gray Code Conversion</h3>
+  <div class="orange-box">
+    ① MSB of Gray code = MSB of binary (copy first bit).<br>
+    ② Each subsequent Gray bit = XOR of current binary bit with previous binary bit.<br>
+    i.e., Gᵢ = Bᵢ ⊕ Bᵢ₋₁
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">Q: Convert binary 10111011 → Gray code</div>
+    <div class="q-ans" style="font-size:14px;line-height:28px;">
+      Binary: &nbsp;1 &nbsp;0 &nbsp;1 &nbsp;1 &nbsp;1 &nbsp;0 &nbsp;1 &nbsp;1<br>
+      Gray: &nbsp;&nbsp;1 &nbsp;1 &nbsp;1 &nbsp;0 &nbsp;0 &nbsp;1 &nbsp;1 &nbsp;0<br>
+      (MSB copy: 1; then XOR adjacent pairs: 1⊕0=1, 0⊕1=1, 1⊕1=0, 1⊕1=0, 1⊕0=1, 0⊕1=1, 1⊕1=0)<br>
+      <strong>Gray = 11100110</strong>
+    </div>
+  </div>
+
+  <h3 class="sub">Gray Code → Binary Conversion</h3>
+  <div class="orange-box">
+    ① MSB of Binary = MSB of Gray (copy first bit).<br>
+    ② Each subsequent binary bit = XOR of current Gray bit with previous BINARY bit.<br>
+    i.e., Bᵢ = Gᵢ ⊕ Bᵢ₋₁
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">Q: Convert Gray 11100110 → Binary</div>
+    <div class="q-ans" style="font-size:14px;line-height:28px;">
+      Gray: &nbsp;&nbsp;1 &nbsp;1 &nbsp;1 &nbsp;0 &nbsp;0 &nbsp;1 &nbsp;1 &nbsp;0<br>
+      Binary: 1 &nbsp;0 &nbsp;1 &nbsp;1 &nbsp;1 &nbsp;0 &nbsp;1 &nbsp;1<br>
+      B₁=1; B₂=G₂⊕B₁=1⊕1=0; B₃=1⊕0=1; B₄=0⊕1=1; B₅=0⊕1=1; B₆=1⊕1=0; B₇=1⊕0=1; B₈=0⊕1=1<br>
+      <strong>Binary = 10111011</strong> ✓ (matches original)
+    </div>
+  </div>
+
+  <div class="page-num">3 / 4</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DE — Unit 1 · §5</span><span class="unit-badge ub-red">PRACTICE</span></div>
+
+  <h2 class="topic">6. Practice Questions — §5</h2>
+
+  <div class="exam-q-box">
+    <div class="eq-label">Q1 — Convert (395)₁₀ to BCD and Excess-3</div>
+    <div class="q-step">Convert each decimal digit independently to 4-bit BCD, then add 0011 for XS3</div>
+    <div class="q-ans" style="font-size:14px;line-height:28px;">
+      3 → BCD: 0011 → XS3: 0011+0011 = 0110<br>
+      9 → BCD: 1001 → XS3: 1001+0011 = 1100<br>
+      5 → BCD: 0101 → XS3: 0101+0011 = 1000<br>
+      <strong>BCD = 0011 1001 0101</strong><br>
+      <strong>XS3 = 0110 1100 1000</strong>
+    </div>
+  </div>
+
+  <div class="exam-q-box">
+    <div class="eq-label">Q2 — Convert Gray code 1101 to Binary</div>
+    <div class="q-step">MSB of Binary = MSB of Gray. Then Bᵢ = Gᵢ ⊕ Bᵢ₋₁</div>
+    <div class="q-ans" style="font-size:14px;line-height:28px;">
+      Gray: 1 | 1 | 0 | 1<br>
+      B₁ = 1 (copy MSB)<br>
+      B₂ = G₂ ⊕ B₁ = 1 ⊕ 1 = 0<br>
+      B₃ = G₃ ⊕ B₂ = 0 ⊕ 0 = 0<br>
+      B₄ = G₄ ⊕ B₃ = 1 ⊕ 0 = 1<br>
+      <strong>Binary = 1001</strong>
+    </div>
+  </div>
+
+  <div class="page-num">4 / 4</div>
+</div>
+
+<!-- ══════════ SECTION 6 ══════════ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DE — Unit 1 · Part 2</span><span class="unit-badge ub-green">SECTION 6</span></div>
+  <h1 class="section-title"><span style="color:var(--green);">§6</span> Logic Gates</h1>
+  <hr class="divider">
+
+  <h2 class="topic">1. What is a Logic Gate?</h2>
+  <div class="def-box">
+    A <strong>Logic Gate</strong> is a digital circuit that is able to operate on binary inputs to perform a logical operation. It takes one or more binary inputs and produces a binary output.
+  </div>
+
+  <div class="two-col">
+    <div class="def-box">
+      <strong>Basic Gates:</strong><br>① AND &nbsp; ② OR &nbsp; ③ NOT
+    </div>
+    <div class="def-box">
+      <strong>Universal Gates:</strong><br>① NAND (NOT+AND) &nbsp; ② NOR
+    </div>
+  </div>
+
+  <h2 class="topic">2. All Logic Gates — Summary</h2>
+  <table class="tt">
+    <tr><th>Gate</th><th>Symbol</th><th>Expression</th><th>Truth Table (A,B→Y)</th><th>Key Property</th></tr>
+    <tr><td><strong>AND</strong></td><td>·</td><td>Y = A·B</td><td>0,0→0; 0,1→0; 1,0→0; 1,1→1</td><td>Output 1 only when ALL inputs are 1</td></tr>
+    <tr><td><strong>OR</strong></td><td>+</td><td>Y = A+B</td><td>0,0→0; 0,1→1; 1,0→1; 1,1→1</td><td>Output 1 when ANY input is 1</td></tr>
+    <tr><td><strong>NOT</strong></td><td>ˉ (bar)</td><td>Y = Ā</td><td>0→1; 1→0</td><td>Inverts input (complement)</td></tr>
+    <tr><td><strong>NAND</strong></td><td>· + NOT</td><td>Y = A̅·̅B̅</td><td>0,0→1; 0,1→1; 1,0→1; 1,1→0</td><td>Universal gate — implement any function</td></tr>
+    <tr><td><strong>NOR</strong></td><td>+ + NOT</td><td>Y = A̅+̅B̅</td><td>0,0→1; 0,1→0; 1,0→0; 1,1→0</td><td>Universal gate — implement any function</td></tr>
+    <tr><td><strong>XOR</strong></td><td>⊕</td><td>Y = A⊕B = ĀB+AB̄</td><td>0,0→0; 0,1→1; 1,0→1; 1,1→0</td><td>Output 1 when inputs DIFFER (odd 1s)</td></tr>
+    <tr><td><strong>XNOR</strong></td><td>⊙</td><td>Y = A⊙B = AB+ĀB̄</td><td>0,0→1; 0,1→0; 1,0→0; 1,1→1</td><td>Output 1 when inputs are SAME (even 1s)</td></tr>
+  </table>
+
+  <div class="note-box"><strong>★ Universal Gates:</strong> NAND and NOR are called <em>universal gates</em> because any Boolean function can be implemented using ONLY NAND gates or ONLY NOR gates.</div>
+
+  <div class="page-num">1 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DE — Unit 1 · §6</span><span class="unit-badge ub-green">LOGIC GATES</span></div>
+
+  <h2 class="topic">3. Implementing Basic Gates Using NAND</h2>
+  <div class="rule-box">
+    <ul class="plain">
+      <li><strong>NOT using NAND:</strong> Ā = (A·A)̄ → tie both inputs of NAND to A</li>
+      <li><strong>AND using NAND:</strong> A·B = ((A·B)̄)̄ → NAND followed by NAND-as-NOT</li>
+      <li><strong>OR using NAND:</strong> A+B = Ā̄·B̄̄ = (Ā·B̄)̄ → invert both inputs then NAND</li>
+    </ul>
+  </div>
+
+  <h2 class="topic">4. Implementing Basic Gates Using NOR</h2>
+  <div class="rule-box">
+    <ul class="plain">
+      <li><strong>NOT using NOR:</strong> Ā = (A+A)̄ → tie both inputs of NOR to A</li>
+      <li><strong>OR using NOR:</strong> A+B = ((A+B)̄)̄ → NOR followed by NOR-as-NOT</li>
+      <li><strong>AND using NOR:</strong> A·B = Ā̄+B̄̄ = (Ā+B̄)̄ → invert both inputs then NOR</li>
+    </ul>
+  </div>
+
+  <h2 class="topic">5. NAND Implementation Example</h2>
+  <div class="qbox">
+    <div class="q-label">Q: Implement F = Z + XȲ + X̄Y using NAND gates only</div>
+    <div class="q-step">Strategy: · (AND) = Series connection, + (OR) = Parallel connection in NAND implementation</div>
+    <div class="q-ans" style="font-size:14px;line-height:26px;">
+      Step 1: Write F in terms of NAND: F = Z + XȲ + X̄Y<br>
+      Step 2: Apply double complement: F = ((Z̄)·(X̄Ȳ)·(X̄̄Ȳ))̄<br>
+      Using De Morgan: F = (Z̄ · X̄Ȳ · ... )̄ ... implement as two-level NAND-NAND.<br>
+      <span style="color:var(--green);font-size:13px;">In NAND-NAND: Level 1 = NAND of each product term; Level 2 = NAND of all Level-1 outputs.</span><br>
+      NAND-NAND is equivalent to SOP (Sum of Products).
+    </div>
+  </div>
+
+  <div class="page-num">2 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DE — Unit 1 · §6</span><span class="unit-badge ub-green">PRACTICE</span></div>
+
+  <h2 class="topic">6. Practice Questions — §6</h2>
+
+  <div class="exam-q-box">
+    <div class="eq-label">Q1 — Draw truth table for F = A·B̄ + Ā·B (this is XOR)</div>
+    <div class="q-ans" style="font-size:14px;line-height:28px;">
+      <table class="truth-table" style="margin:8px 0;">
+        <tr><th>A</th><th>B</th><th>B̄</th><th>Ā</th><th>A·B̄</th><th>Ā·B</th><th>F=A·B̄+Ā·B</th></tr>
+        <tr><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td></tr>
+        <tr><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td></tr>
+        <tr><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+      </table>
+      This matches XOR truth table ✓
+    </div>
+  </div>
+
+  <div class="exam-q-box">
+    <div class="eq-label">Q2 — Show how to implement NAND gate using NOR gates only</div>
+    <div class="q-ans" style="font-size:14px;line-height:28px;">
+      A·B = (Ā+B̄)̄ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← De Morgan<br>
+      So NAND(A,B) = A·B̄ ← wait: NAND = (A·B)̄ = Ā+B̄ ← De Morgan<br><br>
+      Implementation:<br>
+      Step 1: NOT A using NOR: Ā = NOR(A,A)<br>
+      Step 2: NOT B using NOR: B̄ = NOR(B,B)<br>
+      Step 3: OR(Ā,B̄) = (Ā+B̄)̄̄ → need double NOR again<br>
+      Step 4: NOT(NOR(Ā,B̄)) = NOR(NOR(Ā,B̄), NOR(Ā,B̄))<br>
+      <strong>= Ā+B̄ = NAND(A,B) ✓</strong><br>
+      Uses: 2 NORs for NOT + 1 NOR + 1 NOR-NOT = 4 NOR gates total.
+    </div>
+  </div>
+
+  <div class="page-num">3 / 3</div>
+</div>
+
+<!-- ══════════ SECTION 7 ══════════ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DE — Unit 1 · Part 2</span><span class="unit-badge ub-purple">SECTION 7</span></div>
+  <h1 class="section-title"><span style="color:var(--purple);">§7</span> Boolean Algebra &amp; De Morgan's Theorem</h1>
+  <hr class="divider">
+
+  <h2 class="topic">1. Basic Boolean Laws</h2>
+  <div class="two-col">
+    <div>
+      <div class="bool-law">A + Ā = 1</div>
+      <div class="bool-law">A · Ā = 0</div>
+      <div class="bool-law">A · 1 = A</div>
+      <div class="bool-law">A + 1 = 1</div>
+      <div class="bool-law">A + 0 = A</div>
+      <div class="bool-law">A · 0 = 0</div>
+    </div>
+    <div>
+      <div class="bool-law">A + A = A &nbsp;&nbsp;(Idempotent)</div>
+      <div class="bool-law">A · A = A &nbsp;&nbsp;(Idempotent)</div>
+      <div class="bool-law">Ā̄ = A &nbsp;&nbsp;(Double complement)</div>
+      <div class="bool-law">A+B = B+A &nbsp;&nbsp;(Commutative)</div>
+      <div class="bool-law">A·B = B·A &nbsp;&nbsp;(Commutative)</div>
+      <div class="bool-law">(A+B)+C = A+(B+C) &nbsp;(Associative)</div>
+    </div>
+  </div>
+
+  <h2 class="topic">2. De Morgan's Theorem</h2>
+  <div class="purple-box">
+    <strong>De Morgan's Theorem</strong> — two very important identities:<br><br>
+    <div style="text-align:center;font-family:'Patrick Hand',cursive;font-size:20px;margin:8px 0;">
+      ① &nbsp;A̅+̅B̅ = Ā · B̄ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;② &nbsp;A̅·̅B̅ = Ā + B̄
+    </div>
+    In words:<br>
+    ① <em>Complement of a SUM = PRODUCT of complements</em><br>
+    ② <em>Complement of a PRODUCT = SUM of complements</em><br><br>
+    <strong>Note:</strong> In De Morgan: ̄T = · &nbsp;and&nbsp; ̄¹ = t (bar flips + to · and vice versa)
+  </div>
+
+  <h2 class="topic">3. Algebraic Simplification Examples</h2>
+  <div class="qbox">
+    <div class="q-label">Simplify: F = AB + AB̄</div>
+    <div class="q-ans" style="font-size:14px;line-height:26px;">
+      = A(B + B̄) &nbsp;← factor out A<br>
+      = A · 1 &nbsp;&nbsp;&nbsp;&nbsp;← B + B̄ = 1<br>
+      = <strong>A</strong>
+    </div>
+  </div>
+  <div class="qbox">
+    <div class="q-label">Simplify: F = A + ĀB</div>
+    <div class="q-ans" style="font-size:14px;line-height:26px;">
+      = (A + Ā)(A + B) &nbsp;← Distributive law<br>
+      = 1 · (A + B)<br>
+      = <strong>A + B</strong> &nbsp;(Absorption theorem)
+    </div>
+  </div>
+
+  <div class="page-num">1 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DE — Unit 1 · §7</span><span class="unit-badge ub-purple">BOOLEAN ALGEBRA</span></div>
+
+  <h2 class="topic">4. Important Boolean Identities</h2>
+  <table class="tt">
+    <tr><th>Identity</th><th>Name</th><th>Expression</th></tr>
+    <tr><td>Absorption 1</td><td>Absorption</td><td>A + AB = A</td></tr>
+    <tr><td>Absorption 2</td><td>Absorption</td><td>A(A+B) = A</td></tr>
+    <tr><td>Consensus</td><td>Consensus</td><td>AB + ĀC + BC = AB + ĀC</td></tr>
+    <tr><td>Dist. (OR over AND)</td><td>Distributive</td><td>A+(B·C) = (A+B)·(A+C)</td></tr>
+    <tr><td>Dist. (AND over OR)</td><td>Distributive</td><td>A·(B+C) = A·B + A·C</td></tr>
+    <tr><td>De Morgan 1</td><td>De Morgan</td><td>(A+B)̄ = Ā·B̄</td></tr>
+    <tr><td>De Morgan 2</td><td>De Morgan</td><td>(A·B)̄ = Ā+B̄</td></tr>
+  </table>
+
+  <h2 class="topic">5. Practice Questions — §7</h2>
+
+  <div class="exam-q-box">
+    <div class="eq-label">Q1 — Apply De Morgan's theorem: simplify F̄ where F = (A+B)(C+D)</div>
+    <div class="q-ans" style="font-size:14px;line-height:28px;">
+      F̄ = (A+B)(C+D) with bar on top = complement of F<br>
+      Apply De Morgan ②: (P·Q)̄ = P̄+Q̄<br>
+      F̄ = (A+B)̄ + (C+D)̄<br>
+      Apply De Morgan ①: (A+B)̄ = Ā·B̄ and (C+D)̄ = C̄·D̄<br>
+      <strong>F̄ = Ā·B̄ + C̄·D̄</strong>
+    </div>
+  </div>
+
+  <div class="exam-q-box">
+    <div class="eq-label">Q2 — Simplify: F = ABC + ĀBC + ABĈ + ĀĀBĈ</div>
+    <div class="q-ans" style="font-size:14px;line-height:28px;">
+      Group terms: ABC + ĀBC = BC(A + Ā) = BC·1 = BC<br>
+      ABĈ remains for now. ĀĀBĈ = 0 (since A·Ā = 0)<br>
+      F = BC + ABĈ<br>
+      Cannot simplify further unless another term exists.<br>
+      <strong>F = BC + ABĈ</strong>
+    </div>
+  </div>
+
+  <div class="page-num">2 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DE — Unit 1 · §7</span><span class="unit-badge ub-purple">DUALITY</span></div>
+
+  <h2 class="topic">6. Duality Principle</h2>
+  <div class="def-box">
+    The <strong>Dual</strong> of a Boolean expression is obtained by:<br>
+    ① Replacing every <strong>+</strong> with <strong>·</strong> (AND) and every <strong>·</strong> with <strong>+</strong> (OR)<br>
+    ② Replacing every <strong>0</strong> with <strong>1</strong> and every <strong>1</strong> with <strong>0</strong><br>
+    ③ Leaving all literals (variables) unchanged<br><br>
+    Every Boolean identity has a dual that is also valid.
+  </div>
+  <div class="note-box"><strong>Example:</strong> Dual of (A + 0 = A) is (A · 1 = A) ✓ &nbsp;|&nbsp; Dual of (A + B = B + A) is (A·B = B·A) ✓</div>
+
+  <div class="page-num">3 / 3</div>
+</div>
+
+<!-- ══════════ SECTION 8 ══════════ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DE — Unit 1 · Part 2</span><span class="unit-badge ub-teal">SECTION 8</span></div>
+  <h1 class="section-title"><span style="color:var(--teal);">§8</span> SOP, POS &amp; Canonical Forms</h1>
+  <hr class="divider">
+
+  <h2 class="topic">1. Boolean Functions — Two Standard Forms</h2>
+  <div class="vs-box">
+    <div class="vs-left">
+      <div class="vs-head" style="color:var(--blue);">SOP — Sum of Products</div>
+      <div class="vs-item"><strong>Disjunction function</strong><br>→ Sum of <em>minterms</em><br>→ 1 → A (true form), 0 → Ā<br>E.g.: F = AB + CD</div>
+    </div>
+    <div class="vs-right">
+      <div class="vs-head" style="color:var(--purple);">POS — Product of Sums</div>
+      <div class="vs-item"><strong>Junction function</strong><br>→ Product of <em>maxterms</em><br>→ 0 → A (positive form), 1 → Ā<br>E.g.: F = (A+B)(C+D)</div>
+    </div>
+  </div>
+
+  <h2 class="topic">2. Minterms and Maxterms</h2>
+  <div class="def-box">
+    <strong>Minterm (mᵢ):</strong> A product term that contains each variable exactly ONCE (either complemented or uncomplemented). For n variables → 2ⁿ minterms.<br>
+    Rule: if bit = 1 → variable appears uncomplemented (A); if bit = 0 → complemented (Ā)<br><br>
+    <strong>Maxterm (Mᵢ):</strong> A sum term that contains each variable exactly once.<br>
+    Rule: if bit = 0 → variable appears uncomplemented (A+...); if bit = 1 → complemented (Ā+...)<br><br>
+    <strong>Key relation:</strong> mᵢ = M̄ᵢ &nbsp;(minterm i is complement of maxterm i)
+  </div>
+
+  <h2 class="topic">3. Canonical SOP (Standard SOP)</h2>
+  <div class="orange-box">
+    A <strong>Canonical SOP</strong> contains ALL literals in each product term. To convert non-canonical SOP to canonical:<br>
+    Multiply each term by (x + x̄) for each missing variable x.
+  </div>
+  <div class="qbox">
+    <div class="q-label">Convert AB + CD to Canonical SOP for 4 variables A,B,C,D</div>
+    <div class="q-ans" style="font-size:14px;line-height:26px;">
+      AB is missing C,D: AB(C+C̄)(D+D̄) = ABCD + ABCD̄ + ABC̄D + ABC̄D̄<br>
+      CD is missing A,B: CD(A+Ā)(B+B̄) = ABCD + ABCD̄ → wait...<br>
+      AB(C+C̄)(D+D̄) = m₁₅+m₁₄+m₁₃+m₁₂ (minterms 12,13,14,15)<br>
+      CD(A+Ā)(B+B̄) = ABCD+ĀBCd+AB̄CD+ĀB̄CD = m₁₅+m₇+m₁₁+m₃
+    </div>
+  </div>
+
+  <div class="page-num">1 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DE — Unit 1 · §8</span><span class="unit-badge ub-teal">SOP & POS</span></div>
+
+  <h2 class="topic">4. Canonical POS (Standard POS)</h2>
+  <div class="orange-box">
+    A <strong>Canonical POS</strong> contains ALL literals in each sum term. To convert non-canonical POS to canonical:<br>
+    Add (x·x̄) to each sum term that is missing variable x. (using A+BC = (A+B)(A+C) distributive law)
+  </div>
+  <div class="qbox">
+    <div class="q-label">Convert (A+B)·(B+C) to Canonical POS for variables A,B,C</div>
+    <div class="q-ans" style="font-size:14px;line-height:26px;">
+      (A+B) missing C: Add C·C̄: (A+B+C)(A+B+C̄)<br>
+      (B+C) missing A: Add A·Ā: (A+B+C)(Ā+B+C)<br><br>
+      Canonical POS = (A+B+C)(A+B+C̄)(Ā+B+C)<br>
+      = M₀·M₁·M₄ &nbsp;&nbsp;(maxterms 0, 1, 4)
+    </div>
+  </div>
+
+  <h2 class="topic">5. Relationship between SOP and POS</h2>
+  <div class="rule-box">
+    For a function F defined on n variables:<br>
+    F as SOP = Σm(minterms where F=1)<br>
+    F as POS = ΠM(maxterms where F=0)<br><br>
+    <strong>Converting:</strong> If F = Σm(0,1,3), then F = ΠM(2,4,5,6,7) for 3-variable function (complement minterm set = maxterm set)
+  </div>
+
+  <h2 class="topic">6. Practice Questions — §8</h2>
+
+  <div class="exam-q-box">
+    <div class="eq-label">Q1 — Express F(A,B,C) = Σm(0,2,5,7) in POS form</div>
+    <div class="q-step">Maxterms are where F=0 → positions not in {0,2,5,7} = {1,3,4,6}</div>
+    <div class="q-ans" style="font-size:14px;line-height:28px;">
+      M₁ = A+B+C̄ (position 001: A+B+C̄)<br>
+      M₃ = A+B̄+C̄ (position 011)<br>
+      M₄ = Ā+B+C (position 100: Ā+B+C)<br>
+      M₆ = Ā+B̄+C (position 110)<br>
+      <strong>F = (A+B+C̄)(A+B̄+C̄)(Ā+B+C)(Ā+B̄+C)</strong>
+    </div>
+  </div>
+
+  <div class="exam-q-box">
+    <div class="eq-label">Q2 — Find minterms and write SOP for F: truth table F=1 at rows 1,3,5,7 (3-variable)</div>
+    <div class="q-ans" style="font-size:14px;line-height:28px;">
+      m₁ = ĀB̄C (001); m₃ = ĀBC (011); m₅ = AB̄C (101); m₇ = ABC (111)<br>
+      F = ĀB̄C + ĀBC + AB̄C + ABC<br>
+      Simplify: C(ĀB̄ + ĀB + AB̄ + AB) = C(Ā(B̄+B) + A(B̄+B)) = C(Ā+A) = C·1<br>
+      <strong>F = C</strong> (function is simply variable C!)
+    </div>
+  </div>
+
+  <div class="page-num">2 / 3</div>
+</div>
+
+</body>
+</html>

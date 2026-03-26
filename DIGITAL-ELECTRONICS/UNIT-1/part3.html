@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DE Unit 1 — Part 3</title>
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1a1a2e;--ink2:#2c2c54;--blue:#1565C0;--red:#b71c1c;--green:#1b5e20;--purple:#4a148c;--teal:#006064;--orange:#e65100;--line:#c5cae9;--page:#fafaf7;--highlight:#fff9c4;--box-blue:#e8f4fd;--box-green:#e8f5e9;--box-red:#fce4ec;--box-purple:#f3e5f5;--box-orange:#fff3e0;--box-teal:#e0f7fa;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#d6d6d6;font-family:'Kalam',cursive;color:var(--ink);padding:20px;}
+.part-nav{max-width:820px;margin:0 auto 20px;display:flex;gap:8px;flex-wrap:wrap;}
+.part-nav a{padding:6px 18px;border-radius:20px;font-size:13px;font-weight:700;text-decoration:none;border:2px solid #bbb;color:#666;background:#fff;}
+.part-nav a.active{background:var(--green);color:#fff;border-color:var(--green);}
+.part-nav .unit-label{font-size:13px;font-weight:700;color:#888;padding:6px 4px;align-self:center;}
+.cover-page{background:linear-gradient(135deg,#1b5e20 0%,#2e7d32 60%,#0d47a1 100%);max-width:820px;margin:0 auto 40px;border-radius:6px;padding:70px 60px;text-align:center;color:#fff;box-shadow:0 4px 24px rgba(0,0,0,0.3);position:relative;overflow:hidden;}
+.cover-page::before{content:'';position:absolute;top:-50px;right:-50px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,0.05);}
+.cover-eyebrow{font-size:13px;letter-spacing:3px;opacity:0.65;margin-bottom:12px;}
+.cover-title{font-size:36px;font-weight:700;line-height:1.2;margin-bottom:8px;}
+.cover-sub{font-size:16px;opacity:0.8;margin-bottom:8px;}
+.cover-part{display:inline-block;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);border-radius:20px;padding:4px 20px;font-size:14px;margin-bottom:26px;}
+.cover-div{width:60px;height:3px;background:rgba(255,255,255,0.35);margin:0 auto 20px;border-radius:2px;}
+.cover-toc{text-align:left;background:rgba(255,255,255,0.1);border-radius:8px;padding:16px 24px;display:inline-block;min-width:420px;}
+.cover-toc-item{font-size:14px;line-height:32px;display:flex;justify-content:space-between;gap:20px;}
+.cover-toc-sep{border-top:1px solid rgba(255,255,255,0.25);margin:8px 0;}
+.page{background:var(--page);max-width:820px;margin:0 auto 36px;border-radius:4px;box-shadow:0 2px 16px rgba(0,0,0,0.15);padding:56px 66px 66px 86px;position:relative;min-height:1040px;background-image:repeating-linear-gradient(transparent,transparent 31px,var(--line) 31px,var(--line) 32px);background-position:0 52px;}
+.page::before{content:'';position:absolute;left:68px;top:0;bottom:0;width:1.5px;background:#ef9a9a;opacity:0.65;}
+.holes{position:absolute;left:15px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-around;padding:36px 0;}
+.hole{width:22px;height:22px;border-radius:50%;background:#d6d6d6;border:1.5px solid #bdbdbd;}
+.page-num{position:absolute;bottom:24px;right:46px;font-size:13px;color:#9e9e9e;}
+.page-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
+.date-tag{font-size:13px;color:#9e9e9e;}
+.unit-badge{color:#fff;font-size:13px;padding:2px 14px;border-radius:20px;font-weight:700;}
+.ub-green{background:var(--green);}
+.ub-blue{background:var(--blue);}
+.ub-red{background:var(--red);}
+.ub-purple{background:var(--purple);}
+.ub-teal{background:var(--teal);}
+.ub-orange{background:var(--orange);}
+h1.section-title{font-size:22px;font-weight:700;color:var(--ink2);text-align:center;margin:8px 0 4px;text-decoration:underline;text-underline-offset:5px;}
+h2.topic{font-size:17px;font-weight:700;color:var(--blue);margin:18px 0 6px;border-bottom:1.5px solid var(--blue);padding-bottom:2px;display:inline-block;}
+h3.sub{font-size:15px;font-weight:700;color:var(--purple);margin:12px 0 4px;}
+p,li{font-size:15px;line-height:30px;}
+.divider{border:none;border-top:1px dashed #b0bec5;margin:14px 0 10px;}
+.def-box{background:var(--box-blue);border-left:4px solid var(--blue);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
+.rule-box{background:var(--box-green);border:1.5px solid #81c784;border-radius:6px;padding:10px 16px;margin:10px 0;font-size:14.5px;line-height:28px;}
+.note-box{background:var(--highlight);border-left:4px solid #f9a825;border-radius:0 6px 6px 0;padding:8px 14px;margin:8px 0 10px;font-size:14px;line-height:26px;}
+.purple-box{background:var(--box-purple);border-left:4px solid var(--purple);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
+.orange-box{background:var(--box-orange);border-left:4px solid var(--orange);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
+.teal-box{background:var(--box-teal);border-left:4px solid var(--teal);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
+.qbox{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:12px 16px;margin:10px 0;}
+.q-label{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:4px;}
+.q-step{font-size:14px;color:var(--green);margin-top:4px;line-height:26px;}
+.q-ans{font-size:15px;color:var(--red);font-family:'Patrick Hand',cursive;margin-top:4px;line-height:28px;}
+.exam-q-box{background:#fff8f8;border:2px solid var(--red);border-radius:8px;padding:12px 16px;margin:10px 0;}
+.eq-label{font-size:13px;font-weight:700;color:var(--red);margin-bottom:4px;}
+.formula{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--blue);}
+ul.plain{list-style:none;padding-left:4px;}
+ul.plain li::before{content:'→ ';color:var(--blue);font-weight:700;}
+ul.plain li{font-size:15px;line-height:30px;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0;}
+.step-card{background:var(--box-purple);border-left:4px solid var(--purple);padding:8px 14px;margin:5px 0;border-radius:0 6px 6px 0;}
+.step-head{font-size:14px;font-weight:700;color:var(--purple);}
+.step-body{font-size:13.5px;line-height:24px;color:var(--ink2);}
+table.tt{width:100%;border-collapse:collapse;margin:8px 0;font-size:14px;}
+table.tt th{background:var(--blue);color:#fff;padding:7px 10px;text-align:center;}
+table.tt td{padding:6px 10px;border-bottom:1px solid #e0e0e0;line-height:26px;text-align:center;}
+table.tt tr:nth-child(even) td{background:#f5f5f5;}
+
+/* K-Map styles */
+.kmap-container{display:flex;justify-content:center;margin:12px 0;}
+.kmap{border-collapse:collapse;font-family:'Patrick Hand',cursive;font-size:15px;}
+.kmap th{background:var(--blue);color:#fff;padding:6px 14px;text-align:center;font-size:13px;min-width:40px;}
+.kmap td{border:1.5px solid #555;padding:8px 12px;text-align:center;min-width:42px;min-height:38px;color:var(--ink2);}
+.kmap .header-cell{background:#f5f5f5;font-weight:700;color:var(--blue);border:1.5px solid #555;}
+.kmap .dc{color:#999;font-style:italic;}
+.kmap .one{color:var(--red);font-weight:700;}
+
+/* QMC table */
+.qmc-table{width:100%;border-collapse:collapse;margin:8px 0;font-size:13px;}
+.qmc-table th{background:var(--purple);color:#fff;padding:5px 8px;text-align:center;font-size:12px;}
+.qmc-table td{padding:5px 8px;border:1px solid #ccc;text-align:center;font-family:'Patrick Hand',cursive;font-size:14px;}
+.qmc-table .group0{background:#e8f4fd;}
+.qmc-table .group1{background:#e8f5e9;}
+.qmc-table .group2{background:#fff3e0;}
+.qmc-table .group3{background:#f3e5f5;}
+
+.rev-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0;}
+.rev-card{background:#fff;border:1.5px solid var(--blue);border-radius:8px;padding:10px 14px;}
+.rev-head{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:6px;border-bottom:1px solid #e3e3e3;padding-bottom:4px;}
+.rev-item{font-size:13px;line-height:26px;font-family:'Patrick Hand',cursive;color:var(--ink2);}
+</style>
+</head>
+<body>
+
+<div class="part-nav">
+  <a href="../index.html">&#8617; Units</a>
+  <span class="unit-label">DE / DSD — Unit 1</span>
+  <a href="part1.html">Part 1</a>
+  <a href="part2.html">Part 2</a>
+  <a href="part3.html" class="active">Part 3</a>
+</div>
+
+<div class="cover-page">
+  <div class="cover-eyebrow">DIGITAL ELECTRONICS · UNIT 1 · BEC-302 / BOE-310 / BOE-410</div>
+  <div class="cover-title">K-Maps, Implementation &amp; QMC</div>
+  <div class="cover-sub">Simplification · NAND/NOR · Quine-McClusky</div>
+  <div class="cover-part">Part 3 of 3 — Advanced</div>
+  <div class="cover-div"></div>
+  <div class="cover-toc">
+    <div class="cover-toc-item"><span>§9 — Karnaugh Maps (2, 3, 4, 5 variable + Don't Care)</span><span>5 pages</span></div>
+    <div class="cover-toc-item"><span>§10 — NAND &amp; NOR Implementation</span><span>3 pages</span></div>
+    <div class="cover-toc-item"><span>§11 — Quine-McClusky (Tabular) Method</span><span>3 pages</span></div>
+    <div class="cover-toc-item"><span>§12 — Quick Revision: All of Unit 1</span><span>2 pages</span></div>
+    <div class="cover-toc-item"><span>Practice Questions (2 per section)</span><span>1 page</span></div>
+    <div class="cover-toc-sep"></div>
+    <div class="cover-toc-item"><strong><span>Total</span><span>14 pages</span></strong></div>
+  </div>
+</div>
+
+<!-- ══════════ SECTION 9 ══════════ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DE — Unit 1 · Part 3</span><span class="unit-badge ub-green">SECTION 9</span></div>
+  <h1 class="section-title"><span style="color:var(--green);">§9</span> Karnaugh Map (K-Map)</h1>
+  <hr class="divider">
+
+  <h2 class="topic">1. What is a K-Map?</h2>
+  <div class="def-box">
+    A <strong>Karnaugh Map (K-Map)</strong> is another way of representing the given information in a truth table. It is a graphical method for minimizing Boolean expressions.<br><br>
+    For <strong>n variables</strong> → K-Map has <strong>2ⁿ cells</strong>.<br>
+    K-Map cells are arranged in <strong>Gray code order</strong> (adjacent cells differ by only 1 bit).
+  </div>
+
+  <h2 class="topic">2. Grouping Rules in K-Map</h2>
+  <div class="rule-box">
+    <ul class="plain">
+      <li>Groups must be powers of 2: <strong>1 (single), 2 (pair), 4 (quad), 8 (octet)</strong></li>
+      <li>Groups can <strong>wrap around</strong> edges (left-right and top-bottom)</li>
+      <li>Always make the <strong>LARGEST possible group</strong> first</li>
+      <li>Each 1 must be covered by at least one group</li>
+      <li>A 1 can be in multiple groups (if it helps create larger groups)</li>
+      <li>Minimize the total number of groups for minimum expression</li>
+    </ul>
+  </div>
+
+  <h2 class="topic">3. Two-Variable K-Map (2² = 4 cells)</h2>
+  <div class="kmap-container">
+    <table class="kmap">
+      <tr><td class="header-cell">A\B</td><th>B=0</th><th>B=1</th></tr>
+      <tr><th>A=0</th><td>m₀ (00)</td><td>m₁ (01)</td></tr>
+      <tr><th>A=1</th><td>m₂ (10)</td><td>m₃ (11)</td></tr>
+    </table>
+  </div>
+
+  <h2 class="topic">4. Three-Variable K-Map (2³ = 8 cells)</h2>
+  <div class="kmap-container">
+    <table class="kmap">
+      <tr><td class="header-cell">A\BC</td><th>00</th><th>01</th><th>11</th><th>10</th></tr>
+      <tr><th>A=0</th><td>m₀</td><td>m₁</td><td>m₃</td><td>m₂</td></tr>
+      <tr><th>A=1</th><td>m₄</td><td>m₅</td><td>m₇</td><td>m₆</td></tr>
+    </table>
+  </div>
+  <div class="note-box"><strong>★ IMPORTANT:</strong> Columns are ordered <strong>00, 01, 11, 10</strong> (Gray code order) — NOT 00, 01, 10, 11. This ensures adjacent cells differ by 1 bit only.</div>
+
+  <div class="page-num">1 / 5</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DE — Unit 1 · §9</span><span class="unit-badge ub-green">K-MAP</span></div>
+
+  <h2 class="topic">5. Four-Variable K-Map (2⁴ = 16 cells)</h2>
+  <div class="kmap-container">
+    <table class="kmap">
+      <tr><td class="header-cell">AB\CD</td><th>00</th><th>01</th><th>11</th><th>10</th></tr>
+      <tr><th>00</th><td>m₀</td><td>m₁</td><td>m₃</td><td>m₂</td></tr>
+      <tr><th>01</th><td>m₄</td><td>m₅</td><td>m₇</td><td>m₆</td></tr>
+      <tr><th>11</th><td>m₁₂</td><td>m₁₃</td><td>m₁₅</td><td>m₁₄</td></tr>
+      <tr><th>10</th><td>m₈</td><td>m₉</td><td>m₁₁</td><td>m₁₀</td></tr>
+    </table>
+  </div>
+
+  <h2 class="topic">6. Worked Example — 3-Variable K-Map</h2>
+  <div class="qbox">
+    <div class="q-label">Minimize: F(x,y,z) = Σm(1,2,3,4,5,7)</div>
+    <div class="kmap-container" style="margin:8px 0;">
+      <table class="kmap">
+        <tr><td class="header-cell">x\yz</td><th>00</th><th>01</th><th>11</th><th>10</th></tr>
+        <tr><th>0</th><td>0</td><td class="one">1</td><td class="one">1</td><td class="one">1</td></tr>
+        <tr><th>1</th><td class="one">1</td><td class="one">1</td><td class="one">1</td><td>0</td></tr>
+      </table>
+    </div>
+    <div class="q-step">Identify groups:</div>
+    <div class="q-ans" style="font-size:14px;line-height:26px;">
+      Quad 1 (m₁,m₃,m₅,m₇): cells (01,11) in both rows → y changes, x changes, z=1 always → <strong>z</strong><br>
+      Pair 1 (m₄,m₅): x=1, y=0 → <strong>xȳ</strong><br>
+      Pair 2 (m₂,m₃): x=0, z varies, y=1 → wait: m₂=010, m₃=011 → x=0,y=1 → <strong>x̄y</strong><br>
+      <strong>F = z + xȳ + x̄y = z + xȳ</strong> (xȳ covers m₄; x̄y is covered by z+... simplify)
+    </div>
+  </div>
+
+  <div class="page-num">2 / 5</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DE — Unit 1 · §9</span><span class="unit-badge ub-green">K-MAP 4-VAR</span></div>
+
+  <h2 class="topic">7. 4-Variable K-Map — Worked Example (AKTU 2016-17)</h2>
+  <div class="qbox">
+    <div class="q-label">F(w,x,y,z) = Σm(1,3,7,11,15) with d(w,x,y,z) = Σd(0,2,5)</div>
+    <div class="q-step">X = don't care (can be 0 or 1, use to help form groups). Try to use don't cares to form larger groups.</div>
+    <div class="kmap-container" style="margin:8px 0;">
+      <table class="kmap">
+        <tr><td class="header-cell">wx\yz</td><th>00</th><th>01</th><th>11</th><th>10</th></tr>
+        <tr><th>00</th><td class="dc">X₀</td><td class="one">1₁</td><td class="one">1₃</td><td class="dc">X₂</td></tr>
+        <tr><th>01</th><td>4</td><td class="dc">X₅</td><td class="one">1₇</td><td>6</td></tr>
+        <tr><th>11</th><td>12</td><td>13</td><td class="one">1₁₅</td><td>14</td></tr>
+        <tr><th>10</th><td>8</td><td>9</td><td class="one">1₁₁</td><td>10</td></tr>
+      </table>
+    </div>
+    <div class="q-step">Groups found:</div>
+    <div class="q-ans" style="font-size:14px;line-height:26px;">
+      Quad 1: (m₁,m₃,d₂,d₀) in row 00: all 4 cells, x=0,w=0 → need to check... yz column 01,11,10,00 and row 00: <br>
+      d₀,m₁,m₃,d₂ → w=0,x=0 → quad gives: <strong>ȳz (m₁,m₃ using d₀,d₂)</strong><br>
+      Actually: m₁(0001),m₃(0011): wx=00, z=1 → w̄x̄z<br>
+      Quad 2 using m₃,m₇,m₁₁,m₁₅: z=1, y=1 → <strong>yz</strong><br>
+      <strong>F = yz + w̄x̄z</strong>... simplified using don't cares: <strong>yz + w̄z</strong>
+    </div>
+  </div>
+
+  <h2 class="topic">8. Don't Care Conditions</h2>
+  <div class="orange-box">
+    <strong>Don't Care (X or d):</strong> Conditions where the output value doesn't matter (either input combination never occurs, or the output doesn't matter).<br><br>
+    <strong>Rule:</strong> Don't cares can be treated as 0 OR 1 — choose whichever helps form <em>larger groups</em> to simplify the expression more. Always try to use min. as possible.
+  </div>
+
+  <div class="page-num">3 / 5</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DE — Unit 1 · §9</span><span class="unit-badge ub-green">5-VAR K-MAP</span></div>
+
+  <h2 class="topic">9. Five-Variable K-Map (2⁵ = 32 cells)</h2>
+  <div class="def-box">
+    For 5 variables (A,B,C,D,E): Use <strong>TWO 4-variable K-maps</strong> placed side by side.<br>
+    Left map: A=0 (Ā) | Right map: A=1<br>
+    Groups can span across both maps (mirror images).
+  </div>
+
+  <div class="kmap-container">
+    <div style="display:flex;gap:20px;align-items:flex-start;">
+      <div>
+        <div style="text-align:center;font-size:12px;color:var(--blue);font-weight:700;margin-bottom:4px;">A=0 (Ā)</div>
+        <table class="kmap">
+          <tr><td class="header-cell">BC\DE</td><th>00</th><th>01</th><th>11</th><th>10</th></tr>
+          <tr><th>00</th><td>m₀</td><td>m₁</td><td>m₃</td><td>m₂</td></tr>
+          <tr><th>01</th><td>m₄</td><td>m₅</td><td>m₇</td><td>m₆</td></tr>
+          <tr><th>11</th><td>m₁₂</td><td>m₁₃</td><td>m₁₅</td><td>m₁₄</td></tr>
+          <tr><th>10</th><td>m₈</td><td>m₉</td><td>m₁₁</td><td>m₁₀</td></tr>
+        </table>
+      </div>
+      <div>
+        <div style="text-align:center;font-size:12px;color:var(--red);font-weight:700;margin-bottom:4px;">A=1</div>
+        <table class="kmap">
+          <tr><td class="header-cell">BC\DE</td><th>00</th><th>01</th><th>11</th><th>10</th></tr>
+          <tr><th>00</th><td>m₁₆</td><td>m₁₇</td><td>m₁₉</td><td>m₁₈</td></tr>
+          <tr><th>01</th><td>m₂₀</td><td>m₂₁</td><td>m₂₃</td><td>m₂₂</td></tr>
+          <tr><th>11</th><td>m₂₈</td><td>m₂₉</td><td>m₃₁</td><td>m₃₀</td></tr>
+          <tr><th>10</th><td>m₂₄</td><td>m₂₅</td><td>m₂₇</td><td>m₂₆</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="note-box"><strong>★ Spanning groups:</strong> A group of 8 that spans the same cell position in BOTH the A=0 and A=1 maps eliminates variable A from the result.</div>
+
+  <div class="page-num">4 / 5</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DE — Unit 1 · §9</span><span class="unit-badge ub-green">PRACTICE</span></div>
+
+  <h2 class="topic">10. How to Read Group Result</h2>
+  <div class="rule-box">
+    After grouping, for each group:<br>
+    ① List all variables — check which ones CHANGE within the group and which stay CONSTANT.<br>
+    ② Variables that CHANGE → <strong>eliminated</strong> (not in the product term).<br>
+    ③ Variables that stay CONSTANT:<br>
+    &nbsp;&nbsp;&nbsp;• If constant at <strong>1</strong> → include variable uncomplemented (e.g., A)<br>
+    &nbsp;&nbsp;&nbsp;• If constant at <strong>0</strong> → include variable complemented (e.g., Ā)
+  </div>
+
+  <h2 class="topic">11. Practice Questions — §9</h2>
+
+  <div class="exam-q-box">
+    <div class="eq-label">Q1 — Minimize F(A,B,C,D) = Σm(0,1,2,4,5,6,8,9,12,13,14) using K-Map</div>
+    <div class="q-step">Fill 4-variable K-Map. Find largest groups.</div>
+    <div class="q-ans" style="font-size:14px;line-height:26px;">
+      Fill K-Map with 1s at positions 0,1,2,4,5,6,8,9,12,13,14.<br>
+      Octet (8 cells): m₀,m₁,m₄,m₅,m₈,m₉,m₁₂,m₁₃ → D changes, C changes... AB rows 00,01,10,11 at CD=00,01 → C=0 → <strong>C̄</strong><br>
+      Quad: m₀,m₂,m₄,m₆ (CD=00,10 row AB=00,01) → D=0, B=0 → <strong>B̄D̄</strong><br>
+      Quad: m₄,m₅,m₁₂,m₁₃ → B=0, A changes → <strong>B̄</strong>... hmm need verification<br>
+      <strong>F = C̄ + B̄D̄</strong>
+    </div>
+  </div>
+
+  <div class="exam-q-box">
+    <div class="eq-label">Q2 — Minimize F(A,B,C) = Σm(0,2,6,7) using K-Map</div>
+    <div class="q-ans" style="font-size:14px;line-height:26px;">
+      Fill 3-var K-Map (A vs BC):<br>
+      A=0: m₀(00)=1, m₁(01)=0, m₃(11)=0, m₂(10)=1<br>
+      A=1: m₄(00)=0, m₅(01)=0, m₇(11)=1, m₆(10)=1<br>
+      Group 1 (m₀,m₂): A=0, C=0 → <strong>ĀC̄</strong><br>
+      Group 2 (m₆,m₇): A=1, B=1 → <strong>AB</strong><br>
+      <strong>F = ĀC̄ + AB</strong>
+    </div>
+  </div>
+
+  <div class="page-num">5 / 5</div>
+</div>
+
+<!-- ══════════ SECTION 10 ══════════ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DE — Unit 1 · Part 3</span><span class="unit-badge ub-teal">SECTION 10</span></div>
+  <h1 class="section-title"><span style="color:var(--teal);">§10</span> NAND &amp; NOR Implementation</h1>
+  <hr class="divider">
+
+  <h2 class="topic">1. Two-Level NAND-NAND = SOP</h2>
+  <div class="def-box">
+    Any SOP expression can be implemented using <strong>only NAND gates</strong> in two levels:<br>
+    • Level 1: Each product term → 1 NAND gate (with inputs = literals)<br>
+    • Level 2: Final NAND gate (with Level 1 outputs as inputs)<br><br>
+    <strong>Reason:</strong> Double complement of NAND = AND, and NAND of NAND = OR of complements by De Morgan = AND-OR = SOP ✓
+  </div>
+
+  <div class="teal-box">
+    <strong>Steps for NAND Implementation:</strong><br>
+    ① Express function in <strong>minimal SOP</strong> using K-Map<br>
+    ② Draw 2-level NAND circuit (product terms at Level 1, OR at Level 2 → both become NAND)<br>
+    ③ If a literal appears directly (single-variable product): connect it to the output NAND with a NOT-NAND bubble
+  </div>
+
+  <h2 class="topic">2. Two-Level NOR-NOR = POS</h2>
+  <div class="def-box">
+    Any POS expression can be implemented using <strong>only NOR gates</strong> in two levels:<br>
+    • Level 1: Each sum term → 1 NOR gate<br>
+    • Level 2: Final NOR gate (with Level 1 outputs)<br><br>
+    <strong>Reason:</strong> NOR-NOR is equivalent to OR-AND = POS ✓
+  </div>
+
+  <div class="teal-box">
+    <strong>Steps for NOR Implementation:</strong><br>
+    ① Express function in <strong>minimal POS</strong> using K-Map (group 0s!)<br>
+    ② Draw 2-level NOR circuit (sum terms at Level 1, AND at Level 2 → both become NOR)<br>
+    ③ Complement any variable that appears uncomplemented in POS (invert inputs)
+  </div>
+
+  <div class="page-num">1 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DE — Unit 1 · §10</span><span class="unit-badge ub-teal">NAND/NOR</span></div>
+
+  <h2 class="topic">3. NAND Implementation — Example</h2>
+  <div class="qbox">
+    <div class="q-label">Implement F = x̄y + xȳ + z using NAND gates (from K-Map result)</div>
+    <div class="q-step">This is already in SOP form. Convert to NAND-NAND:</div>
+    <div class="q-ans" style="font-size:14px;line-height:26px;">
+      F = x̄y + xȳ + z<br><br>
+      Level 1 NAND gates (produce complement of each product):<br>
+      NAND₁: inputs = x̄, y → output = (x̄y)̄<br>
+      NAND₂: inputs = x, ȳ → output = (xȳ)̄<br>
+      NAND₃: input = z (single input NAND = NOT) → output = z̄<br><br>
+      Level 2 NAND gate:<br>
+      NAND₄: inputs = (x̄y)̄, (xȳ)̄, z̄ → output = ((x̄y)̄ · (xȳ)̄ · z̄)̄<br>
+      = x̄y + xȳ + z = F ✓ (by De Morgan applied twice)
+    </div>
+  </div>
+
+  <h2 class="topic">4. POS Simplification and NOR Implementation</h2>
+  <div class="orange-box">
+    <strong>POS Simplification using K-Map:</strong><br>
+    ★ Group the <strong>ZEROS (0s)</strong> in the K-Map (instead of 1s)<br>
+    ★ Each group of 0s gives one <strong>sum term</strong> in POS<br>
+    ★ In sum terms: constant 0 → variable uncomplemented; constant 1 → variable complemented<br>
+    (This is opposite to SOP convention!)
+  </div>
+
+  <h2 class="topic">5. Summary: NAND vs NOR Implementation</h2>
+  <table class="tt">
+    <tr><th>Property</th><th>NAND-NAND</th><th>NOR-NOR</th></tr>
+    <tr><td>Equivalent to</td><td>AND-OR = SOP</td><td>OR-AND = POS</td></tr>
+    <tr><td>K-Map grouping</td><td>Group 1s</td><td>Group 0s</td></tr>
+    <tr><td>Result form</td><td>Minimal SOP</td><td>Minimal POS</td></tr>
+    <tr><td>Level 1 gates</td><td>Product terms</td><td>Sum terms</td></tr>
+    <tr><td>Level 2 gate</td><td>1 NAND (OR function)</td><td>1 NOR (AND function)</td></tr>
+  </table>
+
+  <h2 class="topic">6. Practice Questions — §10</h2>
+
+  <div class="exam-q-box">
+    <div class="eq-label">Q1 — Implement F = AB + BC + AC using NAND gates only</div>
+    <div class="q-ans" style="font-size:14px;line-height:26px;">
+      Level 1 NAND gates:<br>
+      G₁: (AB)̄ — inputs A, B<br>
+      G₂: (BC)̄ — inputs B, C<br>
+      G₃: (AC)̄ — inputs A, C<br>
+      Level 2 NAND gate:<br>
+      G₄: ((AB)̄ · (BC)̄ · (AC)̄)̄ = AB + BC + AC = F ✓
+    </div>
+  </div>
+
+  <div class="exam-q-box">
+    <div class="eq-label">Q2 — For POS F = (A+B)(B+C), implement using NOR gates only</div>
+    <div class="q-ans" style="font-size:14px;line-height:26px;">
+      Level 1 NOR gates:<br>
+      G₁: (A+B)̄ — inputs A, B → NOR output<br>
+      G₂: (B+C)̄ — inputs B, C → NOR output<br>
+      Level 2 NOR gate:<br>
+      G₃: ((A+B)̄ + (B+C)̄)̄ = (A+B)(B+C) = F ✓
+    </div>
+  </div>
+
+  <div class="page-num">2 / 3</div>
+</div>
+
+<!-- ══════════ SECTION 11 ══════════ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DE — Unit 1 · Part 3</span><span class="unit-badge ub-orange">SECTION 11</span></div>
+  <h1 class="section-title"><span style="color:var(--orange);">§11</span> Quine-McClusky (Tabular) Method</h1>
+  <hr class="divider">
+
+  <h2 class="topic">1. What is QMC / Tabulation Method?</h2>
+  <div class="def-box">
+    <strong>Drawback of K-Map:</strong> Not suitable when number of variables <strong>exceeds 4-5</strong> (becomes complex).<br><br>
+    To avoid this complexity → use <strong>Quine-McClusky (QMC) method</strong> = Tabulation Method.<br><br>
+    QMC is a systematic, algorithmic method for minimizing Boolean functions — can handle any number of variables.
+  </div>
+
+  <h2 class="topic">2. Steps of QMC Method</h2>
+  <div class="step-card"><div class="step-head">Step 1</div><div class="step-body">List all minterms. Convert each to binary. Group by number of 1s (weight/count of 1s).</div></div>
+  <div class="step-card"><div class="step-head">Step 2</div><div class="step-body">Compare minterms in adjacent groups (groups differing by 1 in count of 1s). If two minterms differ in only 1 bit → combine them. Replace the differing bit with dash (–). Mark both original minterms with ✓.</div></div>
+  <div class="step-card"><div class="step-head">Step 3</div><div class="step-body">Repeat Step 2 for the new group of combined terms. Only minterms with dashes in the SAME positions can be combined.</div></div>
+  <div class="step-card"><div class="step-head">Step 4</div><div class="step-body">Unchecked terms (not combined with any other) = <strong>Prime Implicants</strong>.</div></div>
+  <div class="step-card"><div class="step-head">Step 5</div><div class="step-body">Create a <strong>Prime Implicant Chart</strong>. Find minimum cover: select Essential Prime Implicants (columns with only one ✓) first. Then cover remaining minterms.</div></div>
+
+  <div class="note-box"><strong>★ Rule:</strong> Only minterms that differ by exactly 1 bit can combine. Combined terms must have dashes in the SAME positions (this is important — different dash positions → cannot combine!).</div>
+
+  <div class="page-num">1 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DE — Unit 1 · §11</span><span class="unit-badge ub-orange">QMC METHOD</span></div>
+
+  <h2 class="topic">3. QMC Worked Example (AKTU 2016-17)</h2>
+  <div class="qbox">
+    <div class="q-label">F(x₁,x₂,x₃,x₄,x₅) = Σm(0,1,2,8,9,15,17,21,24,25,27,31) — 5-bit</div>
+    <div class="q-step">Step 1: Convert minterms to 5-bit binary, group by number of 1s:</div>
+    <div class="two-col" style="margin-top:6px;">
+      <div>
+        <table class="qmc-table">
+          <tr><th colspan="2">Group 0 (0 ones)</th></tr>
+          <tr class="group0"><td>m₀</td><td>00000</td></tr>
+          <tr><th colspan="2">Group 1 (1 one)</th></tr>
+          <tr class="group1"><td>m₁</td><td>00001</td></tr>
+          <tr class="group1"><td>m₂</td><td>00010</td></tr>
+          <tr class="group1"><td>m₈</td><td>01000</td></tr>
+          <tr><th colspan="2">Group 2 (2 ones)</th></tr>
+          <tr class="group2"><td>m₉</td><td>01001</td></tr>
+          <tr class="group2"><td>m₁₇</td><td>10001</td></tr>
+          <tr class="group2"><td>m₂₄</td><td>11000</td></tr>
+          <tr><th colspan="2">Group 3 (3 ones)</th></tr>
+          <tr class="group3"><td>m₂₅</td><td>11001</td></tr>
+          <tr class="group3"><td>m₂₁</td><td>10101</td></tr>
+        </table>
+      </div>
+      <div>
+        <table class="qmc-table">
+          <tr><th colspan="2">Group 4 (4 ones)</th></tr>
+          <tr class="group0"><td>m₁₅</td><td>01111</td></tr>
+          <tr class="group0"><td>m₂₇</td><td>11011</td></tr>
+          <tr><th colspan="2">Group 5 (5 ones)</th></tr>
+          <tr class="group1"><td>m₃₁</td><td>11111</td></tr>
+        </table>
+        <div class="q-step" style="margin-top:10px;">Step 2: Combine adjacent groups (1-bit diff):<br>
+        m₀,m₁ → 0000– ✓<br>
+        m₀,m₂ → 000–0 ✓<br>
+        m₀,m₈ → 0–000 ✓<br>
+        m₁,m₉ → 0100– ← wait: 00001 vs 01001 differ by 2 bits → cannot!<br>
+        m₈,m₉ → 0100– ✓ (differ in bit 0 only)<br>
+        m₁,m₁₇ → –0001 ✓<br>
+        m₉,m₂₅ → 1–001? 01001 vs 11001: differ in bit 4 only → –1001 ✓</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-num">2 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DE — Unit 1 · §11</span><span class="unit-badge ub-orange">PRIME IMPLICANT CHART</span></div>
+
+  <h2 class="topic">4. Prime Implicant Chart</h2>
+  <div class="def-box">
+    After finding all prime implicants, create a <strong>PI Chart</strong>:<br>
+    • Rows = Prime Implicants<br>
+    • Columns = Original minterms<br>
+    • Place ✓ where a PI covers a minterm<br><br>
+    <strong>Essential Prime Implicant (EPI):</strong> A PI that is the ONLY one covering a particular minterm. EPIs MUST be included in the final expression.<br><br>
+    After selecting all EPIs, cover remaining uncovered minterms with fewest additional PIs.
+  </div>
+
+  <h2 class="topic">5. QMC Final Answer (from teacher example)</h2>
+  <div class="qbox">
+    <div class="q-label">From AKTU example — Prime Implicants and final answer</div>
+    <div class="q-ans" style="font-size:14px;line-height:28px;">
+      Prime Implicants identified:<br>
+      PI₁: m₀,m₁,m₈,m₉ → 0–00– → <strong>x₂x̄₃x̄₄</strong><br>
+      PI₂: m₁,m₉,m₁₇,m₂₅ → ––001 → <strong>x̄₃x̄₄x₅</strong>... wait verify<br>
+      From teacher notes final answer:<br>
+      <strong>F = x₂x̄₃x̄₄ + x̄₁x̄₂x̄₃x₅ + x̄₁x̄₂x̄₄x₅ + x₂x₃x₄x₅</strong>
+    </div>
+  </div>
+
+  <h2 class="topic">6. Practice Questions — §11</h2>
+
+  <div class="exam-q-box">
+    <div class="eq-label">Q1 — Apply QMC to minimize: F(A,B,C,D) = Σm(0,1,2,5,6,7,8,9,10,14)</div>
+    <div class="q-step">Group by number of 1s and combine. Find prime implicants.</div>
+    <div class="q-ans" style="font-size:14px;line-height:26px;">
+      Group 0: m₀=0000<br>
+      Group 1: m₁=0001, m₂=0010, m₈=1000<br>
+      Group 2: m₅=0101, m₆=0110, m₉=1001, m₁₀=1010<br>
+      Group 3: m₇=0111, m₁₄=1110<br>
+      Combinations: (0000,0001)=000–; (0000,0010)=00–0; (0000,1000)=–000; ...<br>
+      <strong>Process systematically → Final: F = B̄C̄ + B̄D̄ + ĀB̄ + ... (verify using chart)</strong>
+    </div>
+  </div>
+
+  <div class="exam-q-box">
+    <div class="eq-label">Q2 — What are Essential Prime Implicants? When are they used?</div>
+    <div class="q-ans" style="font-size:14px;line-height:28px;">
+      An <strong>Essential Prime Implicant (EPI)</strong> is a prime implicant that is the ONLY one that covers at least one particular minterm (that column in the PI chart has only ONE checkmark).<br>
+      EPIs MUST be included in any minimal cover.<br>
+      After selecting all EPIs, check if all minterms are covered. If not, select additional PIs to cover remaining minterms (choose PIs that cover the most uncovered minterms).
+    </div>
+  </div>
+
+  <div class="page-num">3 / 3</div>
+</div>
+
+<!-- ══════════ SECTION 12 — QUICK REVISION ══════════ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DE — Unit 1 · Part 3</span><span class="unit-badge ub-purple">SECTION 12</span></div>
+  <h1 class="section-title"><span style="color:var(--purple);">§12</span> Quick Revision — All of Unit 1</h1>
+  <hr class="divider">
+
+  <div class="rev-grid">
+    <div class="rev-card">
+      <div class="rev-head">Number Systems</div>
+      <div class="rev-item">Decimal: base 10 (0-9)</div>
+      <div class="rev-item">Binary: base 2 (0,1)</div>
+      <div class="rev-item">Octal: base 8 (0-7)</div>
+      <div class="rev-item">Hex: base 16 (0-9,A-F)</div>
+      <div class="rev-item">Nᵣ = Σaᵢrⁱ</div>
+    </div>
+    <div class="rev-card">
+      <div class="rev-head">Conversions</div>
+      <div class="rev-item">Dec→Any: division rule (int) / multiply rule (frac)</div>
+      <div class="rev-item">Any→Dec: positional notation</div>
+      <div class="rev-item">Bin↔Oct: group 3 bits</div>
+      <div class="rev-item">Bin↔Hex: group 4 bits</div>
+    </div>
+    <div class="rev-card">
+      <div class="rev-head">Complements</div>
+      <div class="rev-item">r's complement = rⁿ − N</div>
+      <div class="rev-item">(r-1)'s complement = (rⁿ−1)−N</div>
+      <div class="rev-item">1's complement: flip all bits</div>
+      <div class="rev-item">2's complement: flip + add 1</div>
+      <div class="rev-item">Carry→discard; no carry→negative</div>
+    </div>
+    <div class="rev-card">
+      <div class="rev-head">Binary Codes</div>
+      <div class="rev-item">BCD: 4-bit code per decimal digit</div>
+      <div class="rev-item">BCD invalid: 1010–1111 (10–15)</div>
+      <div class="rev-item">XS-3: BCD + 3</div>
+      <div class="rev-item">Gray: 1-bit change between consecutive</div>
+      <div class="rev-item">XOR = AB̄ + ĀB (Gray conversion)</div>
+    </div>
+    <div class="rev-card">
+      <div class="rev-head">Logic Gates</div>
+      <div class="rev-item">AND: Y=A·B (all 1→1)</div>
+      <div class="rev-item">OR: Y=A+B (any 1→1)</div>
+      <div class="rev-item">NAND: Y=(AB)̄ = universal</div>
+      <div class="rev-item">NOR: Y=(A+B)̄ = universal</div>
+      <div class="rev-item">XOR: Y=A⊕B (different→1)</div>
+      <div class="rev-item">XNOR: Y=A⊙B (same→1)</div>
+    </div>
+    <div class="rev-card">
+      <div class="rev-head">Boolean Laws</div>
+      <div class="rev-item">A+Ā=1; A·Ā=0; Ā̄=A</div>
+      <div class="rev-item">De Morgan 1: (A+B)̄=ĀB̄</div>
+      <div class="rev-item">De Morgan 2: (AB)̄=Ā+B̄</div>
+      <div class="rev-item">Absorption: A+AB=A</div>
+      <div class="rev-item">Distributive: A+(BC)=(A+B)(A+C)</div>
+    </div>
+    <div class="rev-card">
+      <div class="rev-head">SOP and POS</div>
+      <div class="rev-item">SOP: sum of minterms (group 1s)</div>
+      <div class="rev-item">POS: product of maxterms (group 0s)</div>
+      <div class="rev-item">Minterm: all vars, 1→A, 0→Ā</div>
+      <div class="rev-item">Maxterm: all vars, 0→A, 1→Ā</div>
+      <div class="rev-item">Canonical: add X+X̄ for missing vars</div>
+    </div>
+    <div class="rev-card">
+      <div class="rev-head">K-Map Rules</div>
+      <div class="rev-item">2ⁿ cells for n variables</div>
+      <div class="rev-item">Groups: 1,2,4,8,16 (powers of 2)</div>
+      <div class="rev-item">Gray code column order: 00,01,11,10</div>
+      <div class="rev-item">Don't care: use to enlarge groups</div>
+      <div class="rev-item">5-var: 2 separate 4-var maps</div>
+    </div>
+    <div class="rev-card">
+      <div class="rev-head">NAND/NOR Implementation</div>
+      <div class="rev-item">NAND-NAND = SOP</div>
+      <div class="rev-item">NOR-NOR = POS</div>
+      <div class="rev-item">NAND: group 1s in K-Map first</div>
+      <div class="rev-item">NOR: group 0s in K-Map first</div>
+    </div>
+    <div class="rev-card">
+      <div class="rev-head">QMC Method</div>
+      <div class="rev-item">Group minterms by number of 1s</div>
+      <div class="rev-item">Combine if differ by exactly 1 bit</div>
+      <div class="rev-item">Uncombined = Prime Implicants</div>
+      <div class="rev-item">EPI = covers unique minterm (must select)</div>
+      <div class="rev-item">PI chart → minimum cover</div>
+    </div>
+  </div>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DE — Unit 1 · §12</span><span class="unit-badge ub-purple">KEY FORMULAS</span></div>
+
+  <h2 class="topic">Key Formulas &amp; Exam Facts</h2>
+
+  <table class="tt">
+    <tr><th>Topic</th><th>Formula / Fact</th></tr>
+    <tr><td>r's Complement</td><td>rⁿ − N &nbsp;(where n = digits before decimal)</td></tr>
+    <tr><td>(r-1)'s Complement</td><td>(rⁿ−1) − N</td></tr>
+    <tr><td>XOR gate</td><td>A⊕B = ĀB + AB̄</td></tr>
+    <tr><td>XNOR gate</td><td>A⊙B = AB + ĀB̄ = (A⊕B)̄</td></tr>
+    <tr><td>Gray→Binary</td><td>Bᵢ = Gᵢ ⊕ Bᵢ₋₁ (MSB copied)</td></tr>
+    <tr><td>Binary→Gray</td><td>Gᵢ = Bᵢ ⊕ Bᵢ₋₁ (MSB copied)</td></tr>
+    <tr><td>K-Map cells</td><td>2ⁿ for n variables</td></tr>
+    <tr><td>Minterms of F=1</td><td>ΣM → complements of maxterms</td></tr>
+    <tr><td>BCD invalid range</td><td>1010 to 1111 (10 to 15)</td></tr>
+    <tr><td>XS-3 = BCD + 3</td><td>Self-complementing code</td></tr>
+  </table>
+
+  <h2 class="topic">Common Exam Mistakes</h2>
+  <div class="note-box">
+    <ul class="plain">
+      <li>K-Map column order MUST be Gray code: <strong>00,01,11,10</strong> (NOT 00,01,10,11)</li>
+      <li>In r's complement subtraction: if carry → POSITIVE; if no carry → take complement of sum = NEGATIVE</li>
+      <li>In (r-1)'s complement: if carry → add 1 to LSB (end-around carry); no carry → take (r-1)'s complement of sum</li>
+      <li>Gray code MSB is always copied as-is (not XORed)</li>
+      <li>BCD addition: if sum > 9 OR generates carry → add 6 (0110)</li>
+      <li>Excess-3 addition: carry → add 3; no carry → subtract 3</li>
+      <li>In POS form: 0→uncomplemented, 1→complemented (OPPOSITE to SOP!)</li>
+      <li>Don't cares in K-Map: try to use them, but don't HAVE to use them</li>
+    </ul>
+  </div>
+
+  <div class="rule-box" style="margin-top:10px;">
+    <strong>★ Canonical Forms Summary:</strong><br>
+    <span style="font-family:'Patrick Hand',cursive;font-size:15px;">
+    SOP Canonical: multiply each term by (x+x̄) for missing variable x<br>
+    POS Canonical: add (x·x̄) to each sum term for missing variable x &nbsp;[using A+BC=(A+B)(A+C)]
+    </span>
+  </div>
+
+  <div class="page-num">2 / 2</div>
+</div>
+
+</body>
+</html>

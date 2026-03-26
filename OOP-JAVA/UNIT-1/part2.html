@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OOP in Java — Unit 1 | Part 2</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Kalam:wght@300;400;700&family=Patrick+Hand&family=Special+Elite&display=swap');
+
+  :root {
+    --paper: #fdf9f0;
+    --paper2: #fefcf5;
+    --ink: #1a1a2e;
+    --ink-light: #2d2d4e;
+    --blue: #1a56db;
+    --blue-light: #dbeafe;
+    --green: #0d6b3f;
+    --green-light: #d1fae5;
+    --orange: #c05621;
+    --orange-light: #fef3c7;
+    --purple: #5b21b6;
+    --purple-light: #ede9fe;
+    --red: #b91c1c;
+    --red-light: #fee2e2;
+    --teal: #0e7490;
+    --teal-light: #cffafe;
+    --rule-line: #c8d8e8;
+    --margin-line: #f4a0a0;
+    --hole-bg: #e8e0d0;
+    --shadow: rgba(0,0,0,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #b8b0a0;
+    background-image:
+      radial-gradient(circle at 25% 40%, rgba(91,33,182,0.12) 0%, transparent 55%),
+      radial-gradient(circle at 75% 70%, rgba(13,107,63,0.1) 0%, transparent 50%);
+    font-family: 'Kalam', cursive;
+    color: var(--ink);
+    padding: 20px 0 40px;
+    min-height: 100vh;
+  }
+
+  /* ── PART NAV ── */
+  .part-nav {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    padding: 0 16px;
+  }
+  .part-nav a {
+    font-family: 'Caveat', cursive;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 7px 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    background: rgba(255,255,255,0.5);
+    color: #555;
+    border: 2px solid rgba(255,255,255,0.7);
+    transition: all 0.2s;
+  }
+  .part-nav a.active {
+    background: var(--purple);
+    color: #fff;
+    border-color: var(--purple);
+    box-shadow: 0 4px 12px rgba(91,33,182,0.4);
+  }
+  .part-nav a:hover:not(.active) { background: rgba(255,255,255,0.8); color: #333; }
+
+  /* ── PAGE ── */
+  .page {
+    width: 760px;
+    max-width: 98vw;
+    margin: 0 auto 28px;
+    background: var(--paper);
+    border-radius: 3px;
+    box-shadow: 4px 4px 14px var(--shadow), 0 1px 3px rgba(0,0,0,0.12);
+    position: relative;
+    padding: 36px 44px 44px 80px;
+    min-height: 600px;
+    background-image:
+      repeating-linear-gradient(
+        transparent,
+        transparent 31px,
+        var(--rule-line) 31px,
+        var(--rule-line) 32px
+      );
+    background-position: 0 64px;
+  }
+  .page::before {
+    content: '';
+    position: absolute;
+    left: 68px; top: 0; bottom: 0;
+    width: 2px;
+    background: var(--margin-line);
+    opacity: 0.7;
+  }
+
+  /* ── HOLES ── */
+  .holes {
+    position: absolute;
+    left: 18px; top: 0; bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 32px;
+  }
+  .hole {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--hole-bg);
+    border: 1.5px solid #b8a898;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+  }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .date-tag {
+    font-family: 'Special Elite', cursive;
+    font-size: 0.72rem;
+    color: var(--teal);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .unit-badge {
+    font-family: 'Caveat', cursive;
+    font-size: 0.85rem;
+    font-weight: 700;
+    background: var(--purple);
+    color: white;
+    padding: 2px 12px;
+    border-radius: 10px;
+    letter-spacing: 0.08em;
+  }
+
+  /* ── SECTION TITLE ── */
+  .section-title {
+    font-family: 'Caveat', cursive;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 8px 0 4px;
+    line-height: 1.2;
+  }
+  .sn {
+    font-family: 'Special Elite', cursive;
+    color: var(--purple);
+    margin-right: 6px;
+    font-size: 1.7rem;
+  }
+  .divider {
+    border: none;
+    border-top: 2.5px solid var(--purple);
+    margin: 6px 0 18px;
+    border-radius: 2px;
+  }
+
+  /* ── HEADINGS ── */
+  h2.topic {
+    font-family: 'Caveat', cursive;
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: var(--purple);
+    margin: 20px 0 8px;
+    padding-bottom: 3px;
+    border-bottom: 1.5px dashed var(--rule-line);
+  }
+  h3.sub {
+    font-family: 'Kalam', cursive;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--blue);
+    margin: 14px 0 6px;
+  }
+
+  /* ── BOXES ── */
+  .def-box, .rule-box, .note-box, .purple-box, .orange-box {
+    border-radius: 8px;
+    padding: 13px 16px;
+    margin: 14px 0;
+    position: relative;
+    font-size: 0.97rem;
+    line-height: 1.65;
+  }
+  .def-box { background: var(--blue-light); border-left: 4px solid var(--blue); }
+  .def-box::before {
+    content: '📘 Definition';
+    font-family: 'Caveat', cursive; font-weight: 700; font-size: 0.82rem;
+    color: var(--blue); display: block; margin-bottom: 5px;
+    text-transform: uppercase; letter-spacing: 0.06em;
+  }
+  .rule-box { background: var(--green-light); border-left: 4px solid var(--green); }
+  .rule-box::before {
+    content: '📗 Key Result';
+    font-family: 'Caveat', cursive; font-weight: 700; font-size: 0.82rem;
+    color: var(--green); display: block; margin-bottom: 5px;
+    text-transform: uppercase; letter-spacing: 0.06em;
+  }
+  .note-box { background: var(--red-light); border-left: 4px solid var(--red); }
+  .note-box::before {
+    content: '⚠️ Exam Tip / Warning';
+    font-family: 'Caveat', cursive; font-weight: 700; font-size: 0.82rem;
+    color: var(--red); display: block; margin-bottom: 5px;
+    text-transform: uppercase; letter-spacing: 0.06em;
+  }
+  .purple-box { background: var(--purple-light); border-left: 4px solid var(--purple); }
+  .purple-box::before {
+    content: '💡 Important';
+    font-family: 'Caveat', cursive; font-weight: 700; font-size: 0.82rem;
+    color: var(--purple); display: block; margin-bottom: 5px;
+    text-transform: uppercase; letter-spacing: 0.06em;
+  }
+  .orange-box { background: var(--orange-light); border-left: 4px solid var(--orange); }
+  .orange-box::before {
+    content: '🔧 Procedure / Algorithm';
+    font-family: 'Caveat', cursive; font-weight: 700; font-size: 0.82rem;
+    color: var(--orange); display: block; margin-bottom: 5px;
+    text-transform: uppercase; letter-spacing: 0.06em;
+  }
+
+  /* ── Q BOX ── */
+  .qbox {
+    background: #fffbf0;
+    border: 1.5px solid #e4cc88;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin: 14px 0;
+    font-size: 0.96rem;
+  }
+  .q-label { font-family: 'Caveat', cursive; font-weight: 700; font-size: 1.05rem; color: var(--orange); margin-bottom: 6px; }
+  .q-step { margin: 5px 0; padding-left: 16px; position: relative; line-height: 1.6; color: var(--ink-light); }
+  .q-step::before { content: '→'; position: absolute; left: 0; color: var(--blue); font-weight: 700; }
+  .q-ans { font-family: 'Caveat', cursive; font-weight: 700; font-size: 1.05rem; color: var(--green); margin-top: 8px; padding-top: 6px; border-top: 1px dashed #e4cc88; }
+
+  /* ── PLAIN LIST ── */
+  ul.plain { list-style: none; padding-left: 0; margin: 8px 0; }
+  ul.plain li { padding: 4px 0 4px 22px; position: relative; line-height: 1.6; font-size: 0.97rem; }
+  ul.plain li::before { content: '→'; position: absolute; left: 2px; color: var(--purple); font-weight: 700; }
+
+  /* ── FORMULA ── */
+  .formula {
+    font-family: 'Special Elite', cursive;
+    background: rgba(91,33,182,0.09);
+    color: var(--purple);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.95em;
+    display: inline-block;
+  }
+  pre.code-block {
+    background: #1e1e2e;
+    color: #cdd6f4;
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.82rem;
+    line-height: 1.7;
+    margin: 12px 0;
+    overflow-x: auto;
+    border-left: 4px solid var(--purple);
+  }
+  .kw { color: #89b4fa; font-weight: bold; }
+  .cm { color: #6c7086; font-style: italic; }
+  .st { color: #a6e3a1; }
+  .nm { color: #fab387; }
+  .tp { color: #f38ba8; }
+  .fn { color: #cba6f7; }
+
+  /* ── TWO-COL ── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 12px 0; }
+  @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* ── VS BOX ── */
+  .vs-box { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin: 12px 0; border-radius: 8px; overflow: hidden; border: 1.5px solid #d0d0d0; font-size: 0.93rem; }
+  .vs-left { background: #e8f0fe; padding: 12px 14px; border-right: 1.5px solid #d0d0d0; }
+  .vs-right { background: #e6f4ea; padding: 12px 14px; }
+  .vs-left strong, .vs-right strong { font-family: 'Caveat', cursive; font-size: 1.05rem; display: block; margin-bottom: 6px; }
+  .vs-left strong { color: var(--blue); }
+  .vs-right strong { color: var(--green); }
+
+  /* ── TABLE ── */
+  table.tt { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin: 12px 0; }
+  table.tt th { background: var(--purple); color: white; padding: 8px 12px; text-align: left; font-family: 'Caveat', cursive; font-size: 1rem; }
+  table.tt td { padding: 7px 12px; border-bottom: 1px solid var(--rule-line); }
+  table.tt tr:nth-child(even) td { background: rgba(91,33,182,0.04); }
+  table.tt tr:hover td { background: rgba(91,33,182,0.08); }
+
+  /* ── STEP CARDS ── */
+  .step-card { display: flex; gap: 12px; margin: 10px 0; align-items: flex-start; }
+  .step-head { background: var(--purple); color: white; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-family: 'Caveat', cursive; font-weight: 700; font-size: 1rem; flex-shrink: 0; margin-top: 2px; }
+  .step-body { flex: 1; line-height: 1.65; font-size: 0.97rem; }
+
+  /* ── PAGE NUM ── */
+  .page-num { position: absolute; bottom: 14px; right: 22px; font-family: 'Caveat', cursive; font-size: 0.85rem; color: #999; }
+
+  /* ── PILLAR CARD ── */
+  .pillar-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 14px 0;
+  }
+  .pillar-card {
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 0.93rem;
+    line-height: 1.6;
+  }
+  .pillar-card .pillar-name {
+    font-family: 'Caveat', cursive;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .pc-enc  { background: #e0f2fe; border-top: 4px solid #0284c7; }
+  .pc-enc .pillar-name  { color: #0284c7; }
+  .pc-inh  { background: #fef9c3; border-top: 4px solid #ca8a04; }
+  .pc-inh .pillar-name  { color: #ca8a04; }
+  .pc-pol  { background: #fce7f3; border-top: 4px solid #db2777; }
+  .pc-pol .pillar-name  { color: #db2777; }
+  .pc-abs  { background: #f0fdf4; border-top: 4px solid #16a34a; }
+  .pc-abs .pillar-name  { color: #16a34a; }
+
+  /* ── INHERIT TREE ── */
+  .tree {
+    font-family: 'Caveat', cursive;
+    font-size: 1rem;
+    line-height: 2;
+    margin: 10px 0 10px 10px;
+    color: var(--ink);
+  }
+  .tree .node {
+    display: inline-block;
+    background: var(--purple-light);
+    border: 1.5px solid var(--purple);
+    border-radius: 6px;
+    padding: 2px 14px;
+    color: var(--purple);
+    font-weight: 700;
+  }
+  .tree .arrow { color: var(--orange); font-size: 1.2rem; margin: 0 6px; }
+
+  /* ── COVER PAGE ── */
+  .cover-page {
+    width: 760px; max-width: 98vw;
+    margin: 0 auto 28px;
+    background: linear-gradient(135deg, #1e0442 0%, #2d1270 50%, #4c1d95 100%);
+    border-radius: 6px;
+    box-shadow: 6px 6px 20px rgba(0,0,0,0.35);
+    padding: 50px 60px 50px 80px;
+    position: relative; overflow: hidden;
+    color: white; min-height: 440px;
+  }
+  .cover-page::before {
+    content: '';
+    position: absolute; top: -60px; right: -60px;
+    width: 280px; height: 280px;
+    background: radial-gradient(circle, rgba(167,139,250,0.35) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .cover-page::after {
+    content: '';
+    position: absolute; bottom: -40px; left: 40px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(16,185,129,0.2) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .cover-holes { position: absolute; left: 18px; top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: space-evenly; align-items: center; width: 32px; }
+  .cover-subject { font-family: 'Special Elite', cursive; font-size: 0.78rem; letter-spacing: 0.25em; text-transform: uppercase; color: #c4b5fd; margin-bottom: 8px; position: relative; z-index: 1; }
+  .cover-title { font-family: 'Caveat', cursive; font-size: 3rem; font-weight: 700; line-height: 1.1; margin-bottom: 6px; position: relative; z-index: 1; }
+  .cover-unit { font-family: 'Kalam', cursive; font-size: 1.15rem; color: #a7f3d0; margin-bottom: 4px; position: relative; z-index: 1; }
+  .cover-subtitle { font-family: 'Kalam', cursive; font-size: 1rem; color: #fde68a; margin-bottom: 28px; position: relative; z-index: 1; }
+  .cover-part-badge { display: inline-block; background: var(--purple); color: white; font-family: 'Caveat', cursive; font-weight: 700; font-size: 1.1rem; padding: 6px 20px; border-radius: 20px; margin-bottom: 28px; position: relative; z-index: 1; letter-spacing: 0.06em; }
+  .cover-toc { position: relative; z-index: 1; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 18px; }
+  .cover-toc h3 { font-family: 'Special Elite', cursive; font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: #c4b5fd; margin-bottom: 12px; }
+  .toc-row { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: 1px dotted rgba(255,255,255,0.12); }
+  .toc-sec { font-family: 'Caveat', cursive; font-size: 1rem; font-weight: 600; color: #f5f5f5; }
+  .toc-sec span.toc-num { color: #c4b5fd; margin-right: 8px; font-family: 'Special Elite', cursive; }
+  .toc-pages { font-family: 'Special Elite', cursive; font-size: 0.75rem; color: #a6adc8; background: rgba(255,255,255,0.07); padding: 2px 8px; border-radius: 8px; }
+
+  .hl-yellow { background: #fff176; border-radius: 3px; padding: 0 3px; }
+  .hl-pink { background: #fce7f3; border-radius: 3px; padding: 0 3px; }
+  p { line-height: 1.7; margin: 8px 0; font-size: 0.97rem; }
+  strong { color: var(--ink); }
+  code { font-family: 'Courier New', monospace; font-size: 0.9em; background: rgba(0,0,0,0.07); padding: 1px 5px; border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<!-- ══════════ PART NAV ══════════ -->
+<nav class="part-nav">
+        <a href="../index.html">&#8617; Units</a>
+  <a href="part1.html">◆ Part 1 — Intro &amp; Fundamentals</a>
+  <a href="part2.html" class="active">◆ Part 2 — OOP Concepts</a>
+  <a href="part3.html">◆ Part 3 — Packages &amp; Revision</a>
+</nav>
+
+<!-- ══════════ COVER PAGE ══════════ -->
+<div class="cover-page">
+  <div class="cover-holes">
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+  </div>
+  <div class="cover-subject">Object-Oriented Programming in Java</div>
+  <div class="cover-title">Unit 1 Notes</div>
+  <div class="cover-unit">Unit 1 — Object-Oriented Programming</div>
+  <div class="cover-subtitle">Classes · Constructors · Inheritance · Polymorphism · Abstraction · Interfaces</div>
+  <div class="cover-part-badge">📒 Part 2 of 3</div>
+  <div class="cover-toc">
+    <h3>Contents — Part 2</h3>
+    <div class="toc-row">
+      <div class="toc-sec"><span class="toc-num">§7</span> Classes, Objects &amp; The 4 OOP Pillars</div>
+      <div class="toc-pages">2 pages</div>
+    </div>
+    <div class="toc-row">
+      <div class="toc-sec"><span class="toc-num">§8</span> Constructors &amp; Methods</div>
+      <div class="toc-pages">2 pages</div>
+    </div>
+    <div class="toc-row">
+      <div class="toc-sec"><span class="toc-num">§9</span> Access Specifiers, Static &amp; Final</div>
+      <div class="toc-pages">2 pages</div>
+    </div>
+    <div class="toc-row">
+      <div class="toc-sec"><span class="toc-num">§10</span> Inheritance — Super &amp; Sub Classes</div>
+      <div class="toc-pages">3 pages</div>
+    </div>
+    <div class="toc-row">
+      <div class="toc-sec"><span class="toc-num">§11</span> Overriding &amp; Overloading</div>
+      <div class="toc-pages">2 pages</div>
+    </div>
+    <div class="toc-row">
+      <div class="toc-sec"><span class="toc-num">§12</span> Encapsulation &amp; Abstraction</div>
+      <div class="toc-pages">2 pages</div>
+    </div>
+    <div class="toc-row">
+      <div class="toc-sec"><span class="toc-num">§13</span> Interfaces &amp; Abstract Classes</div>
+      <div class="toc-pages">3 pages</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     §7 — CLASSES, OBJECTS & THE 4 OOP PILLARS (2 pages)
+══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">OOP in Java — Unit 1</span>
+    <span class="unit-badge">SECTION 7</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§7</span> Classes, Objects &amp; The 4 OOP Pillars</h1>
+  <hr class="divider">
+
+  <h2 class="topic">Class vs Object</h2>
+  <div class="vs-box">
+    <div class="vs-left">
+      <strong>Class — Blueprint</strong>
+      A template / prototype.<br>
+      Defines properties (fields) and behaviours (methods).<br>
+      Does NOT occupy memory by itself.<br>
+      e.g., <code>class Car { ... }</code>
+    </div>
+    <div class="vs-right">
+      <strong>Object — Instance</strong>
+      A real-world entity created from a class.<br>
+      Occupies memory in the heap.<br>
+      Has its own copy of instance variables.<br>
+      e.g., <code>Car myCar = new Car();</code>
+    </div>
+  </div>
+
+  <pre class="code-block"><span class="kw">class</span> <span class="tp">Car</span> {
+    <span class="cm">// Fields (instance variables)</span>
+    String brand;
+    <span class="kw">int</span> speed;
+
+    <span class="cm">// Method (behaviour)</span>
+    <span class="kw">void</span> <span class="fn">accelerate</span>() {
+        speed += <span class="nm">10</span>;
+        System.out.println(brand + <span class="st">" speed: "</span> + speed);
+    }
+}
+
+<span class="cm">// Creating objects</span>
+<span class="tp">Car</span> c1 = <span class="kw">new</span> <span class="tp">Car</span>();   <span class="cm">// c1 is a reference to a Car object in heap</span>
+c1.brand = <span class="st">"Toyota"</span>;
+c1.speed = <span class="nm">60</span>;
+c1.<span class="fn">accelerate</span>();      <span class="cm">// Toyota speed: 70</span></pre>
+
+  <div class="rule-box">
+    <strong>new keyword</strong> — allocates memory in the heap for the object and returns a reference. It also calls the constructor to initialise the object.
+  </div>
+
+  <h2 class="topic">The 4 Pillars of OOP</h2>
+  <div class="pillar-grid">
+    <div class="pillar-card pc-enc">
+      <div class="pillar-name">1. Encapsulation</div>
+      Bundling data + methods together. Hiding internal state using <code>private</code> fields + <code>public</code> getters/setters.
+    </div>
+    <div class="pillar-card pc-inh">
+      <div class="pillar-name">2. Inheritance</div>
+      A class (child) acquires properties and behaviours of another class (parent) using <code>extends</code>.
+    </div>
+    <div class="pillar-card pc-pol">
+      <div class="pillar-name">3. Polymorphism</div>
+      "Many forms." One method/interface, multiple implementations. Achieved via overriding (runtime) and overloading (compile-time).
+    </div>
+    <div class="pillar-card pc-abs">
+      <div class="pillar-name">4. Abstraction</div>
+      Hiding implementation details; showing only essential features. Achieved via abstract classes and interfaces.
+    </div>
+  </div>
+
+  <div class="note-box">
+    Exams love: "What are the 4 pillars of OOP? Explain each with an example." Memorise the names and one-line definitions for each.
+  </div>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">OOP in Java — Unit 1</span>
+    <span class="unit-badge">SECTION 7</span>
+  </div>
+
+  <h2 class="topic">Class Anatomy — Full Example</h2>
+  <pre class="code-block"><span class="kw">public class</span> <span class="tp">Student</span> {
+
+    <span class="cm">// 1. Fields</span>
+    <span class="kw">private</span> String name;
+    <span class="kw">private int</span> rollNo;
+    <span class="kw">static int</span> totalStudents = <span class="nm">0</span>;   <span class="cm">// class variable</span>
+
+    <span class="cm">// 2. Constructor</span>
+    <span class="kw">public</span> <span class="fn">Student</span>(String name, <span class="kw">int</span> rollNo) {
+        <span class="kw">this</span>.name = name;
+        <span class="kw">this</span>.rollNo = rollNo;
+        totalStudents++;
+    }
+
+    <span class="cm">// 3. Getter / Setter</span>
+    <span class="kw">public</span> String <span class="fn">getName</span>() { <span class="kw">return</span> name; }
+    <span class="kw">public void</span> <span class="fn">setName</span>(String name) { <span class="kw">this</span>.name = name; }
+
+    <span class="cm">// 4. Instance method</span>
+    <span class="kw">public void</span> <span class="fn">display</span>() {
+        System.out.println(rollNo + <span class="st">": "</span> + name);
+    }
+
+    <span class="cm">// 5. Static method</span>
+    <span class="kw">public static int</span> <span class="fn">getTotal</span>() { <span class="kw">return</span> totalStudents; }
+}</pre>
+
+  <h2 class="topic">this keyword</h2>
+  <div class="def-box">
+    <code>this</code> is a reference to the <em>current object</em>. Used to:
+    <ul class="plain" style="margin-top:6px">
+      <li>Distinguish instance variables from parameters with same name: <span class="formula">this.name = name</span></li>
+      <li>Call another constructor in the same class: <span class="formula">this(args)</span> — must be first statement.</li>
+      <li>Pass current object as argument: <span class="formula">method(this)</span></li>
+      <li>Return current object from a method: <span class="formula">return this</span> (method chaining).</li>
+    </ul>
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">🧪 What is the output?</div>
+    <div class="q-step"><code>Student s1 = new Student("Alice", 1);</code></div>
+    <div class="q-step"><code>Student s2 = new Student("Bob", 2);</code></div>
+    <div class="q-step"><code>System.out.println(Student.getTotal());</code></div>
+    <div class="q-ans">✓ Output: 2 — totalStudents is static, shared and incremented by both constructors.</div>
+  </div>
+
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     §8 — CONSTRUCTORS & METHODS (2 pages)
+══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">OOP in Java — Unit 1</span>
+    <span class="unit-badge">SECTION 8</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§8</span> Constructors &amp; Methods</h1>
+  <hr class="divider">
+
+  <h2 class="topic">Constructors</h2>
+  <div class="def-box">
+    A <strong>constructor</strong> is a special method that is called automatically when an object is created using <code>new</code>. It initialises the object's state.<br>
+    Rules: same name as class · no return type (not even void) · can be overloaded.
+  </div>
+
+  <h3 class="sub">Types of Constructors</h3>
+  <pre class="code-block"><span class="kw">class</span> <span class="tp">Box</span> {
+    <span class="kw">double</span> length, width, height;
+
+    <span class="cm">// 1. Default constructor (no parameters)</span>
+    <span class="tp">Box</span>() {
+        length = width = height = <span class="nm">1.0</span>;
+        System.out.println(<span class="st">"Default Box created"</span>);
+    }
+
+    <span class="cm">// 2. Parameterised constructor</span>
+    <span class="tp">Box</span>(<span class="kw">double</span> l, <span class="kw">double</span> w, <span class="kw">double</span> h) {
+        length = l; width = w; height = h;
+    }
+
+    <span class="cm">// 3. Copy constructor (Java doesn't provide one automatically!)</span>
+    <span class="tp">Box</span>(<span class="tp">Box</span> other) {
+        <span class="kw">this</span>.length = other.length;
+        <span class="kw">this</span>.width  = other.width;
+        <span class="kw">this</span>.height = other.height;
+    }
+
+    <span class="kw">double</span> <span class="fn">volume</span>() { <span class="kw">return</span> length * width * height; }
+}</pre>
+
+  <div class="purple-box">
+    If you do NOT write any constructor, Java provides a <strong>default constructor</strong> (no-arg, does nothing). Once you write ANY constructor, the default is no longer provided automatically!
+  </div>
+
+  <div class="note-box">
+    <strong>Constructor chaining with this():</strong> <code>this(args)</code> calls another constructor in the SAME class and must be the very first statement. <code>super(args)</code> calls the parent constructor.
+  </div>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">OOP in Java — Unit 1</span>
+    <span class="unit-badge">SECTION 8</span>
+  </div>
+
+  <h2 class="topic">Methods</h2>
+  <div class="def-box">
+    A <strong>method</strong> is a block of code that performs a specific task. It is defined inside a class and can be called on objects (instance methods) or on the class (static methods).
+    <br>Syntax: <span class="formula">accessModifier returnType methodName(parameters) { body }</span>
+  </div>
+
+  <h3 class="sub">Method Categories</h3>
+  <table class="tt">
+    <tr><th>Type</th><th>Description</th><th>Called via</th></tr>
+    <tr><td><strong>Instance method</strong></td><td>Operates on instance variables. Needs an object to call.</td><td><code>obj.method()</code></td></tr>
+    <tr><td><strong>Static method</strong></td><td>Belongs to class. Cannot access instance variables directly.</td><td><code>ClassName.method()</code></td></tr>
+    <tr><td><strong>Getter</strong></td><td>Returns value of private field. Convention: <code>getFieldName()</code></td><td><code>obj.getName()</code></td></tr>
+    <tr><td><strong>Setter</strong></td><td>Sets value of private field. Convention: <code>setFieldName(val)</code></td><td><code>obj.setName(x)</code></td></tr>
+    <tr><td><strong>Abstract method</strong></td><td>No body; must be overridden in subclass.</td><td>via subclass object</td></tr>
+  </table>
+
+  <h3 class="sub">Pass by Value in Java</h3>
+  <div class="rule-box">
+    Java is <span class="hl-yellow">always pass-by-value</span> — but for objects, the <em>value</em> is the reference (memory address). So:
+    <ul class="plain" style="margin-top:6px">
+      <li>Primitive types: method gets a copy — changes don't affect original.</li>
+      <li>Object references: method gets a copy of the reference — you CAN modify the object's fields, but you CANNOT reassign the original reference.</li>
+    </ul>
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">🧪 Tricky Pass-by-Value Example</div>
+    <div class="q-step"><code>void change(int x) { x = 99; } int a = 5; change(a); // a is still 5!</code></div>
+    <div class="q-step"><code>void change(int[] arr) { arr[0] = 99; } int[] a = {5}; change(a); // a[0] = 99!</code></div>
+    <div class="q-ans">✓ Primitives: no change to original. Arrays/objects: fields CAN be changed via reference.</div>
+  </div>
+
+  <h3 class="sub">Varargs (Variable Arguments)</h3>
+  <pre class="code-block"><span class="cm">// Accepts zero or more int arguments</span>
+<span class="kw">int</span> <span class="fn">sum</span>(<span class="kw">int</span>... nums) {
+    <span class="kw">int</span> total = <span class="nm">0</span>;
+    <span class="kw">for</span>(<span class="kw">int</span> n : nums) total += n;
+    <span class="kw">return</span> total;
+}
+sum(<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>);    <span class="cm">// 6</span>
+sum();           <span class="cm">// 0 — zero arguments is valid</span></pre>
+
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     §9 — ACCESS SPECIFIERS, STATIC & FINAL (2 pages)
+══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">OOP in Java — Unit 1</span>
+    <span class="unit-badge">SECTION 9</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§9</span> Access Specifiers, Static &amp; Final</h1>
+  <hr class="divider">
+
+  <h2 class="topic">Access Specifiers (Modifiers)</h2>
+  <div class="def-box">
+    Access specifiers control the <strong>visibility</strong> (scope) of classes, fields, methods, and constructors.
+  </div>
+  <table class="tt">
+    <tr><th>Modifier</th><th>Same Class</th><th>Same Package</th><th>Subclass (diff pkg)</th><th>Other Package</th></tr>
+    <tr><td><strong>private</strong></td><td>✅</td><td>❌</td><td>❌</td><td>❌</td></tr>
+    <tr><td><strong>default</strong> (no keyword)</td><td>✅</td><td>✅</td><td>❌</td><td>❌</td></tr>
+    <tr><td><strong>protected</strong></td><td>✅</td><td>✅</td><td>✅</td><td>❌</td></tr>
+    <tr><td><strong>public</strong></td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr>
+  </table>
+
+  <div class="purple-box">
+    <strong>Most restrictive → Most open:</strong> <span class="formula">private &lt; default &lt; protected &lt; public</span><br>
+    Best practice (encapsulation): make fields <code>private</code>, methods <code>public</code>.
+  </div>
+
+  <div class="note-box">
+    <strong>Top-level classes</strong> can only be <code>public</code> or <code>default</code> — NOT private or protected. Inner classes can use all 4.
+  </div>
+
+  <h2 class="topic">Static Keyword</h2>
+  <div class="def-box">
+    <code>static</code> members belong to the <em>class</em>, not to any particular object. Shared across all instances.
+  </div>
+  <ul class="plain">
+    <li><strong>Static variable:</strong> one copy per class. Initialised when class loads.</li>
+    <li><strong>Static method:</strong> can be called without object. Cannot use <code>this</code> or access instance variables directly.</li>
+    <li><strong>Static block:</strong> runs once when class is first loaded. Used for static initialisation.</li>
+    <li><strong>Static nested class:</strong> inner class declared static — doesn't need outer class instance.</li>
+  </ul>
+  <pre class="code-block"><span class="kw">class</span> <span class="tp">Counter</span> {
+    <span class="kw">static int</span> count = <span class="nm">0</span>;
+
+    <span class="kw">static</span> {                       <span class="cm">// static block</span>
+        System.out.println(<span class="st">"Class loaded!"</span>);
+    }
+
+    <span class="tp">Counter</span>() { count++; }
+
+    <span class="kw">static int</span> <span class="fn">getCount</span>() { <span class="kw">return</span> count; }
+}</pre>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">OOP in Java — Unit 1</span>
+    <span class="unit-badge">SECTION 9</span>
+  </div>
+
+  <h2 class="topic">Final Keyword</h2>
+  <div class="def-box">
+    <code>final</code> means "cannot be changed." Applied to variables, methods, and classes.
+  </div>
+  <table class="tt">
+    <tr><th>Applied to</th><th>Meaning</th><th>Example</th></tr>
+    <tr><td><strong>Variable</strong></td><td>Value cannot be reassigned (constant)</td><td><code>final double PI = 3.14;</code></td></tr>
+    <tr><td><strong>Method</strong></td><td>Cannot be overridden in subclass</td><td><code>final void show() {}</code></td></tr>
+    <tr><td><strong>Class</strong></td><td>Cannot be subclassed (extended)</td><td><code>final class String {}</code></td></tr>
+  </table>
+
+  <div class="purple-box">
+    <strong>final + static</strong> = constant. Convention: ALL_CAPS with underscores.<br>
+    <span class="formula">static final double MAX_SPEED = 200.0;</span>
+  </div>
+
+  <pre class="code-block"><span class="kw">final class</span> <span class="tp">Immutable</span> {        <span class="cm">// cannot be extended</span>
+    <span class="kw">final int</span> value;             <span class="cm">// must be initialised in constructor</span>
+
+    <span class="tp">Immutable</span>(<span class="kw">int</span> v) { value = v; }
+
+    <span class="kw">final void</span> <span class="fn">show</span>() {         <span class="cm">// cannot be overridden</span>
+        System.out.println(value);
+    }
+}
+<span class="cm">// Java's String class is final — that's why you can't extend it!</span></pre>
+
+  <h2 class="topic">Blank Final &amp; final with Objects</h2>
+  <div class="rule-box">
+    <strong>Blank final variable:</strong> declared <code>final</code> but not initialised at declaration — must be initialised in the constructor.
+    <br><br>
+    <strong>final reference:</strong> the reference cannot change (point to a different object), but the object's fields CAN be modified!
+    <pre style="background:rgba(0,0,0,0.07);padding:8px;border-radius:4px;margin-top:8px;font-family:monospace;font-size:0.82rem;">final int[] arr = {1, 2, 3};
+arr[0] = 99;   // ✅ allowed — modifying content
+arr = new int[5]; // ❌ error — cannot reassign reference</pre>
+  </div>
+
+  <div class="note-box">
+    <strong>Common exam trap:</strong> "Can you change the value of a final array?" — YES you can change its elements. Only the reference is final, not the array contents.
+  </div>
+
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     §10 — INHERITANCE (3 pages)
+══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">OOP in Java — Unit 1</span>
+    <span class="unit-badge">SECTION 10</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§10</span> Inheritance — Super &amp; Sub Classes</h1>
+  <hr class="divider">
+
+  <h2 class="topic">What is Inheritance?</h2>
+  <div class="def-box">
+    <strong>Inheritance</strong> is the mechanism by which one class (child / subclass) acquires the properties and behaviours of another class (parent / superclass). Promotes <em>code reuse</em> and <em>IS-A</em> relationship.
+    <br>Keyword: <span class="formula">extends</span>
+  </div>
+
+  <div class="tree">
+    <span class="node">Animal</span> <span class="arrow">←extends</span> <span class="node">Dog</span> <span class="arrow">←extends</span> <span class="node">GoldenRetriever</span>
+  </div>
+
+  <h2 class="topic">Types of Inheritance in Java</h2>
+  <table class="tt">
+    <tr><th>Type</th><th>Description</th><th>Java supports?</th></tr>
+    <tr><td><strong>Single</strong></td><td>One child inherits from one parent.</td><td>✅ Yes</td></tr>
+    <tr><td><strong>Multilevel</strong></td><td>A → B → C (chain of inheritance).</td><td>✅ Yes</td></tr>
+    <tr><td><strong>Hierarchical</strong></td><td>Multiple children from one parent.</td><td>✅ Yes</td></tr>
+    <tr><td><strong>Multiple</strong></td><td>One child from multiple parents (classes).</td><td>❌ No (via classes)</td></tr>
+    <tr><td><strong>Hybrid</strong></td><td>Combination of above types.</td><td>❌ No (via classes)</td></tr>
+  </table>
+
+  <div class="purple-box">
+    Java does NOT support multiple inheritance through classes to avoid the <strong>Diamond Problem</strong> (ambiguity when two parents have same method). It CAN be achieved through <strong>interfaces</strong>.
+  </div>
+
+  <h2 class="topic">super keyword</h2>
+  <div class="def-box">
+    <code>super</code> refers to the <em>immediate parent class</em>. Used to:
+    <ul class="plain" style="margin-top:6px">
+      <li>Access parent class fields: <span class="formula">super.fieldName</span></li>
+      <li>Call parent class method: <span class="formula">super.methodName()</span></li>
+      <li>Call parent class constructor: <span class="formula">super(args)</span> — must be FIRST statement in constructor.</li>
+    </ul>
+  </div>
+
+  <div class="note-box">
+    If you don't explicitly write <code>super()</code> in a constructor, Java automatically inserts a call to the no-arg parent constructor. If the parent has no no-arg constructor, you MUST call <code>super(args)</code> manually or you get a compile error.
+  </div>
+
+  <div class="page-num">1 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">OOP in Java — Unit 1</span>
+    <span class="unit-badge">SECTION 10</span>
+  </div>
+
+  <h2 class="topic">Inheritance Example — Single &amp; Multilevel</h2>
+  <pre class="code-block"><span class="cm">// Superclass</span>
+<span class="kw">class</span> <span class="tp">Animal</span> {
+    String name;
+    <span class="tp">Animal</span>(String name) { <span class="kw">this</span>.name = name; }
+    <span class="kw">void</span> <span class="fn">eat</span>()   { System.out.println(name + <span class="st">" eats"</span>); }
+    <span class="kw">void</span> <span class="fn">breathe</span>() { System.out.println(name + <span class="st">" breathes"</span>); }
+}
+
+<span class="cm">// Single inheritance — Dog IS-A Animal</span>
+<span class="kw">class</span> <span class="tp">Dog</span> <span class="kw">extends</span> <span class="tp">Animal</span> {
+    String breed;
+    <span class="tp">Dog</span>(String name, String breed) {
+        <span class="kw">super</span>(name);           <span class="cm">// calls Animal constructor</span>
+        <span class="kw">this</span>.breed = breed;
+    }
+    <span class="kw">void</span> <span class="fn">bark</span>() { System.out.println(name + <span class="st">" barks!"</span>); }
+}
+
+<span class="cm">// Multilevel inheritance</span>
+<span class="kw">class</span> <span class="tp">GoldenRetriever</span> <span class="kw">extends</span> <span class="tp">Dog</span> {
+    <span class="tp">GoldenRetriever</span>(String name) {
+        <span class="kw">super</span>(name, <span class="st">"Golden Retriever"</span>);
+    }
+    <span class="kw">void</span> <span class="fn">fetch</span>() { System.out.println(name + <span class="st">" fetches!"</span>); }
+}
+
+<span class="cm">// Usage</span>
+<span class="tp">GoldenRetriever</span> g = <span class="kw">new</span> <span class="tp">GoldenRetriever</span>(<span class="st">"Buddy"</span>);
+g.<span class="fn">eat</span>();    <span class="cm">// inherited from Animal</span>
+g.<span class="fn">bark</span>();   <span class="cm">// inherited from Dog</span>
+g.<span class="fn">fetch</span>();  <span class="cm">// own method</span></pre>
+
+  <h2 class="topic">What is Inherited?</h2>
+  <div class="vs-box">
+    <div class="vs-left">
+      <strong>✅ Inherited</strong>
+      public fields &amp; methods<br>
+      protected fields &amp; methods<br>
+      default members (same package)<br>
+      All methods except constructors
+    </div>
+    <div class="vs-right">
+      <strong>❌ NOT Inherited</strong>
+      private fields &amp; methods<br>
+      Constructors (but called via super)<br>
+      static members (inherited but not overridden in true sense)
+    </div>
+  </div>
+
+  <div class="page-num">2 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">OOP in Java — Unit 1</span>
+    <span class="unit-badge">SECTION 10</span>
+  </div>
+
+  <h2 class="topic">IS-A vs HAS-A Relationship</h2>
+  <div class="two-col">
+    <div class="purple-box">
+      <strong>IS-A (Inheritance)</strong><br>
+      Use <code>extends</code>.<br>
+      Dog IS-A Animal ✅<br>
+      Car IS-A Vehicle ✅<br>
+      Check: "Is a Dog an Animal?" — Yes.
+    </div>
+    <div class="orange-box">
+      <strong>HAS-A (Composition)</strong><br>
+      Class contains an object of another class as a field.<br>
+      Car HAS-A Engine ✅<br>
+      Student HAS-A Address ✅<br>
+      Prefer composition over inheritance when IS-A doesn't fit.
+    </div>
+  </div>
+
+  <h2 class="topic">Object Class — Root of All Classes</h2>
+  <div class="rule-box">
+    Every class in Java implicitly extends <code>java.lang.Object</code> if no explicit parent is specified. The Object class provides default implementations of:
+    <ul class="plain" style="margin-top:6px">
+      <li><span class="formula">toString()</span> — returns "ClassName@hashcode" by default. Override for readable output.</li>
+      <li><span class="formula">equals(Object o)</span> — default checks reference equality (==). Override for content equality.</li>
+      <li><span class="formula">hashCode()</span> — returns integer hash. Must override when you override equals.</li>
+      <li><span class="formula">getClass()</span> — returns runtime class of object.</li>
+      <li><span class="formula">clone()</span> — creates a copy (must implement Cloneable).</li>
+      <li><span class="formula">finalize()</span> — called before GC (deprecated in Java 9+).</li>
+    </ul>
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">🧪 Why override toString()?</div>
+    <div class="q-step">Default: <code>Student@6d06d69c</code> — not helpful.</div>
+    <div class="q-step">Override: <code>public String toString() { return "Student[" + name + "," + rollNo + "]"; }</code></div>
+    <div class="q-ans">✓ Now System.out.println(s) prints: Student[Alice,1] — much more readable.</div>
+  </div>
+
+  <div class="page-num">3 / 3</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     §11 — OVERRIDING & OVERLOADING (2 pages)
+══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">OOP in Java — Unit 1</span>
+    <span class="unit-badge">SECTION 11</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§11</span> Overriding &amp; Overloading</h1>
+  <hr class="divider">
+
+  <h2 class="topic">Method Overloading (Compile-time Polymorphism)</h2>
+  <div class="def-box">
+    <strong>Overloading</strong> — same method name, different parameter lists (type, count, or order) in the <em>same class</em>. Resolved at <em>compile time</em> (static/early binding).
+  </div>
+  <pre class="code-block"><span class="kw">class</span> <span class="tp">Calculator</span> {
+    <span class="kw">int</span>    <span class="fn">add</span>(<span class="kw">int</span> a, <span class="kw">int</span> b)           { <span class="kw">return</span> a + b; }
+    <span class="kw">double</span> <span class="fn">add</span>(<span class="kw">double</span> a, <span class="kw">double</span> b)   { <span class="kw">return</span> a + b; }
+    <span class="kw">int</span>    <span class="fn">add</span>(<span class="kw">int</span> a, <span class="kw">int</span> b, <span class="kw">int</span> c)   { <span class="kw">return</span> a + b + c; }
+    String <span class="fn">add</span>(String a, String b)    { <span class="kw">return</span> a + b; }
+}</pre>
+
+  <div class="note-box">
+    <strong>Return type alone CANNOT distinguish overloaded methods</strong> — this does NOT compile:<br>
+    <code>int foo() { return 1; }</code> and <code>double foo() { return 1.0; }</code> in the same class = compile error.
+  </div>
+
+  <h2 class="topic">Method Overriding (Runtime Polymorphism)</h2>
+  <div class="def-box">
+    <strong>Overriding</strong> — subclass provides its own implementation of a method already defined in the superclass. Same name, same parameters, same return type (or covariant). Resolved at <em>runtime</em> (dynamic/late binding).
+  </div>
+  <pre class="code-block"><span class="kw">class</span> <span class="tp">Shape</span> {
+    <span class="kw">void</span> <span class="fn">draw</span>() { System.out.println(<span class="st">"Drawing a shape"</span>); }
+}
+
+<span class="kw">class</span> <span class="tp">Circle</span> <span class="kw">extends</span> <span class="tp">Shape</span> {
+    <span class="nm">@Override</span>                      <span class="cm">// annotation — optional but recommended</span>
+    <span class="kw">void</span> <span class="fn">draw</span>() { System.out.println(<span class="st">"Drawing a circle ⭕"</span>); }
+}
+
+<span class="kw">class</span> <span class="tp">Rectangle</span> <span class="kw">extends</span> <span class="tp">Shape</span> {
+    <span class="nm">@Override</span>
+    <span class="kw">void</span> <span class="fn">draw</span>() { System.out.println(<span class="st">"Drawing a rectangle ▭"</span>); }
+}
+
+<span class="cm">// Runtime polymorphism — method called based on actual object type</span>
+Shape s = <span class="kw">new</span> Circle();     <span class="cm">// Shape reference, Circle object</span>
+s.<span class="fn">draw</span>();                   <span class="cm">// "Drawing a circle ⭕"</span></pre>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">OOP in Java — Unit 1</span>
+    <span class="unit-badge">SECTION 11</span>
+  </div>
+
+  <h2 class="topic">Overriding vs Overloading — Side by Side</h2>
+  <table class="tt">
+    <tr><th>Aspect</th><th>Overloading</th><th>Overriding</th></tr>
+    <tr><td>Where</td><td>Same class</td><td>Subclass overrides superclass method</td></tr>
+    <tr><td>Parameters</td><td>Must differ</td><td>Must be identical</td></tr>
+    <tr><td>Return type</td><td>Can differ</td><td>Same or covariant</td></tr>
+    <tr><td>Binding</td><td>Compile-time (static)</td><td>Runtime (dynamic)</td></tr>
+    <tr><td>Polymorphism</td><td>Compile-time polymorphism</td><td>Runtime polymorphism</td></tr>
+    <tr><td>Inheritance</td><td>Not needed</td><td>Required</td></tr>
+    <tr><td>Access modifier</td><td>Can differ</td><td>Cannot be more restrictive</td></tr>
+    <tr><td>static methods</td><td>Can be overloaded</td><td>Cannot be overridden (hidden instead)</td></tr>
+    <tr><td>private methods</td><td>Can be overloaded</td><td>Cannot be overridden</td></tr>
+    <tr><td>final methods</td><td>Can be overloaded</td><td>Cannot be overridden</td></tr>
+  </table>
+
+  <div class="rule-box">
+    <strong>Rules for Overriding:</strong>
+    <ul class="plain" style="margin-top:6px">
+      <li>Method signature (name + params) must be identical.</li>
+      <li>Return type must be same or <em>covariant</em> (subtype of parent return type).</li>
+      <li>Cannot override <code>static</code>, <code>final</code>, or <code>private</code> methods.</li>
+      <li>Access modifier can be widened (private→public) but NOT narrowed.</li>
+      <li>Can throw same or narrower checked exceptions, or unchecked exceptions.</li>
+      <li>Use <code>@Override</code> annotation — helps compiler catch mistakes.</li>
+    </ul>
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">🧪 Polymorphism with Array of Shapes</div>
+    <div class="q-step"><code>Shape[] shapes = { new Circle(), new Rectangle(), new Circle() };</code></div>
+    <div class="q-step"><code>for(Shape s : shapes) s.draw();</code></div>
+    <div class="q-ans">✓ Each object's draw() is called based on actual runtime type — this is runtime polymorphism in action!</div>
+  </div>
+
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     §12 — ENCAPSULATION & ABSTRACTION (2 pages)
+══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">OOP in Java — Unit 1</span>
+    <span class="unit-badge">SECTION 12</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§12</span> Encapsulation &amp; Abstraction</h1>
+  <hr class="divider">
+
+  <h2 class="topic">Encapsulation</h2>
+  <div class="def-box">
+    <strong>Encapsulation</strong> is the process of wrapping data (fields) and the methods that operate on the data into a single unit (class), and restricting direct access to the data from outside the class.
+  </div>
+
+  <div class="orange-box">
+    How to achieve encapsulation:
+    <div class="step-card" style="margin-top:8px">
+      <div class="step-head">1</div>
+      <div class="step-body">Declare all fields as <code>private</code>.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-head">2</div>
+      <div class="step-body">Provide <code>public</code> getter methods to read the values.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-head">3</div>
+      <div class="step-body">Provide <code>public</code> setter methods to modify the values (with validation if needed).</div>
+    </div>
+  </div>
+
+  <pre class="code-block"><span class="kw">public class</span> <span class="tp">BankAccount</span> {
+    <span class="kw">private double</span> balance;      <span class="cm">// hidden from outside</span>
+    <span class="kw">private</span> String accountNo;
+
+    <span class="kw">public double</span> <span class="fn">getBalance</span>() { <span class="kw">return</span> balance; }
+
+    <span class="kw">public void</span> <span class="fn">deposit</span>(<span class="kw">double</span> amount) {
+        <span class="kw">if</span> (amount > <span class="nm">0</span>) balance += amount;  <span class="cm">// validation!</span>
+        <span class="kw">else</span> System.out.println(<span class="st">"Invalid amount"</span>);
+    }
+
+    <span class="kw">public void</span> <span class="fn">withdraw</span>(<span class="kw">double</span> amount) {
+        <span class="kw">if</span> (amount <= balance) balance -= amount;
+        <span class="kw">else</span> System.out.println(<span class="st">"Insufficient funds"</span>);
+    }
+}</pre>
+
+  <div class="rule-box">
+    <strong>Benefits of Encapsulation:</strong>
+    <ul class="plain" style="margin-top:6px">
+      <li>Data hiding — internal state protected from unintended modification.</li>
+      <li>Flexibility — can change internal implementation without affecting external code.</li>
+      <li>Increased security and control (add validation in setters).</li>
+      <li>Makes code easier to test and maintain.</li>
+    </ul>
+  </div>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">OOP in Java — Unit 1</span>
+    <span class="unit-badge">SECTION 12</span>
+  </div>
+
+  <h2 class="topic">Abstraction</h2>
+  <div class="def-box">
+    <strong>Abstraction</strong> is the process of hiding complex implementation details and exposing only what is essential to the user. Focus on <em>what</em> an object does, not <em>how</em> it does it.
+  </div>
+
+  <div class="purple-box">
+    Real-world analogy: When you drive a car, you use the steering wheel, accelerator, and brakes — you don't need to know HOW the engine or braking system works internally. That's abstraction.
+  </div>
+
+  <h3 class="sub">Two ways to achieve abstraction in Java:</h3>
+  <div class="two-col">
+    <div class="orange-box">
+      <strong>Abstract Class</strong><br>
+      Partial abstraction (0–100%).<br>
+      Can have abstract + concrete methods.<br>
+      Can have constructors and fields.<br>
+      A class can extend only ONE abstract class.
+    </div>
+    <div class="def-box">
+      <strong>Interface</strong><br>
+      Full abstraction (100% by tradition).<br>
+      All methods are abstract by default (Java 7).<br>
+      Can have default/static methods (Java 8+).<br>
+      A class can implement MULTIPLE interfaces.
+    </div>
+  </div>
+
+  <h2 class="topic">Encapsulation vs Abstraction</h2>
+  <table class="tt">
+    <tr><th>Aspect</th><th>Encapsulation</th><th>Abstraction</th></tr>
+    <tr><td>Focus</td><td>Hides <em>data</em></td><td>Hides <em>implementation</em></td></tr>
+    <tr><td>How</td><td>private fields + getters/setters</td><td>abstract classes + interfaces</td></tr>
+    <tr><td>Purpose</td><td>Data protection &amp; control</td><td>Simplify complexity for user</td></tr>
+    <tr><td>Example</td><td>private balance in BankAccount</td><td>Shape.draw() without knowing how each shape draws</td></tr>
+  </table>
+
+  <div class="note-box">
+    These two are often confused in exams. Remember: <strong>Encapsulation = wrapping + hiding DATA. Abstraction = hiding HOW things work.</strong> Both work together — a well-designed class is both encapsulated and abstracted.
+  </div>
+
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     §13 — INTERFACES & ABSTRACT CLASSES (3 pages)
+══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">OOP in Java — Unit 1</span>
+    <span class="unit-badge">SECTION 13</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§13</span> Interfaces &amp; Abstract Classes</h1>
+  <hr class="divider">
+
+  <h2 class="topic">Abstract Class</h2>
+  <div class="def-box">
+    A class declared with the <code>abstract</code> keyword. It may contain abstract methods (no body) and/or concrete methods (with body). <span class="hl-yellow">Cannot be instantiated directly</span> — must be subclassed.
+  </div>
+
+  <pre class="code-block"><span class="kw">abstract class</span> <span class="tp">Shape</span> {
+    String color;
+    <span class="tp">Shape</span>(String color) { <span class="kw">this</span>.color = color; }
+
+    <span class="cm">// Abstract method — no body, MUST be overridden</span>
+    <span class="kw">abstract double</span> <span class="fn">area</span>();
+
+    <span class="cm">// Concrete method — has body, can be inherited as-is</span>
+    <span class="kw">void</span> <span class="fn">describe</span>() {
+        System.out.println(<span class="st">"I am a "</span> + color + <span class="st">" shape with area "</span> + <span class="fn">area</span>());
+    }
+}
+
+<span class="kw">class</span> <span class="tp">Circle</span> <span class="kw">extends</span> <span class="tp">Shape</span> {
+    <span class="kw">double</span> radius;
+    <span class="tp">Circle</span>(<span class="kw">double</span> r, String c) { <span class="kw">super</span>(c); radius = r; }
+
+    <span class="nm">@Override</span>
+    <span class="kw">double</span> <span class="fn">area</span>() { <span class="kw">return</span> Math.PI * radius * radius; }
+}
+
+<span class="cm">// Shape s = new Shape();  ❌ Cannot instantiate abstract class</span>
+Shape s = <span class="kw">new</span> Circle(<span class="nm">5.0</span>, <span class="st">"Red"</span>);  <span class="cm">// ✅ polymorphism</span>
+s.<span class="fn">describe</span>();                       <span class="cm">// I am a Red shape with area 78.53...</span></pre>
+
+  <div class="rule-box">
+    <strong>Abstract Class Rules:</strong>
+    <ul class="plain" style="margin-top:6px">
+      <li>If a class has even one abstract method, the class must be declared abstract.</li>
+      <li>An abstract class CAN have a constructor (called via super() from subclass).</li>
+      <li>A subclass MUST implement all abstract methods, or be declared abstract itself.</li>
+      <li>Abstract class CAN have static, final, and concrete methods.</li>
+    </ul>
+  </div>
+
+  <div class="page-num">1 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">OOP in Java — Unit 1</span>
+    <span class="unit-badge">SECTION 13</span>
+  </div>
+
+  <h2 class="topic">Interfaces</h2>
+  <div class="def-box">
+    An <strong>interface</strong> is a completely abstract type that defines a contract — a set of methods that a class must implement. It specifies <em>what</em> to do but not <em>how</em>. Keyword: <code>implements</code>.
+  </div>
+
+  <pre class="code-block"><span class="cm">// Defining an interface</span>
+<span class="kw">interface</span> <span class="tp">Drawable</span> {
+    <span class="cm">// All fields are implicitly: public static final</span>
+    <span class="kw">int</span> MAX_SIZE = <span class="nm">100</span>;    <span class="cm">// same as: public static final int MAX_SIZE = 100;</span>
+
+    <span class="cm">// All methods are implicitly: public abstract (Java 7 and below)</span>
+    <span class="kw">void</span> <span class="fn">draw</span>();
+    <span class="kw">void</span> <span class="fn">resize</span>(<span class="kw">int</span> factor);
+
+    <span class="cm">// Default method — Java 8+ (has a body, subclass can override)</span>
+    <span class="kw">default void</span> <span class="fn">describe</span>() {
+        System.out.println(<span class="st">"I am a drawable object"</span>);
+    }
+
+    <span class="cm">// Static method — Java 8+ (called as Drawable.info())</span>
+    <span class="kw">static void</span> <span class="fn">info</span>() {
+        System.out.println(<span class="st">"Drawable interface"</span>);
+    }
+}
+
+<span class="cm">// Implementing interface</span>
+<span class="kw">class</span> <span class="tp">Square</span> <span class="kw">implements</span> <span class="tp">Drawable</span> {
+    <span class="nm">@Override</span>
+    <span class="kw">public void</span> <span class="fn">draw</span>() { System.out.println(<span class="st">"Drawing square □"</span>); }
+    <span class="nm">@Override</span>
+    <span class="kw">public void</span> <span class="fn">resize</span>(<span class="kw">int</span> f) { System.out.println(<span class="st">"Resizing by "</span> + f); }
+}
+
+<span class="cm">// Multiple interfaces</span>
+<span class="kw">class</span> <span class="tp">FancyShape</span> <span class="kw">implements</span> <span class="tp">Drawable</span>, <span class="tp">Serializable</span>, <span class="tp">Comparable</span>&lt;<span class="tp">FancyShape</span>&gt; {
+    <span class="cm">// must implement all abstract methods from all interfaces</span>
+}</pre>
+
+  <div class="note-box">
+    All methods in an interface are implicitly <code>public</code>. When you implement them, you MUST use <code>public</code> access (or you'll get a compile error — can't reduce visibility).
+  </div>
+
+  <div class="page-num">2 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">OOP in Java — Unit 1</span>
+    <span class="unit-badge">SECTION 13</span>
+  </div>
+
+  <h2 class="topic">Abstract Class vs Interface — Master Comparison</h2>
+  <table class="tt">
+    <tr><th>Feature</th><th>Abstract Class</th><th>Interface</th></tr>
+    <tr><td>Keyword</td><td><code>abstract class</code></td><td><code>interface</code></td></tr>
+    <tr><td>Instantiation</td><td>❌ Cannot instantiate</td><td>❌ Cannot instantiate</td></tr>
+    <tr><td>Method types</td><td>Abstract + Concrete</td><td>Abstract + default + static (Java 8+)</td></tr>
+    <tr><td>Fields</td><td>Any type (instance, static)</td><td>public static final only</td></tr>
+    <tr><td>Constructor</td><td>✅ Has constructor</td><td>❌ No constructor</td></tr>
+    <tr><td>Multiple inheritance</td><td>❌ Extend only ONE</td><td>✅ Implement MULTIPLE</td></tr>
+    <tr><td>Access modifiers</td><td>Any modifier on methods</td><td>public only (abstract methods)</td></tr>
+    <tr><td>When to use</td><td>Shared code + common base with IS-A</td><td>Contract / capability across unrelated classes</td></tr>
+    <tr><td>Example</td><td>abstract class Shape</td><td>interface Serializable, Runnable</td></tr>
+  </table>
+
+  <div class="purple-box">
+    <strong>Choosing between them:</strong><br>
+    Use <strong>abstract class</strong> when classes share code and have a natural parent-child hierarchy.<br>
+    Use <strong>interface</strong> when you want to define a capability that multiple unrelated classes can have (e.g., <code>Flyable</code> for Bird, Airplane, Superman).
+  </div>
+
+  <h2 class="topic">Interface Extending Interface</h2>
+  <pre class="code-block"><span class="kw">interface</span> <span class="tp">Animal</span>   { <span class="kw">void</span> <span class="fn">breathe</span>(); }
+<span class="kw">interface</span> <span class="tp">Pet</span> <span class="kw">extends</span> <span class="tp">Animal</span> { <span class="kw">void</span> <span class="fn">play</span>(); }
+<span class="cm">// An interface can extend multiple interfaces!</span>
+<span class="kw">interface</span> <span class="tp">SmartPet</span> <span class="kw">extends</span> <span class="tp">Pet</span>, <span class="tp">Trainable</span> { <span class="kw">void</span> <span class="fn">doTrick</span>(); }</pre>
+
+  <div class="qbox">
+    <div class="q-label">🧪 Classic Exam Question — Can abstract class have constructor?</div>
+    <div class="q-step">YES — abstract classes CAN have constructors, but they cannot be called directly with new.</div>
+    <div class="q-step">They are called implicitly via <code>super()</code> when a subclass object is created.</div>
+    <div class="q-ans">✓ Purpose: to initialise the common fields in the abstract class when subclass is constructed.</div>
+  </div>
+
+  <div class="note-box">
+    <strong>Functional Interface (Java 8):</strong> An interface with exactly ONE abstract method. Used with lambda expressions. e.g., <code>Runnable</code>, <code>Comparator</code>, <code>Callable</code>. Annotate with <code>@FunctionalInterface</code>.
+  </div>
+
+  <div class="page-num">3 / 3</div>
+</div>
+
+<script>
+  document.querySelectorAll('.part-nav a').forEach(a => {
+    if (a.href === window.location.href) a.classList.add('active');
+  });
+</script>
+</body>
+</html>

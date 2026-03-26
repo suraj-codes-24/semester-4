@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DSD Unit 2 — Part 3 | Adders, Subtractors &amp; BCD</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Kalam',cursive;background:#c8c8c8;background-image:repeating-linear-gradient(45deg,#b8b8b8 0,#b8b8b8 1px,transparent 0,transparent 50%);background-size:10px 10px;min-height:100vh}
+.part-nav{position:fixed;top:0;left:0;right:0;background:#0d1b6e;color:white;display:flex;align-items:center;justify-content:center;padding:10px 20px;gap:10px;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,0.3);flex-wrap:wrap}
+.nav-title{font-family:'Caveat',cursive;font-size:1.1rem;font-weight:700;margin-right:15px;white-space:nowrap}
+.part-nav a{color:rgba(255,255,255,0.55);text-decoration:none;padding:5px 18px;border-radius:20px;font-family:'Caveat',cursive;font-size:1rem;transition:all .2s;white-space:nowrap}
+.part-nav a.active{color:white;background:rgba(255,255,255,0.22);font-weight:700}
+.part-nav a:hover{color:white;background:rgba(255,255,255,0.12)}
+.notebook{max-width:860px;margin:0 auto;padding:80px 16px 50px}
+.page{background:#fffef5;border:1px solid #ddd;border-radius:3px;box-shadow:3px 3px 12px rgba(0,0,0,0.18);margin-bottom:28px;padding:28px 36px 50px 72px;position:relative;overflow:hidden}
+.page::before{content:'';position:absolute;top:0;bottom:0;left:58px;width:2px;background:#ff9999;opacity:.6}
+.page-lines{position:absolute;top:0;left:0;right:0;bottom:0;background-image:repeating-linear-gradient(transparent,transparent 29px,#c5ddf4 29px,#c5ddf4 30px);background-size:100% 30px;pointer-events:none;z-index:0}
+.page>*{position:relative;z-index:1}
+.holes{position:absolute;left:15px;top:35px;display:flex;flex-direction:column;gap:90px;z-index:2}
+.hole{width:22px;height:22px;border-radius:50%;background:#b8b8b8;border:3px solid #999;box-shadow:inset 0 1px 4px rgba(0,0,0,0.3)}
+.page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;line-height:30px}
+.date-tag{font-family:'Caveat',cursive;font-size:.9rem;color:#888}
+.unit-badge{background:#0d1b6e;color:white;padding:2px 14px;border-radius:12px;font-family:'Caveat',cursive;font-size:.82rem;letter-spacing:.5px}
+.section-title{font-family:'Caveat',cursive;font-size:2.1rem;color:#0d1b6e;line-height:1.1;margin-bottom:4px}
+.sn{background:#0d1b6e;color:white;padding:2px 10px;border-radius:5px;margin-right:8px;font-size:1.6rem}
+hr.divider{border:none;border-top:2.5px solid #0d1b6e;opacity:.2;margin:8px 0 18px}
+.topic{font-family:'Caveat',cursive;font-size:1.55rem;color:#b71c1c;margin:22px 0 10px;padding-bottom:4px;border-bottom:1.5px dashed #ef9a9a;line-height:30px}
+.sub{font-family:'Caveat',cursive;font-size:1.2rem;color:#1565c0;margin:14px 0 8px;line-height:30px}
+ul.plain{list-style:none;padding-left:8px;line-height:1.8}
+ul.plain li::before{content:"→ ";color:#0d1b6e;font-weight:700}
+ul.plain li{margin:3px 0}
+.formula{font-family:'Courier New',monospace;background:#f0f0f0;padding:2px 7px;border-radius:4px;border:1px solid #ccc;color:#c62828;font-size:.93rem}
+.def-box{background:#e3f2fd;border-left:5px solid #1565c0;padding:12px 15px;margin:14px 0;border-radius:0 8px 8px 0;line-height:1.7}
+.def-box b.bh{display:block;font-family:'Caveat',cursive;font-size:1.15rem;color:#1565c0;margin-bottom:4px}
+.rule-box{background:#e8f5e9;border-left:5px solid #2e7d32;padding:12px 15px;margin:14px 0;border-radius:0 8px 8px 0;line-height:1.7}
+.rule-box b.bh{display:block;font-family:'Caveat',cursive;font-size:1.15rem;color:#2e7d32;margin-bottom:4px}
+.note-box{background:#fff8e1;border-left:5px solid #f57f17;padding:12px 15px;margin:14px 0;border-radius:0 8px 8px 0;line-height:1.7}
+.note-box b.bh{display:block;font-family:'Caveat',cursive;font-size:1.15rem;color:#e65100;margin-bottom:4px}
+.purple-box{background:#f3e5f5;border-left:5px solid #7b1fa2;padding:12px 15px;margin:14px 0;border-radius:0 8px 8px 0;line-height:1.7}
+.purple-box b.bh{display:block;font-family:'Caveat',cursive;font-size:1.15rem;color:#6a1b9a;margin-bottom:4px}
+.orange-box{background:#fbe9e7;border-left:5px solid #d84315;padding:12px 15px;margin:14px 0;border-radius:0 8px 8px 0;line-height:1.7}
+.orange-box b.bh{display:block;font-family:'Caveat',cursive;font-size:1.15rem;color:#bf360c;margin-bottom:4px}
+.qbox{border:2px solid #0d1b6e;border-radius:8px;padding:14px;margin:14px 0;background:#fafafa}
+.q-label{font-weight:700;color:#0d1b6e;font-family:'Caveat',cursive;font-size:1.15rem;margin-bottom:8px}
+.q-step{margin:5px 0;padding-left:14px;line-height:1.7}
+.q-ans{background:#e8f5e9;padding:8px 12px;border-radius:4px;margin-top:8px;border-left:3px solid #4caf50;line-height:1.7}
+table.tt{border-collapse:collapse;margin:14px auto;font-size:.9rem}
+table.tt th{background:#0d1b6e;color:white;padding:6px 14px;text-align:center;font-family:'Caveat',cursive;font-size:1rem}
+table.tt td{border:1px solid #ccc;padding:5px 14px;text-align:center}
+table.tt tr:nth-child(even) td{background:#e3f2fd}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:14px 0}
+.vs-box{display:grid;grid-template-columns:1fr 1fr;margin:14px 0;border:2px solid #ddd;border-radius:8px;overflow:hidden}
+.vs-left{background:#e8f5e9;padding:12px}
+.vs-right{background:#fce4ec;padding:12px;border-left:2px solid #ddd}
+.vs-left h4,.vs-right h4{font-family:'Caveat',cursive;font-size:1.1rem;text-align:center;margin-bottom:8px}
+.step-card{border:1px solid #ddd;border-radius:8px;overflow:hidden;margin:10px 0}
+.step-head{background:#0d1b6e;color:white;padding:7px 14px;font-family:'Caveat',cursive;font-size:1.1rem}
+.step-body{padding:10px 14px;line-height:1.7}
+.page-num{position:absolute;bottom:14px;right:18px;color:#aaa;font-family:'Caveat',cursive;font-size:1rem}
+.cover-page{background:linear-gradient(140deg,#0d3d6e 0%,#1a5276 40%,#1f618d 70%,#2980b9 100%);color:white;border-radius:6px;padding:55px 50px;margin-bottom:28px;min-height:580px;position:relative;box-shadow:4px 4px 20px rgba(0,0,0,0.35);overflow:hidden}
+.cover-page::after{content:'';position:absolute;top:-80px;right:-80px;width:350px;height:350px;border-radius:50%;background:rgba(255,255,255,.05)}
+.cover-subject{font-size:.85rem;opacity:.65;text-transform:uppercase;letter-spacing:3px;font-family:'Caveat',cursive}
+.cover-unit{font-family:'Caveat',cursive;font-size:3.8rem;font-weight:700;margin:8px 0;line-height:1.05}
+.cover-subtitle{font-family:'Caveat',cursive;font-size:1.9rem;opacity:.8}
+.cover-part{display:inline-block;background:rgba(255,255,255,.18);padding:5px 22px;border-radius:20px;margin:18px 0;font-size:1.05rem;font-family:'Caveat',cursive;border:1px solid rgba(255,255,255,.3)}
+.cover-toc h3{font-family:'Caveat',cursive;font-size:1.55rem;border-bottom:1px solid rgba(255,255,255,.3);padding-bottom:8px;margin:28px 0 14px;opacity:.9}
+.toc-item{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px dotted rgba(255,255,255,.2);font-size:.95rem}
+.toc-item .toc-sec{opacity:.7;font-size:.82rem;margin-right:10px;white-space:nowrap}
+.toc-item .toc-pg{opacity:.6;font-size:.82rem;white-space:nowrap}
+.pq-sec{background:linear-gradient(135deg,#0d1b6e08,#3949ab08);border:2px solid #0d1b6e;border-radius:8px;padding:15px;margin:14px 0}
+.pq-num{display:inline-block;background:#0d1b6e;color:white;width:28px;height:28px;border-radius:50%;text-align:center;line-height:28px;font-weight:700;margin-right:8px;font-size:.88rem}
+.pq-q{font-weight:600;color:#0d1b6e;margin-bottom:6px}
+.pq-hint{color:#666;font-size:.85rem;font-style:italic}
+.ans-btn{display:inline-block;cursor:pointer;background:#0d1b6e;color:white;padding:3px 12px;border-radius:10px;font-size:.8rem;margin-top:6px;font-family:'Caveat',cursive;border:none}
+.pq-answer{display:none;background:#e8f5e9;border-left:3px solid #4caf50;padding:8px 12px;border-radius:4px;margin-top:8px;line-height:1.6}
+.circuit-ascii{font-family:'Courier New',monospace;font-size:.82rem;background:#f5f5f5;padding:10px 14px;border-radius:6px;border:1px solid #ddd;overflow-x:auto;white-space:pre;line-height:1.6;color:#333;margin:10px 0}
+/* Quick Revision specific */
+.rev-card{background:linear-gradient(135deg,#0d1b6e,#1a237e);color:white;border-radius:8px;padding:14px 18px;margin:10px 0}
+.rev-card h4{font-family:'Caveat',cursive;font-size:1.3rem;margin-bottom:8px;border-bottom:1px solid rgba(255,255,255,.3);padding-bottom:4px}
+.rev-card .formula{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.3);color:#ffeb3b}
+.rev-card ul{list-style:none;padding-left:4px}
+.rev-card ul li::before{content:"✓ ";color:#69f0ae}
+.rev-card ul li{margin:4px 0;font-size:.93rem}
+.formula-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+.formula-card{background:#f5f5f5;border:2px solid #0d1b6e;border-radius:8px;padding:12px;text-align:center}
+.formula-card .fc-title{font-family:'Caveat',cursive;font-size:1rem;color:#0d1b6e;margin-bottom:6px;font-weight:700}
+.formula-card .fc-expr{font-family:'Courier New',monospace;color:#c62828;font-size:.88rem;line-height:1.6}
+</style>
+</head>
+<body>
+
+<nav class="part-nav">
+  <a href="../index.html">&#8617; Units</a>
+  <span class="nav-title">📓 DSD / DE — Unit 2</span>
+  <a href="part1.html">Part 1: Comparator &amp; MUX</a>
+  <a href="part2.html">Part 2: Decoder, Encoder &amp; Display</a>
+  <a href="part3.html" class="active">Part 3: Adders, Subtractors &amp; BCD</a>
+</nav>
+
+<div class="notebook">
+
+<!-- Cover -->
+<div class="cover-page">
+  <div class="cover-subject">BEC-302 / BOE-310 / BOE-410 · Digital System Design</div>
+  <div class="cover-unit">Unit 2</div>
+  <div class="cover-subtitle">Combinational Logic — Arithmetic Circuits</div>
+  <div class="cover-part">📘 Part 3 of 3</div>
+  <div class="cover-toc">
+    <h3>Contents — Part 3</h3>
+    <div class="toc-item"><span><b>§8</b> Half Adder &amp; Full Adder</span><span class="toc-sec">Section 8</span><span class="toc-pg">3 pages</span></div>
+    <div class="toc-item"><span><b>§9</b> Half Subtractor &amp; Full Subtractor</span><span class="toc-sec">Section 9</span><span class="toc-pg">2 pages</span></div>
+    <div class="toc-item"><span><b>§10</b> Serial &amp; Parallel Adders (4-bit)</span><span class="toc-sec">Section 10</span><span class="toc-pg">2 pages</span></div>
+    <div class="toc-item"><span><b>§11</b> BCD Adder</span><span class="toc-sec">Section 11</span><span class="toc-pg">2 pages</span></div>
+    <div class="toc-item"><span><b>§12</b> Quick Revision — All Formulas</span><span class="toc-sec">Section 12</span><span class="toc-pg">2 pages</span></div>
+    <div class="toc-item"><span><b>§PQ3</b> Practice Questions — Part 3</span><span class="toc-sec">Section PQ</span><span class="toc-pg">2 pages</span></div>
+  </div>
+</div>
+
+<!-- ══════════ SECTION 8 — HALF & FULL ADDER (Page 1/3) ══════════ -->
+<div class="page">
+  <div class="page-lines"></div>
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital System Design — Unit 2</span>
+    <span class="unit-badge">SECTION 8</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§8</span> Half Adder &amp; Full Adder</h1>
+  <hr class="divider">
+
+  <div class="def-box">
+    <b class="bh">📖 Adder</b>
+    Adders are logic circuits used to <b>add binary bits</b>. Arithmetic circuits are designed by the help of combinational circuits to perform <b>addition and subtraction</b>.
+  </div>
+
+  <h2 class="topic">⚡ Half Adder (HA)</h2>
+  <div class="def-box">
+    <b class="bh">📖 Half Adder</b>
+    A Half Adder is a circuit containing <b>two inputs</b> (A and B) and <b>two outputs</b> — Sum (S) and Carry (C). It adds two single binary bits.
+  </div>
+
+  <table class="tt">
+    <tr><th>A</th><th>B</th><th>Sum (S)</th><th>Carry (C)</th></tr>
+    <tr><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+    <tr><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+    <tr><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+    <tr><td>1</td><td>1</td><td>0</td><td>1</td></tr>
+  </table>
+
+  <div class="rule-box">
+    <b class="bh">📐 Half Adder Expressions</b>
+    <span class="formula">S = A ⊕ B = ĀB + AB̄</span><br>
+    <span class="formula">C = A · B</span>
+  </div>
+
+  <h2 class="topic">🔧 Half Adder Implementations</h2>
+
+  <div class="vs-box">
+    <div class="vs-left">
+      <h4>Using XOR Gate</h4>
+      A ──►┐<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XOR ──► S<br>
+      B ──►┘<br>
+      A ──►┐<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AND ──► C<br>
+      B ──►┘<br>
+      <br><b>2 gates total</b>
+    </div>
+    <div class="vs-right">
+      <h4>Using Basic Gates</h4>
+      Need: 2 NOT + 2 AND + 1 OR for Sum<br>
+      1 AND for Carry<br>
+      Total: <b>6 gates</b><br>
+      (Less efficient — prefer XOR)
+    </div>
+  </div>
+
+  <div class="note-box">
+    <b class="bh">⚠️ Why called HALF adder?</b>
+    Called "half" because it can add only <b>two bits</b> — it cannot add a carry from a previous stage. To add multi-bit numbers, we need the Full Adder.
+  </div>
+
+  <div class="page-num">1 / 3</div>
+</div>
+
+<!-- Section 8 — Page 2/3 -->
+<div class="page">
+  <div class="page-lines"></div>
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital System Design — Unit 2</span>
+    <span class="unit-badge">SECTION 8</span>
+  </div>
+  <h2 class="topic">⚡ Full Adder (FA)</h2>
+
+  <div class="def-box">
+    <b class="bh">📖 Full Adder</b>
+    A Full Adder contains <b>3 inputs</b> (A, B, Carry-in C<sub>in</sub>) and <b>2 outputs</b> (Sum S and Carry-out C). It adds three binary bits — the two operand bits plus the carry from the previous stage.
+  </div>
+
+  <table class="tt">
+    <tr><th>A</th><th>B</th><th>Cᵢₙ</th><th>Sum (S)</th><th>Carry (C)</th></tr>
+    <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+    <tr><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+    <tr><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+    <tr><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td></tr>
+    <tr><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+    <tr><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td></tr>
+    <tr><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+    <tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+  </table>
+
+  <div class="rule-box">
+    <b class="bh">📐 Full Adder Expressions</b>
+    <b>Sum:</b> <span class="formula">S = A ⊕ B ⊕ Cᵢₙ</span><br>
+    &nbsp;&nbsp;&nbsp;Also: <span class="formula">S = ĀB̄Cᵢₙ + ĀBCᵢₙ̄ + AB̄Cᵢₙ̄ + ABCᵢₙ</span><br><br>
+    <b>Carry:</b> <span class="formula">C = AB + (A⊕B)·Cᵢₙ</span><br>
+    &nbsp;&nbsp;&nbsp;Also: <span class="formula">C = AB + BCᵢₙ + ACᵢₙ</span><br>
+    &nbsp;&nbsp;&nbsp;(Simplified from K-map: C = BCᵢₙ + ACᵢₙ + AB)
+  </div>
+
+  <div class="purple-box">
+    <b class="bh">⭐ XOR Observation — Sum</b>
+    S = A⊕B⊕Cᵢₙ: XOR gives 1 when <b>odd number of inputs</b> are 1.<br>
+    Check truth table: S=1 for rows 1,2,4,7 — each has odd number of 1s ✓
+  </div>
+
+  <div class="page-num">2 / 3</div>
+</div>
+
+<!-- Section 8 — Page 3/3 -->
+<div class="page">
+  <div class="page-lines"></div>
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital System Design — Unit 2</span>
+    <span class="unit-badge">SECTION 8</span>
+  </div>
+  <h2 class="topic">🔧 Full Adder using Two Half Adders</h2>
+
+  <div class="orange-box">
+    <b class="bh">🔧 Construction: FA = 2 × HA + 1 OR gate</b>
+    HA1: inputs A,B → outputs S₁ = A⊕B, C₁ = A·B<br>
+    HA2: inputs S₁, Cᵢₙ → outputs S = S₁⊕Cᵢₙ = A⊕B⊕Cᵢₙ, C₂ = S₁·Cᵢₙ<br>
+    Final Carry: C = C₁ + C₂ = AB + (A⊕B)·Cᵢₙ<br>
+    <b>Result: Sum = A⊕B⊕Cᵢₙ, Carry = AB + (A⊕B)Cᵢₙ</b>
+  </div>
+
+  <div class="circuit-ascii">  A ──►┐                    ┌───►┐
+       HA₁ ─► S₁=A⊕B ───►     HA₂ ─► S = A⊕B⊕Cᵢₙ
+  B ──►┘     C₁=AB ──►│    ├───►
+  Cᵢₙ ──────────────────►│   └─► C₂       OR ──► C (carry)
+                          │                ▲
+                          └─────── C₁ ────┘</div>
+
+  <h2 class="topic">🔧 Full Adder — Carry Simplification</h2>
+  <div class="qbox">
+    <div class="q-label">🖊️ Deriving Carry C from canonical form</div>
+    <div class="q-step">C is 1 for minterms: 3(011), 5(101), 6(110), 7(111)</div>
+    <div class="q-step">K-map (3-variable A,B,Cin):</div>
+    <div class="q-step">Groups: {6,7}=AB, {5,7}=ACin, {3,7}=BCin → wait, also {5,7}+{3,7}+{6,7}</div>
+    <div class="q-ans"><b>C = AB + ACᵢₙ + BCᵢₙ</b><br>This can also be written as: C = AB + (A⊕B)·Cᵢₙ</div>
+  </div>
+
+  <div class="note-box">
+    <b class="bh">⚠️ Exam: NAND/NOR Implementation</b>
+    To implement HA using NAND gates only:<br>
+    S = A⊕B requires 4 NAND gates. C = A·B requires 2 NAND gates (NAND then NOT)<br>
+    Total: <b>5 NAND gates</b> for complete Half Adder
+  </div>
+
+  <div class="page-num">3 / 3</div>
+</div>
+
+<!-- ══════════ SECTION 9 — SUBTRACTORS (Page 1/2) ══════════ -->
+<div class="page">
+  <div class="page-lines"></div>
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital System Design — Unit 2</span>
+    <span class="unit-badge">SECTION 9</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§9</span> Half Subtractor &amp; Full Subtractor</h1>
+  <hr class="divider">
+
+  <h2 class="topic">⚡ Half Subtractor</h2>
+  <div class="def-box">
+    <b class="bh">📖 Half Subtractor</b>
+    A Half Subtractor has two inputs A (minuend) and B (subtrahend) and two outputs D (difference) and Br (borrow). It performs A - B. <b>D → 0 when A=B; D → 1 when A≠B</b>
+  </div>
+
+  <table class="tt">
+    <tr><th>A</th><th>B</th><th>Difference (D)</th><th>Borrow (Br)</th></tr>
+    <tr><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+    <tr><td>0</td><td>1</td><td>1</td><td>1</td></tr>
+    <tr><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+    <tr><td>1</td><td>1</td><td>0</td><td>0</td></tr>
+  </table>
+
+  <div class="rule-box">
+    <b class="bh">📐 Half Subtractor Expressions</b>
+    <span class="formula">D = A ⊕ B = ĀB + AB̄</span><br>
+    <span class="formula">Br = Ā · B</span>
+  </div>
+
+  <div class="vs-box">
+    <div class="vs-left">
+      <h4>Half Adder</h4>
+      S = A⊕B<br>C = A·B<br>
+      "Carry" generated when both 1
+    </div>
+    <div class="vs-right">
+      <h4>Half Subtractor</h4>
+      D = A⊕B<br>Br = Ā·B<br>
+      "Borrow" when A=0, B=1
+    </div>
+  </div>
+
+  <h2 class="topic">⚡ Full Subtractor</h2>
+  <div class="def-box">
+    <b class="bh">📖 Full Subtractor</b>
+    A Full Subtractor performs <b>three-bit subtraction</b>: A - B - Bᵢₙ (where Bᵢₙ = borrow in from previous stage). Outputs: Difference D and Borrow-out Br.
+  </div>
+
+  <table class="tt">
+    <tr><th>A</th><th>B</th><th>Bᵢₙ</th><th>D</th><th>Br</th></tr>
+    <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+    <tr><td>0</td><td>0</td><td>1</td><td>1</td><td>1</td></tr>
+    <tr><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td></tr>
+    <tr><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td></tr>
+    <tr><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+    <tr><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+    <tr><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td></tr>
+    <tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+  </table>
+
+  <div class="rule-box">
+    <b class="bh">📐 Full Subtractor Expressions (from K-map)</b>
+    <b>Difference D:</b> <span class="formula">D = A⊕B⊕Bᵢₙ</span><br>
+    &nbsp;(Same form as Full Adder Sum!)<br><br>
+    <b>Borrow Br:</b> <span class="formula">Br = ĀC + B·Bᵢₙ + Ā·B</span><br>
+    Simplified: <span class="formula">Br = Ā·C + B·Bᵢₙ + Ā·B</span>
+  </div>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<!-- Section 9 — Page 2/2 -->
+<div class="page">
+  <div class="page-lines"></div>
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital System Design — Unit 2</span>
+    <span class="unit-badge">SECTION 9</span>
+  </div>
+  <h2 class="topic">📐 Full Subtractor — K-map Results</h2>
+
+  <div class="rule-box">
+    <b class="bh">📐 From K-map (from teacher's notes)</b>
+    <b>Difference:</b><br>
+    <span class="formula">D = ĀB̄Bᵢₙ + ĀBBᵢₙ̄ + AB̄Bᵢₙ̄ + ABBᵢₙ = A⊕B⊕Bᵢₙ</span><br><br>
+    <b>Borrow:</b><br>
+    <span class="formula">Br = ĀB̄C + ĀBBᵢₙ̄ + ĀBᵢₙ + ABᵢₙ → simplified: ĀC + BBᵢₙ + ĀB</span>
+  </div>
+
+  <div class="orange-box">
+    <b class="bh">🔧 Borrow Simplification (from teacher's derivation)</b>
+    From Br canonical: Ā B̄ Bᵢₙ + Ā B Bᵢₙ̄ + Ā B Bᵢₙ + A B Bᵢₙ<br>
+    K-map groups:<br>
+    &nbsp; → {ĀB̄Bᵢₙ, ĀBBᵢₙ} = Ā·Bᵢₙ<br>
+    &nbsp; → {ĀBBᵢₙ̄, ĀBBᵢₙ} = Ā·B<br>
+    &nbsp; → {ĀBBᵢₙ, ABBᵢₙ} = B·Bᵢₙ<br>
+    <b>Final: Br = Ā·Bᵢₙ + Ā·B + B·Bᵢₙ</b>
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">🖊️ Binary Subtraction Example using Full Subtractor</div>
+    <div class="q-step">Problem: 1101 - 1011 (subtract B from A)</div>
+    <div class="q-step">Bit by bit (LSB first): 1-1=0, 0-1=1(borrow), 1-0-borrow=0, 1-1=0</div>
+    <div class="q-ans">1101 - 1011 = 0010 ✓ (verified: 13 - 11 = 2)</div>
+  </div>
+
+  <div class="note-box">
+    <b class="bh">⚠️ Common Confusion</b>
+    Full Adder and Full Subtractor have the <b>SAME expression for Sum/Difference</b>: both = A⊕B⊕C<sub>in/Bin</sub>. The difference is in the <b>Carry/Borrow</b> expression — adder: C = AB + (A⊕B)Cin. Subtractor: Br = ĀBin + ĀB + BBin.
+  </div>
+
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══════════ SECTION 10 — PARALLEL & SERIAL ADDER (Page 1/2) ══════════ -->
+<div class="page">
+  <div class="page-lines"></div>
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital System Design — Unit 2</span>
+    <span class="unit-badge">SECTION 10</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§10</span> Serial &amp; Parallel Adders</h1>
+  <hr class="divider">
+
+  <div class="vs-box">
+    <div class="vs-left">
+      <h4>✅ Serial Adder</h4>
+      <ul class="plain">
+        <li>Adds one bit at a time</li>
+        <li>Uses shift registers</li>
+        <li>Slower (n clock cycles for n bits)</li>
+        <li>Less hardware</li>
+        <li>One Full Adder + flip-flop</li>
+      </ul>
+    </div>
+    <div class="vs-right">
+      <h4>✅ Parallel Adder</h4>
+      <ul class="plain">
+        <li>Adds all bits simultaneously</li>
+        <li>No shift registers needed</li>
+        <li>Faster (one clock cycle)</li>
+        <li>More hardware (n Full Adders)</li>
+        <li>n Full Adders connected in chain</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="topic">⚡ 4-bit Binary Parallel Adder</h2>
+  <div class="def-box">
+    <b class="bh">📖 4-bit Binary Parallel Adder</b>
+    A 4-bit binary parallel adder uses <b>4 Full Adders</b> connected in a chain (ripple carry). Augend bits A₃A₂A₁A₀ are added with Addend bits B₃B₂B₁B₀ simultaneously. Carries ripple from FA₀ to FA₃.
+  </div>
+
+  <div class="circuit-ascii">  A₃B₃       A₂B₂       A₁B₁       A₀B₀
+   │ │         │ │         │ │         │ │
+  ┌▼─▼─┐      ┌▼─▼─┐      ┌▼─▼─┐      ┌▼─▼──────── C₀=0
+  │ FA │◄─C₃─ │ FA │◄─C₂─ │ FA │◄─C₁─ │ FA │
+  └─┬──┘      └─┬──┘      └─┬──┘      └─┬──┘
+    │ C₄        │            │            │
+    ▼           ▼            ▼            ▼
+  C_out        S₃           S₂           S₁           S₀
+
+  Note: C₀ = 0 (no initial carry for addition)</div>
+
+  <div class="rule-box">
+    <b class="bh">📐 4-bit Parallel Adder — Example</b>
+    A = 1101 (13) + B = 1111 (15):<br>
+    FA₀: 1+1+0 → S₀=0, C₁=1<br>
+    FA₁: 0+1+1 → S₁=0, C₂=1<br>
+    FA₂: 1+1+1 → S₂=1, C₃=1<br>
+    FA₃: 1+1+1 → S₃=1, C₄=1<br>
+    Result: <b>C₄ S₃S₂S₁S₀ = 1 1100 = 11100₂ = 28 ✓</b>
+  </div>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<!-- Section 10 — Page 2/2 -->
+<div class="page">
+  <div class="page-lines"></div>
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital System Design — Unit 2</span>
+    <span class="unit-badge">SECTION 10</span>
+  </div>
+  <h2 class="topic">⚡ 4-bit Binary Adder/Subtractor</h2>
+
+  <div class="def-box">
+    <b class="bh">📖 Binary Adder/Subtractor</b>
+    A combined circuit that can perform <b>both addition and subtraction</b> on 4-bit numbers using a mode control input M (Mode line). Uses XOR gates on B inputs.
+  </div>
+
+  <div class="orange-box">
+    <b class="bh">🔧 How Adder/Subtractor Works</b>
+    Each B bit passes through an XOR gate with control line M:<br>
+    <b>M = 0 (Addition):</b> B ⊕ 0 = B → normal addition (A + B)<br>
+    <b>M = 1 (Subtraction):</b> B ⊕ 1 = B̄ → B is complemented; M also feeds C₀=1<br>
+    → A + B̄ + 1 = A + 2's complement of B = <b>A - B</b>
+  </div>
+
+  <div class="circuit-ascii">  A₃ B₃ M     A₂ B₂ M     A₁ B₁ M     A₀ B₀ M
+   │  │  │      │  │  │      │  │  │      │  │  │
+   │ XOR─┘      │ XOR─┘      │ XOR─┘      │ XOR─┘
+   │  │         │  │         │  │         │  │
+  ┌▼──▼┐       ┌▼──▼┐       ┌▼──▼┐       ┌▼──▼┐ ◄── C₀=M
+  │ FA │←C₃    │ FA │←C₂    │ FA │←C₁    │ FA │
+  └─┬──┘       └─┬──┘       └─┬──┘       └─┬──┘
+    ▼            ▼            ▼            ▼
+  C_out         S₃           S₂           S₁           S₀</div>
+
+  <div class="purple-box">
+    <b class="bh">⭐ Key Insight</b>
+    When M=1: all B bits inverted (B̄) + C₀=1 → This computes 2's complement of B.<br>
+    A + (2's complement of B) = A - B<br>
+    This is why XOR gates are used — they act as <b>controlled inverters</b>.
+  </div>
+
+  <div class="note-box">
+    <b class="bh">⚠️ Exam — Subtraction Example</b>
+    Subtract: B=1101 from A=1011 (B-A, so M=1):<br>
+    B inputs XORed with 1: 0010, plus Cin=1<br>
+    1011 + 0010 + 1 = 1110 (but note sign interpretation in exam context)
+  </div>
+
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══════════ SECTION 11 — BCD ADDER (Page 1/2) ══════════ -->
+<div class="page">
+  <div class="page-lines"></div>
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital System Design — Unit 2</span>
+    <span class="unit-badge">SECTION 11</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§11</span> BCD Adder</h1>
+  <hr class="divider">
+
+  <div class="def-box">
+    <b class="bh">📖 BCD Adder Circuit</b>
+    A BCD adder circuit adds <b>two BCD digits in parallel</b> and produces a sum digit which is also BCD. BCD (Binary Coded Decimal) uses 4 bits to represent digits 0–9 only (0000–1001). States 1010–1111 are invalid BCD.
+  </div>
+
+  <div class="orange-box">
+    <b class="bh">🔧 BCD Addition Rules</b>
+    <b>Step 1:</b> Add two 4-bit BCD numbers using straight binary addition.<br>
+    <b>Step 2:</b> If the 4-bit sum ≤ 9 (0–1001): sum is valid BCD, <b>no correction needed</b>.<br>
+    <b>Step 3:</b> If 4-bit sum &gt; 9 (1010–1111) <b>OR</b> a carry is generated: sum is invalid. <b>Add 6 (0110)</b> to correct it. This also generates a carry to the next BCD digit.
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">🖊️ Example 1: BCD 6 + 7 = 13</div>
+    <div class="q-step">6 = 0110, 7 = 0111</div>
+    <div class="q-step">0110 + 0111 = 1101 (13) → invalid BCD (> 9)</div>
+    <div class="q-step">Add 6: 1101 + 0110 = 1 0011</div>
+    <div class="q-ans">Result: carry=1, sum=0011 → BCD 13 ✓</div>
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">🖊️ Example 2: BCD 8 + 8 = 16</div>
+    <div class="q-step">8 = 1000, 8 = 1000</div>
+    <div class="q-step">1000 + 1000 = 1 0000 (carry generated) → invalid BCD</div>
+    <div class="q-step">Carry present → add 6: 0000 + 0110 = 0110, carry still = 1</div>
+    <div class="q-ans">Result: carry=1, sum=0110 → BCD 16 ✓</div>
+  </div>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<!-- Section 11 — Page 2/2 -->
+<div class="page">
+  <div class="page-lines"></div>
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital System Design — Unit 2</span>
+    <span class="unit-badge">SECTION 11</span>
+  </div>
+  <h2 class="topic">🔥 BCD Adder — Correction Logic</h2>
+  <p>When is correction (add 6) needed? When output Y (correction) = 1:</p>
+
+  <table class="tt">
+    <tr><th>A</th><th>B</th><th>C</th><th>D</th><th>Y (correction)</th></tr>
+    <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+    <tr><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+    <tr><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+    <tr><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+    <tr><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td></tr>
+    <tr><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+    <tr><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td></tr>
+    <tr><td>0</td><td>1</td><td>1</td><td>1</td><td>0</td></tr>
+    <tr><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+    <tr><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+    <tr><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td></tr>
+    <tr><td>1</td><td>0</td><td>1</td><td>1</td><td>1</td></tr>
+    <tr><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+    <tr><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td></tr>
+    <tr><td>1</td><td>1</td><td>1</td><td>0</td><td>1</td></tr>
+    <tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+  </table>
+
+  <div class="rule-box">
+    <b class="bh">📐 Correction Logic Expression (from K-map)</b>
+    <span class="formula">Y = AB + AC</span><br>
+    Where A,B,C,D are the sum bits (S₃,S₂,S₁,S₀) from the first 4-bit adder.<br>
+    So: <span class="formula">Y = S₃S₂ + S₃S₁</span>
+  </div>
+
+  <div class="orange-box">
+    <b class="bh">🔧 BCD Adder — Complete Block Diagram</b>
+    <b>Stage 1:</b> 4-bit parallel adder adds the two BCD inputs → gives S₃S₂S₁S₀ + Cout<br>
+    <b>Correction logic:</b> Y = S₃S₂ + S₃S₁ OR if Cout=1 → correction needed<br>
+    <b>Stage 2:</b> 4-bit adder adds 0110 (when Y or Cout = 1) to the first sum → final BCD output<br>
+    <b>Final carry:</b> Cout from Stage 1 OR Cout from Stage 2
+  </div>
+
+  <div class="note-box">
+    <b class="bh">⚠️ Why add 6 (0110)?</b>
+    Because BCD skips 6 codes (1010–1111). When a binary result falls in this invalid range, adding 6 "jumps over" the invalid codes and arrives at the correct BCD representation with a carry.
+  </div>
+
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══════════ SECTION 12 — QUICK REVISION (Page 1/2) ══════════ -->
+<div class="page">
+  <div class="page-lines"></div>
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital System Design — Unit 2</span>
+    <span class="unit-badge">SECTION 12</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§12</span> Quick Revision — All Key Formulas</h1>
+  <hr class="divider">
+
+  <h2 class="topic">📌 All Formulas at a Glance</h2>
+
+  <div class="formula-grid">
+    <div class="formula-card">
+      <div class="fc-title">🔲 Half Adder</div>
+      <div class="fc-expr">S = A ⊕ B<br>C = A · B</div>
+    </div>
+    <div class="formula-card">
+      <div class="fc-title">🔲 Full Adder</div>
+      <div class="fc-expr">S = A⊕B⊕Cᵢₙ<br>C = AB + ACᵢₙ + BCᵢₙ</div>
+    </div>
+    <div class="formula-card">
+      <div class="fc-title">🔲 Half Subtractor</div>
+      <div class="fc-expr">D = A ⊕ B<br>Br = Ā · B</div>
+    </div>
+    <div class="formula-card">
+      <div class="fc-title">🔲 Full Subtractor</div>
+      <div class="fc-expr">D = A⊕B⊕Bᵢₙ<br>Br = ĀBᵢₙ + ĀB + BBᵢₙ</div>
+    </div>
+    <div class="formula-card">
+      <div class="fc-title">🔲 2:1 MUX</div>
+      <div class="fc-expr">Y = S̄·I₀ + S·I₁</div>
+    </div>
+    <div class="formula-card">
+      <div class="fc-title">🔲 4:1 MUX</div>
+      <div class="fc-expr">Y = S̄₁S̄₀I₀+S̄₁S₀I₁<br>+S₁S̄₀I₂+S₁S₀I₃</div>
+    </div>
+    <div class="formula-card">
+      <div class="fc-title">🔲 Comparator</div>
+      <div class="fc-expr">A=B: A⊙B (XNOR)<br>A&gt;B: A·B̄<br>A&lt;B: Ā·B</div>
+    </div>
+    <div class="formula-card">
+      <div class="fc-title">🔲 BCD Correction</div>
+      <div class="fc-expr">Y = S₃S₂ + S₃S₁<br>(add 0110 if Y=1)</div>
+    </div>
+  </div>
+
+  <div class="rev-card">
+    <h4>🎯 Key Relationships to Remember</h4>
+    <ul>
+      <li>MUX: 2ⁿ inputs, n selection lines | DEMUX: reverse</li>
+      <li>Decoder: n→2ⁿ (one output active) | Encoder: 2ⁿ→n</li>
+      <li>Priority Encoder: V=D₃+D₂+D₁+D₀ (valid bit)</li>
+      <li>FA = 2 Half Adders + 1 OR gate</li>
+      <li>4-bit Parallel Adder = 4 Full Adders in ripple-carry chain</li>
+      <li>Adder/Subtractor: M=0→Add, M=1→Subtract (uses XOR + 2's complement)</li>
+      <li>BCD Adder: Add 6 if sum &gt; 9 or carry generated</li>
+    </ul>
+  </div>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<!-- Quick Revision — Page 2/2 -->
+<div class="page">
+  <div class="page-lines"></div>
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital System Design — Unit 2</span>
+    <span class="unit-badge">SECTION 12</span>
+  </div>
+  <h2 class="topic">📌 MSI Device Summary Table</h2>
+
+  <table class="tt">
+    <tr><th>Device</th><th>Inputs</th><th>Outputs</th><th>Function</th><th>Key Formula</th></tr>
+    <tr><td>MUX n:1</td><td>2ⁿ data + n sel</td><td>1</td><td>Many→One</td><td>Selected by Sₙ</td></tr>
+    <tr><td>DEMUX 1:n</td><td>1 data + n sel</td><td>2ⁿ</td><td>One→Many</td><td>Yₖ = I when sel=k</td></tr>
+    <tr><td>Decoder n:2ⁿ</td><td>n</td><td>2ⁿ</td><td>Binary→Active line</td><td>Each out = minterm</td></tr>
+    <tr><td>Encoder 2ⁿ:n</td><td>2ⁿ</td><td>n</td><td>Active line→Binary</td><td>OR pattern</td></tr>
+    <tr><td>Comparator</td><td>2n</td><td>3</td><td>A vs B</td><td>A=B, A&gt;B, A&lt;B</td></tr>
+    <tr><td>Half Adder</td><td>2</td><td>2</td><td>A+B</td><td>S=A⊕B, C=AB</td></tr>
+    <tr><td>Full Adder</td><td>3</td><td>2</td><td>A+B+Cᵢₙ</td><td>S=A⊕B⊕C</td></tr>
+    <tr><td>BCD Adder</td><td>8</td><td>5</td><td>BCD+BCD</td><td>Add 6 if &gt;9</td></tr>
+  </table>
+
+  <h2 class="topic">📌 Gate Count Reference</h2>
+  <table class="tt">
+    <tr><th>Circuit</th><th>Gates Required</th></tr>
+    <tr><td>Half Adder (basic)</td><td>1 XOR + 1 AND = 2 gates</td></tr>
+    <tr><td>Half Adder (NAND only)</td><td>5 NAND gates</td></tr>
+    <tr><td>Full Adder (basic)</td><td>2 XOR + 2 AND + 1 OR = 5 gates</td></tr>
+    <tr><td>Full Adder (2 HAs)</td><td>2 HAs + 1 OR = 5 gates</td></tr>
+    <tr><td>2:4 Decoder</td><td>2 NOT + 4 AND = 6 gates</td></tr>
+    <tr><td>1:4 DEMUX</td><td>2 NOT + 4 AND (3-input) = 6 gates</td></tr>
+    <tr><td>4-bit Parallel Adder</td><td>4 Full Adders = 20 gates</td></tr>
+  </table>
+
+  <div class="purple-box">
+    <b class="bh">⭐ Don't Forget for Exam</b>
+    <ul class="plain">
+      <li>Combinational circuit: no feedback, no memory, output = f(current input)</li>
+      <li>Design steps: Analyze → Symbol → Truth Table → K-map → Circuit</li>
+      <li>XOR: output 1 when <b>odd</b> number of inputs are 1</li>
+      <li>XNOR: output 1 when inputs are <b>same</b> (used for equality check)</li>
+      <li>BCD valid range: 0000–1001 only; 1010–1111 are invalid/don't care</li>
+      <li>Priority encoder: highest priority D₃; V=0 means all inputs zero</li>
+      <li>Multiplexed display: time-division; counter + MUX + decoder + DEMUX</li>
+    </ul>
+  </div>
+
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══════════ PRACTICE QUESTIONS — PART 3 ══════════ -->
+<div class="page">
+  <div class="page-lines"></div>
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital System Design — Unit 2</span>
+    <span class="unit-badge">PRACTICE Q's</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§PQ</span> Practice Questions — Part 3</h1>
+  <hr class="divider">
+
+  <h2 class="topic">📝 Section §8 — Adders</h2>
+
+  <div class="pq-sec">
+    <div class="pq-q"><span class="pq-num">Q1</span> Design a Full Adder using two Half Adders and one OR gate. Show the complete truth table, derive the expressions for Sum and Carry, and draw the block diagram.</div>
+    <div class="pq-hint">Hint: HA1(A,B)→S₁=A⊕B, C₁=AB. HA2(S₁,Cin)→S=S₁⊕Cin, C₂=S₁·Cin. Final C = C₁+C₂.</div>
+    <button class="ans-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Show Answer</button>
+    <div class="pq-answer">
+      <b>HA1:</b> S₁ = A⊕B, C₁ = AB<br>
+      <b>HA2:</b> S = S₁⊕Cin = A⊕B⊕Cin, C₂ = S₁·Cin = (A⊕B)·Cin<br>
+      <b>Final Carry:</b> C = C₁ + C₂ = AB + (A⊕B)·Cin<br>
+      <b>Block diagram:</b> [A,B]→HA1→[S₁,C₁]; [S₁,Cin]→HA2→[S,C₂]; C₁+C₂→C_out<br>
+      <b>Total:</b> 2 Half Adders + 1 OR gate
+    </div>
+  </div>
+
+  <div class="pq-sec">
+    <div class="pq-q"><span class="pq-num">Q2</span> Implement a Half Adder using only NAND gates. How many NAND gates are required? Draw the circuit and verify for inputs A=1, B=1.</div>
+    <div class="pq-hint">Hint: XOR using NAND: 4 gates needed. AND(then NOT) for carry: 2 gates. Total: 5 NAND gates.</div>
+    <button class="ans-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Show Answer</button>
+    <div class="pq-answer">
+      S = A⊕B = NAND(NAND(A,NAND(A,B)), NAND(B,NAND(A,B))) → 4 NAND gates<br>
+      C = A·B = NOT(NAND(A,B)) = NAND(NAND(A,B),NAND(A,B)) → 1 extra NAND = total 5<br>
+      <b>Verification (A=1, B=1):</b> NAND(1,1)=0; NAND(1,0)=1; NAND(1,0)=1; NAND(1,1)=0 → S=0 ✓<br>
+      C = NAND(0,0) = 1 → Carry=1 ✓ (1+1=10 in binary)
+    </div>
+  </div>
+
+  <h2 class="topic">📝 Section §9 — Subtractors</h2>
+
+  <div class="pq-sec">
+    <div class="pq-q"><span class="pq-num">Q3</span> Design a Half Subtractor and compare it with a Half Adder. Write the truth table for subtraction A-B and derive Boolean expressions for Difference and Borrow.</div>
+    <div class="pq-hint">Hint: D = A⊕B (same as sum!). Borrow Br = Ā·B (borrow occurs when A=0 and B=1)</div>
+    <button class="ans-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Show Answer</button>
+    <div class="pq-answer">
+      <b>Truth Table:</b> A=0,B=0→D=0,Br=0 | A=0,B=1→D=1,Br=1 | A=1,B=0→D=1,Br=0 | A=1,B=1→D=0,Br=0<br>
+      <b>D = A⊕B</b> (XOR gate, same as Sum in HA)<br>
+      <b>Br = Ā·B</b> (AND gate with A complemented)<br>
+      <b>Comparison:</b> HA Sum S=A⊕B = D; but Carry C=A·B ≠ Borrow Br=Ā·B
+    </div>
+  </div>
+
+  <div class="pq-sec">
+    <div class="pq-q"><span class="pq-num">Q4</span> Show that the Difference output of a Full Subtractor has the same expression as Sum of a Full Adder. What is the difference between the two circuits?</div>
+    <div class="pq-hint">Hint: Both use A⊕B⊕Cᵢₙ (or Bᵢₙ). The difference is in carry/borrow logic only.</div>
+    <button class="ans-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Show Answer</button>
+    <div class="pq-answer">
+      <b>Full Adder Sum:</b> S = A⊕B⊕Cᵢₙ<br>
+      <b>Full Subtractor Diff:</b> D = A⊕B⊕Bᵢₙ<br>
+      <b>Both are IDENTICAL in form!</b> XOR of all 3 inputs.<br>
+      <b>Difference:</b> Carry C = AB + ACᵢₙ + BCᵢₙ vs Borrow Br = ĀBᵢₙ + ĀB + BBᵢₙ<br>
+      → Same Sum/Difference logic, different Carry/Borrow logic.
+    </div>
+  </div>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<!-- Practice Questions P3 — Page 2/2 -->
+<div class="page">
+  <div class="page-lines"></div>
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital System Design — Unit 2</span>
+    <span class="unit-badge">PRACTICE Q's</span>
+  </div>
+
+  <h2 class="topic">📝 Section §10 — Parallel Adder &amp; §11 — BCD Adder</h2>
+
+  <div class="pq-sec">
+    <div class="pq-q"><span class="pq-num">Q5</span> Explain the working of a 4-bit binary parallel adder. Add A=1101 and B=1011 using it, showing carry propagation at each Full Adder stage.</div>
+    <div class="pq-hint">Hint: Start from LSB (bit 0). Cin of FA₀ = 0. Each stage's Cout feeds next stage as Cin.</div>
+    <button class="ans-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Show Answer</button>
+    <div class="pq-answer">
+      A=1101 (13), B=1011 (11), Expected: 11000 (24)<br>
+      FA₀: A₀=1, B₀=1, Cin=0 → S₀=0, C₁=1<br>
+      FA₁: A₁=0, B₁=1, Cin=1 → S₁=0, C₂=1<br>
+      FA₂: A₂=1, B₂=0, Cin=1 → S₂=0, C₃=1<br>
+      FA₃: A₃=1, B₃=1, Cin=1 → S₃=1, C₄=1<br>
+      <b>Result: C₄S₃S₂S₁S₀ = 11000₂ = 24 ✓</b>
+    </div>
+  </div>
+
+  <div class="pq-sec">
+    <div class="pq-q"><span class="pq-num">Q6</span> Add BCD digits 7 and 8 using a BCD adder. Show all steps including correction. When and why is the correction needed?</div>
+    <div class="pq-hint">Hint: 7=0111, 8=1000. Binary sum=1111=15 > 9 → correction needed. Add 0110.</div>
+    <button class="ans-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Show Answer</button>
+    <div class="pq-answer">
+      <b>Step 1:</b> 7=0111, 8=1000<br>
+      <b>Step 2:</b> Binary add: 0111+1000 = 1111 (=15 decimal)<br>
+      <b>Step 3:</b> 15 &gt; 9 → invalid BCD, correction needed<br>
+      <b>Step 4:</b> Add 6: 1111+0110 = 1 0101<br>
+      <b>Result:</b> Carry=1, Sum=0101 → BCD 15 ✓<br>
+      <b>Why?</b> BCD skips hex codes A–F (6 states), so adding 6 jumps over them.
+    </div>
+  </div>
+
+  <div class="note-box">
+    <b class="bh">⚠️ Final Exam Checklist — Unit 2</b>
+    <ul class="plain">
+      <li>✅ Combinational circuit: no feedback, 5 design steps</li>
+      <li>✅ MUX: 2:1, 4:1, 8:1 — expressions, truth tables, Boolean implementation</li>
+      <li>✅ Comparator: single-bit (XNOR, AB̄, ĀB), two-bit (K-map expressions)</li>
+      <li>✅ DEMUX = Decoder with enable as data input</li>
+      <li>✅ Decoder: each output = minterm; implement any function using OR</li>
+      <li>✅ Priority Encoder: D₃ highest; V = OR of all inputs</li>
+      <li>✅ 7-segment: know segment patterns for digits 0–9</li>
+      <li>✅ Half Adder: S=A⊕B, C=AB. Full Adder: S=A⊕B⊕Cin, C=AB+ACin+BCin</li>
+      <li>✅ Half Sub: D=A⊕B, Br=ĀB. Full Sub: D=A⊕B⊕Bin, Br=ĀBin+ĀB+BBin</li>
+      <li>✅ 4-bit Parallel Adder: 4 FAs, ripple carry (C₀=0)</li>
+      <li>✅ BCD Adder: add 0110 when sum &gt; 9 OR carry generated; Y=S₃S₂+S₃S₁</li>
+    </ul>
+  </div>
+
+  <div class="page-num">2 / 2</div>
+</div>
+
+</div>
+<script>
+document.querySelectorAll('.ans-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    this.nextElementSibling.style.display = 'block';
+    this.style.display = 'none';
+  });
+});
+</script>
+</body>
+</html>

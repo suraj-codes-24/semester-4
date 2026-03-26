@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DE Unit 1 — Part 1</title>
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1a1a2e;--ink2:#2c2c54;--blue:#1565C0;--red:#b71c1c;--green:#1b5e20;--purple:#4a148c;--teal:#006064;--orange:#e65100;--line:#c5cae9;--page:#fafaf7;--highlight:#fff9c4;--box-blue:#e8f4fd;--box-green:#e8f5e9;--box-red:#fce4ec;--box-purple:#f3e5f5;--box-orange:#fff3e0;--box-teal:#e0f7fa;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#d6d6d6;font-family:'Kalam',cursive;color:var(--ink);padding:20px;}
+.part-nav{max-width:820px;margin:0 auto 20px;display:flex;gap:8px;flex-wrap:wrap;}
+.part-nav a{padding:6px 18px;border-radius:20px;font-size:13px;font-weight:700;text-decoration:none;border:2px solid #bbb;color:#666;background:#fff;}
+.part-nav a.active{background:var(--blue);color:#fff;border-color:var(--blue);}
+.part-nav .unit-label{font-size:13px;font-weight:700;color:#888;padding:6px 4px;align-self:center;}
+.cover-page{background:linear-gradient(135deg,#0d47a1 0%,#1565C0 60%,#0277bd 100%);max-width:820px;margin:0 auto 40px;border-radius:6px;padding:70px 60px;text-align:center;color:#fff;box-shadow:0 4px 24px rgba(0,0,0,0.3);position:relative;overflow:hidden;}
+.cover-page::before{content:'';position:absolute;top:-50px;right:-50px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,0.05);}
+.cover-eyebrow{font-size:13px;letter-spacing:3px;opacity:0.65;margin-bottom:12px;}
+.cover-title{font-size:36px;font-weight:700;line-height:1.2;margin-bottom:8px;}
+.cover-sub{font-size:16px;opacity:0.8;margin-bottom:8px;}
+.cover-part{display:inline-block;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);border-radius:20px;padding:4px 20px;font-size:14px;margin-bottom:26px;}
+.cover-div{width:60px;height:3px;background:rgba(255,255,255,0.35);margin:0 auto 20px;border-radius:2px;}
+.cover-toc{text-align:left;background:rgba(255,255,255,0.1);border-radius:8px;padding:16px 24px;display:inline-block;min-width:420px;}
+.cover-toc-item{font-size:14px;line-height:32px;display:flex;justify-content:space-between;gap:20px;}
+.cover-toc-sep{border-top:1px solid rgba(255,255,255,0.25);margin:8px 0;}
+.page{background:var(--page);max-width:820px;margin:0 auto 36px;border-radius:4px;box-shadow:0 2px 16px rgba(0,0,0,0.15),0 0 0 1px rgba(0,0,0,0.06);padding:56px 66px 66px 86px;position:relative;min-height:1040px;background-image:repeating-linear-gradient(transparent,transparent 31px,var(--line) 31px,var(--line) 32px);background-position:0 52px;}
+.page::before{content:'';position:absolute;left:68px;top:0;bottom:0;width:1.5px;background:#ef9a9a;opacity:0.65;}
+.holes{position:absolute;left:15px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-around;padding:36px 0;}
+.hole{width:22px;height:22px;border-radius:50%;background:#d6d6d6;border:1.5px solid #bdbdbd;box-shadow:inset 0 1px 3px rgba(0,0,0,0.18);}
+.page-num{position:absolute;bottom:24px;right:46px;font-size:13px;color:#9e9e9e;}
+.page-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
+.date-tag{font-size:13px;color:#9e9e9e;}
+.unit-badge{color:#fff;font-size:13px;padding:2px 14px;border-radius:20px;font-weight:700;}
+.ub-blue{background:var(--blue);}
+.ub-red{background:var(--red);}
+.ub-green{background:var(--green);}
+.ub-purple{background:var(--purple);}
+.ub-teal{background:var(--teal);}
+.ub-orange{background:var(--orange);}
+h1.section-title{font-size:22px;font-weight:700;color:var(--ink2);text-align:center;margin:8px 0 4px;text-decoration:underline;text-underline-offset:5px;}
+h2.topic{font-size:17px;font-weight:700;color:var(--blue);margin:18px 0 6px;border-bottom:1.5px solid var(--blue);padding-bottom:2px;display:inline-block;}
+h3.sub{font-size:15px;font-weight:700;color:var(--purple);margin:12px 0 4px;}
+p,li{font-size:15px;line-height:30px;}
+.divider{border:none;border-top:1px dashed #b0bec5;margin:14px 0 10px;}
+.def-box{background:var(--box-blue);border-left:4px solid var(--blue);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
+.rule-box{background:var(--box-green);border:1.5px solid #81c784;border-radius:6px;padding:10px 16px;margin:10px 0;font-size:14.5px;line-height:28px;}
+.note-box{background:var(--highlight);border-left:4px solid #f9a825;border-radius:0 6px 6px 0;padding:8px 14px;margin:8px 0 10px;font-size:14px;line-height:26px;}
+.purple-box{background:var(--box-purple);border-left:4px solid var(--purple);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
+.orange-box{background:var(--box-orange);border-left:4px solid var(--orange);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
+.teal-box{background:var(--box-teal);border-left:4px solid var(--teal);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
+.qbox{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:12px 16px;margin:10px 0;}
+.q-label{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:4px;}
+.q-step{font-size:14px;color:var(--green);margin-top:4px;line-height:26px;}
+.q-ans{font-size:15px;color:var(--red);font-family:'Patrick Hand',cursive;margin-top:4px;line-height:28px;}
+.exam-q-box{background:#fff8f8;border:2px solid var(--red);border-radius:8px;padding:12px 16px;margin:10px 0;}
+.eq-label{font-size:13px;font-weight:700;color:var(--red);margin-bottom:4px;}
+.formula{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--blue);}
+ul.plain{list-style:none;padding-left:4px;}
+ul.plain li::before{content:'→ ';color:var(--blue);font-weight:700;}
+ul.plain li{font-size:15px;line-height:30px;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0;}
+.vs-box{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:12px 0;border-radius:8px;overflow:hidden;border:1.5px solid #90caf9;}
+.vs-left{background:var(--box-blue);padding:12px 14px;}
+.vs-right{background:var(--box-purple);padding:12px 14px;border-left:1px solid #90caf9;}
+.vs-head{font-size:15px;font-weight:700;margin-bottom:8px;}
+.vs-item{font-size:14px;line-height:26px;}
+table.tt{width:100%;border-collapse:collapse;margin:8px 0;font-size:14px;}
+table.tt th{background:var(--blue);color:#fff;padding:7px 10px;text-align:center;}
+table.tt td{padding:6px 10px;border-bottom:1px solid #e0e0e0;line-height:26px;text-align:center;}
+table.tt tr:nth-child(even) td{background:#f5f5f5;}
+.step-card{background:var(--box-purple);border-left:4px solid var(--purple);padding:8px 14px;margin:5px 0;border-radius:0 6px 6px 0;}
+.step-head{font-size:14px;font-weight:700;color:var(--purple);}
+.step-body{font-size:13.5px;line-height:24px;color:var(--ink2);}
+.num-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0;}
+.num-card{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:10px 12px;text-align:center;}
+.num-head{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:4px;}
+.num-body{font-size:13px;line-height:22px;color:var(--ink2);font-family:'Patrick Hand',cursive;}
+.calc-box{background:#fff;border:1.5px solid #b0bec5;border-radius:8px;padding:12px 16px;margin:8px 0;font-family:'Patrick Hand',cursive;font-size:16px;line-height:30px;}
+.calc-step{color:var(--ink2);}
+.calc-ans{color:var(--red);font-weight:700;}
+</style>
+</head>
+<body>
+
+<div class="part-nav">
+  <a href="../index.html">&#8617; Units</a>
+  <span class="unit-label">DE / DSD — Unit 1</span>
+  <a href="part1.html" class="active">Part 1</a>
+  <a href="part2.html">Part 2</a>
+  <a href="part3.html">Part 3</a>
+</div>
+
+<div class="cover-page">
+  <div class="cover-eyebrow">DIGITAL ELECTRONICS / DIGITAL SYSTEM DESIGN · UNIT 1 · BEC-302 / BOE-310 / BOE-410</div>
+  <div class="cover-title">Number Systems &amp; Arithmetic</div>
+  <div class="cover-sub">Logic Simplification and Combinational Logic Design</div>
+  <div class="cover-part">Part 1 of 3 — Foundations</div>
+  <div class="cover-div"></div>
+  <div class="cover-toc">
+    <div class="cover-toc-item"><span>§1 — Digital Systems: Analog vs Digital</span><span>2 pages</span></div>
+    <div class="cover-toc-item"><span>§2 — Number Systems (Decimal, Binary, Octal, Hex)</span><span>3 pages</span></div>
+    <div class="cover-toc-item"><span>§3 — Number Conversions</span><span>4 pages</span></div>
+    <div class="cover-toc-item"><span>§4 — Arithmetic: Addition, Subtraction &amp; Complements</span><span>4 pages</span></div>
+    <div class="cover-toc-item"><span>Practice Questions (2 per section)</span><span>1 page</span></div>
+    <div class="cover-toc-sep"></div>
+    <div class="cover-toc-item"><strong><span>Total</span><span>14 pages</span></strong></div>
+  </div>
+</div>
+
+<!-- ══════════ SECTION 1 ══════════ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DE — Unit 1 · Part 1</span><span class="unit-badge ub-blue">SECTION 1</span></div>
+  <h1 class="section-title"><span style="color:var(--blue);">§1</span> Digital Systems — Analog vs Digital</h1>
+  <hr class="divider">
+
+  <h2 class="topic">1. Analog Signal vs Digital Signal</h2>
+  <div class="vs-box">
+    <div class="vs-left">
+      <div class="vs-head" style="color:var(--blue);">Analog Signal</div>
+      <div class="vs-item">Signal in which information is processed <strong>continuously</strong>.</div>
+      <div class="vs-item" style="margin-top:6px;">Output is a continuous waveform (sine wave).</div>
+      <div class="vs-item">E.g. — sound wave, temperature sensor output</div>
+    </div>
+    <div class="vs-right">
+      <div class="vs-head" style="color:var(--purple);">Digital Signal</div>
+      <div class="vs-item">Signal in which information is processed in a <strong>finite sequence of discrete values</strong>.</div>
+      <div class="vs-item" style="margin-top:6px;">Output is a square wave (0s and 1s).</div>
+      <div class="vs-item">E.g. — computer data, digital clock</div>
+    </div>
+  </div>
+
+  <h2 class="topic">2. Digital System</h2>
+  <div class="def-box">
+    A <strong>Digital System</strong> represents symbols (information) with discrete symbols. It operates on binary values (0 and 1) to process, store and transmit information.
+  </div>
+
+  <h2 class="topic">3. Advantages of Digital Systems</h2>
+  <div class="rule-box">
+    <ul class="plain">
+      <li><strong>Easier to design</strong> — binary logic simplifies circuit design</li>
+      <li><strong>Storage is easy</strong> — digital information is easy to store and retrieve</li>
+      <li><strong>Accuracy and precision are greater</strong> — no signal degradation</li>
+      <li><strong>Digital circuits are less affected by noise</strong> — immune to small voltage fluctuations</li>
+    </ul>
+  </div>
+
+  <h2 class="topic">4. Representation of a Number System</h2>
+  <div class="def-box">
+    A <strong>Number System</strong> is a system of writing to express numbers.<br><br>
+    General representation: &nbsp;<span class="formula">Nᵣ = Σ aᵢ · rⁱ</span> &nbsp;(i from -n to n-1)<br><br>
+    where: &nbsp;<strong>r</strong> = base (radix), &nbsp;<strong>aᵢ</strong> = digit at position i, &nbsp;<strong>N</strong> = number with base r
+  </div>
+
+  <div class="note-box">
+    <strong>★ Key Insight:</strong> Every number system is defined by its base (radix) r. The digits used are from 0 to (r-1). The positional value of each digit increases by a power of r as we move left.
+  </div>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DE — Unit 1 · §1</span><span class="unit-badge ub-blue">PRACTICE</span></div>
+
+  <h2 class="topic">5. Practice Questions — §1</h2>
+
+  <div class="exam-q-box">
+    <div class="eq-label">Q1 — List 4 advantages of digital systems over analog systems</div>
+    <div class="q-ans" style="font-size:14px;line-height:28px;">
+      ① Easier to design using simple binary logic<br>
+      ② Storage of digital data is easy and reliable<br>
+      ③ Greater accuracy and precision in processing<br>
+      ④ Digital circuits are less affected by noise/interference
+    </div>
+  </div>
+
+  <div class="exam-q-box">
+    <div class="eq-label">Q2 — Define: (a) Digital Signal (b) Number System (c) Base/Radix</div>
+    <div class="q-ans" style="font-size:14px;line-height:28px;">
+      <strong>(a) Digital Signal:</strong> A signal in which information is processed as a finite sequence of discrete values (0 and 1).<br>
+      <strong>(b) Number System:</strong> A system of writing to express numbers using a defined set of symbols.<br>
+      <strong>(c) Base/Radix:</strong> The number of unique digits (including zero) used in a number system. E.g., decimal has base 10, binary has base 2.
+    </div>
+  </div>
+
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══════════ SECTION 2 ══════════ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DE — Unit 1 · Part 1</span><span class="unit-badge ub-purple">SECTION 2</span></div>
+  <h1 class="section-title"><span style="color:var(--purple);">§2</span> Number Systems</h1>
+  <hr class="divider">
+
+  <h2 class="topic">1. Four Common Number Systems</h2>
+  <div class="num-grid">
+    <div class="num-card">
+      <div class="num-head">Decimal</div>
+      <div class="num-body">Base = 10<br>(0 – 9)₁₀<br>10 digits</div>
+    </div>
+    <div class="num-card">
+      <div class="num-head">Binary</div>
+      <div class="num-body">Base = 2<br>(0 and 1)₂<br>2 digits</div>
+    </div>
+    <div class="num-card">
+      <div class="num-head">Octal</div>
+      <div class="num-body">Base = 8<br>(0 – 7)₈<br>8 digits</div>
+    </div>
+    <div class="num-card">
+      <div class="num-head">Hexadecimal</div>
+      <div class="num-body">Base = 16<br>(0–9, A–F)₁₆<br>16 symbols</div>
+    </div>
+  </div>
+
+  <h2 class="topic">2. Decimal to Binary / Octal / Hex Equivalents</h2>
+  <table class="tt">
+    <tr><th>Decimal</th><th>Binary (8421)</th><th>Octal</th><th>Hexadecimal</th></tr>
+    <tr><td>0</td><td>0000</td><td>000</td><td>0000</td></tr>
+    <tr><td>1</td><td>0001</td><td>001</td><td>0001</td></tr>
+    <tr><td>2</td><td>0010</td><td>010</td><td>0010</td></tr>
+    <tr><td>3</td><td>0011</td><td>011</td><td>0011</td></tr>
+    <tr><td>4</td><td>0100</td><td>100</td><td>0100</td></tr>
+    <tr><td>5</td><td>0101</td><td>101</td><td>0101</td></tr>
+    <tr><td>6</td><td>0110</td><td>110</td><td>0110</td></tr>
+    <tr><td>7</td><td>0111</td><td>111</td><td>0111</td></tr>
+    <tr><td>8</td><td>1000</td><td>—</td><td>1000</td></tr>
+    <tr><td>9</td><td>1001</td><td>—</td><td>1001</td></tr>
+    <tr><td>10</td><td>1010</td><td>—</td><td>A (1010)</td></tr>
+    <tr><td>11</td><td>1011</td><td>—</td><td>B (1011)</td></tr>
+    <tr><td>12</td><td>1100</td><td>—</td><td>C (1100)</td></tr>
+    <tr><td>13</td><td>1101</td><td>—</td><td>D (1101)</td></tr>
+    <tr><td>14</td><td>1110</td><td>—</td><td>E (1110)</td></tr>
+    <tr><td>15</td><td>1111</td><td>—</td><td>F (1111)</td></tr>
+  </table>
+
+  <div class="note-box"><strong>★ Hex shortcuts:</strong> 10=A, 11=B, 12=C, 13=D, 14=E, 15=F</div>
+
+  <div class="page-num">1 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DE — Unit 1 · §2</span><span class="unit-badge ub-purple">NUMBER SYSTEMS</span></div>
+
+  <h2 class="topic">3. Positional Notation</h2>
+  <div class="def-box">
+    Any number can be expressed as a <strong>weighted sum of powers of its base</strong>:<br>
+    <span class="formula">(d₃d₂d₁d₀.d₋₁d₋₂)ᵣ = d₃×r³ + d₂×r² + d₁×r¹ + d₀×r⁰ + d₋₁×r⁻¹ + d₋₂×r⁻²</span>
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">Example: (426)₇ → Decimal using positional notation</div>
+    <div class="calc-box">
+      (426)₇ = 4×7² + 2×7¹ + 6×7⁰<br>
+      = 4×49 + 2×7 + 6×1<br>
+      = 196 + 14 + 6<br>
+      <span class="calc-ans">= (216)₁₀</span>
+    </div>
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">Example: (426.44)₇ → Decimal (with fractional part)</div>
+    <div class="calc-box">
+      = 4×7² + 2×7¹ + 6×7⁰ + 4×7⁻¹ + 4×7⁻²<br>
+      = 196 + 14 + 6 + 4/7 + 4/49<br>
+      = 216 + 0.571 + 0.082<br>
+      <span class="calc-ans">≈ (216.714)₁₀</span>
+    </div>
+  </div>
+
+  <h2 class="topic">4. Signed Binary Numbers</h2>
+  <div class="def-box">
+    <strong>Signed binary numbers</strong> represent both positive and negative values. The MSB (Most Significant Bit) is used as the <strong>sign bit</strong>:<br>
+    • MSB = 0 → <strong>Positive</strong> number<br>
+    • MSB = 1 → <strong>Negative</strong> number<br><br>
+    Representations:<br>
+    ① <strong>Sign-Magnitude</strong>: MSB = sign, remaining bits = magnitude<br>
+    ② <strong>1's Complement</strong>: Flip all bits for negative<br>
+    ③ <strong>2's Complement</strong>: Most commonly used — flip all bits and add 1
+  </div>
+
+  <div class="note-box">
+    <strong>★ Example:</strong> +7 = 0111 (4-bit) &nbsp;|&nbsp; -7 = 1111 (sign-magnitude) &nbsp;|&nbsp; -7 = 1001 (2's complement of +7 = 0111 → flip → 1000 → add 1 → 1001)
+  </div>
+
+  <div class="page-num">2 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DE — Unit 1 · §2</span><span class="unit-badge ub-purple">PRACTICE</span></div>
+
+  <h2 class="topic">5. Practice Questions — §2</h2>
+
+  <div class="exam-q-box">
+    <div class="eq-label">Q1 — Convert (1011.101)₂ to decimal using positional notation</div>
+    <div class="q-step">Multiply each bit by its positional weight (powers of 2)</div>
+    <div class="q-ans" style="font-size:14px;line-height:28px;">
+      = 1×2³ + 0×2² + 1×2¹ + 1×2⁰ + 1×2⁻¹ + 0×2⁻² + 1×2⁻³<br>
+      = 8 + 0 + 2 + 1 + 0.5 + 0 + 0.125<br>
+      = <strong>(11.625)₁₀</strong>
+    </div>
+  </div>
+
+  <div class="exam-q-box">
+    <div class="eq-label">Q2 — Find 2's complement representation of -13 in 8-bit signed binary</div>
+    <div class="q-step">Step 1: Write +13 in binary. Step 2: Flip all bits. Step 3: Add 1.</div>
+    <div class="q-ans" style="font-size:14px;line-height:28px;">
+      +13 = 00001101<br>
+      1's complement = 11110010 &nbsp;(flip all bits)<br>
+      2's complement = 11110011 &nbsp;(add 1)<br>
+      <strong>∴ -13 = (11110011)₂ in 2's complement</strong>
+    </div>
+  </div>
+
+  <div class="page-num">3 / 3</div>
+</div>
+
+<!-- ══════════ SECTION 3 ══════════ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DE — Unit 1 · Part 1</span><span class="unit-badge ub-teal">SECTION 3</span></div>
+  <h1 class="section-title"><span style="color:var(--teal);">§3</span> Number System Conversions</h1>
+  <hr class="divider">
+
+  <h2 class="topic">1. Decimal → Binary (Division Rule)</h2>
+  <div class="orange-box">
+    <strong>Integer part:</strong> Repeatedly divide by 2 (base). Write remainders bottom to top (LSB to MSB).<br>
+    <strong>Fractional part:</strong> Repeatedly multiply by 2. Write integer part top to bottom.
+  </div>
+
+  <div class="two-col">
+    <div class="qbox">
+      <div class="q-label">Q: (41)₁₀ → Binary</div>
+      <div class="calc-box" style="font-size:14px;line-height:26px;">
+        41 ÷ 2 = 20 rem <strong>1</strong> ↑<br>
+        20 ÷ 2 = 10 rem <strong>0</strong> ↑<br>
+        10 ÷ 2 = 5 &nbsp;rem <strong>0</strong> ↑<br>
+        5 ÷ 2 &nbsp;= 2 &nbsp;rem <strong>1</strong> ↑<br>
+        2 ÷ 2 &nbsp;= 1 &nbsp;rem <strong>0</strong> ↑<br>
+        1 ÷ 2 &nbsp;= 0 &nbsp;rem <strong>1</strong> ↑<br>
+        <span class="calc-ans">= (101001)₂</span>
+      </div>
+    </div>
+    <div class="qbox">
+      <div class="q-label">Q: (0.6875)₁₀ → Binary</div>
+      <div class="calc-box" style="font-size:14px;line-height:26px;">
+        0.6875 × 2 = <strong>1</strong>.375 ↓<br>
+        0.375 × 2 &nbsp;= <strong>0</strong>.75 &nbsp;↓<br>
+        0.75 × 2 &nbsp;&nbsp;= <strong>1</strong>.5 &nbsp;&nbsp;↓<br>
+        0.5 × 2 &nbsp;&nbsp;&nbsp;= <strong>1</strong>.0 &nbsp;&nbsp;↓<br>
+        <span class="calc-ans">= (0.1011)₂</span>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="topic">2. Any Base → Decimal (Multiplication Rule)</h2>
+  <div class="def-box">
+    Multiply each digit by its positional weight (power of base) and sum all.<br>
+    <span class="formula">N₁₀ = Σ dᵢ × rⁱ</span> &nbsp;(already covered in §2)
+  </div>
+
+  <h2 class="topic">3. Any Base → Any Other Base</h2>
+  <div class="teal-box">
+    <strong>General Method:</strong><br>
+    Source Base → <strong>Decimal</strong> (multiplication rule) → Target Base (division rule)<br><br>
+    <strong>Shortcut (Binary ↔ Octal/Hex):</strong><br>
+    • Binary ↔ Octal: Group binary digits in sets of <strong>3</strong> from decimal point (2³=8)<br>
+    • Binary ↔ Hex: Group binary digits in sets of <strong>4</strong> from decimal point (2⁴=16)
+  </div>
+
+  <div class="page-num">1 / 4</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DE — Unit 1 · §3</span><span class="unit-badge ub-teal">CONVERSIONS</span></div>
+
+  <h2 class="topic">4. Binary → Octal (Group of 3)</h2>
+  <div class="qbox">
+    <div class="q-label">Convert (010110001101011.111100000110)₂ → Octal</div>
+    <div class="q-step">Group bits in sets of 3 from decimal point, left and right:</div>
+    <div class="calc-box" style="font-size:14px;line-height:28px;">
+      Integer: 010 | 110 | 001 | 101 | 011<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2 &nbsp;&nbsp;&nbsp;6 &nbsp;&nbsp;&nbsp;1 &nbsp;&nbsp;&nbsp;5 &nbsp;&nbsp;&nbsp;3<br>
+      Fraction: 111 | 100 | 000 | 110<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7 &nbsp;&nbsp;&nbsp;4 &nbsp;&nbsp;&nbsp;0 &nbsp;&nbsp;&nbsp;6<br>
+      <span class="calc-ans">= (26153.7406)₈</span>
+    </div>
+  </div>
+
+  <h2 class="topic">5. Binary → Hexadecimal (Group of 4)</h2>
+  <div class="qbox">
+    <div class="q-label">Convert (0010110000110101011.11110010)₂ → Hex</div>
+    <div class="q-step">Group bits in sets of 4 from decimal point:</div>
+    <div class="calc-box" style="font-size:14px;line-height:28px;">
+      Integer: 0010 | 1100 | 0011 | 0101 | 011 (pad → 0011)<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2 &nbsp;&nbsp;&nbsp;&nbsp;C &nbsp;&nbsp;&nbsp;&nbsp;3 &nbsp;&nbsp;&nbsp;&nbsp;5 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3... wait<br>
+      0010 | 1100 | 0110 | 1011 . 1111 | 0010<br>
+      &nbsp;&nbsp;2 &nbsp;&nbsp;&nbsp;| &nbsp;&nbsp;C &nbsp; | &nbsp;&nbsp;6 &nbsp;&nbsp;| &nbsp;&nbsp;B &nbsp;&nbsp;&nbsp;. &nbsp;&nbsp;F &nbsp;&nbsp;| &nbsp;&nbsp;2<br>
+      <span class="calc-ans">= (2C6B.F2)₁₆</span>
+    </div>
+    <div class="q-step">Hex letter mapping: 10=A, 11=B, 12=C, 13=D, 14=E, 15=F</div>
+  </div>
+
+  <h2 class="topic">6. Octal → Binary and Hex → Binary</h2>
+  <div class="def-box">
+    <strong>Octal → Binary:</strong> Replace each octal digit with its 3-bit binary equivalent.<br>
+    <strong>Hex → Binary:</strong> Replace each hex digit with its 4-bit binary equivalent.<br><br>
+    Example: (8421)₈ → 000 | 100 | 010 | 001 = (000100010001)₂
+  </div>
+
+  <div class="page-num">2 / 4</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DE — Unit 1 · §3</span><span class="unit-badge ub-teal">CONVERSIONS</span></div>
+
+  <h2 class="topic">7. Decimal → Octal and Decimal → Hex</h2>
+  <div class="two-col">
+    <div class="qbox">
+      <div class="q-label">Q: (426)₁₀ → Octal (divide by 8)</div>
+      <div class="calc-box" style="font-size:14px;line-height:26px;">
+        426 ÷ 8 = 53 rem <strong>2</strong> ↑<br>
+        53 ÷ 8 &nbsp;= 6 &nbsp;rem <strong>5</strong> ↑<br>
+        6 ÷ 8 &nbsp;&nbsp;= 0 &nbsp;rem <strong>6</strong> ↑<br>
+        <span class="calc-ans">= (652)₈</span>
+      </div>
+    </div>
+    <div class="qbox">
+      <div class="q-label">Q: (426)₁₀ → Hex (divide by 16)</div>
+      <div class="calc-box" style="font-size:14px;line-height:26px;">
+        426 ÷ 16 = 26 rem <strong>10(A)</strong> ↑<br>
+        26 ÷ 16 &nbsp;= 1 &nbsp;rem <strong>10(A)</strong> ↑<br>
+        1 ÷ 16 &nbsp;&nbsp;= 0 &nbsp;rem <strong>1</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↑<br>
+        <span class="calc-ans">= (1AA)₁₆</span>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="topic">8. Summary of Conversion Methods</h2>
+  <table class="tt">
+    <tr><th>From</th><th>To</th><th>Method</th></tr>
+    <tr><td>Decimal</td><td>Any Base</td><td>Division (integer) / Multiplication (fraction)</td></tr>
+    <tr><td>Any Base</td><td>Decimal</td><td>Positional notation (multiply by powers)</td></tr>
+    <tr><td>Binary</td><td>Octal</td><td>Group bits in 3s from decimal point</td></tr>
+    <tr><td>Binary</td><td>Hex</td><td>Group bits in 4s from decimal point</td></tr>
+    <tr><td>Octal</td><td>Binary</td><td>Replace each octal digit by 3-bit binary</td></tr>
+    <tr><td>Hex</td><td>Binary</td><td>Replace each hex digit by 4-bit binary</td></tr>
+    <tr><td>Any</td><td>Any other</td><td>Convert via Decimal as intermediate</td></tr>
+  </table>
+
+  <div class="page-num">3 / 4</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DE — Unit 1 · §3</span><span class="unit-badge ub-teal">PRACTICE</span></div>
+
+  <h2 class="topic">9. Practice Questions — §3</h2>
+
+  <div class="exam-q-box">
+    <div class="eq-label">Q1 — Convert (348.625)₁₀ to Binary</div>
+    <div class="q-step">Integer: divide by 2. Fraction: multiply by 2.</div>
+    <div class="q-ans" style="font-size:14px;line-height:28px;">
+      <strong>Integer 348:</strong><br>
+      348÷2=174 R0; 174÷2=87 R0; 87÷2=43 R1; 43÷2=21 R1; 21÷2=10 R1; 10÷2=5 R0; 5÷2=2 R1; 2÷2=1 R0; 1÷2=0 R1<br>
+      → 101011100<br>
+      <strong>Fraction 0.625:</strong><br>
+      0.625×2=1.25→1; 0.25×2=0.5→0; 0.5×2=1.0→1<br>
+      → 0.101<br>
+      <strong>∴ (348.625)₁₀ = (101011100.101)₂</strong>
+    </div>
+  </div>
+
+  <div class="exam-q-box">
+    <div class="eq-label">Q2 — Convert (2C6B.F2)₁₆ to Binary</div>
+    <div class="q-step">Replace each hex digit with its 4-bit binary:</div>
+    <div class="q-ans" style="font-size:14px;line-height:28px;">
+      2 = 0010 &nbsp;|&nbsp; C(12) = 1100 &nbsp;|&nbsp; 6 = 0110 &nbsp;|&nbsp; B(11) = 1011<br>
+      F(15) = 1111 &nbsp;|&nbsp; 2 = 0010<br>
+      <strong>= (0010 1100 0110 1011 . 1111 0010)₂</strong>
+    </div>
+  </div>
+
+  <div class="page-num">4 / 4</div>
+</div>
+
+<!-- ══════════ SECTION 4 ══════════ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DE — Unit 1 · Part 1</span><span class="unit-badge ub-orange">SECTION 4</span></div>
+  <h1 class="section-title"><span style="color:var(--orange);">§4</span> Arithmetic: Complements &amp; Subtraction</h1>
+  <hr class="divider">
+
+  <h2 class="topic">1. Complements</h2>
+  <div class="def-box">
+    <strong>Complements</strong> are used to <em>simplify the subtraction operation</em> (turn subtraction into addition).<br><br>
+    Two types:<br>
+    ① <strong>r's complement</strong> (radix complement) — also called 2's complement, 10's complement<br>
+    ② <strong>(r-1)'s complement</strong> (diminished radix complement) — also called 1's complement, 9's complement
+  </div>
+
+  <h2 class="topic">2. r's Complement (Radix Complement)</h2>
+  <div class="def-box">
+    Formula: &nbsp;<span class="formula">r's complement = rⁿ − N</span><br>
+    where r = base, n = number of positive digits, N = given number
+  </div>
+
+  <div class="two-col">
+    <div class="qbox">
+      <div class="q-label">10's complement of (7634)₁₀</div>
+      <div class="calc-box" style="font-size:14px;line-height:26px;">
+        rⁿ - N = 10⁴ - 7634<br>
+        = 10000 - 7634<br>
+        <span class="calc-ans">= 2366</span>
+      </div>
+    </div>
+    <div class="qbox">
+      <div class="q-label">8's complement of (7432)₈</div>
+      <div class="calc-box" style="font-size:14px;line-height:26px;">
+        8⁴ - 7432 = 10000₈ - 7432₈<br>
+        (in decimal: 4096 - 3866)<br>
+        <span class="calc-ans">= 0346₈</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="note-box"><strong>★ For fractional numbers:</strong> n = number of digits BEFORE the decimal point. E.g. for 0.7634 → n = 0 (before decimal) → 10⁰ - 0.7634 = 1 - 0.7634 = 0.2366</div>
+
+  <h2 class="topic">3. (r-1)'s Complement (Diminished Radix Complement)</h2>
+  <div class="def-box">
+    Formula: &nbsp;<span class="formula">(r-1)'s complement = (rⁿ - 1) − N</span>
+  </div>
+
+  <div class="two-col">
+    <div class="qbox">
+      <div class="q-label">9's complement of (76.32)₁₀</div>
+      <div class="calc-box" style="font-size:14px;line-height:26px;">
+        (10² - 1) - 76.32<br>
+        = 99.99 - 76.32<br>
+        <span class="calc-ans">= 23.67</span>
+      </div>
+    </div>
+    <div class="qbox">
+      <div class="q-label">7's complement of (76.32)₈</div>
+      <div class="calc-box" style="font-size:14px;line-height:26px;">
+        (8² - 1) - 76.32<br>
+        = 77 - 76.32<br>
+        <span class="calc-ans">= 00.46</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-num">1 / 4</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DE — Unit 1 · §4</span><span class="unit-badge ub-orange">SUBTRACTION</span></div>
+
+  <h2 class="topic">4. Subtraction Using r's Complement (Steps)</h2>
+  <div class="step-card"><div class="step-head">Step 1</div><div class="step-body">Equate number of digits (pad with leading zeros if needed)</div></div>
+  <div class="step-card"><div class="step-head">Step 2</div><div class="step-body">A − B: Take r's complement of the SUBTRAHEND (B)</div></div>
+  <div class="step-card"><div class="step-head">Step 3</div><div class="step-body">Add minuend (A) + r's complement of subtrahend</div></div>
+  <div class="step-card"><div class="step-head">Step 4a</div><div class="step-body">If sum produces a CARRY → discard carry → result is POSITIVE</div></div>
+  <div class="step-card"><div class="step-head">Step 4b</div><div class="step-body">If sum does NOT produce carry → take r's complement of sum → result is NEGATIVE</div></div>
+
+  <h2 class="topic">5. Subtraction Using r's Complement — Worked Examples</h2>
+  <div class="two-col">
+    <div class="qbox">
+      <div class="q-label">① 76532 − 04250 (10's complement)</div>
+      <div class="calc-box" style="font-size:14px;line-height:26px;">
+        10's complement of 04250:<br>
+        10⁵ − 04250 = <strong>95750</strong><br><br>
+        76532<br>
+        + 95750<br>
+        ——————<br>
+        ❌172282 → carry! Discard carry.<br>
+        <span class="calc-ans">= +72282</span>
+      </div>
+    </div>
+    <div class="qbox">
+      <div class="q-label">② 04250 − 76532 (10's complement)</div>
+      <div class="calc-box" style="font-size:14px;line-height:26px;">
+        10's complement of 76532:<br>
+        10⁵ − 76532 = <strong>23468</strong><br><br>
+        04250<br>
+        + 23468<br>
+        ——————<br>
+        27718 → NO carry!<br>
+        10's complement of 27718:<br>
+        = 10⁵ − 27718 = 72282<br>
+        <span class="calc-ans">= −72282</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-num">2 / 4</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DE — Unit 1 · §4</span><span class="unit-badge ub-orange">SUBTRACTION</span></div>
+
+  <h2 class="topic">6. Subtraction Using (r-1)'s Complement (Steps)</h2>
+  <div class="step-card"><div class="step-head">Step 1</div><div class="step-body">Equate number of digits</div></div>
+  <div class="step-card"><div class="step-head">Step 2</div><div class="step-body">Take (r-1)'s complement of subtrahend</div></div>
+  <div class="step-card"><div class="step-head">Step 3</div><div class="step-body">Add minuend + (r-1)'s complement of subtrahend</div></div>
+  <div class="step-card"><div class="step-head">Step 4a (carry)</div><div class="step-body">If sum produces carry: add carry to LSB (end-around carry) → result is POSITIVE</div></div>
+  <div class="step-card"><div class="step-head">Step 4b (no carry)</div><div class="step-body">No carry → take (r-1)'s complement of sum → place (−) sign → result is NEGATIVE</div></div>
+
+  <h2 class="topic">7. Example: 76532 − 04250 using 9's Complement</h2>
+  <div class="qbox">
+    <div class="q-label">9's complement of 04250 = 99999 − 04250 = 95749</div>
+    <div class="calc-box" style="font-size:14px;line-height:28px;">
+      &nbsp;&nbsp;&nbsp;76532<br>
+      + 95749<br>
+      ————————<br>
+      &nbsp;172281 &nbsp;← carry generated!<br>
+      End-around carry: 72281 + 1 = <strong>72282</strong><br>
+      <span class="calc-ans">Result = +72282 ✓</span>
+    </div>
+  </div>
+
+  <h2 class="topic">8. Hexadecimal Subtraction</h2>
+  <div class="qbox">
+    <div class="q-label">Q: (AB6)₁₆ − (7FF)₁₆</div>
+    <div class="q-step">When subtraction requires borrowing: add base (16) to the digit, borrow from next column.</div>
+    <div class="calc-box" style="font-size:14px;line-height:28px;">
+      &nbsp;&nbsp;A &nbsp;B &nbsp;6<br>
+      − &nbsp;7 &nbsp;F &nbsp;F<br>
+      ——————————<br>
+      Col 1 (rightmost): 6 − F(15): borrow → 6+16=22; 22−15=<strong>7</strong><br>
+      Col 2: B(11)−1(borrow)=10; 10−F(15): borrow → 10+16=26; 26−15=<strong>11(B)</strong><br>
+      Col 3: A(10)−1(borrow)=9; 9−7=<strong>2</strong><br>
+      <span class="calc-ans">= (2B7)₁₆</span>
+    </div>
+  </div>
+
+  <div class="page-num">3 / 4</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DE — Unit 1 · §4</span><span class="unit-badge ub-orange">PRACTICE</span></div>
+
+  <h2 class="topic">9. Summary — Complement Types</h2>
+  <table class="tt">
+    <tr><th>System</th><th>r's Complement</th><th>(r-1)'s Complement</th></tr>
+    <tr><td>Decimal (base 10)</td><td>10's complement: 10ⁿ − N</td><td>9's complement: (10ⁿ−1) − N</td></tr>
+    <tr><td>Binary (base 2)</td><td>2's complement: 2ⁿ − N</td><td>1's complement: (2ⁿ−1) − N = flip all bits</td></tr>
+    <tr><td>Octal (base 8)</td><td>8's complement: 8ⁿ − N</td><td>7's complement: (8ⁿ−1) − N</td></tr>
+    <tr><td>Hex (base 16)</td><td>16's complement: 16ⁿ − N</td><td>15's complement: (16ⁿ−1) − N</td></tr>
+  </table>
+
+  <div class="note-box"><strong>★ 1's complement shortcut:</strong> Simply flip all bits. &nbsp;|&nbsp; <strong>★ 2's complement shortcut:</strong> Flip all bits then add 1.</div>
+
+  <h2 class="topic">10. Practice Questions — §4</h2>
+
+  <div class="exam-q-box">
+    <div class="eq-label">Q1 — Subtract (1010)₂ − (0111)₂ using 2's complement</div>
+    <div class="q-step">2's complement of 0111: flip=1000, add 1=1001</div>
+    <div class="q-ans" style="font-size:14px;line-height:28px;">
+      2's complement of (0111): 1000 + 1 = <strong>1001</strong><br>
+      1010 + 1001 = 1<strong>0011</strong> → carry generated → discard carry<br>
+      <strong>Result = 0011 = (+3)₁₀ ✓</strong> (10-7=3)
+    </div>
+  </div>
+
+  <div class="exam-q-box">
+    <div class="eq-label">Q2 — Find 10's complement of (0.4567)₁₀ and use it for 0.9999 − 0.4567</div>
+    <div class="q-step">n=0 digits before decimal. 10's complement = 10⁰ − 0.4567 = 1 − 0.4567</div>
+    <div class="q-ans" style="font-size:14px;line-height:28px;">
+      10's complement of 0.4567 = 1.0000 − 0.4567 = <strong>0.5433</strong><br>
+      0.9999 + 0.5433 = 1<strong>.5432</strong> → carry → discard → +<strong>0.5432</strong>
+    </div>
+  </div>
+
+  <div class="page-num">4 / 4</div>
+</div>
+
+</body>
+</html>

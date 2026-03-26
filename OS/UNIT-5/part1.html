@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OS Unit 5 — Part 1</title>
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1a1a2e;--ink2:#2c2c54;--blue:#1565C0;--red:#b71c1c;--green:#1b5e20;--purple:#4a148c;--teal:#006064;--orange:#e65100;--line:#c5cae9;--page:#fafaf7;--highlight:#fff9c4;--box-blue:#e8f4fd;--box-green:#e8f5e9;--box-purple:#f3e5f5;--box-orange:#fff3e0;--box-red:#fce4ec;--box-teal:#e0f7fa;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#e0e0e0;font-family:'Kalam',cursive;color:var(--ink);padding:30px 20px;}
+.page{background:var(--page);max-width:820px;margin:0 auto 40px;border-radius:4px;box-shadow:0 2px 16px rgba(0,0,0,0.18),0 0 0 1px rgba(0,0,0,0.08);padding:60px 70px 70px 90px;position:relative;min-height:1060px;background-image:repeating-linear-gradient(transparent,transparent 31px,var(--line) 31px,var(--line) 32px);background-position:0 56px;}
+.page::before{content:'';position:absolute;left:72px;top:0;bottom:0;width:1.5px;background:#ef9a9a;opacity:0.7;}
+.holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-around;padding:40px 0;}
+.hole{width:22px;height:22px;border-radius:50%;background:#e0e0e0;border:1.5px solid #bdbdbd;box-shadow:inset 0 1px 3px rgba(0,0,0,0.2);}
+.page-num{position:absolute;bottom:28px;right:50px;font-size:13px;color:#9e9e9e;}
+.page-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
+.date-tag{font-size:13px;color:#9e9e9e;}
+.unit-badge{color:#fff;font-size:13px;padding:2px 14px;border-radius:20px;font-weight:700;}
+h1.section-title{font-size:24px;font-weight:700;color:var(--ink2);text-align:center;margin:8px 0 4px;text-decoration:underline;text-underline-offset:5px;}
+h2.topic{font-size:18px;font-weight:700;color:var(--blue);margin:18px 0 6px;border-bottom:1.5px solid var(--blue);padding-bottom:2px;display:inline-block;}
+h3.sub{font-size:15px;font-weight:700;color:var(--purple);margin:12px 0 4px;}
+p,li{font-size:15px;line-height:32px;}
+.def-box{background:var(--box-blue);border-left:4px solid var(--blue);border-radius:0 6px 6px 0;padding:10px 16px;margin:10px 0 12px;font-size:15px;line-height:30px;}
+.note-box{background:var(--highlight);border-left:4px solid #f9a825;border-radius:0 6px 6px 0;padding:8px 14px;margin:8px 0 10px;font-size:14px;line-height:26px;}
+.rule-box{background:var(--box-green);border:1.5px solid #81c784;border-radius:6px;padding:10px 16px;margin:10px 0;font-size:14.5px;line-height:28px;}
+.purple-box{background:var(--box-purple);border-left:4px solid var(--purple);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
+.orange-box{background:var(--box-orange);border-left:4px solid var(--orange);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
+.teal-box{background:var(--box-teal);border-left:4px solid var(--teal);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
+.formula{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--blue);}
+.divider{border:none;border-top:1px dashed #b0bec5;margin:14px 0 10px;}
+ul.plain{list-style:none;padding-left:4px;}
+ul.plain li::before{content:'→ ';color:var(--blue);font-weight:700;}
+ul.plain li{font-size:15px;line-height:32px;}
+.qbox{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:12px 16px;margin:10px 0;}
+.q-label{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:2px;}
+.q-step{font-size:14px;color:var(--green);margin-top:4px;line-height:26px;}
+.q-ans{font-size:15px;color:var(--red);font-family:'Patrick Hand',cursive;margin-top:4px;}
+table.tt{width:100%;border-collapse:collapse;margin:8px 0;font-size:14px;}
+table.tt th{color:#fff;padding:7px 10px;text-align:center;}
+table.tt td{padding:6px 10px;border-bottom:1px solid #e0e0e0;text-align:center;font-family:'Patrick Hand',cursive;font-size:14px;}
+table.tt tr:nth-child(even) td{background:#f5f5f5;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0;}
+.vs-box{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:12px 0;border-radius:8px;overflow:hidden;border:1.5px solid #90caf9;}
+.vs-left{background:#e8f4fd;padding:12px 14px;}
+.vs-right{background:var(--box-purple);padding:12px 14px;border-left:1px solid #90caf9;}
+.vs-head{font-size:15px;font-weight:700;margin-bottom:8px;}
+.vs-item{font-size:14px;line-height:26px;}
+.step-card{background:var(--box-purple);border-left:4px solid var(--purple);padding:8px 14px;margin:5px 0;border-radius:0 6px 6px 0;}
+.step-head{font-size:14px;font-weight:700;color:var(--purple);}
+.step-body{font-size:13.5px;line-height:24px;color:var(--ink2);}
+.cover-page{max-width:820px;margin:0 auto 40px;border-radius:8px;padding:80px 60px;text-align:center;color:#fff;box-shadow:0 4px 24px rgba(0,0,0,0.3);position:relative;overflow:hidden;}
+.cover-subject{font-size:14px;letter-spacing:3px;opacity:0.7;margin-bottom:16px;}
+.cover-title{font-size:40px;font-weight:700;line-height:1.2;margin-bottom:12px;}
+.cover-unit{font-size:20px;opacity:0.85;margin-bottom:30px;}
+.cover-divider{width:80px;height:3px;background:rgba(255,255,255,0.4);margin:0 auto 24px;border-radius:2px;}
+.cover-toc{text-align:left;background:rgba(255,255,255,0.1);border-radius:8px;padding:20px 28px;display:inline-block;min-width:420px;}
+.cover-toc-item{font-size:15px;line-height:32px;display:flex;justify-content:space-between;gap:20px;}
+.part-nav{max-width:820px;margin:0 auto 20px;display:flex;gap:10px;justify-content:center;align-items:center;font-family:'Kalam',cursive;flex-wrap:wrap;}
+.part-nav a{padding:6px 20px;border-radius:20px;background:#fff;border:1.5px solid #90caf9;color:var(--blue);text-decoration:none;font-size:14px;font-weight:700;}
+.part-nav a:hover:not(.active){background:#e3f2fd;}
+.part-nav .back{background:#f5f5f5;border-color:#ccc;color:#555;font-size:13px;}
+.unit-badge{background:#4a148c;}
+h1.section-title{text-decoration-color:#4a148c;}
+h1.section-title .sn{color:#4a148c;}
+.part-nav a.active{background:#4a148c;border-color:#4a148c;color:#fff;}
+</style>
+</head>
+<body>
+
+<div class="part-nav">
+  <a href="../index.html" class="back">↩ Units</a>
+  <a href="part1.html" class="active">Part 1</a>
+  <a href="part2.html">Part 2</a>
+  <a href="part3.html">Part 3</a>
+</div>
+
+<div class="cover-page" style="background:linear-gradient(135deg,#4a148c 0%,#1a237e 100%);">
+  <div class="cover-subject">OPERATING SYSTEMS</div>
+  <div class="cover-title">Unit 5 — Part 1</div>
+  <div class="cover-unit">[ Awaiting Content ]</div>
+  <div class="cover-divider"></div>
+  <div class="cover-toc">
+    <div class="cover-toc-item" style="opacity:0.6;font-style:italic;justify-content:center;"><span>Content to be added</span></div>
+  </div>
+</div>
+
+<!-- ================================================
+     ADD CONTENT SECTIONS BELOW THIS LINE
+
+     Each section pattern:
+
+     <div class="page">
+       <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+       <div class="page-header">
+         <span class="date-tag">OS — Unit 5</span>
+         <span class="unit-badge">SECTION X</span>
+       </div>
+       <h1 class="section-title"><span class="sn">§X</span> Title Here</h1>
+       <hr class="divider">
+       ... content ...
+       <div class="page-num">1 / 1</div>
+     </div>
+     ================================================ -->
+
+<script>
+(function(){
+  var pages = document.querySelectorAll('.page');
+  var secPages = [];
+  pages.forEach(function(p){ if(p.querySelector('h1.section-title')) secPages.push(p); });
+  secPages.forEach(function(p,i){ p.id = 'sec-'+(i+1); });
+  var tocItems = document.querySelectorAll('.cover-toc-item');
+  tocItems.forEach(function(item, i){
+    if(i >= secPages.length) return;
+    item.style.cursor = 'pointer';
+    item.style.borderRadius = '4px';
+    item.style.transition = 'background 0.18s';
+    item.setAttribute('title', 'Click to jump to this section');
+    item.addEventListener('mouseenter', function(){ item.style.background='rgba(255,255,255,0.18)'; });
+    item.addEventListener('mouseleave', function(){ item.style.background=''; });
+    item.addEventListener('click', function(){ secPages[i].scrollIntoView({behavior:'smooth'}); });
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DSD Unit 2 — Part 1 | Combinational Logic</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Kalam',cursive;background:#c8c8c8;background-image:repeating-linear-gradient(45deg,#b8b8b8 0,#b8b8b8 1px,transparent 0,transparent 50%);background-size:10px 10px;min-height:100vh}
+.part-nav{position:fixed;top:0;left:0;right:0;background:#0d1b6e;color:white;display:flex;align-items:center;justify-content:center;padding:10px 20px;gap:10px;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,0.3);flex-wrap:wrap}
+.nav-title{font-family:'Caveat',cursive;font-size:1.1rem;font-weight:700;margin-right:15px;white-space:nowrap}
+.part-nav a{color:rgba(255,255,255,0.55);text-decoration:none;padding:5px 18px;border-radius:20px;font-family:'Caveat',cursive;font-size:1rem;transition:all .2s;white-space:nowrap}
+.part-nav a.active{color:white;background:rgba(255,255,255,0.22);font-weight:700}
+.part-nav a:hover{color:white;background:rgba(255,255,255,0.12)}
+.notebook{max-width:860px;margin:0 auto;padding:80px 16px 50px}
+.page{background:#fffef5;border:1px solid #ddd;border-radius:3px;box-shadow:3px 3px 12px rgba(0,0,0,0.18);margin-bottom:28px;padding:28px 36px 50px 72px;position:relative;overflow:hidden}
+.page::before{content:'';position:absolute;top:0;bottom:0;left:58px;width:2px;background:#ff9999;opacity:.6}
+.page-lines{position:absolute;top:0;left:0;right:0;bottom:0;background-image:repeating-linear-gradient(transparent,transparent 29px,#c5ddf4 29px,#c5ddf4 30px);background-size:100% 30px;pointer-events:none;z-index:0}
+.page>*{position:relative;z-index:1}
+.holes{position:absolute;left:15px;top:35px;display:flex;flex-direction:column;gap:90px;z-index:2}
+.hole{width:22px;height:22px;border-radius:50%;background:#b8b8b8;border:3px solid #999;box-shadow:inset 0 1px 4px rgba(0,0,0,0.3)}
+.page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;line-height:30px}
+.date-tag{font-family:'Caveat',cursive;font-size:.9rem;color:#888}
+.unit-badge{background:#0d1b6e;color:white;padding:2px 14px;border-radius:12px;font-family:'Caveat',cursive;font-size:.82rem;letter-spacing:.5px}
+.section-title{font-family:'Caveat',cursive;font-size:2.1rem;color:#0d1b6e;line-height:1.1;margin-bottom:4px}
+.sn{background:#0d1b6e;color:white;padding:2px 10px;border-radius:5px;margin-right:8px;font-size:1.6rem}
+hr.divider{border:none;border-top:2.5px solid #0d1b6e;opacity:.2;margin:8px 0 18px}
+.topic{font-family:'Caveat',cursive;font-size:1.55rem;color:#b71c1c;margin:22px 0 10px;padding-bottom:4px;border-bottom:1.5px dashed #ef9a9a;line-height:30px}
+.sub{font-family:'Caveat',cursive;font-size:1.2rem;color:#1565c0;margin:14px 0 8px;line-height:30px}
+ul.plain{list-style:none;padding-left:8px;line-height:1.8}
+ul.plain li::before{content:"→ ";color:#0d1b6e;font-weight:700}
+ul.plain li{margin:3px 0}
+.formula{font-family:'Courier New',monospace;background:#f0f0f0;padding:2px 7px;border-radius:4px;border:1px solid #ccc;color:#c62828;font-size:.93rem}
+.def-box{background:#e3f2fd;border-left:5px solid #1565c0;padding:12px 15px;margin:14px 0;border-radius:0 8px 8px 0;line-height:1.7}
+.def-box b.bh{display:block;font-family:'Caveat',cursive;font-size:1.15rem;color:#1565c0;margin-bottom:4px}
+.rule-box{background:#e8f5e9;border-left:5px solid #2e7d32;padding:12px 15px;margin:14px 0;border-radius:0 8px 8px 0;line-height:1.7}
+.rule-box b.bh{display:block;font-family:'Caveat',cursive;font-size:1.15rem;color:#2e7d32;margin-bottom:4px}
+.note-box{background:#fff8e1;border-left:5px solid #f57f17;padding:12px 15px;margin:14px 0;border-radius:0 8px 8px 0;line-height:1.7}
+.note-box b.bh{display:block;font-family:'Caveat',cursive;font-size:1.15rem;color:#e65100;margin-bottom:4px}
+.purple-box{background:#f3e5f5;border-left:5px solid #7b1fa2;padding:12px 15px;margin:14px 0;border-radius:0 8px 8px 0;line-height:1.7}
+.purple-box b.bh{display:block;font-family:'Caveat',cursive;font-size:1.15rem;color:#6a1b9a;margin-bottom:4px}
+.orange-box{background:#fbe9e7;border-left:5px solid #d84315;padding:12px 15px;margin:14px 0;border-radius:0 8px 8px 0;line-height:1.7}
+.orange-box b.bh{display:block;font-family:'Caveat',cursive;font-size:1.15rem;color:#bf360c;margin-bottom:4px}
+.qbox{border:2px solid #0d1b6e;border-radius:8px;padding:14px;margin:14px 0;background:#fafafa}
+.q-label{font-weight:700;color:#0d1b6e;font-family:'Caveat',cursive;font-size:1.15rem;margin-bottom:8px}
+.q-step{margin:5px 0;padding-left:14px;line-height:1.7}
+.q-ans{background:#e8f5e9;padding:8px 12px;border-radius:4px;margin-top:8px;border-left:3px solid #4caf50;line-height:1.7}
+table.tt{border-collapse:collapse;margin:14px auto;font-size:.9rem}
+table.tt th{background:#0d1b6e;color:white;padding:6px 14px;text-align:center;font-family:'Caveat',cursive;font-size:1rem}
+table.tt td{border:1px solid #ccc;padding:5px 14px;text-align:center}
+table.tt tr:nth-child(even) td{background:#e3f2fd}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:14px 0}
+.vs-box{display:grid;grid-template-columns:1fr 1fr;margin:14px 0;border:2px solid #ddd;border-radius:8px;overflow:hidden}
+.vs-left{background:#e8f5e9;padding:12px}
+.vs-right{background:#fce4ec;padding:12px;border-left:2px solid #ddd}
+.vs-left h4,.vs-right h4{font-family:'Caveat',cursive;font-size:1.1rem;text-align:center;margin-bottom:8px}
+.step-card{border:1px solid #ddd;border-radius:8px;overflow:hidden;margin:10px 0}
+.step-head{background:#0d1b6e;color:white;padding:7px 14px;font-family:'Caveat',cursive;font-size:1.1rem}
+.step-body{padding:10px 14px;line-height:1.7}
+.page-num{position:absolute;bottom:14px;right:18px;color:#aaa;font-family:'Caveat',cursive;font-size:1rem}
+/* Cover */
+.cover-page{background:linear-gradient(140deg,#0d1b6e 0%,#1a237e 40%,#283593 70%,#3949ab 100%);color:white;border-radius:6px;padding:55px 50px;margin-bottom:28px;min-height:580px;position:relative;box-shadow:4px 4px 20px rgba(0,0,0,0.35);overflow:hidden}
+.cover-page::after{content:'';position:absolute;top:-80px;right:-80px;width:350px;height:350px;border-radius:50%;background:rgba(255,255,255,.05)}
+.cover-subject{font-size:.85rem;opacity:.65;text-transform:uppercase;letter-spacing:3px;font-family:'Caveat',cursive}
+.cover-unit{font-family:'Caveat',cursive;font-size:3.8rem;font-weight:700;margin:8px 0;line-height:1.05}
+.cover-subtitle{font-family:'Caveat',cursive;font-size:1.9rem;opacity:.8}
+.cover-part{display:inline-block;background:rgba(255,255,255,.18);padding:5px 22px;border-radius:20px;margin:18px 0;font-size:1.05rem;font-family:'Caveat',cursive;border:1px solid rgba(255,255,255,.3)}
+.cover-toc h3{font-family:'Caveat',cursive;font-size:1.55rem;border-bottom:1px solid rgba(255,255,255,.3);padding-bottom:8px;margin:28px 0 14px;opacity:.9}
+.toc-item{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px dotted rgba(255,255,255,.2);font-size:.95rem}
+.toc-item .toc-sec{opacity:.7;font-size:.82rem;margin-right:10px;white-space:nowrap}
+.toc-item .toc-pg{opacity:.6;font-size:.82rem;white-space:nowrap}
+.pq-sec{background:linear-gradient(135deg,#0d1b6e08,#3949ab08);border:2px solid #0d1b6e;border-radius:8px;padding:15px;margin:14px 0}
+.pq-num{display:inline-block;background:#0d1b6e;color:white;width:28px;height:28px;border-radius:50%;text-align:center;line-height:28px;font-weight:700;margin-right:8px;font-size:.88rem}
+.pq-q{font-weight:600;color:#0d1b6e;margin-bottom:6px}
+.pq-hint{color:#666;font-size:.85rem;font-style:italic}
+.ans-btn{display:inline-block;cursor:pointer;background:#0d1b6e;color:white;padding:3px 12px;border-radius:10px;font-size:.8rem;margin-top:6px;font-family:'Caveat',cursive;border:none}
+.pq-answer{display:none;background:#e8f5e9;border-left:3px solid #4caf50;padding:8px 12px;border-radius:4px;margin-top:8px;line-height:1.6}
+.circuit-ascii{font-family:'Courier New',monospace;font-size:.82rem;background:#f5f5f5;padding:10px 14px;border-radius:6px;border:1px solid #ddd;overflow-x:auto;white-space:pre;line-height:1.6;color:#333;margin:10px 0}
+.highlight{background:#fff176;padding:0 3px;border-radius:2px}
+.badge{display:inline-block;background:#0d1b6e;color:white;padding:1px 9px;border-radius:10px;font-size:.78rem;font-family:'Caveat',cursive;vertical-align:middle;margin-left:4px}
+.badge.green{background:#2e7d32}
+.badge.red{background:#c62828}
+.badge.orange{background:#d84315}
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="part-nav">
+  <a href="../index.html">&#8617; Units</a>
+  <span class="nav-title">📓 DSD / DE — Unit 2</span>
+  <a href="part1.html" class="active">Part 1: Comparator &amp; MUX</a>
+  <a href="part2.html">Part 2: Decoder, Encoder &amp; Display</a>
+  <a href="part3.html">Part 3: Adders, Subtractors &amp; BCD</a>
+</nav>
+
+<div class="notebook">
+
+<!-- ══════════ COVER PAGE ══════════ -->
+<div class="cover-page">
+  <div class="cover-subject">BEC-302 / BOE-310 / BOE-410 · Digital System Design</div>
+  <div class="cover-unit">Unit 2</div>
+  <div class="cover-subtitle">Combinational Logic — MSI Devices</div>
+  <div class="cover-part">📘 Part 1 of 3</div>
+  <div class="cover-toc">
+    <h3>Contents — Part 1</h3>
+    <div class="toc-item"><span><b>§1</b> Introduction to Combinational Logic</span><span class="toc-sec">Section 1</span><span class="toc-pg">2 pages</span></div>
+    <div class="toc-item"><span><b>§2</b> Magnitude Comparator</span><span class="toc-sec">Section 2</span><span class="toc-pg">3 pages</span></div>
+    <div class="toc-item"><span><b>§3</b> Multiplexers (MUX)</span><span class="toc-sec">Section 3</span><span class="toc-pg">4 pages</span></div>
+    <div class="toc-item"><span><b>§PQ1</b> Practice Questions — Part 1</span><span class="toc-sec">Section PQ</span><span class="toc-pg">2 pages</span></div>
+  </div>
+</div>
+
+<!-- ══════════ SECTION 1 — INTRO (Page 1/2) ══════════ -->
+<div class="page">
+  <div class="page-lines"></div>
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital System Design — Unit 2</span>
+    <span class="unit-badge">SECTION 1</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§1</span> Introduction to Combinational Logic</h1>
+  <hr class="divider">
+
+  <div class="def-box">
+    <b class="bh">📖 Combinational Circuit</b>
+    A combinational circuit is a circuit which does <b>not require any feedback element</b> to process its circuit. The output depends <b>only on the current inputs</b> — not on past inputs or outputs. These circuits have a combination of <b>n inputs</b> and <b>m outputs</b>.
+  </div>
+
+  <div class="circuit-ascii">        n inputs                     m outputs
+  ────────►│                      │────────►
+  ────────►│  Combinational       │────────►
+  ────────►│     Circuit          │────────►
+            └──────────────────────┘</div>
+
+  <div class="purple-box">
+    <b class="bh">⭐ Key Property</b>
+    Combinational circuits are <b>memoryless</b> — they have no storage elements (no flip-flops, no latches). The output is a <b>pure Boolean function</b> of the inputs.
+  </div>
+
+  <h2 class="topic">🔨 Design Procedure</h2>
+  <p>For designing any combinational circuit, the following 5 steps must be followed:</p>
+
+  <div class="step-card">
+    <div class="step-head">Step 1 — Analyze the Problem</div>
+    <div class="step-body">Analyze the given problem and <b>identify the number of inputs and outputs</b> required.</div>
+  </div>
+  <div class="step-card">
+    <div class="step-head">Step 2 — Assign Letter Symbols</div>
+    <div class="step-body">Assign letter symbols to the <b>input and output lines</b> (e.g. A, B, C for inputs; Y, S, C for outputs).</div>
+  </div>
+  <div class="step-card">
+    <div class="step-head">Step 3 — Write the Truth Table</div>
+    <div class="step-body">Write the truth table based on the <b>given specification</b> — list all 2<sup>n</sup> input combinations.</div>
+  </div>
+  <div class="step-card">
+    <div class="step-head">Step 4 — Simplify with K-Map</div>
+    <div class="step-body">Determine the <b>simplified Boolean expression</b> for each output using Karnaugh Map.</div>
+  </div>
+  <div class="step-card">
+    <div class="step-head">Step 5 — Draw the Logic Circuit</div>
+    <div class="step-body">Draw the <b>logic circuit</b> for the obtained simplified output expression.</div>
+  </div>
+
+  <div class="note-box">
+    <b class="bh">⚠️ Exam Tip</b>
+    In exam questions: if the problem says "design a combinational circuit that…" — follow all 5 steps above. Always draw the K-map before drawing the circuit.
+  </div>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<!-- Section 1 — Page 2/2 -->
+<div class="page">
+  <div class="page-lines"></div>
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital System Design — Unit 2</span>
+    <span class="unit-badge">SECTION 1</span>
+  </div>
+  <h2 class="topic">🔨 Truth Table Construction Steps</h2>
+  <p>To obtain a truth table from a logic diagram:</p>
+
+  <ul class="plain">
+    <li><b>Step 1:</b> Determine the number of input variables <b>n</b>; list 2<sup>n</sup> binary combinations from 0 to 2<sup>n</sup>−1</li>
+    <li><b>Step 2:</b> Label the output of each selected gate with an arbitrary symbol</li>
+    <li><b>Step 3:</b> Obtain the truth table for the outputs of those gates that are a <b>function of the input variables</b></li>
+    <li><b>Step 4:</b> Proceed to obtain the truth table for the output of gates that are functions of <b>previously defined values</b>, until columns of all outputs are determined</li>
+  </ul>
+
+  <h2 class="topic">🔥 Worked Example — Design Problem</h2>
+  <p>Design a combinational circuit with <b>4 inputs</b> and <b>1 output</b>. The output is 1 when the input is greater than 1000 (binary).</p>
+
+  <div class="qbox">
+    <div class="q-label">🖊️ Solution</div>
+    <div class="q-step">Input greater than 1000₂ (= 8 in decimal) means inputs 9–15 give output Y = 1.</div>
+    <div class="q-step">From K-map (4-variable): group the minterms 9,10,11,12,13,14,15</div>
+    <div class="q-step">K-map yields groups → AB, AD, AC</div>
+    <div class="q-ans">
+      <b>Simplified Expression: Y = AB + AD + AC</b><br>
+      <b>Logic circuit:</b> Three AND gates (AB, AD, AC) feeding one OR gate → Y
+    </div>
+  </div>
+
+  <div class="vs-box">
+    <div class="vs-left">
+      <h4>✅ Combinational Circuits</h4>
+      <ul class="plain">
+        <li>No memory elements</li>
+        <li>Output = f(current inputs)</li>
+        <li>Examples: Adder, MUX, Decoder</li>
+        <li>No feedback paths</li>
+      </ul>
+    </div>
+    <div class="vs-right">
+      <h4>❌ Sequential Circuits</h4>
+      <ul class="plain">
+        <li>Has memory (flip-flops)</li>
+        <li>Output = f(inputs + past state)</li>
+        <li>Examples: Counter, Register</li>
+        <li>Has feedback paths</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══════════ SECTION 2 — MAGNITUDE COMPARATOR (Page 1/3) ══════════ -->
+<div class="page">
+  <div class="page-lines"></div>
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital System Design — Unit 2</span>
+    <span class="unit-badge">SECTION 2</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§2</span> Magnitude Comparator</h1>
+  <hr class="divider">
+
+  <div class="def-box">
+    <b class="bh">📖 Magnitude Comparator</b>
+    A Magnitude Comparator is a combinational circuit designed primarily to compare the <b>relative magnitude</b> of two binary numbers A and B. The result of the comparison is specified by three binary output variables that indicate whether <b>A &gt; B</b>, <b>A &lt; B</b>, or <b>A = B</b>.
+  </div>
+
+  <div class="circuit-ascii">              ┌──────────────────┐
+  2 inputs ──►│   Comparator     │──► A &gt; B
+              │                  │──► A &lt; B
+              └──────────────────┘──► A = B</div>
+
+  <h2 class="topic">⚡ Single-Bit Comparator</h2>
+  <p>Compares two single bits A and B:</p>
+
+  <table class="tt">
+    <tr><th>A</th><th>B</th><th>A &gt; B</th><th>A &lt; B</th><th>A = B</th></tr>
+    <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td></tr>
+    <tr><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+    <tr><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+    <tr><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+  </table>
+
+  <div class="rule-box">
+    <b class="bh">📐 Boolean Expressions — Single Bit</b>
+    <span class="formula">A = B  →  Ā·B̄ + A·B  = A ⊙ B  (XNOR)</span><br>
+    <span class="formula">A &gt; B  →  A·B̄</span><br>
+    <span class="formula">A &lt; B  →  Ā·B</span>
+  </div>
+
+  <div class="note-box">
+    <b class="bh">⚠️ Exam Tip</b>
+    A = B uses <b>XNOR gate</b>. Remember: XNOR gives 1 when both inputs are same. A &gt; B needs A=1, B=0 (so AND with B̄). A &lt; B needs A=0, B=1 (so AND with Ā).
+  </div>
+
+  <h2 class="topic">Logic Circuit — Single Bit Comparator</h2>
+  <div class="circuit-ascii">  A ──┬──────────────────────────────► A·B̄ ─► (A&gt;B)
+       │    ┌─── XNOR ──────────────────────► A⊙B  ─► (A=B)
+       │    │
+  B ──┴──┬──┘─ NOT(A) ─► Ā·B ─────────────► (A&lt;B)
+          └──── NOT(B) ─► A·B̄ ─────────────► (A&gt;B)</div>
+
+  <div class="page-num">1 / 3</div>
+</div>
+
+<!-- Section 2 — Page 2/3 -->
+<div class="page">
+  <div class="page-lines"></div>
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital System Design — Unit 2</span>
+    <span class="unit-badge">SECTION 2</span>
+  </div>
+  <h2 class="topic">⚡ Two-Bit Comparator</h2>
+  <p>Compares two 2-bit numbers: A = A₂A₁ and B = B₂B₁. Total 4 inputs → 16 combinations.</p>
+
+  <table class="tt">
+    <tr><th>A₂</th><th>A₁</th><th>B₂</th><th>B₁</th><th>A&gt;B</th><th>A&lt;B</th><th>A=B</th></tr>
+    <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td></tr>
+    <tr><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+    <tr><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+    <tr><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+    <tr><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+    <tr><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+    <tr><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+    <tr><td>0</td><td>1</td><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+    <tr><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+    <tr><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td></tr>
+    <tr><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td></tr>
+    <tr><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+    <tr><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+    <tr><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td></tr>
+    <tr><td>1</td><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+    <tr><td>1</td><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+  </table>
+
+  <div class="note-box">
+    <b class="bh">⚠️ Exam Tip — K-map for 2-bit Comparator</b>
+    The K-map for 2-bit comparator uses a <b>special sequence</b> for rows/columns (not standard Gray code). The sequence used is: B₂B₁ → 00, 01, 11, 10 but for A₂A₁: Ā₂Ā₁, Ā₂A₁, A₂A₁, A₂Ā₁. <b>Do NOT change the sequence in K-map.</b>
+  </div>
+
+  <div class="page-num">2 / 3</div>
+</div>
+
+<!-- Section 2 — Page 3/3 -->
+<div class="page">
+  <div class="page-lines"></div>
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital System Design — Unit 2</span>
+    <span class="unit-badge">SECTION 2</span>
+  </div>
+
+  <h2 class="topic">🎯 Simplified Expressions — 2-Bit Comparator</h2>
+
+  <div class="rule-box">
+    <b class="bh">📐 From K-Map Simplification</b>
+    <b>A &gt; B:</b> <span class="formula">A₂B̄₂ + A₁B̄₂B̄₁ + A₂A₁B̄₁</span><br><br>
+    <b>A &lt; B:</b> <span class="formula">Ā₂B₂ + Ā₂Ā₁B₁ + Ā₁B₂B₁</span><br><br>
+    <b>A = B:</b> <span class="formula">A₂⊙A₁⊙B₂⊙B₁</span>  &nbsp;(i.e., XNOR of corresponding bits)<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="formula">= Ā₂Ā₁B̄₂B̄₁ + Ā₂A₁B̄₂B₁ + A₂A₁B₂B₁ + A₂Ā₁B₂B̄₁</span>
+  </div>
+
+  <div class="purple-box">
+    <b class="bh">⭐ Shortcut Formula for A = B (any n-bit)</b>
+    For A = B in an n-bit comparator:<br>
+    Each bit pair (Aᵢ, Bᵢ) must satisfy Aᵢ = Bᵢ.<br>
+    So: <span class="formula">A=B = (A₂⊙B₂) · (A₁⊙B₁)</span><br>
+    Using XNOR for each bit pair, then AND them all together.
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">🖊️ Quick Check — A &gt; B expression</div>
+    <div class="q-step">A &gt; B means A₂A₁ > B₂B₁ (as 2-bit numbers)</div>
+    <div class="q-step">If A₂=1, B₂=0 → definitely A > B regardless of lower bits → term: <b>A₂B̄₂</b></div>
+    <div class="q-step">If A₂=B₂=0, then check lower bits: A₁=1, B₁=0 → term: <b>Ā₂A₁B̄₁</b></div>
+    <div class="q-step">If A₂=B₂=1, then check lower bits: A₁=1, B₁=0 → term: <b>A₂A₁B̄₁</b></div>
+    <div class="q-ans">Final: <b>A &gt; B = A₂B̄₂ + A₁B̄₂B̄₁ + A₂A₁B̄₁</b> ✓</div>
+  </div>
+
+  <div class="note-box">
+    <b class="bh">⚠️ Common Mistake</b>
+    Students often confuse the MSB and LSB subscripts. Remember: A₂ is the <b>Most Significant Bit</b>, A₁ is LSB. Always check MSB first when evaluating A &gt; B.
+  </div>
+
+  <div class="page-num">3 / 3</div>
+</div>
+
+<!-- ══════════ SECTION 3 — MULTIPLEXERS (Page 1/4) ══════════ -->
+<div class="page">
+  <div class="page-lines"></div>
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital System Design — Unit 2</span>
+    <span class="unit-badge">SECTION 3</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§3</span> Multiplexer (MUX)</h1>
+  <hr class="divider">
+
+  <div class="def-box">
+    <b class="bh">📖 Multiplexer</b>
+    A Multiplexer (MUX) is a combinational circuit designed to construct <b>many input lines to one outgoing line</b>. It selects one of 2<sup>n</sup> input lines and routes it to the output, depending upon the condition of the <b>n selection lines</b>.
+  </div>
+
+  <div class="circuit-ascii">   I₀ ───┐
+   I₁ ───┤
+   I₂ ───┤   ┌─────────┐
+   I₃ ───┤   │   MUX   ├──► Y (output)
+    .  ───┤   │         │
+    .  ───┤   └────┬────┘
+   I₂ₙ──┘        │
+               S₀ S₁ … Sₙ₋₁
+             (n selection lines)
+
+  Rule: 2ⁿ inputs → n selection lines</div>
+
+  <h2 class="topic">⚡ Types of MUX</h2>
+  <div class="two-col">
+    <div class="rule-box">
+      <b class="bh">📐 2:1 MUX</b>
+      Inputs: 2 (I₀, I₁)<br>
+      Selection lines: 1 (S₀)<br>
+      2¹ = 2 inputs
+    </div>
+    <div class="rule-box">
+      <b class="bh">📐 4:1 MUX</b>
+      Inputs: 4 (I₀…I₃)<br>
+      Selection lines: 2 (S₁, S₀)<br>
+      2² = 4 inputs
+    </div>
+    <div class="rule-box">
+      <b class="bh">📐 8:1 MUX</b>
+      Inputs: 8 (I₀…I₇)<br>
+      Selection lines: 3 (S₂, S₁, S₀)<br>
+      2³ = 8 inputs
+    </div>
+    <div class="rule-box">
+      <b class="bh">📐 16:1 MUX</b>
+      Inputs: 16 (I₀…I₁₅)<br>
+      Selection lines: 4 (S₃…S₀)<br>
+      2⁴ = 16 inputs
+    </div>
+  </div>
+
+  <h2 class="topic">⚡ 2:1 MUX — Detailed</h2>
+  <p>Has Enable (E), one selection line (S₀):</p>
+  <table class="tt">
+    <tr><th>E</th><th>S₀</th><th>Y (Output)</th></tr>
+    <tr><td>0</td><td>×</td><td>× (disabled)</td></tr>
+    <tr><td>1</td><td>0</td><td>I₀</td></tr>
+    <tr><td>1</td><td>1</td><td>I₁</td></tr>
+  </table>
+  <div class="rule-box">
+    <b class="bh">📐 Expression: 2:1 MUX</b>
+    <span class="formula">Y = S̄·I₀ + S·I₁</span><br>
+    When S=0: Y = I₀ &nbsp;&nbsp;|&nbsp;&nbsp; When S=1: Y = I₁
+  </div>
+
+  <div class="page-num">1 / 4</div>
+</div>
+
+<!-- Section 3 — Page 2/4 -->
+<div class="page">
+  <div class="page-lines"></div>
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital System Design — Unit 2</span>
+    <span class="unit-badge">SECTION 3</span>
+  </div>
+  <h2 class="topic">⚡ 4:1 MUX — Detailed</h2>
+  <p>2 selection lines (S₁, S₀), 4 inputs I₀…I₃:</p>
+  <table class="tt">
+    <tr><th>E</th><th>S₁</th><th>S₀</th><th>Y</th></tr>
+    <tr><td>0</td><td>×</td><td>×</td><td>× (disabled)</td></tr>
+    <tr><td>1</td><td>0</td><td>0</td><td>I₀</td></tr>
+    <tr><td>1</td><td>0</td><td>1</td><td>I₁</td></tr>
+    <tr><td>1</td><td>1</td><td>0</td><td>I₂</td></tr>
+    <tr><td>1</td><td>1</td><td>1</td><td>I₃</td></tr>
+  </table>
+  <div class="rule-box">
+    <b class="bh">📐 Expression: 4:1 MUX</b>
+    <span class="formula">Y = S̄₁S̄₀·I₀ + S̄₁S₀·I₁ + S₁S̄₀·I₂ + S₁S₀·I₃</span>
+  </div>
+
+  <h2 class="topic">⚡ 8:1 MUX</h2>
+  <div class="rule-box">
+    <b class="bh">📐 Expression: 8:1 MUX</b>
+    <span class="formula">Y = S̄₂S̄₁S̄₀·I₀ + S̄₂S̄₁S₀·I₁ + S̄₂S₁S̄₀·I₂ + S̄₂S₁S₀·I₃</span><br>
+    <span class="formula">&nbsp;&nbsp;&nbsp; + S₂S̄₁S̄₀·I₄ + S₂S̄₁S₀·I₅ + S₂S₁S̄₀·I₆ + S₂S₁S₀·I₇</span>
+  </div>
+
+  <h2 class="topic">⚡ Cascading MUX (Building Larger from Smaller)</h2>
+  <div class="orange-box">
+    <b class="bh">🔧 Design 8:1 MUX using 4:1 MUX</b>
+    Use two 4:1 MUX blocks, feed their outputs into a 2:1 MUX:<br>
+    → MUX1 (4:1): handles I₀–I₃ with selection S₀, S₁<br>
+    → MUX2 (4:1): handles I₄–I₇ with selection S₀, S₁<br>
+    → Final 2:1 MUX: selects between MUX1 and MUX2 output using S₂<br>
+    This is called the <b>"Cascading Technique"</b>
+  </div>
+
+  <div class="circuit-ascii">  I₀─┐              I₄─┐
+  I₁─┤  4:1  ─┐   I₅─┤  4:1  ─┐
+  I₂─┤  MUX   │   I₆─┤  MUX   ├─── 2:1 ───► Y
+  I₃─┘        │   I₇─┘        │    MUX
+           S₁,S₀          S₁,S₀        │
+                                      S₂</div>
+
+  <div class="note-box">
+    <b class="bh">⚠️ Exam Formula — MUX Sizes</b>
+    To design 16:1 from 4:1 MUX: need <b>5 blocks</b> of 4:1 (4 in first stage + 1 in second stage)<br>
+    To design 32:1 from 8:1 MUX: need 8:1, 4:1, 2:1 combined<br>
+    General: Use cascading technique — split inputs into groups.
+  </div>
+
+  <div class="page-num">2 / 4</div>
+</div>
+
+<!-- Section 3 — Page 3/4 -->
+<div class="page">
+  <div class="page-lines"></div>
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital System Design — Unit 2</span>
+    <span class="unit-badge">SECTION 3</span>
+  </div>
+  <h2 class="topic">🔥 Boolean Function Implementation using MUX</h2>
+  <p>Any Boolean function with n variables can be implemented using a <b>2<sup>n</sup>:1 MUX</b> directly (or a smaller MUX with one variable as input).</p>
+
+  <div class="orange-box">
+    <b class="bh">🔧 Steps for MUX Implementation</b>
+    <b>Step 1:</b> Determine the multiplexer size based on input variables.<br>
+    <b>Step 2:</b> Depending on the minterm given in the function, circle those numbers in the implementation table.<br>
+    <b>Step 3:</b> If two minterms in a column are NOT circled → place <b>0</b> at corresponding MUX input.<br>
+    <b>Step 4:</b> If two minterms in a column ARE circled → place <b>1</b> at corresponding MUX input.<br>
+    <b>Step 5:</b> If minterm in 2nd row circled but 1st row NOT → apply <b>2nd row variable</b> to MUX input.<br>
+    <b>Step 6:</b> If minterm in 1st row circled but 2nd row NOT → apply <b>complement of 2nd row variable</b>.
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">🖊️ Example: F(A,B,C,D) = Σm(0,1,3,4,8,9,15) — Using 16:1 MUX</div>
+    <div class="q-step">Since 4 variables → 2⁴ = 16:1 MUX (if not given in exam, use this)</div>
+    <div class="q-step">Connect A,B,C,D to selection lines S₃,S₂,S₁,S₀</div>
+    <div class="q-step">Minterms 0,1,3,4,8,9,15 → I₀=1, I₁=1, I₂=0, I₃=1, I₄=1, I₅=0, ..., I₁₅=1</div>
+    <div class="q-ans">Connect minterms to logic 1 (Vcc) and non-minterms to logic 0 (GND) → that's it!</div>
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">🖊️ Example: F(A,B,C,D) = Σm(0,1,3,4,7,8,9,11,14,15) — Using 8:1 MUX</div>
+    <div class="q-step">8:1 MUX has 3 selection lines → use 3 variables (B,C,D) as selection, A as data</div>
+    <div class="q-step">Make table with A=0 (row Ā) and A=1 (row A) for each group of B,C,D values</div>
+    <div class="q-step"><b>For each MUX input Iₖ:</b> check minterms 2k (when A=0) and 2k+1 (when A=1)</div>
+    <div class="q-step">Both circled → Iₖ = 1 &nbsp;|&nbsp; Neither → Iₖ = 0 &nbsp;|&nbsp; Only A=0 → Iₖ = Ā &nbsp;|&nbsp; Only A=1 → Iₖ = A</div>
+    <div class="q-ans">This approach uses one less variable as selection line — saves hardware!</div>
+  </div>
+
+  <div class="page-num">3 / 4</div>
+</div>
+
+<!-- Section 3 — Page 4/4 -->
+<div class="page">
+  <div class="page-lines"></div>
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital System Design — Unit 2</span>
+    <span class="unit-badge">SECTION 3</span>
+  </div>
+  <h2 class="topic">🔥 Worked MUX Implementation — 4:1 MUX</h2>
+
+  <div class="qbox">
+    <div class="q-label">🖊️ F(A,B,C,D) = Σm(0,1,3,4,8,9,11,14,15) using 4:1 MUX — Case: AB as input</div>
+    <div class="q-step">4:1 MUX: 2 selection lines. Use C,D as selection. A,B as data inputs.</div>
+    <div class="q-step">
+      <table class="tt">
+        <tr><th></th><th>I₀</th><th>I₁</th><th>I₂</th><th>I₃</th></tr>
+        <tr><td>ĀB̄</td><td>⑥0</td><td>①1</td><td>2</td><td>③3</td></tr>
+        <tr><td>ĀB</td><td>④4</td><td>5</td><td>6</td><td>⑦7</td></tr>
+        <tr><td>AB̄</td><td>⑧8</td><td>⑨9</td><td>10</td><td>⑪11</td></tr>
+        <tr><td>AB</td><td>12</td><td>13</td><td>⑭14</td><td>⑮15</td></tr>
+      </table>
+    </div>
+    <div class="q-step">Reading columns: I₀: rows 0,4 circled → Ā (only Ā rows). I₁: rows 1,9 circled → Ā+A? Check pattern → D̄. I₂: row 14 only (AB row) → AB. I₃: rows 3,7,11,15 → logic 1...</div>
+    <div class="q-ans">Apply the 6-step procedure to each column → assign 0, 1, variable, or complement to each MUX input.</div>
+  </div>
+
+  <h2 class="topic">📌 Summary Table — MUX Quick Reference</h2>
+  <table class="tt">
+    <tr><th>MUX Type</th><th>Inputs</th><th>Selection Lines</th><th>Direct Function Size</th></tr>
+    <tr><td>2:1</td><td>2</td><td>1</td><td>1-variable</td></tr>
+    <tr><td>4:1</td><td>4</td><td>2</td><td>2-variable (or 3 with trick)</td></tr>
+    <tr><td>8:1</td><td>8</td><td>3</td><td>3-variable (or 4 with trick)</td></tr>
+    <tr><td>16:1</td><td>16</td><td>4</td><td>4-variable</td></tr>
+    <tr><td>32:1</td><td>32</td><td>5</td><td>5-variable</td></tr>
+  </table>
+
+  <div class="purple-box">
+    <b class="bh">⭐ The "One Less Variable" Trick</b>
+    To implement an <b>n-variable function</b> using a MUX with (n-1) selection lines (2<sup>n-1</sup>:1):<br>
+    → Use (n-1) variables as selection lines<br>
+    → Use the n<sup>th</sup> variable (or its complement) as the <b>data input</b><br>
+    → This halves the MUX size needed!
+  </div>
+
+  <div class="note-box">
+    <b class="bh">⚠️ Exam Tip — Which case to use?</b>
+    If exam says "8:1 MUX, 4 variables" → use one variable (A) as data input (4 cases: A, Ā, 0, 1). The remaining 3 variables B,C,D are the selection lines. Make a table with Ā row and A row for each group.
+  </div>
+
+  <div class="page-num">4 / 4</div>
+</div>
+
+<!-- ══════════ PRACTICE QUESTIONS — PART 1 ══════════ -->
+<div class="page">
+  <div class="page-lines"></div>
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital System Design — Unit 2</span>
+    <span class="unit-badge">PRACTICE Q's</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§PQ</span> Practice Questions — Part 1</h1>
+  <hr class="divider">
+
+  <h2 class="topic">📝 Section §1 — Combinational Logic</h2>
+
+  <div class="pq-sec">
+    <div class="pq-q"><span class="pq-num">Q1</span> Design a combinational circuit with 3 inputs and 1 output where the output is 1 when the majority of inputs are 1. Draw the logic circuit.</div>
+    <div class="pq-hint">Hint: Output = 1 for minterms where two or more inputs are 1. Simplify using K-map → AC + BC + AB</div>
+    <button class="ans-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Show Answer</button>
+    <div class="pq-answer">
+      <b>Truth Table:</b> Y=1 for minterms 3,5,6,7 (two or more 1s)<br>
+      <b>K-map simplification:</b> Groups: {3,7}=AC, {5,7}=AB, {6,7}=BC<br>
+      <b>Expression: Y = AC + BC + AB</b><br>
+      Circuit: Three AND gates → one 3-input OR gate
+    </div>
+  </div>
+
+  <div class="pq-sec">
+    <div class="pq-q"><span class="pq-num">Q2</span> List the 5 steps of combinational circuit design procedure and explain with an example of a 4-input BCD-to-excess-3 code converter concept.</div>
+    <div class="pq-hint">Hint: Follow: (1) Analyze (2) Assign symbols (3) Truth table (4) K-map (5) Logic circuit</div>
+    <button class="ans-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Show Answer</button>
+    <div class="pq-answer">
+      <b>5 Steps:</b> (1) Analyze → 4 BCD inputs (A,B,C,D), 4 outputs (W,X,Y,Z)<br>
+      (2) Assign symbols → inputs ABCD, outputs WXYZ<br>
+      (3) Truth table → add 3 (0011) to each BCD digit<br>
+      (4) K-map → simplify each output<br>
+      (5) Draw circuit for each simplified expression
+    </div>
+  </div>
+
+  <h2 class="topic">📝 Section §2 — Magnitude Comparator</h2>
+
+  <div class="pq-sec">
+    <div class="pq-q"><span class="pq-num">Q3</span> Design a single-bit magnitude comparator. Write Boolean expressions for A&gt;B, A&lt;B, A=B and draw the logic circuit using basic gates only.</div>
+    <div class="pq-hint">Hint: A=B uses XNOR; A&gt;B = AB̄; A&lt;B = ĀB</div>
+    <button class="ans-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Show Answer</button>
+    <div class="pq-answer">
+      <b>A=B:</b> ĀB̄ + AB = A⊙B (XNOR)<br>
+      <b>A&gt;B:</b> A·B̄ (AND gate with B complemented)<br>
+      <b>A&lt;B:</b> Ā·B (AND gate with A complemented)<br>
+      Circuit: Two NOT gates + two AND gates + one XNOR gate
+    </div>
+  </div>
+
+  <div class="pq-sec">
+    <div class="pq-q"><span class="pq-num">Q4</span> For a 2-bit comparator, derive the expression for A&gt;B where A=A₂A₁ and B=B₂B₁. Verify with at least two cases.</div>
+    <div class="pq-hint">Hint: MSB has higher priority. Check: (i) A₂=1,B₂=0 always A&gt;B; (ii) A₂=B₂, then check A₁ vs B₁</div>
+    <button class="ans-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Show Answer</button>
+    <div class="pq-answer">
+      <b>A&gt;B = A₂B̄₂ + A₁B̄₂B̄₁ + A₂A₁B̄₁</b><br>
+      Verify (A=10, B=01): A₂=1,B₂=0 → A₂B̄₂=1 → A&gt;B ✓<br>
+      Verify (A=11, B=10): A₂=B₂=1, A₁=1,B₁=0 → A₂A₁B̄₁=1 → A&gt;B ✓
+    </div>
+  </div>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<!-- Practice Questions Page 2/2 -->
+<div class="page">
+  <div class="page-lines"></div>
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital System Design — Unit 2</span>
+    <span class="unit-badge">PRACTICE Q's</span>
+  </div>
+
+  <h2 class="topic">📝 Section §3 — Multiplexers</h2>
+
+  <div class="pq-sec">
+    <div class="pq-q"><span class="pq-num">Q5</span> Implement the Boolean function F(A,B,C,D) = Σm(0,1,3,4,8,9,15) using an 8:1 MUX with A as the data input variable.</div>
+    <div class="pq-hint">Hint: Use B,C,D as selection lines. Make table with Ā and A rows. For each Iₖ pair check which minterms are present.</div>
+    <button class="ans-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Show Answer</button>
+    <div class="pq-answer">
+      Selection: B→S₂, C→S₁, D→S₀<br>
+      <table style="font-size:.82rem;border-collapse:collapse;width:100%">
+        <tr><th style="background:#0d1b6e;color:white;padding:4px">BCD\A</th><th style="background:#0d1b6e;color:white;padding:4px">Ā</th><th style="background:#0d1b6e;color:white;padding:4px">A</th><th style="background:#0d1b6e;color:white;padding:4px">Iₖ</th></tr>
+        <tr><td style="border:1px solid #ccc;padding:3px 6px">000 (0,8)</td><td style="border:1px solid #ccc;padding:3px 6px">✓(0)</td><td style="border:1px solid #ccc;padding:3px 6px">✓(8)</td><td style="border:1px solid #ccc;padding:3px 6px">I₀=1</td></tr>
+        <tr><td style="border:1px solid #ccc;padding:3px 6px">001 (1,9)</td><td style="border:1px solid #ccc;padding:3px 6px">✓(1)</td><td style="border:1px solid #ccc;padding:3px 6px">✓(9)</td><td style="border:1px solid #ccc;padding:3px 6px">I₁=1</td></tr>
+        <tr><td style="border:1px solid #ccc;padding:3px 6px">010 (2,10)</td><td style="border:1px solid #ccc;padding:3px 6px">✗</td><td style="border:1px solid #ccc;padding:3px 6px">✗</td><td style="border:1px solid #ccc;padding:3px 6px">I₂=0</td></tr>
+        <tr><td style="border:1px solid #ccc;padding:3px 6px">011 (3,11)</td><td style="border:1px solid #ccc;padding:3px 6px">✓(3)</td><td style="border:1px solid #ccc;padding:3px 6px">✗</td><td style="border:1px solid #ccc;padding:3px 6px">I₃=Ā</td></tr>
+        <tr><td style="border:1px solid #ccc;padding:3px 6px">100 (4,12)</td><td style="border:1px solid #ccc;padding:3px 6px">✓(4)</td><td style="border:1px solid #ccc;padding:3px 6px">✗</td><td style="border:1px solid #ccc;padding:3px 6px">I₄=Ā</td></tr>
+        <tr><td style="border:1px solid #ccc;padding:3px 6px">101–111</td><td style="border:1px solid #ccc;padding:3px 6px">✗</td><td style="border:1px solid #ccc;padding:3px 6px">✗/✓</td><td style="border:1px solid #ccc;padding:3px 6px">I₅=0,I₆=0,I₇=A</td></tr>
+      </table>
+      (15 → minterm 15: A=1, BCD=111 → row 7, A row → I₇=A)
+    </div>
+  </div>
+
+  <div class="pq-sec">
+    <div class="pq-q"><span class="pq-num">Q6</span> Design a 16:1 MUX using two 8:1 MUX and one 2:1 MUX. Draw the block diagram and explain the role of each selection line.</div>
+    <div class="pq-hint">Hint: 8:1 MUX handles 8 inputs each. The 4th selection line (MSB) drives the 2:1 MUX to choose between the two 8:1 outputs.</div>
+    <button class="ans-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Show Answer</button>
+    <div class="pq-answer">
+      <b>Block diagram:</b><br>
+      MUX1 (8:1): handles I₀–I₇, selection S₂,S₁,S₀<br>
+      MUX2 (8:1): handles I₈–I₁₅, selection S₂,S₁,S₀<br>
+      Final 2:1 MUX: selects MUX1 or MUX2 output using S₃<br>
+      When S₃=0 → output from MUX1 (I₀–I₇)<br>
+      When S₃=1 → output from MUX2 (I₈–I₁₅)
+    </div>
+  </div>
+
+  <div class="note-box">
+    <b class="bh">⚠️ Last-Minute Revision Points</b>
+    <ul class="plain">
+      <li>Combinational circuits: no feedback, output = f(current inputs only)</li>
+      <li>Design steps: Analyze → Symbol → Truth Table → K-map → Circuit</li>
+      <li>Comparator: A=B uses XNOR, A&gt;B uses AB̄, A&lt;B uses ĀB</li>
+      <li>MUX: 2ⁿ inputs, n selection lines; 2:1→Y=S̄I₀+SI₁</li>
+      <li>Cascading: two 4:1 MUX + one 2:1 MUX = 8:1 MUX</li>
+      <li>MUX for Boolean: n-var uses 2ⁿ:1 MUX, or 2ⁿ⁻¹:1 with one variable as data</li>
+    </ul>
+  </div>
+
+  <div class="page-num">2 / 2</div>
+</div>
+
+</div><!-- end .notebook -->
+
+<script>
+// Smooth scrolling for nav links
+document.querySelectorAll('.part-nav a').forEach(a => {
+  a.addEventListener('click', function(e) {
+    // Allow normal navigation for cross-page links
+  });
+});
+</script>
+</body>
+</html>

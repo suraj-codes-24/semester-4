@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DSD Unit 2 — Part 2 | Decoder, Encoder &amp; Display</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Kalam',cursive;background:#c8c8c8;background-image:repeating-linear-gradient(45deg,#b8b8b8 0,#b8b8b8 1px,transparent 0,transparent 50%);background-size:10px 10px;min-height:100vh}
+.part-nav{position:fixed;top:0;left:0;right:0;background:#0d1b6e;color:white;display:flex;align-items:center;justify-content:center;padding:10px 20px;gap:10px;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,0.3);flex-wrap:wrap}
+.nav-title{font-family:'Caveat',cursive;font-size:1.1rem;font-weight:700;margin-right:15px;white-space:nowrap}
+.part-nav a{color:rgba(255,255,255,0.55);text-decoration:none;padding:5px 18px;border-radius:20px;font-family:'Caveat',cursive;font-size:1rem;transition:all .2s;white-space:nowrap}
+.part-nav a.active{color:white;background:rgba(255,255,255,0.22);font-weight:700}
+.part-nav a:hover{color:white;background:rgba(255,255,255,0.12)}
+.notebook{max-width:860px;margin:0 auto;padding:80px 16px 50px}
+.page{background:#fffef5;border:1px solid #ddd;border-radius:3px;box-shadow:3px 3px 12px rgba(0,0,0,0.18);margin-bottom:28px;padding:28px 36px 50px 72px;position:relative;overflow:hidden}
+.page::before{content:'';position:absolute;top:0;bottom:0;left:58px;width:2px;background:#ff9999;opacity:.6}
+.page-lines{position:absolute;top:0;left:0;right:0;bottom:0;background-image:repeating-linear-gradient(transparent,transparent 29px,#c5ddf4 29px,#c5ddf4 30px);background-size:100% 30px;pointer-events:none;z-index:0}
+.page>*{position:relative;z-index:1}
+.holes{position:absolute;left:15px;top:35px;display:flex;flex-direction:column;gap:90px;z-index:2}
+.hole{width:22px;height:22px;border-radius:50%;background:#b8b8b8;border:3px solid #999;box-shadow:inset 0 1px 4px rgba(0,0,0,0.3)}
+.page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;line-height:30px}
+.date-tag{font-family:'Caveat',cursive;font-size:.9rem;color:#888}
+.unit-badge{background:#0d1b6e;color:white;padding:2px 14px;border-radius:12px;font-family:'Caveat',cursive;font-size:.82rem;letter-spacing:.5px}
+.section-title{font-family:'Caveat',cursive;font-size:2.1rem;color:#0d1b6e;line-height:1.1;margin-bottom:4px}
+.sn{background:#0d1b6e;color:white;padding:2px 10px;border-radius:5px;margin-right:8px;font-size:1.6rem}
+hr.divider{border:none;border-top:2.5px solid #0d1b6e;opacity:.2;margin:8px 0 18px}
+.topic{font-family:'Caveat',cursive;font-size:1.55rem;color:#b71c1c;margin:22px 0 10px;padding-bottom:4px;border-bottom:1.5px dashed #ef9a9a;line-height:30px}
+.sub{font-family:'Caveat',cursive;font-size:1.2rem;color:#1565c0;margin:14px 0 8px;line-height:30px}
+ul.plain{list-style:none;padding-left:8px;line-height:1.8}
+ul.plain li::before{content:"→ ";color:#0d1b6e;font-weight:700}
+ul.plain li{margin:3px 0}
+.formula{font-family:'Courier New',monospace;background:#f0f0f0;padding:2px 7px;border-radius:4px;border:1px solid #ccc;color:#c62828;font-size:.93rem}
+.def-box{background:#e3f2fd;border-left:5px solid #1565c0;padding:12px 15px;margin:14px 0;border-radius:0 8px 8px 0;line-height:1.7}
+.def-box b.bh{display:block;font-family:'Caveat',cursive;font-size:1.15rem;color:#1565c0;margin-bottom:4px}
+.rule-box{background:#e8f5e9;border-left:5px solid #2e7d32;padding:12px 15px;margin:14px 0;border-radius:0 8px 8px 0;line-height:1.7}
+.rule-box b.bh{display:block;font-family:'Caveat',cursive;font-size:1.15rem;color:#2e7d32;margin-bottom:4px}
+.note-box{background:#fff8e1;border-left:5px solid #f57f17;padding:12px 15px;margin:14px 0;border-radius:0 8px 8px 0;line-height:1.7}
+.note-box b.bh{display:block;font-family:'Caveat',cursive;font-size:1.15rem;color:#e65100;margin-bottom:4px}
+.purple-box{background:#f3e5f5;border-left:5px solid #7b1fa2;padding:12px 15px;margin:14px 0;border-radius:0 8px 8px 0;line-height:1.7}
+.purple-box b.bh{display:block;font-family:'Caveat',cursive;font-size:1.15rem;color:#6a1b9a;margin-bottom:4px}
+.orange-box{background:#fbe9e7;border-left:5px solid #d84315;padding:12px 15px;margin:14px 0;border-radius:0 8px 8px 0;line-height:1.7}
+.orange-box b.bh{display:block;font-family:'Caveat',cursive;font-size:1.15rem;color:#bf360c;margin-bottom:4px}
+.qbox{border:2px solid #0d1b6e;border-radius:8px;padding:14px;margin:14px 0;background:#fafafa}
+.q-label{font-weight:700;color:#0d1b6e;font-family:'Caveat',cursive;font-size:1.15rem;margin-bottom:8px}
+.q-step{margin:5px 0;padding-left:14px;line-height:1.7}
+.q-ans{background:#e8f5e9;padding:8px 12px;border-radius:4px;margin-top:8px;border-left:3px solid #4caf50;line-height:1.7}
+table.tt{border-collapse:collapse;margin:14px auto;font-size:.9rem}
+table.tt th{background:#0d1b6e;color:white;padding:6px 14px;text-align:center;font-family:'Caveat',cursive;font-size:1rem}
+table.tt td{border:1px solid #ccc;padding:5px 14px;text-align:center}
+table.tt tr:nth-child(even) td{background:#e3f2fd}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:14px 0}
+.vs-box{display:grid;grid-template-columns:1fr 1fr;margin:14px 0;border:2px solid #ddd;border-radius:8px;overflow:hidden}
+.vs-left{background:#e8f5e9;padding:12px}
+.vs-right{background:#fce4ec;padding:12px;border-left:2px solid #ddd}
+.vs-left h4,.vs-right h4{font-family:'Caveat',cursive;font-size:1.1rem;text-align:center;margin-bottom:8px}
+.step-card{border:1px solid #ddd;border-radius:8px;overflow:hidden;margin:10px 0}
+.step-head{background:#0d1b6e;color:white;padding:7px 14px;font-family:'Caveat',cursive;font-size:1.1rem}
+.step-body{padding:10px 14px;line-height:1.7}
+.page-num{position:absolute;bottom:14px;right:18px;color:#aaa;font-family:'Caveat',cursive;font-size:1rem}
+.cover-page{background:linear-gradient(140deg,#1b0d6e 0%,#231a7e 40%,#32289a 70%,#4a3ab5 100%);color:white;border-radius:6px;padding:55px 50px;margin-bottom:28px;min-height:580px;position:relative;box-shadow:4px 4px 20px rgba(0,0,0,0.35);overflow:hidden}
+.cover-page::after{content:'';position:absolute;top:-80px;right:-80px;width:350px;height:350px;border-radius:50%;background:rgba(255,255,255,.05)}
+.cover-subject{font-size:.85rem;opacity:.65;text-transform:uppercase;letter-spacing:3px;font-family:'Caveat',cursive}
+.cover-unit{font-family:'Caveat',cursive;font-size:3.8rem;font-weight:700;margin:8px 0;line-height:1.05}
+.cover-subtitle{font-family:'Caveat',cursive;font-size:1.9rem;opacity:.8}
+.cover-part{display:inline-block;background:rgba(255,255,255,.18);padding:5px 22px;border-radius:20px;margin:18px 0;font-size:1.05rem;font-family:'Caveat',cursive;border:1px solid rgba(255,255,255,.3)}
+.cover-toc h3{font-family:'Caveat',cursive;font-size:1.55rem;border-bottom:1px solid rgba(255,255,255,.3);padding-bottom:8px;margin:28px 0 14px;opacity:.9}
+.toc-item{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px dotted rgba(255,255,255,.2);font-size:.95rem}
+.toc-item .toc-sec{opacity:.7;font-size:.82rem;margin-right:10px;white-space:nowrap}
+.toc-item .toc-pg{opacity:.6;font-size:.82rem;white-space:nowrap}
+.pq-sec{background:linear-gradient(135deg,#0d1b6e08,#3949ab08);border:2px solid #0d1b6e;border-radius:8px;padding:15px;margin:14px 0}
+.pq-num{display:inline-block;background:#0d1b6e;color:white;width:28px;height:28px;border-radius:50%;text-align:center;line-height:28px;font-weight:700;margin-right:8px;font-size:.88rem}
+.pq-q{font-weight:600;color:#0d1b6e;margin-bottom:6px}
+.pq-hint{color:#666;font-size:.85rem;font-style:italic}
+.ans-btn{display:inline-block;cursor:pointer;background:#0d1b6e;color:white;padding:3px 12px;border-radius:10px;font-size:.8rem;margin-top:6px;font-family:'Caveat',cursive;border:none}
+.pq-answer{display:none;background:#e8f5e9;border-left:3px solid #4caf50;padding:8px 12px;border-radius:4px;margin-top:8px;line-height:1.6}
+.circuit-ascii{font-family:'Courier New',monospace;font-size:.82rem;background:#f5f5f5;padding:10px 14px;border-radius:6px;border:1px solid #ddd;overflow-x:auto;white-space:pre;line-height:1.6;color:#333;margin:10px 0}
+.seven-seg{display:inline-grid;grid-template-columns:60px;grid-template-rows:20px 20px 20px 20px 20px 20px 20px;gap:2px;margin:10px 20px;font-size:.75rem;font-family:monospace}
+.seg-h{height:8px;border-radius:2px}
+.seg-v{width:8px;border-radius:2px}
+.seg-on{background:#ff3333}
+.seg-off{background:#ffcccc}
+.seg-display{display:inline-block;background:#111;padding:12px;border-radius:6px;margin:4px}
+</style>
+</head>
+<body>
+
+<nav class="part-nav">
+  <a href="../index.html">&#8617; Units</a>
+  <span class="nav-title">📓 DSD / DE — Unit 2</span>
+  <a href="part1.html">Part 1: Comparator &amp; MUX</a>
+  <a href="part2.html" class="active">Part 2: Decoder, Encoder &amp; Display</a>
+  <a href="part3.html">Part 3: Adders, Subtractors &amp; BCD</a>
+</nav>
+
+<div class="notebook">
+
+<!-- Cover -->
+<div class="cover-page">
+  <div class="cover-subject">BEC-302 / BOE-310 / BOE-410 · Digital System Design</div>
+  <div class="cover-unit">Unit 2</div>
+  <div class="cover-subtitle">Combinational Logic — Decoder, Encoder &amp; Display</div>
+  <div class="cover-part">📗 Part 2 of 3</div>
+  <div class="cover-toc">
+    <h3>Contents — Part 2</h3>
+    <div class="toc-item"><span><b>§4</b> Demultiplexer (DEMUX)</span><span class="toc-sec">Section 4</span><span class="toc-pg">2 pages</span></div>
+    <div class="toc-item"><span><b>§5</b> Decoder</span><span class="toc-sec">Section 5</span><span class="toc-pg">3 pages</span></div>
+    <div class="toc-item"><span><b>§6</b> Encoder &amp; Priority Encoder</span><span class="toc-sec">Section 6</span><span class="toc-pg">3 pages</span></div>
+    <div class="toc-item"><span><b>§7</b> Multiplexed Display</span><span class="toc-sec">Section 7</span><span class="toc-pg">2 pages</span></div>
+    <div class="toc-item"><span><b>§PQ2</b> Practice Questions — Part 2</span><span class="toc-sec">Section PQ</span><span class="toc-pg">2 pages</span></div>
+  </div>
+</div>
+
+<!-- ══════════ SECTION 4 — DEMUX (Page 1/2) ══════════ -->
+<div class="page">
+  <div class="page-lines"></div>
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital System Design — Unit 2</span>
+    <span class="unit-badge">SECTION 4</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§4</span> Demultiplexer (DEMUX)</h1>
+  <hr class="divider">
+
+  <div class="def-box">
+    <b class="bh">📖 Demultiplexer (DEMUX)</b>
+    A Demultiplexer is the <b>reverse of a Multiplexer</b>. It routes a single input line to <b>one of 2<sup>n</sup> output lines</b>, determined by the n selection lines. Also called a <b>"one-to-many"</b> circuit.
+  </div>
+
+  <div class="circuit-ascii">                    ┌──────────────────┐
+  1 input ──────►  │      DEMUX       ├──► Y₀
+                    │                  ├──► Y₁
+  n selection ──►  │                  ├──► Y₂
+    lines           │                  │  …
+                    └──────────────────┘──► Y₂ₙ₋₁
+
+  Rule: 1 input → 2ⁿ outputs, n selection lines</div>
+
+  <div class="vs-box">
+    <div class="vs-left">
+      <h4>✅ MUX</h4>
+      <ul class="plain">
+        <li>Many → One</li>
+        <li>2ⁿ inputs, 1 output</li>
+        <li>n selection lines</li>
+        <li>Data selector</li>
+      </ul>
+    </div>
+    <div class="vs-right">
+      <h4>✅ DEMUX</h4>
+      <ul class="plain">
+        <li>One → Many</li>
+        <li>1 input, 2ⁿ outputs</li>
+        <li>n selection lines</li>
+        <li>Data distributor</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="topic">⚡ 1:2 DEMUX</h2>
+  <p>1 input, 2 outputs, 1 selection line:</p>
+  <table class="tt">
+    <tr><th>S</th><th>Y₀</th><th>Y₁</th></tr>
+    <tr><td>0</td><td>I</td><td>0</td></tr>
+    <tr><td>1</td><td>0</td><td>I</td></tr>
+  </table>
+  <div class="rule-box">
+    <b class="bh">📐 Expressions</b>
+    <span class="formula">Y₀ = S̄ · I</span> &nbsp;&nbsp; <span class="formula">Y₁ = S · I</span>
+  </div>
+
+  <h2 class="topic">⚡ 1:4 DEMUX</h2>
+  <table class="tt">
+    <tr><th>S₁</th><th>S₀</th><th>Y₀</th><th>Y₁</th><th>Y₂</th><th>Y₃</th></tr>
+    <tr><td>0</td><td>0</td><td>I</td><td>0</td><td>0</td><td>0</td></tr>
+    <tr><td>0</td><td>1</td><td>0</td><td>I</td><td>0</td><td>0</td></tr>
+    <tr><td>1</td><td>0</td><td>0</td><td>0</td><td>I</td><td>0</td></tr>
+    <tr><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>I</td></tr>
+  </table>
+  <div class="rule-box">
+    <b class="bh">📐 Expressions — 1:4 DEMUX</b>
+    <span class="formula">Y₀ = S̄₁·S̄₀·I</span> &nbsp;
+    <span class="formula">Y₁ = S̄₁·S₀·I</span> &nbsp;
+    <span class="formula">Y₂ = S₁·S̄₀·I</span> &nbsp;
+    <span class="formula">Y₃ = S₁·S₀·I</span>
+  </div>
+
+  <div class="note-box">
+    <b class="bh">⚠️ Key Insight</b>
+    A decoder with an enable line works exactly as a DEMUX! The enable = single input I, address inputs = selection lines, outputs = DEMUX outputs. <b>Decoder = DEMUX when enable is used as data input.</b>
+  </div>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<!-- Section 4 — Page 2/2 -->
+<div class="page">
+  <div class="page-lines"></div>
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital System Design — Unit 2</span>
+    <span class="unit-badge">SECTION 4</span>
+  </div>
+  <h2 class="topic">⚡ 1:8 DEMUX</h2>
+  <p>3 selection lines (S₂,S₁,S₀), 8 outputs. Each output is active only when corresponding binary code is on selection lines:</p>
+  <table class="tt">
+    <tr><th>S₂</th><th>S₁</th><th>S₀</th><th>Active Output</th></tr>
+    <tr><td>0</td><td>0</td><td>0</td><td>Y₀ = I</td></tr>
+    <tr><td>0</td><td>0</td><td>1</td><td>Y₁ = I</td></tr>
+    <tr><td>0</td><td>1</td><td>0</td><td>Y₂ = I</td></tr>
+    <tr><td>0</td><td>1</td><td>1</td><td>Y₃ = I</td></tr>
+    <tr><td>1</td><td>0</td><td>0</td><td>Y₄ = I</td></tr>
+    <tr><td>1</td><td>0</td><td>1</td><td>Y₅ = I</td></tr>
+    <tr><td>1</td><td>1</td><td>0</td><td>Y₆ = I</td></tr>
+    <tr><td>1</td><td>1</td><td>1</td><td>Y₇ = I</td></tr>
+  </table>
+
+  <div class="purple-box">
+    <b class="bh">⭐ General Expression Pattern</b>
+    For a 1:2ⁿ DEMUX, output Yₖ = I · (binary decode of k using selection lines)<br>
+    Each output = I AND (the corresponding minterm of selection lines)<br>
+    Only ONE output is active (= I) at any time; all others are 0.
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">🖊️ Worked Example — 1:4 DEMUX Circuit</div>
+    <div class="q-step">Input I, selection S₁, S₀</div>
+    <div class="q-step">Need: NOT gates for S̄₁ and S̄₀, then 4 AND gates (3-input each)</div>
+    <div class="q-step">Y₀ = S̄₁ · S̄₀ · I → AND(NOT(S₁), NOT(S₀), I)</div>
+    <div class="q-ans">Circuit: 2 NOT gates + 4 AND gates (3-input). Total: 6 gates.</div>
+  </div>
+
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══════════ SECTION 5 — DECODER (Page 1/3) ══════════ -->
+<div class="page">
+  <div class="page-lines"></div>
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital System Design — Unit 2</span>
+    <span class="unit-badge">SECTION 5</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§5</span> Decoder</h1>
+  <hr class="divider">
+
+  <div class="def-box">
+    <b class="bh">📖 Decoder</b>
+    A Decoder is a multi-input, multi-output combinational logic circuit that converts <b>coded input to coded output</b>. It has <b>n input lines</b> and <b>2<sup>n</sup> output lines</b>. At any given time, <b>exactly one output is active</b> (HIGH) corresponding to the input binary code.
+  </div>
+
+  <div class="circuit-ascii">              ┌──────────────┐ 2ⁿ outputs
+  n inputs ──►│   Decoder    ├──► Y₀
+              │              ├──► Y₁
+              │              │  …
+              └──────────────┘──► Y₂ₙ₋₁</div>
+
+  <h2 class="topic">⚡ 1:2 Decoder (1-to-2 Line)</h2>
+  <p>1 input I, 2 outputs Y₀, Y₁:</p>
+  <table class="tt">
+    <tr><th>I</th><th>Y₀</th><th>Y₁</th></tr>
+    <tr><td>0</td><td>1</td><td>0</td></tr>
+    <tr><td>1</td><td>0</td><td>1</td></tr>
+  </table>
+  <div class="rule-box">
+    <b class="bh">📐 Expressions</b>
+    <span class="formula">Y₀ = Ī</span> (output 0 active when I=0)<br>
+    <span class="formula">Y₁ = I</span> (output 1 active when I=1)
+  </div>
+
+  <h2 class="topic">⚡ 2:4 Decoder (2-to-4 Line)</h2>
+  <p>2 inputs (I₀, I₁), 4 outputs Y₀…Y₃:</p>
+  <table class="tt">
+    <tr><th>I₀</th><th>I₁</th><th>Y₀</th><th>Y₁</th><th>Y₂</th><th>Y₃</th></tr>
+    <tr><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td></tr>
+    <tr><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+    <tr><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+    <tr><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td></tr>
+  </table>
+  <div class="rule-box">
+    <b class="bh">📐 Expressions — 2:4 Decoder</b>
+    <span class="formula">Y₀ = Ī₀·Ī₁</span> &nbsp;
+    <span class="formula">Y₁ = Ī₀·I₁</span><br>
+    <span class="formula">Y₂ = I₀·Ī₁</span> &nbsp;
+    <span class="formula">Y₃ = I₀·I₁</span>
+  </div>
+
+  <div class="note-box">
+    <b class="bh">⚠️ Important Pattern</b>
+    Each output of an n:2ⁿ decoder represents exactly <b>one minterm</b> of the input variables. Y₀=m₀, Y₁=m₁, ..., Y₃=m₃ etc.
+  </div>
+
+  <div class="page-num">1 / 3</div>
+</div>
+
+<!-- Section 5 — Page 2/3 -->
+<div class="page">
+  <div class="page-lines"></div>
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital System Design — Unit 2</span>
+    <span class="unit-badge">SECTION 5</span>
+  </div>
+  <h2 class="topic">⚡ 3:8 Decoder (3-to-8 Line)</h2>
+  <p>3 inputs (I₀,I₁,I₂), 8 outputs Y₀…Y₇:</p>
+  <table class="tt">
+    <tr><th>I₀</th><th>I₁</th><th>I₂</th><th>Y₀</th><th>Y₁</th><th>Y₂</th><th>Y₃</th><th>Y₄</th><th>Y₅</th><th>Y₆</th><th>Y₇</th></tr>
+    <tr><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+    <tr><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+    <tr><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+    <tr><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+    <tr><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td></tr>
+    <tr><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+    <tr><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+    <tr><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td></tr>
+  </table>
+
+  <div class="rule-box">
+    <b class="bh">📐 Expressions — 3:8 Decoder</b>
+    Y₀=Ī₂Ī₁Ī₀ &nbsp; Y₁=Ī₂Ī₁I₀ &nbsp; Y₂=Ī₂I₁Ī₀ &nbsp; Y₃=Ī₂I₁I₀<br>
+    Y₄=I₂Ī₁Ī₀ &nbsp; Y₅=I₂Ī₁I₀ &nbsp; Y₆=I₂I₁Ī₀ &nbsp; Y₇=I₂I₁I₀
+  </div>
+
+  <div class="purple-box">
+    <b class="bh">⭐ Decoder as Minterm Generator</b>
+    A 3:8 decoder generates all 8 minterms of 3 variables. To implement any function using decoder:<br>
+    → Write function as sum of minterms<br>
+    → OR the corresponding decoder outputs<br>
+    Example: F(A,B,C) = Σm(1,3,5,7) → F = Y₁ + Y₃ + Y₅ + Y₇<br>
+    <b>This means: connect decoder outputs 1,3,5,7 to an OR gate!</b>
+  </div>
+
+  <div class="page-num">2 / 3</div>
+</div>
+
+<!-- Section 5 — Page 3/3 -->
+<div class="page">
+  <div class="page-lines"></div>
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital System Design — Unit 2</span>
+    <span class="unit-badge">SECTION 5</span>
+  </div>
+  <h2 class="topic">🔥 Expanding Decoders (Cascading)</h2>
+
+  <div class="orange-box">
+    <b class="bh">🔧 Building 3:8 Decoder from Two 2:4 Decoders</b>
+    Use the MSB (I₂) to enable one decoder at a time:<br>
+    → Decoder 1 (2:4): enabled when I₂=0 → handles Y₀–Y₃ (minterms 0-3)<br>
+    → Decoder 2 (2:4): enabled when I₂=1 → handles Y₄–Y₇ (minterms 4-7)<br>
+    Inputs I₁,I₀ feed both decoders. Enable = NOT(I₂) for Dec1, I₂ for Dec2.
+  </div>
+
+  <h2 class="topic">🔥 Implementing Boolean Functions using Decoder</h2>
+  <div class="qbox">
+    <div class="q-label">🖊️ Example: F(A,B,C) = Σm(1,2,4,7) using 3:8 decoder</div>
+    <div class="q-step">Connect A,B,C to decoder inputs I₂,I₁,I₀ respectively</div>
+    <div class="q-step">F requires minterms 1,2,4,7 → connect Y₁,Y₂,Y₄,Y₇ to an OR gate</div>
+    <div class="q-ans"><b>F = Y₁ + Y₂ + Y₄ + Y₇</b> → one 4-input OR gate at output</div>
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">🖊️ Example: Implement full adder sum using 3:8 decoder</div>
+    <div class="q-step">Sum S = A⊕B⊕Cin = Σm(1,2,4,7) in A,B,Cin</div>
+    <div class="q-step">Carry C = Σm(3,5,6,7) in A,B,Cin</div>
+    <div class="q-ans">S = Y₁+Y₂+Y₄+Y₇ (4-input OR gate)<br>C = Y₃+Y₅+Y₆+Y₇ (4-input OR gate)</div>
+  </div>
+
+  <div class="note-box">
+    <b class="bh">⚠️ Exam Tip</b>
+    When using a decoder to implement functions with NAND gates instead of OR gates, use the fact that (Ā·B̄) = (A+B)̄. A NAND decoder uses active-LOW outputs — in that case, connect to NAND gate instead of OR.
+  </div>
+
+  <div class="page-num">3 / 3</div>
+</div>
+
+<!-- ══════════ SECTION 6 — ENCODER (Page 1/3) ══════════ -->
+<div class="page">
+  <div class="page-lines"></div>
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital System Design — Unit 2</span>
+    <span class="unit-badge">SECTION 6</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§6</span> Encoder &amp; Priority Encoder</h1>
+  <hr class="divider">
+
+  <div class="def-box">
+    <b class="bh">📖 Encoder</b>
+    An encoder is the <b>reverse of a decoder</b>. It has <b>2<sup>n</sup> inputs</b> and <b>n output lines</b>. At any time, exactly ONE input is HIGH (active), and the encoder generates the <b>binary code</b> corresponding to that input.
+  </div>
+
+  <div class="circuit-ascii">  2ⁿ inputs                    n outputs
+  Y₀ ────┐
+  Y₁ ────┤   ┌──────────┐
+  Y₂ ────┤   │  Encoder ├──► A₀
+   .  ────┤   │          ├──► A₁
+   .  ────┤   │          │  …
+  Y₂ₙ───┘   └──────────┘──► Aₙ₋₁</div>
+
+  <h2 class="topic">⚡ 2:1 Encoder (2-to-1)</h2>
+  <table class="tt">
+    <tr><th>D₁</th><th>D₀</th><th>Y</th></tr>
+    <tr><td>0</td><td>1</td><td>0</td></tr>
+    <tr><td>1</td><td>0</td><td>1</td></tr>
+  </table>
+  <div class="rule-box">
+    <b class="bh">📐 Expression</b> <span class="formula">Y = D₁</span>
+  </div>
+
+  <h2 class="topic">⚡ 4:2 Encoder (4-to-2)</h2>
+  <table class="tt">
+    <tr><th>D₃</th><th>D₂</th><th>D₁</th><th>D₀</th><th>Y₂</th><th>Y₁</th></tr>
+    <tr><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+    <tr><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+    <tr><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+    <tr><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td></tr>
+  </table>
+  <div class="rule-box">
+    <b class="bh">📐 Expressions — 4:2 Encoder</b>
+    <span class="formula">Y₂ = D₂ + D₃</span><br>
+    <span class="formula">Y₁ = D₁ + D₃</span>
+  </div>
+
+  <div class="note-box">
+    <b class="bh">⚠️ Limitation of Basic Encoder</b>
+    A basic encoder assumes only ONE input is active at a time. If two inputs are active simultaneously, the output is ambiguous/incorrect. → Solution: <b>Priority Encoder</b>
+  </div>
+
+  <div class="page-num">1 / 3</div>
+</div>
+
+<!-- Section 6 — Page 2/3 -->
+<div class="page">
+  <div class="page-lines"></div>
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital System Design — Unit 2</span>
+    <span class="unit-badge">SECTION 6</span>
+  </div>
+  <h2 class="topic">⚡ 8:3 Encoder (Octal to Binary)</h2>
+  <table class="tt">
+    <tr><th>Y₇</th><th>Y₆</th><th>Y₅</th><th>Y₄</th><th>Y₃</th><th>Y₂</th><th>Y₁</th><th>Y₀</th><th>A₂</th><th>A₁</th><th>A₀</th></tr>
+    <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td></tr>
+    <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td></tr>
+    <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+    <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td></tr>
+    <tr><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+    <tr><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td></tr>
+    <tr><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+    <tr><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>1</td></tr>
+  </table>
+  <div class="rule-box">
+    <b class="bh">📐 Expressions — 8:3 Encoder</b>
+    <span class="formula">A₀ = Y₁ + Y₃ + Y₅ + Y₇</span><br>
+    <span class="formula">A₁ = Y₂ + Y₃ + Y₆ + Y₇</span><br>
+    <span class="formula">A₂ = Y₄ + Y₅ + Y₆ + Y₇</span>
+  </div>
+
+  <h2 class="topic">🔥 Priority Encoder</h2>
+  <div class="def-box">
+    <b class="bh">📖 Priority Encoder</b>
+    In a priority encoder, if <b>two or more inputs are active simultaneously</b>, the input with the <b>highest priority</b> takes precedence. It also has an additional output called the <b>Valid Output Indicator (V)</b>: V=0 when all inputs are 0; V=1 when at least one input is 1.
+  </div>
+
+  <div class="rule-box">
+    <b class="bh">📐 4:2 Priority Encoder (D₃ highest priority)</b>
+    <span class="formula">Y₁ = D₂ + D₃</span><br>
+    <span class="formula">Y₀ = D₃ + D̄₂·D₁</span><br>
+    <span class="formula">V = D₀ + D₁ + D₂ + D₃</span>
+  </div>
+
+  <div class="page-num">2 / 3</div>
+</div>
+
+<!-- Section 6 — Page 3/3 -->
+<div class="page">
+  <div class="page-lines"></div>
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital System Design — Unit 2</span>
+    <span class="unit-badge">SECTION 6</span>
+  </div>
+  <h2 class="topic">⚡ 4:2 Priority Encoder Truth Table</h2>
+  <table class="tt">
+    <tr><th>D₃</th><th>D₂</th><th>D₁</th><th>D₀</th><th>Y₁</th><th>Y₀</th><th>V</th></tr>
+    <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>×</td><td>×</td><td>0</td></tr>
+    <tr><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+    <tr><td>0</td><td>0</td><td>1</td><td>×</td><td>0</td><td>1</td><td>1</td></tr>
+    <tr><td>0</td><td>1</td><td>×</td><td>×</td><td>1</td><td>0</td><td>1</td></tr>
+    <tr><td>1</td><td>×</td><td>×</td><td>×</td><td>1</td><td>1</td><td>1</td></tr>
+  </table>
+  <p>(× means don't care — could be 0 or 1, doesn't affect output)</p>
+
+  <div class="purple-box">
+    <b class="bh">⭐ Role of Valid Output Indicator (V)</b>
+    V = 0: All inputs are zero — output is invalid/meaningless<br>
+    V = 1: At least one input is 1 — the binary output Y₁Y₀ is valid<br>
+    Without V, we can't distinguish "D₀=1 → output 00" from "all inputs = 0 → output 00"
+  </div>
+
+  <div class="note-box">
+    <b class="bh">⚠️ Exam: Which encoder to use?</b>
+    If not specified in exam → use <b>4:2 Priority Encoder</b>. It has 2 outputs + 1 valid bit. D₃ has highest priority, D₀ has lowest.
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">🖊️ Quick Derivation — Y₀ of 4:2 Priority Encoder</div>
+    <div class="q-step">Y₀ = 1 when: D₃=1 (→11) OR D₂=0, D₁=1 (→01)</div>
+    <div class="q-step">D₃=1 → Y₀=1 (regardless of D₂,D₁,D₀)</div>
+    <div class="q-step">D₃=0, D₂=0, D₁=1 → Y₀=1</div>
+    <div class="q-ans"><b>Y₀ = D₃ + D̄₂·D₁</b></div>
+  </div>
+
+  <div class="page-num">3 / 3</div>
+</div>
+
+<!-- ══════════ SECTION 7 — MULTIPLEXED DISPLAY (Page 1/2) ══════════ -->
+<div class="page">
+  <div class="page-lines"></div>
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital System Design — Unit 2</span>
+    <span class="unit-badge">SECTION 7</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§7</span> Multiplexed Display</h1>
+  <hr class="divider">
+
+  <h2 class="topic">🔦 Seven-Segment Display Basics</h2>
+
+  <div class="def-box">
+    <b class="bh">📖 Seven-Segment Display</b>
+    A seven-segment display consists of <b>7 LED segments</b> labeled a, b, c, d, e, f, g. Different combinations of segments are turned ON to display digits 0–9 and some alphabets.
+  </div>
+
+  <div class="circuit-ascii">        ─ a ─
+       |     |
+       f     b
+       |     |
+        ─ g ─
+       |     |
+       e     c
+       |     |
+        ─ d ─
+
+  Segments: a(top), b(top-right), c(bottom-right),
+            d(bottom), e(bottom-left), f(top-left), g(middle)</div>
+
+  <table class="tt">
+    <tr><th>Digit</th><th>a</th><th>b</th><th>c</th><th>d</th><th>e</th><th>f</th><th>g</th></tr>
+    <tr><td>0</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>0</td></tr>
+    <tr><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+    <tr><td>2</td><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td></tr>
+    <tr><td>3</td><td>1</td><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+    <tr><td>4</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td></tr>
+    <tr><td>5</td><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td></tr>
+    <tr><td>6</td><td>1</td><td>0</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+    <tr><td>7</td><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+    <tr><td>8</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+    <tr><td>9</td><td>1</td><td>1</td><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td></tr>
+  </table>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<!-- Section 7 — Page 2/2 -->
+<div class="page">
+  <div class="page-lines"></div>
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital System Design — Unit 2</span>
+    <span class="unit-badge">SECTION 7</span>
+  </div>
+  <h2 class="topic">⚡ BCD to 7-Segment Decoder</h2>
+
+  <div class="def-box">
+    <b class="bh">📖 BCD to 7-Segment Decoder</b>
+    A BCD to 7-segment decoder takes a <b>4-bit BCD input</b> (0000–1001) and drives the corresponding segments of a 7-segment display to show the digit 0–9. Inputs 1010–1111 are "don't care" states.
+  </div>
+
+  <div class="orange-box">
+    <b class="bh">🔧 Design Steps</b>
+    <b>1.</b> Create truth table with BCD inputs ABCD → 7 outputs a,b,c,d,e,f,g<br>
+    <b>2.</b> Treat minterms 10–15 as <b>don't cares (d)</b><br>
+    <b>3.</b> Apply K-map for each segment separately<br>
+    <b>4.</b> Simplify and draw circuit
+  </div>
+
+  <h2 class="topic">🔥 Multiplexed Display System</h2>
+
+  <div class="def-box">
+    <b class="bh">📖 Multiplexed Display</b>
+    Instead of using separate decoder+driver for each digit, a <b>multiplexed display</b> shares a single decoder/driver across multiple 7-segment displays. Each display is turned ON for a brief moment in turn — too fast for human eye to notice — creating the illusion of all digits being on simultaneously. This is called <b>time-division multiplexing</b>.
+  </div>
+
+  <div class="rule-box">
+    <b class="bh">📐 How Multiplexed Display Works</b>
+    1. A counter cycles through digit positions (display 0, 1, 2, 3…)<br>
+    2. A MUX selects the BCD data for the currently active digit<br>
+    3. A BCD-to-7-segment decoder converts it<br>
+    4. A DEMUX enables the corresponding display<br>
+    5. The process repeats at ~1 kHz or higher (persistence of vision)
+  </div>
+
+  <div class="circuit-ascii">  BCD Data     MUX    Decoder    DEMUX   Displays
+  Digit 0 ──►┐         ┌──────┐         ┌─► [  0  ]
+  Digit 1 ──►┤→ 4:1 →  │BCD→7 │→ 1:4 →  ├─► [  1  ]
+  Digit 2 ──►┤  MUX    │ Seg  │  DEMUX  ├─► [  2  ]
+  Digit 3 ──►┘         └──────┘         └─► [  3  ]
+              ▲                  ▲
+              └──── Counter ─────┘
+                 (cycles 00→01→10→11)</div>
+
+  <div class="purple-box">
+    <b class="bh">⭐ Advantages of Multiplexed Display</b>
+    <ul class="plain">
+      <li>Fewer components — one decoder shared</li>
+      <li>Lower power consumption</li>
+      <li>Simpler wiring for multi-digit displays</li>
+      <li>Used in calculators, clocks, meters</li>
+    </ul>
+  </div>
+
+  <div class="note-box">
+    <b class="bh">⚠️ Exam Tip</b>
+    The <b>refresh rate</b> must be ≥ 60 Hz per digit to avoid flicker. For 4-digit display, counter runs at ≥ 240 Hz. The key components are: Counter + MUX + Decoder + DEMUX (or transistor switches).
+  </div>
+
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══════════ PRACTICE QUESTIONS — PART 2 ══════════ -->
+<div class="page">
+  <div class="page-lines"></div>
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital System Design — Unit 2</span>
+    <span class="unit-badge">PRACTICE Q's</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§PQ</span> Practice Questions — Part 2</h1>
+  <hr class="divider">
+
+  <h2 class="topic">📝 Section §4 — DEMUX &amp; §5 — Decoder</h2>
+
+  <div class="pq-sec">
+    <div class="pq-q"><span class="pq-num">Q1</span> Explain with truth table: why is a decoder with enable equivalent to a DEMUX? Use 2:4 decoder as example.</div>
+    <div class="pq-hint">Hint: Treat enable E as the single data input I of DEMUX. When E=0, all outputs=0. When E=1, selected output = 1.</div>
+    <button class="ans-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Show Answer</button>
+    <div class="pq-answer">
+      2:4 Decoder with Enable E: Y₀ = E·Ī₀·Ī₁, Y₁ = E·Ī₀·I₁, Y₂ = E·I₀·Ī₁, Y₃ = E·I₀·I₁<br>
+      Compare with 1:4 DEMUX: Y₀ = I·S̄₁·S̄₀, Y₁ = I·S̄₁·S₀, etc.<br>
+      If E→I (data), I₀→S₀, I₁→S₁: <b>Structures are identical!</b><br>
+      ∴ A decoder with enable = DEMUX when enable is used as the data input.
+    </div>
+  </div>
+
+  <div class="pq-sec">
+    <div class="pq-q"><span class="pq-num">Q2</span> Implement the Boolean function F(A,B,C) = Σm(0,1,3,6) using a 3:8 decoder and external gates. What gate(s) are needed?</div>
+    <div class="pq-hint">Hint: Each output of 3:8 decoder = one minterm. Just OR the required outputs.</div>
+    <button class="ans-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Show Answer</button>
+    <div class="pq-answer">
+      Connect A,B,C to decoder inputs.<br>
+      F = m₀ + m₁ + m₃ + m₆ = Y₀ + Y₁ + Y₃ + Y₆<br>
+      Connect Y₀, Y₁, Y₃, Y₆ to a <b>4-input OR gate</b>.<br>
+      That's it — one 3:8 decoder + one 4-input OR gate.
+    </div>
+  </div>
+
+  <h2 class="topic">📝 Section §6 — Encoder &amp; §7 — Display</h2>
+
+  <div class="pq-sec">
+    <div class="pq-q"><span class="pq-num">Q3</span> Design a 4-input priority encoder with D₃ having highest priority. Write the truth table, derive Boolean expressions, and explain the role of the valid bit V.</div>
+    <div class="pq-hint">Hint: V = D₀+D₁+D₂+D₃. Y₁ = D₂+D₃. Y₀ = D₃ + D̄₂·D₁</div>
+    <button class="ans-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Show Answer</button>
+    <div class="pq-answer">
+      <b>Truth Table:</b> (×= don't care)<br>
+      D₃=1,×,×,× → Y₁Y₀=11, V=1<br>
+      D₃=0,D₂=1,×,× → Y₁Y₀=10, V=1<br>
+      D₃=0,D₂=0,D₁=1,× → Y₁Y₀=01, V=1<br>
+      D₃=0,D₂=0,D₁=0,D₀=1 → Y₁Y₀=00, V=1<br>
+      All 0 → Y₁Y₀=×× V=0<br>
+      <b>V:</b> Without V, can't tell if output 00 means D₀=1 or all inputs=0.
+    </div>
+  </div>
+
+  <div class="pq-sec">
+    <div class="pq-q"><span class="pq-num">Q4</span> What is a multiplexed display? Draw a block diagram showing how a 4-digit multiplexed display works with a counter, MUX, BCD decoder, and DEMUX.</div>
+    <div class="pq-hint">Hint: 2-bit counter → cycles 00,01,10,11 → selects which digit's BCD data and which display to enable.</div>
+    <button class="ans-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Show Answer</button>
+    <div class="pq-answer">
+      Block diagram: 2-bit counter → (i) drives 4:1 MUX selection (to pick correct BCD digit data) AND (ii) drives 1:4 DEMUX to enable correct display<br>
+      MUX output (BCD data) → BCD-to-7-segment decoder → segment lines (a–g)<br>
+      DEMUX output → enables one of 4 displays<br>
+      Counter cycles fast (≥60 Hz per display) → appears all digits ON simultaneously<br>
+      Advantage: <b>saves hardware — only one decoder needed!</b>
+    </div>
+  </div>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<!-- Practice Questions P2 — Page 2/2 -->
+<div class="page">
+  <div class="page-lines"></div>
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital System Design — Unit 2</span>
+    <span class="unit-badge">PRACTICE Q's</span>
+  </div>
+
+  <div class="pq-sec">
+    <div class="pq-q"><span class="pq-num">Q5</span> Differentiate between encoder and decoder. Give the truth table for a 4:2 encoder and derive the output expressions.</div>
+    <div class="pq-hint">Hint: Decoder: n inputs → 2ⁿ outputs (one active). Encoder: 2ⁿ inputs → n outputs (binary code).</div>
+    <button class="ans-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Show Answer</button>
+    <div class="pq-answer">
+      <b>Decoder:</b> coded input → coded output (n→2ⁿ), one output active at a time<br>
+      <b>Encoder:</b> one active input → binary code (2ⁿ→n)<br>
+      4:2 Encoder truth table: D₀→00, D₁→01, D₂→10, D₃→11<br>
+      Y₂ = D₂ + D₃ (MSB), Y₁ = D₁ + D₃ (LSB)
+    </div>
+  </div>
+
+  <div class="pq-sec">
+    <div class="pq-q"><span class="pq-num">Q6</span> Design a 2:4 decoder using basic gates (NOT and AND). Write all output expressions and draw the complete logic diagram.</div>
+    <div class="pq-hint">Hint: Need 2 NOT gates (for Ī₀ and Ī₁) + 4 two-input AND gates.</div>
+    <button class="ans-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Show Answer</button>
+    <div class="pq-answer">
+      Y₀ = Ī₁·Ī₀ (AND of both NOTs)<br>
+      Y₁ = Ī₁·I₀ (AND of NOT(I₁) and I₀)<br>
+      Y₂ = I₁·Ī₀ (AND of I₁ and NOT(I₀))<br>
+      Y₃ = I₁·I₀ (AND of both)<br>
+      Gates: 2 NOT + 4 AND = <b>6 gates total</b>
+    </div>
+  </div>
+
+  <div class="note-box">
+    <b class="bh">⚠️ Last-Minute Revision Points — Part 2</b>
+    <ul class="plain">
+      <li>DEMUX: 1 input → 2ⁿ outputs; MUX reverse = DEMUX</li>
+      <li>Decoder: n→2ⁿ; each output = one minterm; use OR gate to implement any function</li>
+      <li>Encoder: 2ⁿ→n; basic encoder: only one input active at a time</li>
+      <li>Priority Encoder: multiple inputs → highest priority wins; needs valid bit V</li>
+      <li>V=0 (all inputs zero), V=1 (at least one input active)</li>
+      <li>7-segment: digits stored in truth table; 1010–1111 are don't cares</li>
+      <li>Multiplexed display: one decoder, counter+MUX+DEMUX, time-division</li>
+    </ul>
+  </div>
+
+  <div class="page-num">2 / 2</div>
+</div>
+
+</div>
+<script>
+document.querySelectorAll('.ans-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    this.nextElementSibling.style.display = 'block';
+    this.style.display = 'none';
+  });
+});
+</script>
+</body>
+</html>

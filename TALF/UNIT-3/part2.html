@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TAFL Unit 3 — Part 2</title>
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1a1a2e;--ink2:#2c2c54;--blue:#1565C0;--red:#b71c1c;--green:#1b5e20;--purple:#4a148c;--teal:#006064;--orange:#e65100;--line:#c5cae9;--page:#fafaf7;--highlight:#fff9c4;--box-blue:#e8f4fd;--box-green:#e8f5e9;--box-red:#fce4ec;--box-purple:#f3e5f5;--box-orange:#fff3e0;--box-teal:#e0f7fa;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#ddd;font-family:'Kalam',cursive;color:var(--ink);padding:20px;}
+.part-nav{max-width:820px;margin:0 auto 20px;display:flex;gap:8px;flex-wrap:wrap;}
+.part-nav a{padding:6px 18px;border-radius:20px;font-size:13px;font-weight:700;text-decoration:none;border:2px solid #bbb;color:#666;background:#fff;}
+.part-nav a.active{background:var(--red);color:#fff;border-color:var(--red);}
+.part-nav .unit-label{font-size:13px;font-weight:700;color:#888;padding:6px 4px;align-self:center;}
+.cover-page{background:linear-gradient(135deg,#880e4f 0%,#ad1457 60%,#c62828 100%);max-width:820px;margin:0 auto 40px;border-radius:8px;padding:70px 60px;text-align:center;color:#fff;box-shadow:0 4px 24px rgba(0,0,0,0.3);position:relative;overflow:hidden;}
+.cover-page::before{content:'';position:absolute;top:-50px;right:-50px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,0.05);}
+.cover-eyebrow{font-size:13px;letter-spacing:3px;opacity:0.6;margin-bottom:12px;}
+.cover-title{font-size:38px;font-weight:700;line-height:1.2;margin-bottom:8px;}
+.cover-sub{font-size:17px;opacity:0.8;margin-bottom:8px;}
+.cover-part{display:inline-block;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);border-radius:20px;padding:4px 20px;font-size:14px;margin-bottom:28px;}
+.cover-div{width:60px;height:3px;background:rgba(255,255,255,0.35);margin:0 auto 22px;border-radius:2px;}
+.cover-toc{text-align:left;background:rgba(255,255,255,0.1);border-radius:8px;padding:18px 26px;display:inline-block;min-width:400px;}
+.cover-toc-item{font-size:14px;line-height:32px;display:flex;justify-content:space-between;gap:20px;}
+.cover-toc-sep{border-top:1px solid rgba(255,255,255,0.25);margin:8px 0;}
+.page{background:var(--page);max-width:820px;margin:0 auto 36px;border-radius:4px;box-shadow:0 2px 16px rgba(0,0,0,0.16);padding:58px 68px 68px 88px;position:relative;min-height:1040px;background-image:repeating-linear-gradient(transparent,transparent 31px,var(--line) 31px,var(--line) 32px);background-position:0 54px;}
+.page::before{content:'';position:absolute;left:70px;top:0;bottom:0;width:1.5px;background:#ef9a9a;opacity:0.65;}
+.holes{position:absolute;left:16px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-around;padding:36px 0;}
+.hole{width:22px;height:22px;border-radius:50%;background:#ddd;border:1.5px solid #bdbdbd;}
+.page-num{position:absolute;bottom:26px;right:48px;font-size:13px;color:#9e9e9e;}
+.page-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
+.date-tag{font-size:13px;color:#9e9e9e;}
+.unit-badge{color:#fff;font-size:13px;padding:2px 14px;border-radius:20px;font-weight:700;}
+.ub-red{background:var(--red);}
+.ub-blue{background:var(--blue);}
+.ub-purple{background:var(--purple);}
+.ub-green{background:var(--green);}
+.ub-teal{background:var(--teal);}
+.ub-orange{background:var(--orange);}
+h1.section-title{font-size:23px;font-weight:700;color:var(--ink2);text-align:center;margin:8px 0 4px;text-decoration:underline;text-underline-offset:5px;}
+h2.topic{font-size:17px;font-weight:700;color:var(--blue);margin:18px 0 6px;border-bottom:1.5px solid var(--blue);padding-bottom:2px;display:inline-block;}
+h3.sub{font-size:15px;font-weight:700;color:var(--purple);margin:12px 0 4px;}
+p,li{font-size:15px;line-height:30px;}
+.divider{border:none;border-top:1px dashed #b0bec5;margin:14px 0 10px;}
+.def-box{background:var(--box-blue);border-left:4px solid var(--blue);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
+.rule-box{background:var(--box-green);border:1.5px solid #81c784;border-radius:6px;padding:10px 16px;margin:10px 0;font-size:14.5px;line-height:28px;}
+.note-box{background:var(--highlight);border-left:4px solid #f9a825;border-radius:0 6px 6px 0;padding:8px 14px;margin:8px 0 10px;font-size:14px;line-height:26px;}
+.purple-box{background:var(--box-purple);border-left:4px solid var(--purple);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
+.orange-box{background:var(--box-orange);border-left:4px solid var(--orange);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
+.red-box{background:var(--box-red);border-left:4px solid var(--red);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
+.qbox{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:12px 16px;margin:10px 0;}
+.q-label{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:4px;}
+.q-step{font-size:14px;color:var(--green);margin-top:4px;line-height:26px;}
+.q-ans{font-size:15px;color:var(--red);font-family:'Patrick Hand',cursive;margin-top:4px;line-height:28px;}
+.exam-q-box{background:#fff8f8;border:2px solid var(--red);border-radius:8px;padding:12px 16px;margin:10px 0;}
+.eq-label{font-size:13px;font-weight:700;color:var(--red);margin-bottom:4px;}
+.formula{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--blue);}
+ul.plain{list-style:none;padding-left:4px;}
+ul.plain li::before{content:'→ ';color:var(--blue);font-weight:700;}
+ul.plain li{font-size:15px;line-height:30px;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0;}
+.vs-box{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:12px 0;border-radius:8px;overflow:hidden;border:1.5px solid #90caf9;}
+.vs-left{background:var(--box-blue);padding:12px 14px;}
+.vs-right{background:var(--box-purple);padding:12px 14px;border-left:1px solid #90caf9;}
+.vs-head{font-size:15px;font-weight:700;margin-bottom:8px;}
+.vs-item{font-size:14px;line-height:26px;}
+.step-card{background:var(--box-purple);border-left:4px solid var(--purple);padding:8px 14px;margin:5px 0;border-radius:0 6px 6px 0;}
+.step-head{font-size:14px;font-weight:700;color:var(--purple);}
+.step-body{font-size:13.5px;line-height:24px;color:var(--ink2);}
+table.tt{width:100%;border-collapse:collapse;margin:8px 0;font-size:14px;}
+table.tt th{background:var(--blue);color:#fff;padding:7px 10px;text-align:center;}
+table.tt td{padding:6px 10px;border-bottom:1px solid #e0e0e0;line-height:26px;}
+table.tt tr:nth-child(even) td{background:#f5f5f5;}
+.nfa-wrap{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:12px;margin:10px 0;text-align:center;}
+.nfa-svg{width:100%;max-width:640px;}
+.conv-box{background:#fff;border:2px solid var(--purple);border-radius:8px;padding:14px 18px;margin:10px 0;}
+.conv-title{font-size:14px;font-weight:700;color:var(--purple);margin-bottom:8px;}
+.conv-rule{font-family:'Patrick Hand',cursive;font-size:15px;line-height:30px;color:var(--ink2);}
+</style>
+</head>
+<body>
+
+<div class="part-nav">
+  <a href="../index.html">&#8617; Units</a>
+  <span class="unit-label">Unit 3 · CFG &amp; Grammars</span>
+  <a href="part1.html">Part 1</a>
+  <a href="part2.html" class="active">Part 2</a>
+  <a href="part3.html">Part 3</a>
+</div>
+
+<div class="cover-page">
+  <div class="cover-eyebrow">THEORY OF AUTOMATA &amp; FORMAL LANGUAGES · UNIT 3</div>
+  <div class="cover-title">Ambiguity &amp; Regular Grammars</div>
+  <div class="cover-sub">FA ↔ Grammar Conversions</div>
+  <div class="cover-part">Part 2 of 3 — Intermediate</div>
+  <div class="cover-div"></div>
+  <div class="cover-toc">
+    <div class="cover-toc-item"><span>§5 — Ambiguity in CFG</span><span>3 pages</span></div>
+    <div class="cover-toc-item"><span>§6 — Regular Grammars (Right &amp; Left Linear)</span><span>3 pages</span></div>
+    <div class="cover-toc-item"><span>§7 — FA → Regular Grammar Conversion</span><span>3 pages</span></div>
+    <div class="cover-toc-item"><span>§8 — Regular Grammar → FA Conversion</span><span>3 pages</span></div>
+    <div class="cover-toc-item"><span>Practice Questions (2 per topic)</span><span>2 pages</span></div>
+    <div class="cover-toc-sep"></div>
+    <div class="cover-toc-item"><strong><span>Total</span><span>14 pages</span></strong></div>
+  </div>
+</div>
+
+<!-- ══════════ SECTION 5 ══════════ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 3 · Part 2</span><span class="unit-badge ub-red">SECTION 5</span></div>
+  <h1 class="section-title"><span class="sn" style="color:var(--red);">§5</span> Ambiguity in CFG</h1>
+  <hr class="divider">
+
+  <h2 class="topic">1. Definition of Ambiguous Grammar</h2>
+  <div class="def-box">
+    A CFG denoted by G is said to be <strong>ambiguous</strong> if there exists some string w ∈ L(G) that has <strong>at least two distinct LMDs</strong> (or equivalently, two distinct parse trees).<br><br>
+    <strong>L(G)</strong> = language generated by Grammar G.
+  </div>
+
+  <div class="red-box">
+    <strong>In simple terms:</strong> A grammar is ambiguous if the same string can be derived in MORE THAN ONE WAY (different parse trees). This means the string has multiple structural interpretations.
+  </div>
+
+  <h2 class="topic">2. Classic Ambiguity Example</h2>
+  <div class="qbox">
+    <div class="q-label">Grammar: S → SbS | a &nbsp;&nbsp; String w = ababа — show grammar is ambiguous</div>
+    <div class="q-step"><strong>LMD Path 1:</strong></div>
+    <div class="q-ans" style="font-size:14px;line-height:26px;">
+      S ⇒ SbS ⇒ abS ⇒ abSbS ⇒ ababS ⇒ ababa
+    </div>
+    <div class="q-step"><strong>LMD Path 2:</strong></div>
+    <div class="q-ans" style="font-size:14px;line-height:26px;">
+      S ⇒ SbS ⇒ SbSbS ⇒ abSbS ⇒ ababS ⇒ ababa
+    </div>
+    <div class="q-step">Two distinct LMDs for same string w = ababa → Grammar is <strong>ambiguous</strong> ✓</div>
+  </div>
+
+  <h2 class="topic">3. Ambiguity in Arithmetic Expressions</h2>
+  <div class="qbox">
+    <div class="q-label">Grammar: E→E+E | E*E | id &nbsp;&nbsp; w = id+id*id</div>
+    <div class="q-step">This grammar is ambiguous because it doesn't define:</div>
+    <div class="q-ans" style="font-size:14px;line-height:28px;">
+      Parse tree 1: (id+id)*id → E = (E+E)*E → (+) has higher precedence<br>
+      Parse tree 2: id+(id*id) → E = E+(E*E) → (*) has higher precedence<br><br>
+      Reasons for ambiguity:<br>
+      ① Associativity of + is not properly defined<br>
+      ② Precedence of operators is not properly defined
+    </div>
+  </div>
+
+  <div class="page-num">1 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 3 · §5</span><span class="unit-badge ub-red">AMBIGUITY</span></div>
+
+  <h2 class="topic">4. Unambiguous Grammar for Arithmetic</h2>
+  <div class="def-box">
+    To resolve ambiguity in E→E+E|E*E|id, use operator precedence and associativity:<br><br>
+    <strong>Unambiguous Grammar:</strong><br>
+    <span class="formula" style="font-family:'Patrick Hand',cursive;font-size:16px;">
+    E → E + T | T<br>
+    T → T * F | F<br>
+    F → id
+    </span><br><br>
+    Here: * has higher precedence than + (handled by grammar structure), and both + and * are <strong>left-associative</strong> (left recursion in E and T).
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">Derive w = id+id*id using unambiguous grammar</div>
+    <div class="q-ans" style="font-size:14px;line-height:28px;">
+      E ⇒ E+T ⇒ T+T ⇒ F+T ⇒ id+T ⇒ id+T*F ⇒ id+F*F ⇒ id+id*F ⇒ id+id*id ✓
+    </div>
+    <div class="q-step">Only ONE parse tree possible → Grammar is unambiguous ✓</div>
+  </div>
+
+  <h2 class="topic">5. Inherently Ambiguous Languages</h2>
+  <div class="red-box">
+    A CFL L is said to be <strong>Inherently Ambiguous</strong> if ALL grammars generating L are ambiguous (no unambiguous grammar exists for it).<br><br>
+    Examples of Inherently Ambiguous CFLs:<br>
+    L₁ = { aⁱbʲcᵏ | i,j,k ≥ 1, i=j or j=k }<br>
+    L₂ = { aⁿbᵐcᵖdᵍ | n,m,p,q ≥ 1, n=p or m=q }
+  </div>
+
+  <div class="note-box">
+    <strong>★ A context-free language can be generated by many grammars.</strong> A language is unambiguous if there is at least one unambiguous grammar for it. If ALL grammars are ambiguous → Inherently Ambiguous Language.
+  </div>
+
+  <div class="page-num">2 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 3 · §5</span><span class="unit-badge ub-red">PRACTICE</span></div>
+
+  <h2 class="topic">6. Practice Questions — §5</h2>
+
+  <div class="exam-q-box">
+    <div class="eq-label">Q1 — Show G: S → SbS|a is ambiguous for w = ababa</div>
+    <div class="q-step">Show TWO different LMDs for w = ababa</div>
+    <div class="q-ans" style="font-size:14px;line-height:28px;">
+      <strong>LMD 1:</strong><br>
+      S⇒SbS⇒abS⇒abSbS⇒ababS⇒ababa<br><br>
+      <strong>LMD 2:</strong><br>
+      S⇒SbS⇒SbSbS⇒abSbS⇒abSba ← wrong, let's redo:<br>
+      S⇒SbS⇒SbSbS⇒abSbS⇒ababS⇒ababa<br><br>
+      Two distinct LMDs → grammar is ambiguous ✓
+    </div>
+  </div>
+
+  <div class="exam-q-box">
+    <div class="eq-label">Q2 — G: bExp→bExp OR bExp | bExp AND bExp | NOT bExp | True | False. Show ambiguous for w = T AND F OR T</div>
+    <div class="q-step">Two parse trees possible: ((T AND F) OR T) and (T AND (F OR T))</div>
+    <div class="q-ans" style="font-size:14px;line-height:26px;">
+      <strong>Path 1:</strong> bExp → bExp OR bExp → (bExp AND bExp) OR T → (T AND F) OR T<br>
+      &nbsp;&nbsp;→ Interprets as ((T AND F) OR T)<br><br>
+      <strong>Path 2:</strong> bExp → bExp AND bExp → T AND (bExp OR bExp) → T AND (F OR T)<br>
+      &nbsp;&nbsp;→ Interprets as (T AND (F OR T))<br><br>
+      Two parse trees → grammar is ambiguous ✓
+    </div>
+    <div class="q-step">Unambiguous version: bExp→bExp OR A|A; A→A AND F|F; F→NOT B|B; B→True|False</div>
+  </div>
+
+  <div class="page-num">3 / 3</div>
+</div>
+
+<!-- ══════════ SECTION 6 ══════════ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 3 · Part 2</span><span class="unit-badge ub-green">SECTION 6</span></div>
+  <h1 class="section-title"><span class="sn" style="color:var(--green);">§6</span> Regular Grammars (Right &amp; Left Linear)</h1>
+  <hr class="divider">
+
+  <h2 class="topic">1. Right Linear Grammar</h2>
+  <div class="def-box">
+    A grammar G is <strong>Right Linear</strong> if every production is of the form:<br><br>
+    <div class="two-col" style="margin-top:6px;">
+      <div style="text-align:center;background:#fff;border:2px solid var(--green);border-radius:6px;padding:8px;font-family:'Patrick Hand',cursive;font-size:17px;">A → xB</div>
+      <div style="text-align:center;background:#fff;border:2px solid var(--green);border-radius:6px;padding:8px;font-family:'Patrick Hand',cursive;font-size:17px;">A → x</div>
+    </div>
+    where x ∈ Σ* (string of terminals) and B ∈ V_N (single non-terminal at RIGHT end).
+  </div>
+
+  <h2 class="topic">2. Left Linear Grammar</h2>
+  <div class="def-box">
+    A grammar G is <strong>Left Linear</strong> if every production is of the form:<br><br>
+    <div class="two-col" style="margin-top:6px;">
+      <div style="text-align:center;background:#fff;border:2px solid var(--blue);border-radius:6px;padding:8px;font-family:'Patrick Hand',cursive;font-size:17px;">A → Bx</div>
+      <div style="text-align:center;background:#fff;border:2px solid var(--blue);border-radius:6px;padding:8px;font-family:'Patrick Hand',cursive;font-size:17px;">A → x</div>
+    </div>
+    where x ∈ Σ* and B ∈ V_N (single non-terminal at LEFT end).
+  </div>
+
+  <h2 class="topic">3. Regular Grammar = Right Linear XOR Left Linear</h2>
+  <div class="purple-box">
+    A grammar is <strong>Regular</strong> if it is EITHER Right Linear OR Left Linear — <em>but not both in the same grammar</em>.<br><br>
+    <strong>Example (NOT Regular):</strong> A → Ba | a &nbsp;and&nbsp; A → aB | a in SAME grammar<br>
+    → Mixes left and right linear → NOT regular (but IS linear grammar).<br><br>
+    <strong>Example (Regular):</strong> A → Ba | a (ALL left linear) → Regular ✓
+  </div>
+
+  <h2 class="topic">4. Connection to FSA</h2>
+  <div class="rule-box">
+    <ul class="plain">
+      <li>Right Linear Grammar ↔ NFA/DFA (state = current NT, terminal = input symbol)</li>
+      <li>The non-terminal represents the <strong>current state</strong> of the FSA</li>
+      <li>A → aB means: read 'a', move to state B</li>
+      <li>A → a means: read 'a', move to <strong>final state</strong> (accepting)</li>
+      <li>Regular Languages are exactly the Type-3 languages</li>
+    </ul>
+  </div>
+
+  <div class="page-num">1 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 3 · §6</span><span class="unit-badge ub-green">REGULAR GRAMMARS</span></div>
+
+  <h2 class="topic">5. Writing Regular Grammars</h2>
+
+  <div class="qbox">
+    <div class="q-label">Write Right Linear Grammar for L = { aⁿbᵐ | n,m ≥ 1 }</div>
+    <div class="q-step">Strategy: Generate a's with one NT, then switch to generating b's with another NT.</div>
+    <div class="q-ans">
+      S → aS | aB &nbsp;&nbsp;(generate a's, then switch to B)<br>
+      B → bB | b &nbsp;&nbsp;&nbsp;(generate b's, end with terminal)
+    </div>
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">Write Right Linear Grammar for L = { (a+b)*b }</div>
+    <div class="q-step">Strings ending with 'b'. Can have anything before.</div>
+    <div class="q-ans">
+      S → aS | bS | b
+    </div>
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">Write Right Linear Grammar for L = { a*b+ } = strings with any a's then one or more b's</div>
+    <div class="q-ans">
+      S → aS | bA | b<br>
+      A → bA | b
+    </div>
+    <div class="q-step">S handles leading a's and transition to b's. A handles more b's.</div>
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">Write Left Linear Grammar for L = { aⁿbᵐ | n,m ≥ 1 }</div>
+    <div class="q-step">In left linear, non-terminal is at the LEFT side of production.</div>
+    <div class="q-ans">
+      S → Sa | Ab<br>
+      A → Ab | Aa | a
+    </div>
+    <div class="q-step">Note: Left linear generates strings right-to-left (generates in reverse order conceptually).</div>
+  </div>
+
+  <h2 class="topic">6. Conversion Between Right and Left Linear</h2>
+  <div class="orange-box">
+    Any Right Linear Grammar can be converted to an equivalent Left Linear Grammar (and vice versa) because both represent Regular Languages. The conversion goes through FA:
+    <ul class="plain" style="margin-top:6px;">
+      <li>Right Linear Grammar → NFA → Reverse NFA → Left Linear Grammar</li>
+    </ul>
+  </div>
+
+  <div class="page-num">2 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 3 · §6</span><span class="unit-badge ub-green">PRACTICE</span></div>
+
+  <h2 class="topic">7. Practice Questions — §6</h2>
+
+  <div class="exam-q-box">
+    <div class="eq-label">Q1 — Write Right Linear Grammar for L = {0ⁿ1ᵐ | n ≥ 1, m ≥ 0}</div>
+    <div class="q-step">Must have at least one 0. May have zero or more 1's after.</div>
+    <div class="q-ans">
+      S → 0S | 0A | 0<br>
+      A → 1A | 1<br>
+      <span style="font-size:13px;color:var(--green);">OR more simply:</span><br>
+      S → 0S | 0B<br>
+      B → 1B | ε &nbsp;&nbsp;(if ε-productions allowed)<br>
+      <span style="font-size:13px;color:var(--green);">Without ε: S → 0S | 0 | 0B; B → 1B | 1</span>
+    </div>
+  </div>
+
+  <div class="exam-q-box">
+    <div class="eq-label">Q2 — Write Right Linear Grammar for L = strings over {a,b} that do NOT contain substring 'aa'</div>
+    <div class="q-step">After reading 'a', the next must be 'b' (not another 'a'). Use states: q₀ (no a last), q₁ (last was a), dead.</div>
+    <div class="q-ans">
+      S → aA | bS | ε &nbsp;&nbsp;(S = no 'a' just seen, or start)<br>
+      A → bS | b &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(A = just saw one 'a' — must take 'b' or end)<br>
+      <span style="font-size:13px;color:var(--green);">A cannot go to another 'a' (that would create 'aa')</span>
+    </div>
+  </div>
+
+  <div class="page-num">3 / 3</div>
+</div>
+
+<!-- ══════════ SECTION 7 ══════════ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 3 · Part 2</span><span class="unit-badge ub-teal">SECTION 7</span></div>
+  <h1 class="section-title"><span class="sn" style="color:var(--teal);">§7</span> Conversion: FA → Regular Grammar</h1>
+  <hr class="divider">
+
+  <h2 class="topic">1. Method: FSA to Regular Grammar</h2>
+  <div class="def-box">
+    Given FSA M = (Q, Σ, δ, q₀, F), construct Regular Grammar G = (V_N, Σ, P, S) where:<br><br>
+    <ul class="plain">
+      <li>Each FSA state qᵢ becomes a Non-Terminal in V_N</li>
+      <li>Start state q₀ becomes Start Symbol S</li>
+    </ul>
+  </div>
+
+  <div class="conv-box">
+    <div class="conv-title">Conversion Rules</div>
+    <div class="conv-rule">
+      If δ(q, a) = p and p is <strong>NOT a final state</strong>:<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;q → aP &nbsp;&nbsp;&nbsp;(right linear production)<br><br>
+      If δ(q, a) = p and p IS a <strong>final state</strong>:<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;q → aP | a &nbsp;&nbsp;(can stop here OR continue)
+    </div>
+  </div>
+
+  <h2 class="topic">2. Worked Example 1</h2>
+  <div class="qbox">
+    <div class="q-label">FSA: q₀ →(a)→ q₀ self-loop, q₀ →(b)→ q₁ (final), q₁ →(a,b)→ q₁ self-loop</div>
+    <div class="q-step">States: A=q₀ (initial), B=q₁ (final)</div>
+    <div class="q-step">Transitions: δ(q₀,a)=q₀, δ(q₀,b)=q₁(final), δ(q₁,a)=q₁(final), δ(q₁,b)=q₁(final)</div>
+    <div class="q-ans">
+      A → aA | bB | b &nbsp;&nbsp;&nbsp;[δ(q₀,a)=q₀ not final → A→aA; δ(q₀,b)=q₁ final → A→bB|b]<br>
+      B → aB | a | bB | b &nbsp;[δ(q₁,a)=q₁ final → B→aB|a; δ(q₁,b)=q₁ final → B→bB|b]
+    </div>
+  </div>
+
+  <div class="page-num">1 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 3 · §7</span><span class="unit-badge ub-teal">FA → GRAMMAR</span></div>
+
+  <h2 class="topic">3. Worked Example 2 — Three-state DFA</h2>
+  <div class="qbox">
+    <div class="q-label">DFA: q₀(A) →b→ q₀, q₀ →a→ q₁(B), q₁ →a→ q₁, q₁ →b→ q₂(C,final), q₂ →b→ q₂, q₂ →a→ q₂</div>
+    <div class="q-step">States: A=q₀(init), B=q₁, C=q₂(final). Apply conversion rules:</div>
+    <div class="q-ans" style="font-size:14px;line-height:28px;">
+      A (q₀): δ(q₀,b)=q₀(not final) → A→bA; δ(q₀,a)=q₁(not final) → A→aB<br>
+      &nbsp;&nbsp;⇒ <strong>A → bA | aB</strong><br><br>
+      B (q₁): δ(q₁,a)=q₁(not final) → B→aB; δ(q₁,b)=q₂(final) → B→bC | b<br>
+      &nbsp;&nbsp;⇒ <strong>B → aB | bC | b</strong><br><br>
+      C (q₂): δ(q₂,b)=q₂(final) → C→bC|b; δ(q₂,a)=q₂(final) → C→aC|a<br>
+      &nbsp;&nbsp;⇒ <strong>C → bC | b | aC | a</strong>
+    </div>
+  </div>
+
+  <h2 class="topic">4. Important Notes on FSA → Grammar</h2>
+  <div class="note-box">
+    <ul class="plain">
+      <li>Each STATE of FSA → one NON-TERMINAL in grammar</li>
+      <li>INITIAL state → START SYMBOL (S)</li>
+      <li>If destination state p is FINAL: add TWO rules: q → ap AND q → a (can terminate)</li>
+      <li>If destination state p is NOT FINAL: add only: q → ap (must continue)</li>
+      <li>The grammar produced is always <strong>Right Linear</strong></li>
+    </ul>
+  </div>
+
+  <div class="page-num">2 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 3 · §7</span><span class="unit-badge ub-teal">PRACTICE</span></div>
+
+  <h2 class="topic">5. Practice Questions — §7</h2>
+
+  <div class="exam-q-box">
+    <div class="eq-label">Q1 — Convert FSA to Regular Grammar: q₀ →(a)→ q₁, q₁ →(b)→ q₂(final). Σ={a,b}. Missing transitions go to dead state.</div>
+    <div class="q-step">States: q₀=A(init), q₁=B, q₂=C(final). Dead state=D(non-final).</div>
+    <div class="q-ans" style="font-size:14px;line-height:28px;">
+      A → aB | bD &nbsp;&nbsp;&nbsp;&nbsp;[δ(q₀,a)=q₁(not final) → A→aB; δ(q₀,b)=dead]<br>
+      B → bC | b | aD &nbsp;[δ(q₁,b)=q₂(final) → B→bC|b; a→dead]<br>
+      C → aD | bD &nbsp;&nbsp;&nbsp;&nbsp;[q₂ is final but all transitions go to dead]<br>
+      D → aD | bD &nbsp;&nbsp;&nbsp;&nbsp;[dead state loops]
+    </div>
+    <div class="q-step">Language: strings matching exactly 'ab'. Grammar simplification: A → aB; B → b (removing dead state paths)</div>
+  </div>
+
+  <div class="exam-q-box">
+    <div class="eq-label">Q2 — FSA: q₀(init+final) →(a)→ q₁, →(b)→ q₀; q₁(final) →(a)→ q₁, →(b)→ q₀. Convert to grammar.</div>
+    <div class="q-step">q₀ is BOTH initial AND final. q₁ is also final.</div>
+    <div class="q-ans" style="font-size:14px;line-height:28px;">
+      S (q₀, final): δ(q₀,a)=q₁(final) → S→aA|a; δ(q₀,b)=q₀(final) → S→bS|b<br>
+      A (q₁, final): δ(q₁,a)=q₁(final) → A→aA|a; δ(q₁,b)=q₀(final) → A→bS|b<br><br>
+      <strong>Grammar:</strong><br>
+      S → aA | a | bS | b<br>
+      A → aA | a | bS | b
+    </div>
+  </div>
+
+  <div class="page-num">3 / 3</div>
+</div>
+
+<!-- ══════════ SECTION 8 ══════════ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 3 · Part 2</span><span class="unit-badge ub-orange">SECTION 8</span></div>
+  <h1 class="section-title"><span class="sn" style="color:var(--orange);">§8</span> Conversion: Regular Grammar → FA</h1>
+  <hr class="divider">
+
+  <h2 class="topic">1. Method: Regular Grammar to FSA</h2>
+  <div class="def-box">
+    Given Right Linear Grammar G = (V_N, T, P, S), construct NFA M = (Q, Σ, δ, q₀, F) where:<br><br>
+    <ul class="plain">
+      <li>Each Non-Terminal Aᵢ → one STATE in FSA</li>
+      <li>Start Symbol S → Initial State q₀</li>
+      <li>Create a new <strong>Final State</strong> (e.g., qf)</li>
+    </ul>
+  </div>
+
+  <div class="conv-box">
+    <div class="conv-title">Conversion Rules</div>
+    <div class="conv-rule">
+      Rule: Aᵢ → a &nbsp;(just terminal)<br>
+      &nbsp;&nbsp;&nbsp;→ Create transition: δ(Aᵢ, a) = qf &nbsp;(move to final state)<br><br>
+      Rule: Aᵢ → aAⱼ &nbsp;(terminal + non-terminal)<br>
+      &nbsp;&nbsp;&nbsp;→ Create transition: δ(Aᵢ, a) = Aⱼ
+    </div>
+  </div>
+
+  <h2 class="topic">2. Worked Example 1</h2>
+  <div class="qbox">
+    <div class="q-label">Grammar: S → bS | aA &nbsp;|&nbsp; A → bA | aB | a &nbsp;|&nbsp; B → bB | b</div>
+    <div class="q-step">NTs: S, A, B. Create states S, A, B, + new final state F.</div>
+    <div class="q-ans" style="font-size:14px;line-height:28px;">
+      S→bS: δ(S,b)=S &nbsp;&nbsp;&nbsp;S→aA: δ(S,a)=A<br>
+      A→bA: δ(A,b)=A &nbsp;&nbsp;A→aB: δ(A,a)=B &nbsp;&nbsp;A→a: δ(A,a)=F<br>
+      B→bB: δ(B,b)=B &nbsp;&nbsp;B→b: δ(B,b)=F
+    </div>
+    <div class="q-step">Initial state: S. Final states: {F}. This gives the NFA for the language.</div>
+  </div>
+
+  <div class="page-num">1 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 3 · §8</span><span class="unit-badge ub-orange">GRAMMAR → FA</span></div>
+
+  <h2 class="topic">3. Worked Example 2 — Complete Conversion with Diagram</h2>
+  <div class="qbox">
+    <div class="q-label">Grammar: A → bA | aB | ε &nbsp;|&nbsp; B → aC | bB &nbsp;|&nbsp; C → aA | bC | a</div>
+    <div class="q-step">Start = A (initial). Note: A→ε means A itself is a final state (it can generate empty string).</div>
+    <div class="q-ans" style="font-size:14px;line-height:28px;">
+      From A: δ(A,b)=A, δ(A,a)=B; A→ε means A is also final<br>
+      From B: δ(B,a)=C, δ(B,b)=B<br>
+      From C: δ(C,a)=A, δ(C,b)=C; C→a: δ(C,a)=F<br><br>
+      States: {A, B, C, F}. Initial: A. Final: {A, F}
+    </div>
+    <div class="nfa-wrap" style="margin-top:8px;">
+      <svg class="nfa-svg" viewBox="0 0 460 100">
+        <defs><marker id="gr1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M2 2L8 5L2 8" fill="none" stroke="#e65100" stroke-width="1.5"/></marker></defs>
+        <line x1="5" y1="50" x2="38" y2="50" stroke="#e65100" stroke-width="1.5" marker-end="url(#gr1)"/>
+        <!-- A (init+final) -->
+        <circle cx="58" cy="50" r="20" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+        <circle cx="58" cy="50" r="16" fill="none" stroke="#e65100" stroke-width="1.2"/>
+        <text x="58" y="54" text-anchor="middle" font-family="Kalam" font-size="13" fill="#e65100">A</text>
+        <!-- A self on b -->
+        <path d="M44 30 Q58 10 72 30" fill="none" stroke="#b71c1c" stroke-width="1.5" marker-end="url(#gr1)"/>
+        <text x="58" y="10" text-anchor="middle" font-family="Patrick Hand" font-size="13" fill="#b71c1c">b</text>
+        <!-- A→B on a -->
+        <line x1="78" y1="50" x2="138" y2="50" stroke="#e65100" stroke-width="1.5" marker-end="url(#gr1)"/>
+        <text x="108" y="42" text-anchor="middle" font-family="Patrick Hand" font-size="13" fill="#b71c1c">a</text>
+        <!-- B -->
+        <circle cx="158" cy="50" r="20" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+        <text x="158" y="54" text-anchor="middle" font-family="Kalam" font-size="13" fill="#e65100">B</text>
+        <!-- B self on b -->
+        <path d="M144 30 Q158 10 172 30" fill="none" stroke="#b71c1c" stroke-width="1.5" marker-end="url(#gr1)"/>
+        <text x="158" y="10" text-anchor="middle" font-family="Patrick Hand" font-size="13" fill="#b71c1c">b</text>
+        <!-- B→C on a -->
+        <line x1="178" y1="50" x2="238" y2="50" stroke="#e65100" stroke-width="1.5" marker-end="url(#gr1)"/>
+        <text x="208" y="42" text-anchor="middle" font-family="Patrick Hand" font-size="13" fill="#b71c1c">a</text>
+        <!-- C -->
+        <circle cx="258" cy="50" r="20" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+        <text x="258" y="54" text-anchor="middle" font-family="Kalam" font-size="13" fill="#e65100">C</text>
+        <!-- C self on b -->
+        <path d="M244 30 Q258 10 272 30" fill="none" stroke="#b71c1c" stroke-width="1.5" marker-end="url(#gr1)"/>
+        <text x="258" y="10" text-anchor="middle" font-family="Patrick Hand" font-size="13" fill="#b71c1c">b</text>
+        <!-- C→A on a -->
+        <path d="M248 68 Q158 88 68 68" fill="none" stroke="#e65100" stroke-width="1.5" marker-end="url(#gr1)"/>
+        <text x="158" y="88" text-anchor="middle" font-family="Patrick Hand" font-size="13" fill="#b71c1c">a</text>
+        <!-- C→F on a (also) -->
+        <line x1="278" y1="50" x2="338" y2="50" stroke="#e65100" stroke-width="1.5" marker-end="url(#gr1)"/>
+        <text x="308" y="42" text-anchor="middle" font-family="Patrick Hand" font-size="13" fill="#b71c1c">a</text>
+        <!-- F final -->
+        <circle cx="358" cy="50" r="20" fill="#e8f5e9" stroke="#1b5e20" stroke-width="1.5"/>
+        <circle cx="358" cy="50" r="16" fill="none" stroke="#1b5e20" stroke-width="1.2"/>
+        <text x="358" y="54" text-anchor="middle" font-family="Kalam" font-size="13" fill="#1b5e20">F</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="page-num">2 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 3 · §8</span><span class="unit-badge ub-orange">PRACTICE</span></div>
+
+  <h2 class="topic">4. Complete Summary Table</h2>
+  <table class="tt">
+    <tr><th>Grammar Rule</th><th>FSA Transition</th></tr>
+    <tr><td>Aᵢ → a (terminal only)</td><td>δ(Aᵢ, a) → new final state F</td></tr>
+    <tr><td>Aᵢ → aAⱼ (terminal + NT)</td><td>δ(Aᵢ, a) = Aⱼ</td></tr>
+    <tr><td>Aᵢ → aAⱼ where Aⱼ is also in final rule</td><td>δ(Aᵢ, a) = Aⱼ (Aⱼ might be final)</td></tr>
+    <tr><td>S → ε (start derives ε)</td><td>Initial state is also a final state</td></tr>
+  </table>
+
+  <h2 class="topic">5. Practice Questions — §8</h2>
+
+  <div class="exam-q-box">
+    <div class="eq-label">Q1 — Convert to FSA: S → aS | bA &nbsp;|&nbsp; A → bA | b</div>
+    <div class="q-step">States: S (initial), A, F (final). Create transitions:</div>
+    <div class="q-ans" style="font-size:14px;line-height:28px;">
+      S→aS: δ(S,a)=S &nbsp;&nbsp;&nbsp;&nbsp;S→bA: δ(S,b)=A<br>
+      A→bA: δ(A,b)=A &nbsp;&nbsp;&nbsp;A→b: δ(A,b)=F<br><br>
+      States: {S, A, F}. Initial: S. Final: {F}.<br>
+      Language: a*bb* = one or more a's (optional) followed by one or more b's
+    </div>
+  </div>
+
+  <div class="exam-q-box">
+    <div class="eq-label">Q2 — Convert to FSA: S → a|aA|bB &nbsp;|&nbsp; A → aA|a &nbsp;|&nbsp; B → bB|b</div>
+    <div class="q-step">S→a: δ(S,a)=F (direct terminal); S→aA: δ(S,a)=A; S→bB: δ(S,b)=B</div>
+    <div class="q-ans" style="font-size:14px;line-height:28px;">
+      δ(S,a) = {A, F} (non-deterministic!)<br>
+      δ(S,b) = B<br>
+      δ(A,a) = {A, F} (A→aA and A→a)<br>
+      δ(B,b) = {B, F} (B→bB and B→b)<br><br>
+      States: {S, A, B, F}. Initial: S. Final: {F}.<br>
+      This is an NFA — can convert to DFA using subset construction.
+    </div>
+  </div>
+
+  <div class="page-num">3 / 3</div>
+</div>
+
+</body>
+</html>

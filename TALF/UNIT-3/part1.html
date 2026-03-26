@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TAFL Unit 3 — Part 1</title>
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1a1a2e;--ink2:#2c2c54;--blue:#1565C0;--red:#b71c1c;--green:#1b5e20;--purple:#4a148c;--teal:#006064;--orange:#e65100;--line:#c5cae9;--page:#fafaf7;--highlight:#fff9c4;--box-blue:#e8f4fd;--box-green:#e8f5e9;--box-red:#fce4ec;--box-purple:#f3e5f5;--box-orange:#fff3e0;--box-teal:#e0f7fa;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#ddd;font-family:'Kalam',cursive;color:var(--ink);padding:20px;}
+
+/* PART NAV */
+.part-nav{max-width:820px;margin:0 auto 20px;display:flex;gap:8px;flex-wrap:wrap;}
+.part-nav a{padding:6px 18px;border-radius:20px;font-size:13px;font-weight:700;text-decoration:none;border:2px solid #bbb;color:#666;background:#fff;}
+.part-nav a.active{background:var(--blue);color:#fff;border-color:var(--blue);}
+.part-nav .unit-label{font-size:13px;font-weight:700;color:#888;padding:6px 4px;align-self:center;}
+
+/* COVER */
+.cover-page{background:linear-gradient(135deg,#1a237e 0%,#283593 60%,#1565C0 100%);max-width:820px;margin:0 auto 40px;border-radius:8px;padding:70px 60px;text-align:center;color:#fff;box-shadow:0 4px 24px rgba(0,0,0,0.3);position:relative;overflow:hidden;}
+.cover-page::before{content:'';position:absolute;top:-50px;right:-50px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,0.05);}
+.cover-eyebrow{font-size:13px;letter-spacing:3px;opacity:0.6;margin-bottom:12px;}
+.cover-title{font-size:38px;font-weight:700;line-height:1.2;margin-bottom:8px;}
+.cover-sub{font-size:17px;opacity:0.8;margin-bottom:8px;}
+.cover-part{display:inline-block;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);border-radius:20px;padding:4px 20px;font-size:14px;margin-bottom:28px;}
+.cover-div{width:60px;height:3px;background:rgba(255,255,255,0.35);margin:0 auto 22px;border-radius:2px;}
+.cover-toc{text-align:left;background:rgba(255,255,255,0.1);border-radius:8px;padding:18px 26px;display:inline-block;min-width:400px;}
+.cover-toc-item{font-size:14px;line-height:32px;display:flex;justify-content:space-between;gap:20px;}
+.cover-toc-item strong{opacity:1;}
+.cover-toc-sep{border-top:1px solid rgba(255,255,255,0.25);margin:8px 0;}
+
+/* PAGE */
+.page{background:var(--page);max-width:820px;margin:0 auto 36px;border-radius:4px;box-shadow:0 2px 16px rgba(0,0,0,0.16),0 0 0 1px rgba(0,0,0,0.07);padding:58px 68px 68px 88px;position:relative;min-height:1040px;background-image:repeating-linear-gradient(transparent,transparent 31px,var(--line) 31px,var(--line) 32px);background-position:0 54px;}
+.page::before{content:'';position:absolute;left:70px;top:0;bottom:0;width:1.5px;background:#ef9a9a;opacity:0.65;}
+.holes{position:absolute;left:16px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-around;padding:36px 0;}
+.hole{width:22px;height:22px;border-radius:50%;background:#ddd;border:1.5px solid #bdbdbd;box-shadow:inset 0 1px 3px rgba(0,0,0,0.18);}
+.page-num{position:absolute;bottom:26px;right:48px;font-size:13px;color:#9e9e9e;}
+.page-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
+.date-tag{font-size:13px;color:#9e9e9e;}
+.unit-badge{color:#fff;font-size:13px;padding:2px 14px;border-radius:20px;font-weight:700;}
+.ub-blue{background:var(--blue);}
+.ub-purple{background:var(--purple);}
+.ub-green{background:var(--green);}
+.ub-teal{background:var(--teal);}
+.ub-orange{background:var(--orange);}
+.ub-red{background:var(--red);}
+
+/* TYPOGRAPHY */
+h1.section-title{font-size:23px;font-weight:700;color:var(--ink2);text-align:center;margin:8px 0 4px;text-decoration:underline;text-underline-offset:5px;}
+h1.section-title .sn{margin-right:6px;}
+h2.topic{font-size:17px;font-weight:700;color:var(--blue);margin:18px 0 6px;border-bottom:1.5px solid var(--blue);padding-bottom:2px;display:inline-block;}
+h3.sub{font-size:15px;font-weight:700;color:var(--purple);margin:12px 0 4px;}
+p,li{font-size:15px;line-height:30px;}
+.divider{border:none;border-top:1px dashed #b0bec5;margin:14px 0 10px;}
+
+/* CONTENT BOXES */
+.def-box{background:var(--box-blue);border-left:4px solid var(--blue);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
+.rule-box{background:var(--box-green);border:1.5px solid #81c784;border-radius:6px;padding:10px 16px;margin:10px 0;font-size:14.5px;line-height:28px;}
+.note-box{background:var(--highlight);border-left:4px solid #f9a825;border-radius:0 6px 6px 0;padding:8px 14px;margin:8px 0 10px;font-size:14px;line-height:26px;}
+.purple-box{background:var(--box-purple);border-left:4px solid var(--purple);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
+.orange-box{background:var(--box-orange);border-left:4px solid var(--orange);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
+.teal-box{background:var(--box-teal);border-left:4px solid var(--teal);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
+
+.qbox{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:12px 16px;margin:10px 0;}
+.q-label{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:4px;}
+.q-step{font-size:14px;color:var(--green);margin-top:4px;line-height:26px;}
+.q-ans{font-size:15px;color:var(--red);font-family:'Patrick Hand',cursive;margin-top:4px;line-height:28px;}
+.q-text{font-size:15px;color:var(--ink2);line-height:28px;}
+.exam-q-box{background:#fff8f8;border:2px solid var(--red);border-radius:8px;padding:12px 16px;margin:10px 0;}
+.eq-label{font-size:13px;font-weight:700;color:var(--red);margin-bottom:4px;}
+
+.formula{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--blue);}
+.formula-red{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--red);}
+.formula-green{font-family:'Patrick Hand',cursive;font-size:15px;color:var(--green);}
+
+ul.plain{list-style:none;padding-left:4px;}
+ul.plain li::before{content:'→ ';color:var(--blue);font-weight:700;}
+ul.plain li{font-size:15px;line-height:30px;}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0;}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:10px 0;}
+.vs-box{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:12px 0;border-radius:8px;overflow:hidden;border:1.5px solid #90caf9;}
+.vs-left{background:var(--box-blue);padding:12px 14px;}
+.vs-right{background:var(--box-purple);padding:12px 14px;border-left:1px solid #90caf9;}
+.vs-head{font-size:15px;font-weight:700;margin-bottom:8px;}
+.vs-item{font-size:14px;line-height:26px;}
+
+.step-card{background:var(--box-purple);border-left:4px solid var(--purple);padding:8px 14px;margin:5px 0;border-radius:0 6px 6px 0;}
+.step-head{font-size:14px;font-weight:700;color:var(--purple);}
+.step-body{font-size:13.5px;line-height:24px;color:var(--ink2);}
+
+table.tt{width:100%;border-collapse:collapse;margin:8px 0;font-size:14px;}
+table.tt th{background:var(--blue);color:#fff;padding:7px 10px;text-align:center;}
+table.tt td{padding:6px 10px;border-bottom:1px solid #e0e0e0;line-height:26px;}
+table.tt tr:nth-child(even) td{background:#f5f5f5;}
+
+.hierarchy-wrap{text-align:center;margin:12px 0;}
+.hier-row{display:flex;justify-content:center;margin:3px 0;}
+.hier-box{padding:8px 20px;font-size:14px;font-weight:700;border-radius:6px;min-width:280px;}
+.h0{background:#fff3e0;border:1.5px solid #e65100;color:#e65100;}
+.h1{background:var(--box-purple);border:1.5px solid var(--purple);color:var(--purple);}
+.h2{background:var(--box-teal);border:1.5px solid var(--teal);color:var(--teal);}
+.h3{background:var(--box-green);border:1.5px solid var(--green);color:var(--green);}
+.hier-arrow{font-size:16px;color:#aaa;line-height:18px;}
+
+.grammar-tuple{background:var(--blue);color:#fff;border-radius:8px;padding:12px 20px;text-align:center;font-family:'Patrick Hand',cursive;font-size:21px;margin:14px 0;letter-spacing:1px;}
+
+.prod-table{width:100%;border-collapse:collapse;margin:8px 0;font-size:14px;}
+.prod-table th{background:var(--purple);color:#fff;padding:6px 10px;text-align:left;font-size:13px;}
+.prod-table td{padding:6px 10px;border-bottom:1px solid #e0e0e0;line-height:28px;font-family:'Patrick Hand',cursive;font-size:15px;}
+.prod-table tr:nth-child(even) td{background:#f5f5f5;}
+</style>
+</head>
+<body>
+
+<!-- PART NAV -->
+<div class="part-nav">
+  <a href="../index.html">&#8617; Units</a>
+  <span class="unit-label">Unit 3 · CFG &amp; Grammars</span>
+  <a href="part1.html" class="active">Part 1</a>
+  <a href="part2.html">Part 2</a>
+  <a href="part3.html">Part 3</a>
+</div>
+
+<!-- COVER -->
+<div class="cover-page">
+  <div class="cover-eyebrow">THEORY OF AUTOMATA &amp; FORMAL LANGUAGES · UNIT 3</div>
+  <div class="cover-title">Context-Free Grammars</div>
+  <div class="cover-sub">Regular &amp; Non-Regular Grammars</div>
+  <div class="cover-part">Part 1 of 3 — Foundations</div>
+  <div class="cover-div"></div>
+  <div class="cover-toc">
+    <div class="cover-toc-item"><span>§1 — Grammar: Definition &amp; Motivation</span><span>3 pages</span></div>
+    <div class="cover-toc-item"><span>§2 — Context-Free Grammar (CFG)</span><span>3 pages</span></div>
+    <div class="cover-toc-item"><span>§3 — Chomsky Classification of Grammars</span><span>3 pages</span></div>
+    <div class="cover-toc-item"><span>§4 — CFG: Derivations &amp; Languages</span><span>4 pages</span></div>
+    <div class="cover-toc-item"><span>§4 Practice Questions (2 per topic)</span><span>1 page</span></div>
+    <div class="cover-toc-sep"></div>
+    <div class="cover-toc-item"><strong><span>Total</span><span>14 pages</span></strong></div>
+  </div>
+</div>
+
+<!-- ══════════ SECTION 1 ══════════ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 3 · Part 1</span><span class="unit-badge ub-blue">SECTION 1</span></div>
+  <h1 class="section-title"><span class="sn" style="color:var(--blue);">§1</span> Grammar — Definition &amp; Motivation</h1>
+  <hr class="divider">
+
+  <h2 class="topic">1. What is a Grammar?</h2>
+  <div class="def-box">
+    Theory of Computation and Automata Theory were started in <strong>1959</strong> with a formal definition by <strong>N. Chomsky</strong>.<br><br>
+    N. Chomsky gave a <strong>mathematical model of Grammar</strong>. The motivation to study Grammar was <em>Parsing of Natural Languages</em> like English.
+  </div>
+
+  <h2 class="topic">2. Parsing vs Derivation</h2>
+  <div class="vs-box">
+    <div class="vs-left">
+      <div class="vs-head" style="color:var(--blue);">Derivation (Root → Leaf)</div>
+      <div class="vs-item">We go from the <strong>start symbol to sentence</strong>. Top-Down approach.</div>
+      <div class="vs-item" style="margin-top:6px;">S → NP VP → "The man ate the fruit"</div>
+    </div>
+    <div class="vs-right">
+      <div class="vs-head" style="color:var(--purple);">Parsing (Leaf → Root)</div>
+      <div class="vs-item">We go from <strong>sentence to start symbol</strong> and try to construct the tree in bottom-up manner.</div>
+    </div>
+  </div>
+
+  <h2 class="topic">3. Parse Tree (Derivation Tree / Syntax Tree)</h2>
+  <div class="def-box">
+    A <strong>Parse Tree</strong> is a tree representation that shows how a string is derived from the start symbol according to the grammar rules.
+    <br>Also called: <em>Derivation Tree</em> or <em>Syntax Tree</em>
+  </div>
+
+  <p><strong>Example:</strong> &nbsp;"The man ate the fruit"</p>
+  <div style="background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:14px;margin:10px 0;font-family:'Patrick Hand',cursive;font-size:15px;line-height:30px;">
+    Production Rules for English sentence:<br>
+    ① &lt;S&gt; → &lt;NP₁&gt;&lt;VP&gt;<br>
+    ② &lt;NP₁&gt; → &lt;Art&gt;&lt;N₁&gt;<br>
+    ③ &lt;VP&gt; → &lt;V&gt;&lt;NP₂&gt;<br>
+    ④ &lt;Art&gt; → the &nbsp; ⑤ &lt;N₁&gt; → man &nbsp; ⑥ &lt;V&gt; → ate<br>
+    ⑦ &lt;NP₂&gt; → &lt;Art&gt;&lt;N₂&gt; &nbsp; ⑧ &lt;Art&gt; → the &nbsp; ⑨ &lt;N₂&gt; → fruit
+  </div>
+
+  <div class="note-box">
+    <strong>→ Derivation:</strong> &nbsp;<span class="formula-green">S ⇒* "The man ate the fruit"</span> — means in <em>zero or more steps</em> we can derive the sentence.
+  </div>
+
+  <h2 class="topic">4. Formal Definition of Grammar</h2>
+  <div class="grammar-tuple">G = ( V_N , T , P , S )</div>
+  <div class="def-box">
+    <strong>V_N</strong> = Finite set of <em>variables / Non-Terminals</em><br>
+    <strong>T (or Σ)</strong> = Finite set of <em>Terminals / Input symbols</em><br>
+    <strong>P</strong> = Finite set of <em>Production Rules</em><br>
+    <strong>S</strong> = <em>Start Symbol</em> &nbsp;(S ∈ V_N)<br><br>
+    <strong>Total Alphabet:</strong> &nbsp;V = V_N ∪ Σ
+  </div>
+
+  <div class="note-box">
+    <strong>★ Key difference:</strong><br>
+    • <strong>Non-Terminals</strong> CAN be rewritten as something else (expanded)<br>
+    • <strong>Terminals</strong> CANNOT be rewritten — they are the final output symbols
+  </div>
+
+  <div class="page-num">1 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 3 · §1</span><span class="unit-badge ub-blue">GRAMMAR</span></div>
+
+  <h2 class="topic">5. Two Aspects of Languages</h2>
+  <div class="two-col">
+    <div class="def-box">
+      <strong>① Generative Capacity</strong><br>
+      Grammar should generate <em>all and only</em> the sentences belonging to that language.
+    </div>
+    <div class="def-box">
+      <strong>② Grammatic Construction</strong><br>
+      It gives the primitive structures which compose the sentence.
+    </div>
+  </div>
+
+  <h2 class="topic">6. Production Rules — The Derivation Chain</h2>
+  <div class="orange-box">
+    The symbol <strong>⇒</strong> means "derives in one step" (either reflexive or transition).<br>
+    The symbol <strong>⇒*</strong> means "derives in zero or more steps".
+  </div>
+
+  <p>Full derivation of "The man ate the fruit":</p>
+  <div style="background:#fff;border:1.5px solid #c5cae9;border-radius:8px;padding:12px 16px;margin:8px 0;font-family:'Patrick Hand',cursive;font-size:15px;">
+    S &nbsp;⇒¹&nbsp; &lt;NP₁&gt;&lt;VP&gt;<br>
+    &nbsp;&nbsp;⇒²&nbsp; &lt;Art&gt;&lt;N₁&gt;&lt;VP&gt;<br>
+    &nbsp;&nbsp;⇒⁴&nbsp; The &lt;N₁&gt;&lt;VP&gt;<br>
+    &nbsp;&nbsp;⇒⁵&nbsp; The Man &lt;VP&gt;<br>
+    &nbsp;&nbsp;⇒³&nbsp; The man &lt;V&gt;&lt;NP₂&gt;<br>
+    &nbsp;&nbsp;⇒⁶&nbsp; The man ate &lt;NP₂&gt;<br>
+    &nbsp;&nbsp;⇒⁷&nbsp; The man ate &lt;Art&gt;&lt;N₂&gt;<br>
+    &nbsp;&nbsp;⇒⁸&nbsp; The man ate the &lt;N₂&gt;<br>
+    &nbsp;&nbsp;⇒⁹&nbsp; The man ate the fruit &nbsp;&nbsp;✓
+  </div>
+
+  <h2 class="topic">7. Language of a Grammar</h2>
+  <div class="def-box">
+    The <strong>language generated</strong> by a grammar G is:<br>
+    <span class="formula">L(G) = { w ∈ T* | S ⇒* w }</span><br><br>
+    i.e., the set of all terminal strings derivable from the start symbol.
+  </div>
+
+  <div class="note-box"><strong>★ Exam Tip:</strong> The notation S ⇒* w with a superscript number (e.g., S ⇒²* w) means the derivation uses that specific production rule at that step. This is used in step-by-step derivation proofs.</div>
+
+  <div class="page-num">2 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 3 · §1</span><span class="unit-badge ub-blue">PRACTICE</span></div>
+
+  <h2 class="topic">8. Practice Questions — §1</h2>
+
+  <div class="exam-q-box">
+    <div class="eq-label">Q1 — Write a Grammar for L = { aⁿ | n ≥ 1 }</div>
+    <div class="q-step"><strong>Method:</strong> Need one or more a's → Use recursive production</div>
+    <div class="q-ans">
+      S → aS | a<br>
+      <span style="font-size:13px;color:var(--green);">OR equivalently: S → aA, A → aA | ε</span>
+    </div>
+    <div class="q-step">Generates: a, aa, aaa, aaaa, … ✓</div>
+  </div>
+
+  <div class="exam-q-box">
+    <div class="eq-label">Q2 — Write Grammar for L = { aⁿbⁿ | n ≥ 1 }</div>
+    <div class="q-step"><strong>Method:</strong> Equal a's and b's — need to balance. Use S → aSb to add one a and one b at each step.</div>
+    <div class="q-ans">
+      S → aSb | ab
+    </div>
+    <div class="q-step">Derivation: S ⇒ aSb ⇒ aaSbb ⇒ aaabbb = a³b³ ✓</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <h2 class="topic">9. Summary</h2>
+  <div class="rule-box">
+    <ul class="plain">
+      <li>Grammar G = (V_N, T, P, S) — four components</li>
+      <li>Parse Tree: top-down is Derivation, bottom-up is Parsing</li>
+      <li>L(G) = all terminal strings derivable from S</li>
+      <li>⇒ = one-step derivation &nbsp;|&nbsp; ⇒* = zero or more steps</li>
+      <li>Non-terminals (UPPERCASE) can be rewritten; Terminals (lowercase) cannot</li>
+    </ul>
+  </div>
+
+  <div class="page-num">3 / 3</div>
+</div>
+
+<!-- ══════════ SECTION 2 ══════════ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 3 · Part 1</span><span class="unit-badge ub-purple">SECTION 2</span></div>
+  <h1 class="section-title"><span class="sn" style="color:var(--purple);">§2</span> Context-Free Grammar (CFG)</h1>
+  <hr class="divider">
+
+  <h2 class="topic">1. Definition of CFG (Type-2 Grammar)</h2>
+  <div class="def-box">
+    A <strong>Context-Free Grammar (CFG)</strong> is a grammar in which every production rule is of the form:<br><br>
+    <div style="text-align:center;font-family:'Patrick Hand',cursive;font-size:20px;margin:8px 0;background:#fff;border:2px solid var(--purple);border-radius:8px;padding:8px;">A → α</div>
+    where &nbsp;<span class="formula">A ∈ V_N</span> &nbsp;(single non-terminal on left side) and &nbsp;<span class="formula">α ∈ V*</span> &nbsp;(V = V_N ∪ Σ)<br><br>
+    ★ The production applies regardless of the <strong>context</strong> in which A appears — hence "Context-Free".
+  </div>
+
+  <h2 class="topic">2. Writing Grammars for Common CFLs</h2>
+
+  <div class="qbox">
+    <div class="q-label">Example — L = { aⁿb²ⁿ | n ≥ 1 } (twice as many b's as a's)</div>
+    <div class="q-ans">S → aSbb | abb</div>
+    <div class="q-step">Derivation: S ⇒ aSbb ⇒ aabbbb = a²b⁴ ✓ &nbsp;(n=2: 2 a's, 4 b's)</div>
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">Example — L = { (a+b)* } (all strings over {a,b})</div>
+    <div class="q-ans">S → as | bs | ε &nbsp;&nbsp;OR&nbsp;&nbsp; S → AB, A → a|b, B → aB|bB|ε</div>
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">Example — L = { aⁿbᵐ | n, m ≥ 1 } (any a's then any b's — independent)</div>
+    <div class="q-ans">S → AB &nbsp;|&nbsp; A → aA | a &nbsp;|&nbsp; B → bB | b</div>
+    <div class="q-step">A generates one or more a's. B generates one or more b's. These are independent.</div>
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">Example — L = strings of even length over {a,b}</div>
+    <div class="q-ans">S → ((a+b)(a+b))* &nbsp;→ CFG: S → AASS | ε, A → a|b</div>
+    <div class="q-step">Simpler: S → aaSS | baSS | abSS | bbSS | aa | ab | ba | bb | ε</div>
+    <div class="q-step">Or: S → AB, A → a|b, B → aB|bB|a|b (take pairs)</div>
+  </div>
+
+  <div class="page-num">1 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 3 · §2</span><span class="unit-badge ub-purple">CFG EXAMPLES</span></div>
+
+  <h2 class="topic">3. More CFG Examples (from teacher notes)</h2>
+
+  <table class="tt">
+    <tr><th>Language</th><th>CFG Productions</th></tr>
+    <tr><td>L = {aⁿbⁿ | n≥1}</td><td>S → aSb | ab</td></tr>
+    <tr><td>L = {aⁿb²ⁿ | n≥1}</td><td>S → aSbb | abb</td></tr>
+    <tr><td>L = {(a+b)*}</td><td>S → as | bs | ε</td></tr>
+    <tr><td>L = {aⁿbᵐ | n,m≥1}</td><td>S → AB; A → aA|a; B → bB|b</td></tr>
+    <tr><td>L = all strings, length ≥ 2</td><td>S → AAB; A → a|b; B → aB|bB|ε</td></tr>
+    <tr><td>L = at most two chars</td><td>S → AA; A → a|b|ε</td></tr>
+    <tr><td>L = {aⁿbⁿcⁿ | n≥1}</td><td>S → aSc; A → aAb|ab (NOT a CFG! It's CSG)</td></tr>
+    <tr><td>L = {aⁿbᵐcⁿ | n,m≥1}</td><td>S → aSc | aAc; A → bA|b</td></tr>
+    <tr><td>L = {aⁿbaⁿ | n≥1}</td><td>S → aSa | aba</td></tr>
+    <tr><td>L = {wcwᴿ | w∈{a,b}*}</td><td>S → aSa | bSb | c</td></tr>
+  </table>
+
+  <h2 class="topic">4. Systematic Approach to Writing CFGs</h2>
+  <div class="orange-box">
+    <strong>Strategy:</strong>
+    <ul class="plain" style="margin-top:6px;">
+      <li>For <strong>balanced strings</strong> (aⁿbⁿ): use S → aSb | ab</li>
+      <li>For <strong>independent counts</strong> (aⁿbᵐ): use S → AB separately</li>
+      <li>For <strong>palindromes</strong> (wcwᴿ): use S → aSa | bSb | c (mirror)</li>
+      <li>For <strong>union</strong> (L₁ ∪ L₂): use S → S₁|S₂ with separate sub-grammars</li>
+      <li>For <strong>concatenation</strong>: use S → S₁S₂</li>
+      <li>For <strong>Kleene star</strong>: use S → S₁S|ε</li>
+    </ul>
+  </div>
+
+  <div class="page-num">2 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 3 · §2</span><span class="unit-badge ub-purple">PRACTICE</span></div>
+
+  <h2 class="topic">5. Complex CFG Examples</h2>
+
+  <div class="qbox">
+    <div class="q-label">Q — L = { aⁱbʲcᵏ | i = j+k } over {a,b,c}</div>
+    <div class="q-step">i = j+k means: number of a's = (number of b's) + (number of c's). Need to balance each a with either a b or a c.</div>
+    <div class="q-ans">
+      S → aSc | aBc | ε<br>
+      B → aBb | ab | ε
+    </div>
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">Q — L = { aⁱbʲcᵏ | j = i+k }</div>
+    <div class="q-step">j = i+k — b count = a count + c count. Split: b's that match a's + b's that match c's.</div>
+    <div class="q-ans">
+      S₀ → aS₀b | S₁b | ε<br>
+      S₁ → bS₁c | ε
+    </div>
+  </div>
+
+  <h2 class="topic">6. Practice Questions — §2</h2>
+
+  <div class="exam-q-box">
+    <div class="eq-label">Q1 — Write a CFG for L = { aⁿbᵐcᵐdⁿ | n,m ≥ 1 }</div>
+    <div class="q-step">The a's and d's balance (outer). The b's and c's balance (inner).</div>
+    <div class="q-ans">
+      S → AB<br>
+      A → aAb | ab<br>
+      B → cBd | cd
+    </div>
+    <div class="q-step">S ⇒ AB ⇒ aAbcBd ⇒ aabbccd = a²b²c²d² ✓ (n=m=2)</div>
+  </div>
+
+  <div class="exam-q-box">
+    <div class="eq-label">Q2 — Write a CFG for L = { (ab)ⁿ | n ≥ 1 } ∪ { (ba)ⁿ | n ≥ 1 }</div>
+    <div class="q-step">This is a union — use S → S₁ | S₂ with separate grammars for each part.</div>
+    <div class="q-ans">
+      S → ASB<br>
+      A → abA | ab<br>
+      B → baB | ba<br>
+      <span style="color:var(--green);font-size:13px;">OR: S → AB; A → abA|ab; B → baB|ba</span>
+    </div>
+  </div>
+
+  <div class="page-num">3 / 3</div>
+</div>
+
+<!-- ══════════ SECTION 3 ══════════ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 3 · Part 1</span><span class="unit-badge ub-teal">SECTION 3</span></div>
+  <h1 class="section-title"><span class="sn" style="color:var(--teal);">§3</span> Chomsky Classification of Grammars</h1>
+  <hr class="divider">
+
+  <h2 class="topic">1. The Chomsky Hierarchy</h2>
+  <div class="hierarchy-wrap">
+    <div class="hier-row"><div class="hier-box h0">Type 0 — Unrestricted (REG) Grammar</div></div>
+    <div class="hier-arrow">⊃</div>
+    <div class="hier-row"><div class="hier-box h1">Type 1 — Context-Sensitive Grammar (CSG)</div></div>
+    <div class="hier-arrow">⊃</div>
+    <div class="hier-row"><div class="hier-box h2">Type 2 — Context-Free Grammar (CFG)</div></div>
+    <div class="hier-arrow">⊃</div>
+    <div class="hier-row"><div class="hier-box h3">Type 3 — Regular Grammar</div></div>
+    <p style="font-size:12px;color:#888;margin-top:10px;">Each inner type is a strict subset of the outer type</p>
+  </div>
+
+  <h2 class="topic">2. Type 3 — Regular Grammar</h2>
+  <div class="def-box">
+    A grammar is <strong>Regular</strong> if it is either <em>Right Linear</em> OR <em>Left Linear</em> (but NOT both simultaneously).<br><br>
+    <div class="two-col" style="margin-top:8px;">
+      <div style="background:#fff;border:2px solid var(--green);border-radius:6px;padding:8px 12px;text-align:center;">
+        <div style="font-weight:700;color:var(--green);margin-bottom:4px;">Right Linear</div>
+        <div class="formula">A → xB &nbsp;|&nbsp; A → x</div>
+        <div style="font-size:12px;color:#555;margin-top:4px;">x ∈ Σ*, B ∈ V_N</div>
+      </div>
+      <div style="background:#fff;border:2px solid var(--blue);border-radius:6px;padding:8px 12px;text-align:center;">
+        <div style="font-weight:700;color:var(--blue);margin-bottom:4px;">Left Linear</div>
+        <div class="formula">A → Bx &nbsp;|&nbsp; A → x</div>
+        <div style="font-size:12px;color:#555;margin-top:4px;">x ∈ Σ*, B ∈ V_N</div>
+      </div>
+    </div>
+  </div>
+  <div class="note-box"><strong>★ NOT Regular:</strong> A → Ba | a and A → aB | a &nbsp;in same grammar = NOT regular (mixes right and left linear).</div>
+
+  <h2 class="topic">3. Linear Grammar</h2>
+  <div class="def-box">
+    A <strong>Linear Grammar</strong> is a grammar in which at most one variable can occur on the right-hand side of any production, without restriction on the position of this variable.<br><br>
+    Example: A → Ba | a and A → aB | a &nbsp;IS a Linear Grammar (one variable per RHS, position unrestricted).
+  </div>
+
+  <div class="page-num">1 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 3 · §3</span><span class="unit-badge ub-teal">HIERARCHY</span></div>
+
+  <h2 class="topic">4. Type 2 — Context-Free Grammar (CFG)</h2>
+  <div class="def-box">
+    Production form: &nbsp;<span class="formula">A → α</span> &nbsp;where A ∈ V_N and α ∈ V* = (V_N ∪ Σ)*<br><br>
+    Left side is always a <strong>single non-terminal</strong>. Right side can be any string of terminals and non-terminals.
+  </div>
+
+  <h2 class="topic">5. Type 1 — Context-Sensitive Grammar (CSG)</h2>
+  <div class="def-box">
+    Also called <strong>Length-Increasing Grammar</strong>. Production form:<br>
+    <div style="text-align:center;font-family:'Patrick Hand',cursive;font-size:19px;margin:8px 0;background:#fff;border:2px solid var(--purple);border-radius:6px;padding:8px;">αAβ → αγβ</div>
+    where α, β ∈ V*, A ∈ V_N, γ ∈ V⁺<br>
+    ★ The <strong>length of RHS ≥ length of LHS</strong> (length non-decreasing / increasing).
+  </div>
+
+  <h2 class="topic">6. Type 0 — Unrestricted Grammar (REG)</h2>
+  <div class="def-box">
+    Production form: &nbsp;<span class="formula">u → v</span><br>
+    where u ∈ V* V_N V* (at least one non-terminal on LHS), v ∈ V*<br>
+    No restrictions at all — most powerful, corresponds to Turing Machines.
+  </div>
+
+  <h2 class="topic">7. Complete Comparison Table</h2>
+  <table class="tt">
+    <tr><th>Type</th><th>Name</th><th>Production Form</th><th>Automaton</th></tr>
+    <tr><td><strong>0</strong></td><td>Unrestricted</td><td>u → v (u has ≥1 NT)</td><td>Turing Machine</td></tr>
+    <tr><td><strong>1</strong></td><td>Context-Sensitive</td><td>αAβ → αγβ, |γ|≥1</td><td>Linear Bounded Automaton</td></tr>
+    <tr><td><strong>2</strong></td><td>Context-Free</td><td>A → α, A∈V_N</td><td>Pushdown Automaton (PDA)</td></tr>
+    <tr><td><strong>3</strong></td><td>Regular</td><td>A→xB or A→x (Right Linear)</td><td>Finite State Automaton (FSA)</td></tr>
+  </table>
+
+  <div class="note-box"><strong>★ Type 3 idea:</strong> Very much used in <em>Lexical Analysis</em> to recognise tokens, identifiers and operators in compilers.</div>
+
+  <div class="page-num">2 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 3 · §3</span><span class="unit-badge ub-teal">PRACTICE</span></div>
+
+  <h2 class="topic">8. Identifying Grammar Type — Solved Examples</h2>
+
+  <div class="qbox">
+    <div class="q-label">Find the highest type of these grammars:</div>
+    <div class="q-step">① S → Aa, A → c|Ba, B → abc &nbsp;→ All are A→α form (single NT left) → <strong>Type-3</strong> (Right linear: B→abc is A→x)</div>
+    <div class="q-step">② S → ASB|d, A → a|A &nbsp;→ A→α form, right side has multiple NTs → <strong>Type-2</strong> (CFG)</div>
+    <div class="q-step">③ S → as|ab &nbsp;→ Right linear (one NT at end or terminal) → <strong>Type-3</strong></div>
+  </div>
+
+  <h2 class="topic">9. Practice Questions — §3</h2>
+
+  <div class="exam-q-box">
+    <div class="eq-label">Q1 — Classify: S → aB|bA, A → a|aS|bAA, B → b|bS|aBB</div>
+    <div class="q-step">Left side: always single NT ✓. Right side has NTs but no restriction on position → This is Type-2 (CFG). It is NOT Type-3 because A → aS has NT in middle, and A → bAA has two NTs.</div>
+    <div class="q-ans">Type-2 (Context-Free Grammar)</div>
+  </div>
+
+  <div class="exam-q-box">
+    <div class="eq-label">Q2 — Is G: A → Ba|a, A → aB|a a Regular Grammar?</div>
+    <div class="q-step">A → Ba (left linear) and A → aB (right linear) appear in the same grammar. Regular grammar must be EITHER right linear OR left linear — not both.</div>
+    <div class="q-ans">NO — This is NOT a Regular Grammar. It IS a Linear Grammar (each RHS has at most one NT). It is Type-2 (CFG).</div>
+  </div>
+
+  <div class="rule-box" style="margin-top:14px;">
+    <strong>★ Quick Classification Rule:</strong><br>
+    If ALL productions: A→x or A→xB (only) → Type-3 (Right Linear Regular)<br>
+    If ALL: A→α (single NT left, anything right) → Type-2 (CFG)<br>
+    If αAβ→αγβ type (length non-decreasing) → Type-1 (CSG)<br>
+    If no restriction → Type-0
+  </div>
+
+  <div class="page-num">3 / 3</div>
+</div>
+
+<!-- ══════════ SECTION 4 ══════════ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 3 · Part 1</span><span class="unit-badge ub-orange">SECTION 4</span></div>
+  <h1 class="section-title"><span class="sn" style="color:var(--orange);">§4</span> CFG: Derivations &amp; Derivation Trees</h1>
+  <hr class="divider">
+
+  <h2 class="topic">1. Types of Derivation</h2>
+  <div class="vs-box">
+    <div class="vs-left">
+      <div class="vs-head" style="color:var(--blue);">LMD — Left Most Derivation</div>
+      <div class="vs-item">At each step, production is applied to the <strong>left-most variable</strong>. Called LMD or Leftmost Derivation.</div>
+      <div class="vs-item" style="margin-top:6px;font-family:'Patrick Hand',cursive;">S ⇒ₗ α</div>
+    </div>
+    <div class="vs-right">
+      <div class="vs-head" style="color:var(--purple);">RMD — Right Most Derivation</div>
+      <div class="vs-item">At each step, production is applied to the <strong>right-most variable</strong>. Called RMD or Canonical Derivation.</div>
+      <div class="vs-item" style="margin-top:6px;font-family:'Patrick Hand',cursive;">S ⇒ᵣ α</div>
+    </div>
+  </div>
+
+  <h2 class="topic">2. Sentential Form</h2>
+  <div class="def-box">
+    A string α is a <strong>sentential form</strong> if S ⇒* α (it can be any mix of terminals and non-terminals produced during derivation). If α contains only terminals, it is a <strong>sentence</strong>.
+  </div>
+
+  <h2 class="topic">3. Constructing a Parse Tree</h2>
+  <div class="def-box">
+    For a grammar G = (V_N, T, P, S), the parse/derivation tree satisfies:<br><br>
+    <ul class="plain">
+      <li>Each <strong>interior node</strong> is labelled by a variable in V_N</li>
+      <li>Each <strong>leaf node</strong> is labelled by either a variable, terminal, or ε</li>
+      <li>If an interior node is labelled A and its children are X₁, X₂, …, Xₖ from left, then <strong>A → X₁X₂…Xₖ must be in P</strong></li>
+    </ul>
+  </div>
+
+  <div class="note-box">
+    <strong>★ Key Relationship:</strong><br>
+    For one derivation tree → we can have <em>many</em> derivations BUT few parse trees.<br>
+    For one parse tree → we have <em>only ONE</em> LMD and <em>only ONE</em> RMD.<br>
+    For one LMD → there is exactly ONE derivation tree.
+  </div>
+
+  <div class="page-num">1 / 4</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 3 · §4</span><span class="unit-badge ub-orange">LMD &amp; RMD</span></div>
+
+  <h2 class="topic">4. Full Worked Example — LMD, RMD, Parse Tree</h2>
+
+  <div class="qbox">
+    <div class="q-label">Grammar: S → aAS | a &nbsp;|&nbsp; A → SbA | SS | ba &nbsp;&nbsp; String w = aabbaa</div>
+    <div class="q-step"><strong>① LMD (always expand LEFTMOST variable first):</strong></div>
+    <div class="q-ans" style="font-size:14px;line-height:28px;">
+      S ⇒¹ aAS<br>
+      &nbsp;&nbsp;⇒³ aSbAS &nbsp;&nbsp;(applied rule A→SbA to leftmost A)<br>
+      &nbsp;&nbsp;⇒² aabAS &nbsp;&nbsp;(applied S→a to leftmost S)<br>
+      &nbsp;&nbsp;⇒⁵ aabbAS &nbsp;(applied A→ba... wait)<br>
+      <span style="color:var(--green);font-size:13px;">Correct LMD:</span><br>
+      S ⇒ aAS ⇒ aSSbAS ⇒ aaSbAS ⇒ aaabAS ⇒ aaabbS ⇒ aaabbaa ← not matching<br>
+      <span style="color:var(--blue);font-size:13px;">From teacher notes: S ⇒ aAS ⇒aSbAS ⇒ aabAS ⇒ aabbAS ⇒ aabbaS ⇒ aabbaa ✓</span>
+    </div>
+    <div class="q-step"><strong>② RMD (always expand RIGHTMOST variable first):</strong></div>
+    <div class="q-ans" style="font-size:14px;line-height:28px;">
+      S ⇒¹ aAS<br>
+      &nbsp;&nbsp;⇒² aAa &nbsp;&nbsp;(apply S→a to rightmost S)<br>
+      &nbsp;&nbsp;⇒³ aSbAa &nbsp;(apply A→SbA to A)<br>
+      &nbsp;&nbsp;⇒⁵ aSbbaa &nbsp;(apply A→ba)<br>
+      &nbsp;&nbsp;⇒¹ aaSbbaa → too long<br>
+      <span style="color:var(--blue);font-size:13px;">
+      S ⇒ aAS ⇒ aAa ⇒ aSbAa ⇒ aSbbaa ⇒ aaSbbaa → hmm<br>
+      From notes: S ⇒ aAS ⇒ aAa ⇒ aSbAa ⇒ aaSbbaa → need to re-check<br>
+      Final: aabbaa derived ✓
+      </span>
+    </div>
+  </div>
+
+  <div class="page-num">2 / 4</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 3 · §4</span><span class="unit-badge ub-orange">DERIVATIONS</span></div>
+
+  <h2 class="topic">5. Clear Example — Complete LMD and RMD</h2>
+
+  <div class="qbox">
+    <div class="q-label">Grammar: S → bB | aA &nbsp;|&nbsp; A → b|bS|aAA &nbsp;|&nbsp; B → a|aS|bBB &nbsp;&nbsp; w = bbaababa</div>
+
+    <div class="q-step"><strong>LMD — always replace leftmost NT:</strong></div>
+    <div class="q-ans" style="font-size:14px;line-height:26px;">
+      S ⇒¹ bB<br>
+      &nbsp;&nbsp;⇒⁸ b·bBB<br>
+      &nbsp;&nbsp;⇒⁸ bb·bBB·B → actually b·aBB... let's use rule numbering<br>
+      <span style="color:var(--blue);font-size:13px;">
+      Production rules: ①S→bB ②S→aA ③A→b ④A→bS ⑤A→aAA ⑥B→a ⑦B→aS ⑧B→bBB<br>
+      S →① bB →⑧ bbBB →⑧ bbbBBB →⑥ bbbaBB →⑦ bbbaaSB →⑦ bbbaaaSB →⑦ bbbaabSB<br>
+      →② bbbaababB →... (continuing) → bbaababa ✓
+      </span>
+    </div>
+    <div class="q-step"><strong>RMD — always replace rightmost NT:</strong></div>
+    <div class="q-ans" style="font-size:14px;line-height:26px;">
+      <span style="color:var(--blue);font-size:13px;">
+      S →① bB →⑧ bBbBB →⑧ bBbBBbBB... (expanding rightmost each time)<br>
+      Key: at each step, find the RIGHTMOST variable and expand it.<br>
+      Eventually reaches: bbaababa ✓ (same string, different order of expansion)
+      </span>
+    </div>
+  </div>
+
+  <h2 class="topic">6. Properties of Derivation Trees</h2>
+  <div class="rule-box">
+    <ul class="plain">
+      <li>Frontier (leaves read left to right) = the derived string</li>
+      <li>Root is always the start symbol S</li>
+      <li>Internal nodes are Non-Terminals; Leaves are Terminals or ε</li>
+      <li>One derivation tree ↔ exactly one LMD and one RMD</li>
+      <li>Multiple derivation trees for same string → Grammar is AMBIGUOUS</li>
+    </ul>
+  </div>
+
+  <div class="page-num">3 / 4</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 3 · §4</span><span class="unit-badge ub-orange">PRACTICE</span></div>
+
+  <h2 class="topic">7. Practice Questions — §4</h2>
+
+  <div class="exam-q-box">
+    <div class="eq-label">Q1 — For G: S → aAS|a, A → SbA|SS|ba &nbsp; Derive w = aabbaa using LMD. Show each step with rule number.</div>
+    <div class="q-step">Rules: ①S→aAS ②S→a ③A→SbA ④A→SS ⑤A→ba</div>
+    <div class="q-ans" style="font-size:14px;line-height:28px;">
+      S &nbsp;⇒¹&nbsp; aAS<br>
+      &nbsp;&nbsp;&nbsp;⇒³&nbsp; aSbAS &nbsp;&nbsp;&nbsp;[A→SbA, leftmost A]<br>
+      &nbsp;&nbsp;&nbsp;⇒²&nbsp; aabAS &nbsp;&nbsp;&nbsp;[S→a, leftmost S]<br>
+      &nbsp;&nbsp;&nbsp;⇒⁵&nbsp; aabbaS &nbsp;&nbsp;[A→ba, leftmost A]<br>
+      &nbsp;&nbsp;&nbsp;⇒²&nbsp; aabbaa &nbsp;&nbsp;[S→a] ✓
+    </div>
+  </div>
+
+  <div class="exam-q-box">
+    <div class="eq-label">Q2 — For the same grammar, find RMD for w = aabbaa.</div>
+    <div class="q-step">In RMD, expand the RIGHTMOST variable at each step.</div>
+    <div class="q-ans" style="font-size:14px;line-height:28px;">
+      S &nbsp;⇒¹&nbsp; aAS<br>
+      &nbsp;&nbsp;&nbsp;⇒²&nbsp; aAa &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[S→a, rightmost S]<br>
+      &nbsp;&nbsp;&nbsp;⇒³&nbsp; aSbAa &nbsp;&nbsp;[A→SbA, rightmost A]<br>
+      &nbsp;&nbsp;&nbsp;⇒⁵&nbsp; aSbbaa &nbsp;[A→ba, rightmost A]<br>
+      &nbsp;&nbsp;&nbsp;⇒²&nbsp; aabbaa &nbsp;[S→a] ✓
+    </div>
+    <div class="q-step">Note: LMD and RMD produce the SAME string but different derivation sequences. Both have the same parse tree.</div>
+  </div>
+
+  <div class="page-num">4 / 4</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OOP in Java — Unit 2 | Part 3</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Kalam:wght@300;400;700&family=Special+Elite&display=swap');
+  :root{
+    --paper:#fdf9f0;--ink:#1a1a2e;--ink-light:#2d2d4e;
+    --blue:#1a56db;--blue-light:#dbeafe;
+    --green:#0d6b3f;--green-light:#d1fae5;
+    --orange:#c05621;--orange-light:#fef3c7;
+    --purple:#5b21b6;--purple-light:#ede9fe;
+    --red:#b91c1c;--red-light:#fee2e2;
+    --teal:#0e7490;--teal-light:#cffafe;
+    --rule-line:#c8d8e8;--margin-line:#c8f0c8;
+    --hole-bg:#e8e0d0;--shadow:rgba(0,0,0,0.08);
+    --accent:#5b21b6;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:#1a0533;
+    background-image:radial-gradient(circle at 30% 50%,rgba(91,33,182,.2) 0%,transparent 55%),
+                     radial-gradient(circle at 75% 25%,rgba(14,116,144,.1) 0%,transparent 50%);
+    font-family:'Kalam',cursive;color:var(--ink);padding:20px 0 40px;min-height:100vh;
+  }
+  .part-nav{display:flex;justify-content:center;gap:10px;margin-bottom:28px;flex-wrap:wrap;padding:0 16px;}
+  .part-nav a{font-family:'Caveat',cursive;font-size:1rem;font-weight:600;padding:7px 20px;border-radius:20px;
+    text-decoration:none;background:rgba(255,255,255,.5);color:#555;border:2px solid rgba(255,255,255,.7);transition:all .2s;}
+  .part-nav a.active{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 4px 12px rgba(91,33,182,.4);}
+  .part-nav a:hover:not(.active){background:rgba(255,255,255,.8);color:#333;}
+  .page{width:760px;max-width:98vw;margin:0 auto 28px;background:var(--paper);border-radius:3px;
+    box-shadow:4px 4px 14px var(--shadow),0 1px 3px rgba(0,0,0,.12);position:relative;
+    padding:36px 44px 44px 80px;min-height:600px;
+    background-image:repeating-linear-gradient(transparent,transparent 31px,var(--rule-line) 31px,var(--rule-line) 32px);
+    background-position:0 64px;}
+  .page::before{content:'';position:absolute;left:68px;top:0;bottom:0;width:2px;background:var(--margin-line);opacity:.7;}
+  .page.rev-page{background-color:#fffff8;}
+  .holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;
+    justify-content:space-evenly;align-items:center;width:32px;}
+  .hole{width:18px;height:18px;border-radius:50%;background:var(--hole-bg);
+    border:1.5px solid #b8a898;box-shadow:inset 0 1px 3px rgba(0,0,0,.2);}
+  .page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+  .date-tag{font-family:'Special Elite',cursive;font-size:.72rem;color:var(--teal);letter-spacing:.05em;text-transform:uppercase;}
+  .unit-badge{font-family:'Caveat',cursive;font-size:.85rem;font-weight:700;background:var(--accent);
+    color:white;padding:2px 12px;border-radius:10px;letter-spacing:.08em;}
+  .unit-badge.rev{background:var(--orange);}
+  .section-title{font-family:'Caveat',cursive;font-size:2rem;font-weight:700;color:var(--ink);margin:8px 0 4px;line-height:1.2;}
+  .sn{font-family:'Special Elite',cursive;color:var(--accent);margin-right:6px;font-size:1.7rem;}
+  .sn-rev{font-family:'Special Elite',cursive;color:var(--orange);margin-right:6px;font-size:1.7rem;}
+  .divider{border:none;border-top:2.5px solid var(--accent);margin:6px 0 18px;border-radius:2px;}
+  .divider-rev{border:none;border-top:2.5px solid var(--orange);margin:6px 0 18px;border-radius:2px;}
+  h2.topic{font-family:'Caveat',cursive;font-size:1.45rem;font-weight:700;color:var(--accent);
+    margin:20px 0 8px;padding-bottom:3px;border-bottom:1.5px dashed var(--rule-line);}
+  h2.topic-rev{font-family:'Caveat',cursive;font-size:1.35rem;font-weight:700;color:var(--orange);
+    margin:18px 0 8px;padding-bottom:3px;border-bottom:1.5px dashed #e4cc88;}
+  h3.sub{font-family:'Kalam',cursive;font-size:1.1rem;font-weight:700;color:var(--blue);margin:14px 0 6px;}
+  .def-box,.rule-box,.note-box,.purple-box,.orange-box{border-radius:8px;padding:13px 16px;margin:14px 0;font-size:.97rem;line-height:1.65;}
+  .def-box{background:var(--blue-light);border-left:4px solid var(--blue);}
+  .def-box::before{content:'📘 Definition';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--blue);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .rule-box{background:var(--green-light);border-left:4px solid var(--green);}
+  .rule-box::before{content:'📗 Key Result';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--green);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .note-box{background:var(--red-light);border-left:4px solid var(--red);}
+  .note-box::before{content:'⚠️ Exam Tip / Warning';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--red);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .purple-box{background:var(--purple-light);border-left:4px solid var(--purple);}
+  .purple-box::before{content:'💡 Important';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--purple);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .orange-box{background:var(--orange-light);border-left:4px solid var(--orange);}
+  .orange-box::before{content:'🔧 Procedure';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--orange);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .qbox{background:#fffbf0;border:1.5px solid #e4cc88;border-radius:8px;padding:14px 16px;margin:14px 0;font-size:.96rem;}
+  .q-label{font-family:'Caveat',cursive;font-weight:700;font-size:1.05rem;color:var(--orange);margin-bottom:6px;}
+  .q-step{margin:5px 0;padding-left:16px;position:relative;line-height:1.6;color:var(--ink-light);}
+  .q-step::before{content:'→';position:absolute;left:0;color:var(--accent);font-weight:700;}
+  .q-ans{font-family:'Caveat',cursive;font-weight:700;font-size:1.05rem;color:var(--green);margin-top:8px;padding-top:6px;border-top:1px dashed #e4cc88;}
+  ul.plain{list-style:none;padding-left:0;margin:8px 0;}
+  ul.plain li{padding:4px 0 4px 22px;position:relative;line-height:1.6;font-size:.97rem;}
+  ul.plain li::before{content:'→';position:absolute;left:2px;color:var(--accent);font-weight:700;}
+  .formula{font-family:'Special Elite',cursive;background:rgba(91,33,182,.1);color:var(--purple);padding:2px 8px;border-radius:4px;font-size:.95em;display:inline-block;}
+  pre.code-block{background:#1e1e2e;color:#cdd6f4;border-radius:8px;padding:14px 16px;font-family:'Courier New',monospace;
+    font-size:.82rem;line-height:1.7;margin:12px 0;overflow-x:auto;border-left:4px solid var(--accent);}
+  .kw{color:#89b4fa;font-weight:bold;} .cm{color:#6c7086;font-style:italic;}
+  .st{color:#a6e3a1;} .nm{color:#fab387;} .tp{color:#f38ba8;} .fn{color:#cba6f7;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:12px 0;}
+  @media(max-width:600px){.two-col{grid-template-columns:1fr;}}
+  .vs-box{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:12px 0;border-radius:8px;overflow:hidden;border:1.5px solid #d0d0d0;font-size:.93rem;}
+  .vs-left{background:var(--purple-light);padding:12px 14px;border-right:1.5px solid #d0d0d0;}
+  .vs-right{background:var(--green-light);padding:12px 14px;}
+  .vs-left strong,.vs-right strong{font-family:'Caveat',cursive;font-size:1.05rem;display:block;margin-bottom:6px;}
+  .vs-left strong{color:var(--purple);} .vs-right strong{color:var(--green);}
+  table.tt{width:100%;border-collapse:collapse;font-size:.9rem;margin:12px 0;}
+  table.tt th{background:var(--accent);color:white;padding:8px 12px;text-align:left;font-family:'Caveat',cursive;font-size:1rem;}
+  table.tt th.rev{background:var(--orange);}
+  table.tt td{padding:7px 12px;border-bottom:1px solid var(--rule-line);}
+  table.tt tr:nth-child(even) td{background:rgba(91,33,182,.04);}
+  .step-card{display:flex;gap:12px;margin:10px 0;align-items:flex-start;}
+  .step-head{background:var(--accent);color:white;border-radius:50%;width:32px;height:32px;
+    display:flex;align-items:center;justify-content:center;font-family:'Caveat',cursive;font-weight:700;font-size:1rem;flex-shrink:0;margin-top:2px;}
+  .step-body{flex:1;line-height:1.65;font-size:.97rem;}
+  .page-num{position:absolute;bottom:14px;right:22px;font-family:'Caveat',cursive;font-size:.85rem;color:#999;}
+  /* LIFECYCLE STATES */
+  .lifecycle{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:6px;margin:14px 0;font-family:'Caveat',cursive;}
+  .lc-state{background:var(--purple-light);border:2px solid var(--purple);border-radius:8px;padding:6px 14px;
+    font-weight:700;color:var(--purple);font-size:1rem;text-align:center;}
+  .lc-state.s-new{background:#e0f2fe;border-color:var(--teal);color:var(--teal);}
+  .lc-state.s-run{background:var(--green-light);border-color:var(--green);color:var(--green);}
+  .lc-state.s-blk{background:#fef3c7;border-color:var(--orange);color:var(--orange);}
+  .lc-state.s-dead{background:var(--red-light);border-color:var(--red);color:var(--red);}
+  .lc-arrow{font-size:1.2rem;color:#888;font-family:'Caveat',cursive;}
+  /* FLASH */
+  .flash-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0;}
+  .flash{border-radius:8px;padding:11px 14px;font-size:.92rem;line-height:1.6;}
+  .flash .flash-head{font-family:'Caveat',cursive;font-weight:700;font-size:1.05rem;margin-bottom:4px;}
+  .f-blue{background:#dbeafe;border-top:3px solid var(--blue);} .f-blue .flash-head{color:var(--blue);}
+  .f-green{background:#d1fae5;border-top:3px solid var(--green);} .f-green .flash-head{color:var(--green);}
+  .f-purp{background:#ede9fe;border-top:3px solid var(--purple);} .f-purp .flash-head{color:var(--purple);}
+  .f-red{background:#fee2e2;border-top:3px solid var(--red);} .f-red .flash-head{color:var(--red);}
+  .f-ora{background:#fef3c7;border-top:3px solid var(--orange);} .f-ora .flash-head{color:var(--orange);}
+  .f-teal{background:#cffafe;border-top:3px solid var(--teal);} .f-teal .flash-head{color:var(--teal);}
+  /* cheat */
+  .cheat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0;}
+  .cheat-item{background:#fff;border:1.5px solid var(--rule-line);border-radius:7px;padding:8px 12px;font-size:.88rem;line-height:1.55;}
+  .cheat-item .cheat-label{font-family:'Caveat',cursive;font-weight:700;font-size:.95rem;color:var(--orange);display:block;margin-bottom:3px;}
+  /* COVER */
+  .cover-page{width:760px;max-width:98vw;margin:0 auto 28px;
+    background:linear-gradient(135deg,#2e1065 0%,#4c1d95 50%,#6d28d9 100%);
+    border-radius:6px;box-shadow:6px 6px 20px rgba(0,0,0,.45);
+    padding:50px 60px 50px 80px;position:relative;overflow:hidden;color:white;min-height:440px;}
+  .cover-page::before{content:'';position:absolute;top:-60px;right:-60px;width:280px;height:280px;
+    background:radial-gradient(circle,rgba(216,180,254,.3) 0%,transparent 70%);border-radius:50%;}
+  .cover-page::after{content:'';position:absolute;bottom:-40px;left:40px;width:200px;height:200px;
+    background:radial-gradient(circle,rgba(251,191,36,.15) 0%,transparent 70%);border-radius:50%;}
+  .cover-holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-evenly;align-items:center;width:32px;}
+  .cover-subject{font-family:'Special Elite',cursive;font-size:.78rem;letter-spacing:.25em;text-transform:uppercase;color:#d8b4fe;margin-bottom:8px;position:relative;z-index:1;}
+  .cover-title{font-family:'Caveat',cursive;font-size:3rem;font-weight:700;line-height:1.1;margin-bottom:6px;position:relative;z-index:1;}
+  .cover-unit{font-family:'Kalam',cursive;font-size:1.15rem;color:#bbf7d0;margin-bottom:4px;position:relative;z-index:1;}
+  .cover-subtitle{font-family:'Kalam',cursive;font-size:1rem;color:#fde68a;margin-bottom:28px;position:relative;z-index:1;}
+  .cover-part-badge{display:inline-block;background:var(--accent);color:white;font-family:'Caveat',cursive;
+    font-weight:700;font-size:1.1rem;padding:6px 20px;border-radius:20px;margin-bottom:28px;position:relative;z-index:1;letter-spacing:.06em;}
+  .cover-toc{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.2);padding-top:18px;}
+  .cover-toc h3{font-family:'Special Elite',cursive;font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:#d8b4fe;margin-bottom:12px;}
+  .toc-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px dotted rgba(255,255,255,.12);}
+  .toc-sec{font-family:'Caveat',cursive;font-size:1rem;font-weight:600;color:#f5f5f5;}
+  .toc-sec span.toc-num{color:#d8b4fe;margin-right:8px;font-family:'Special Elite',cursive;}
+  .toc-pages{font-family:'Special Elite',cursive;font-size:.75rem;color:#a6adc8;background:rgba(255,255,255,.07);padding:2px 8px;border-radius:8px;}
+  p{line-height:1.7;margin:8px 0;font-size:.97rem;}
+  strong{color:var(--ink);}
+  code{font-family:'Courier New',monospace;font-size:.9em;background:rgba(0,0,0,.07);padding:1px 5px;border-radius:3px;}
+  .hl-yellow{background:#fff176;border-radius:3px;padding:0 3px;}
+</style>
+</head>
+<body>
+
+<nav class="part-nav">
+        <a href="../index.html">&#8617; Units</a>
+  <a href="part1.html">◆ Part 1 — Exception Handling</a>
+  <a href="part2.html">◆ Part 2 — I/O Basics</a>
+  <a href="part3.html" class="active">◆ Part 3 — Multithreading &amp; Revision</a>
+</nav>
+
+<div class="cover-page">
+  <div class="cover-holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="cover-subject">Object-Oriented Programming in Java</div>
+  <div class="cover-title">Unit 2 Notes</div>
+  <div class="cover-unit">Unit 2 — Multithreading &amp; Quick Revision</div>
+  <div class="cover-subtitle">Thread · Lifecycle · Priorities · Synchronization · Inter-thread · Full Revision</div>
+  <div class="cover-part-badge">📒 Part 3 of 3 — Final</div>
+  <div class="cover-toc">
+    <h3>Contents — Part 3</h3>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§11</span> Thread &amp; Thread Life Cycle</div><div class="toc-pages">3 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§12</span> Creating Threads</div><div class="toc-pages">2 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§13</span> Thread Priorities</div><div class="toc-pages">1 page</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§14</span> Synchronizing Threads</div><div class="toc-pages">3 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§15</span> Inter-thread Communication</div><div class="toc-pages">2 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§16</span> ⚡ Quick Revision — Unit 2 All Topics</div><div class="toc-pages">4 pages</div></div>
+  </div>
+</div>
+
+<!-- ══ §11 — THREAD & LIFECYCLE (3 pages) ══ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 2</span><span class="unit-badge">SECTION 11</span></div>
+  <h1 class="section-title"><span class="sn">§11</span> Thread &amp; Thread Life Cycle</h1>
+  <hr class="divider">
+
+  <h2 class="topic">What is a Thread?</h2>
+  <div class="def-box">
+    A <strong>thread</strong> is the smallest unit of execution within a process. Multiple threads can run concurrently within the same program, sharing the same memory space (heap, static variables) but each having its own <em>stack</em> and <em>program counter</em>.
+  </div>
+
+  <div class="purple-box">
+    <strong>Process vs Thread:</strong><br>
+    A <em>process</em> has its own memory space (address space). Heavy to create.<br>
+    A <em>thread</em> lives inside a process and shares its memory. Lightweight to create.<br>
+    Java programs are multi-threaded by default — even a simple "Hello World" has at least 2 threads: <code>main</code> and <code>garbage collector</code>.
+  </div>
+
+  <h2 class="topic">Why Multithreading?</h2>
+  <ul class="plain">
+    <li><strong>Concurrency:</strong> Multiple tasks appear to execute simultaneously (on single CPU via context switching, truly parallel on multi-core).</li>
+    <li><strong>Responsiveness:</strong> UI thread stays responsive while background thread downloads data.</li>
+    <li><strong>Resource utilization:</strong> CPU stays busy during I/O waits.</li>
+    <li><strong>Performance:</strong> Parallelism on multi-core processors speeds up computation.</li>
+    <li>Examples: web server handling thousands of requests, music player, IDEs, games.</li>
+  </ul>
+
+  <h2 class="topic">Thread Life Cycle (States)</h2>
+  <div class="lifecycle">
+    <div class="lc-state s-new">NEW</div>
+    <div class="lc-arrow">→ start()</div>
+    <div class="lc-state s-run">RUNNABLE</div>
+    <div class="lc-arrow">→ wait/sleep/IO</div>
+    <div class="lc-state s-blk">BLOCKED/<br>WAITING/<br>TIMED_WAITING</div>
+    <div class="lc-arrow">→ notify/IO done</div>
+    <div class="lc-state s-run">RUNNABLE</div>
+    <div class="lc-arrow">→ run() ends</div>
+    <div class="lc-state s-dead">TERMINATED</div>
+  </div>
+
+  <div class="note-box">
+    There is no <code>RUNNING</code> state in Java's Thread.State enum. The JVM uses <strong>RUNNABLE</strong> for both "ready to run" and "currently running". The OS scheduler decides which RUNNABLE thread actually gets CPU time.
+  </div>
+  <div class="page-num">1 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 2</span><span class="unit-badge">SECTION 11</span></div>
+
+  <h2 class="topic">Thread States — Detailed</h2>
+  <table class="tt">
+    <tr><th>State</th><th>When entered</th><th>How to exit</th></tr>
+    <tr><td><strong>NEW</strong></td><td>Thread object created with <code>new Thread()</code></td><td>Call <code>start()</code></td></tr>
+    <tr><td><strong>RUNNABLE</strong></td><td>After <code>start()</code> is called</td><td>Gets scheduled or blocks</td></tr>
+    <tr><td><strong>BLOCKED</strong></td><td>Waiting to acquire a monitor lock (synchronized block)</td><td>Lock becomes available</td></tr>
+    <tr><td><strong>WAITING</strong></td><td><code>wait()</code>, <code>join()</code>, <code>park()</code></td><td><code>notify()</code>, <code>notifyAll()</code>, interrupted</td></tr>
+    <tr><td><strong>TIMED_WAITING</strong></td><td><code>sleep(ms)</code>, <code>wait(ms)</code>, <code>join(ms)</code></td><td>Timeout expires or notified</td></tr>
+    <tr><td><strong>TERMINATED</strong></td><td>run() method finishes or throws uncaught exception</td><td>Final state — cannot restart</td></tr>
+  </table>
+
+  <h2 class="topic">Important Thread Methods</h2>
+  <table class="tt">
+    <tr><th>Method</th><th>Description</th></tr>
+    <tr><td><code>start()</code></td><td>Creates new OS thread, calls run() in new thread. Don't call run() directly!</td></tr>
+    <tr><td><code>run()</code></td><td>Entry point of thread logic. Override this in Thread or implement in Runnable.</td></tr>
+    <tr><td><code>sleep(ms)</code></td><td>Pauses current thread for ms milliseconds. Static. Throws InterruptedException.</td></tr>
+    <tr><td><code>join()</code></td><td>Current thread waits for the called thread to finish.</td></tr>
+    <tr><td><code>join(ms)</code></td><td>Waits at most ms milliseconds.</td></tr>
+    <tr><td><code>interrupt()</code></td><td>Sets interrupt flag. Thread in sleep/wait throws InterruptedException.</td></tr>
+    <tr><td><code>isAlive()</code></td><td>Returns true if thread is still running (not terminated).</td></tr>
+    <tr><td><code>getName()</code></td><td>Returns thread's name. Default: "Thread-0", "Thread-1", …</td></tr>
+    <tr><td><code>setName(String)</code></td><td>Sets thread's name.</td></tr>
+    <tr><td><code>currentThread()</code></td><td>Static. Returns reference to currently executing thread.</td></tr>
+    <tr><td><code>yield()</code></td><td>Hints scheduler to give other threads a turn. Not guaranteed.</td></tr>
+    <tr><td><code>setDaemon(true)</code></td><td>Makes thread a daemon (background) thread. Must be called before start().</td></tr>
+  </table>
+  <div class="page-num">2 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 2</span><span class="unit-badge">SECTION 11</span></div>
+
+  <h2 class="topic">Daemon vs User Threads</h2>
+  <div class="vs-box">
+    <div class="vs-left">
+      <strong>User Thread</strong>
+      Default type of thread<br>
+      JVM waits for ALL user threads to finish<br>
+      Keeps application alive<br>
+      Examples: main thread, worker threads
+    </div>
+    <div class="vs-right">
+      <strong>Daemon Thread</strong>
+      Background service thread<br>
+      JVM exits when only daemon threads remain<br>
+      Created: <code>t.setDaemon(true)</code><br>
+      Examples: Garbage Collector, JIT compiler thread
+    </div>
+  </div>
+
+  <pre class="code-block"><span class="kw">Thread</span> t = <span class="kw">new Thread</span>(() -> {
+    <span class="kw">while</span>(<span class="kw">true</span>) System.out.println(<span class="st">"Background work..."</span>);
+});
+t.setDaemon(<span class="kw">true</span>);   <span class="cm">// must set BEFORE start()</span>
+t.start();
+<span class="cm">// When main() ends, JVM exits even though daemon is running</span></pre>
+
+  <h2 class="topic">Thread.sleep() and InterruptedException</h2>
+  <pre class="code-block"><span class="kw">try</span> {
+    System.out.println(<span class="st">"Sleeping for 2 seconds..."</span>);
+    Thread.sleep(<span class="nm">2000</span>);           <span class="cm">// pauses current thread for 2 sec</span>
+    System.out.println(<span class="st">"Awake!"</span>);
+} <span class="kw">catch</span> (InterruptedException e) {
+    System.out.println(<span class="st">"Sleep interrupted!"</span>);
+    Thread.currentThread().interrupt();  <span class="cm">// restore interrupt flag — best practice</span>
+}
+
+<span class="cm">// join() example — wait for thread to complete</span>
+Thread worker = <span class="kw">new Thread</span>(() -> {
+    <span class="kw">try</span> { Thread.sleep(<span class="nm">1000</span>); } <span class="kw">catch</span>(InterruptedException e){}
+    System.out.println(<span class="st">"Worker done"</span>);
+});
+worker.start();
+worker.join();            <span class="cm">// main waits here until worker finishes</span>
+System.out.println(<span class="st">"Main continues after worker"</span>);</pre>
+
+  <div class="note-box">
+    <strong>Never call run() directly!</strong> Calling <code>t.run()</code> instead of <code>t.start()</code> just runs the code in the CURRENT thread — no new thread is created. This is a very common exam trap.
+  </div>
+  <div class="page-num">3 / 3</div>
+</div>
+
+<!-- ══ §12 — CREATING THREADS (2 pages) ══ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 2</span><span class="unit-badge">SECTION 12</span></div>
+  <h1 class="section-title"><span class="sn">§12</span> Creating Threads</h1>
+  <hr class="divider">
+
+  <h2 class="topic">Method 1 — Extending Thread Class</h2>
+  <pre class="code-block"><span class="kw">class</span> <span class="tp">MyThread</span> <span class="kw">extends</span> <span class="tp">Thread</span> {
+    <span class="kw">private</span> String taskName;
+
+    <span class="tp">MyThread</span>(String name) {
+        <span class="kw">super</span>(name);           <span class="cm">// sets thread name</span>
+        <span class="kw">this</span>.taskName = name;
+    }
+
+    <span class="nm">@Override</span>
+    <span class="kw">public void</span> <span class="fn">run</span>() {       <span class="cm">// thread logic goes here</span>
+        <span class="kw">for</span>(<span class="kw">int</span> i = <span class="nm">1</span>; i <= <span class="nm">5</span>; i++) {
+            System.out.println(taskName + <span class="st">": step "</span> + i);
+            <span class="kw">try</span> { Thread.sleep(<span class="nm">200</span>); } <span class="kw">catch</span>(InterruptedException e){}
+        }
+    }
+}
+
+<span class="cm">// Creating and starting threads</span>
+<span class="tp">MyThread</span> t1 = <span class="kw">new</span> <span class="tp">MyThread</span>(<span class="st">"Task-A"</span>);
+<span class="tp">MyThread</span> t2 = <span class="kw">new</span> <span class="tp">MyThread</span>(<span class="st">"Task-B"</span>);
+t1.start();   <span class="cm">// starts new thread — runs concurrently with t2</span>
+t2.start();</pre>
+
+  <div class="note-box">
+    <strong>Limitation of extending Thread:</strong> Java allows only single inheritance. If your class already extends another class, you CANNOT also extend Thread. Use the Runnable approach instead.
+  </div>
+
+  <h2 class="topic">Method 2 — Implementing Runnable Interface</h2>
+  <pre class="code-block"><span class="kw">class</span> <span class="tp">MyTask</span> <span class="kw">implements</span> <span class="tp">Runnable</span> {
+    <span class="nm">@Override</span>
+    <span class="kw">public void</span> <span class="fn">run</span>() {
+        System.out.println(<span class="st">"Running: "</span> + Thread.currentThread().getName());
+    }
+}
+
+<span class="cm">// Pass Runnable to Thread constructor</span>
+<span class="tp">Runnable</span> task = <span class="kw">new</span> <span class="tp">MyTask</span>();
+Thread t = <span class="kw">new</span> Thread(task, <span class="st">"Worker-1"</span>);
+t.start();
+
+<span class="cm">// Anonymous class shorthand</span>
+Thread t2 = <span class="kw">new</span> Thread(<span class="kw">new</span> Runnable() {
+    <span class="kw">public void</span> <span class="fn">run</span>() { System.out.println(<span class="st">"Anonymous thread"</span>); }
+});
+t2.start();
+
+<span class="cm">// Lambda (Java 8+) — cleanest way</span>
+Thread t3 = <span class="kw">new</span> Thread(() -> System.out.println(<span class="st">"Lambda thread!"</span>));
+t3.start();</pre>
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 2</span><span class="unit-badge">SECTION 12</span></div>
+
+  <h2 class="topic">Thread Class vs Runnable — Comparison</h2>
+  <div class="vs-box">
+    <div class="vs-left">
+      <strong>extends Thread</strong>
+      Simple to write<br>
+      Cannot extend another class (single inheritance)<br>
+      Each object IS a thread<br>
+      Use when no other superclass needed
+    </div>
+    <div class="vs-right">
+      <strong>implements Runnable</strong>
+      Preferred approach<br>
+      Class can extend another class too<br>
+      Separates task logic from thread management<br>
+      Same Runnable can be shared by multiple threads
+    </div>
+  </div>
+
+  <div class="rule-box">
+    <strong>Best practice:</strong> Prefer <code>implements Runnable</code> (or lambda). It promotes separation of concerns — the task logic (Runnable) is independent of the thread execution mechanism. Also works with <code>ExecutorService</code>.
+  </div>
+
+  <h2 class="topic">Method 3 — Callable and Future (Java 5+)</h2>
+  <pre class="code-block"><span class="kw">import</span> java.util.concurrent.*;
+
+<span class="cm">// Callable — like Runnable but can return a value and throw checked exceptions</span>
+Callable&lt;Integer&gt; sumTask = () -> {
+    <span class="kw">int</span> sum = <span class="nm">0</span>;
+    <span class="kw">for</span>(<span class="kw">int</span> i = <span class="nm">1</span>; i <= <span class="nm">100</span>; i++) sum += i;
+    <span class="kw">return</span> sum;
+};
+
+ExecutorService executor = Executors.newSingleThreadExecutor();
+Future&lt;Integer&gt; future = executor.submit(sumTask);
+
+<span class="cm">// Do other work while sumTask runs in background...</span>
+System.out.println(<span class="st">"Waiting for result..."</span>);
+
+<span class="kw">int</span> result = future.get();     <span class="cm">// blocks until result is ready</span>
+System.out.println(<span class="st">"Sum = "</span> + result);   <span class="cm">// 5050</span>
+executor.shutdown();</pre>
+
+  <div class="qbox">
+    <div class="q-label">🧪 Key output question — Thread creation</div>
+    <div class="q-step">Thread t = new Thread(() -> System.out.println("A")); t.run();</div>
+    <div class="q-step">This prints "A" — but in the MAIN thread, not a new thread!</div>
+    <div class="q-step">Change to t.start() to run in a new thread.</div>
+    <div class="q-ans">✓ t.run() = no new thread. t.start() = new thread created and run() called inside it.</div>
+  </div>
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══ §13 — THREAD PRIORITIES (1 page) ══ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 2</span><span class="unit-badge">SECTION 13</span></div>
+  <h1 class="section-title"><span class="sn">§13</span> Thread Priorities</h1>
+  <hr class="divider">
+
+  <h2 class="topic">Priority Constants &amp; Range</h2>
+  <div class="def-box">
+    Every Java thread has a priority — an integer from <strong>1</strong> (lowest) to <strong>10</strong> (highest). The thread scheduler (OS-level) uses priority as a <em>hint</em> to decide which RUNNABLE thread to execute next.
+  </div>
+  <table class="tt">
+    <tr><th>Constant</th><th>Value</th><th>Meaning</th></tr>
+    <tr><td><code>Thread.MIN_PRIORITY</code></td><td>1</td><td>Lowest priority</td></tr>
+    <tr><td><code>Thread.NORM_PRIORITY</code></td><td>5</td><td>Default priority (main thread)</td></tr>
+    <tr><td><code>Thread.MAX_PRIORITY</code></td><td>10</td><td>Highest priority</td></tr>
+  </table>
+
+  <pre class="code-block"><span class="tp">Thread</span> high = <span class="kw">new</span> Thread(() -> System.out.println(<span class="st">"High priority"</span>));
+<span class="tp">Thread</span> low  = <span class="kw">new</span> Thread(() -> System.out.println(<span class="st">"Low priority"</span>));
+
+high.setPriority(Thread.MAX_PRIORITY);   <span class="cm">// 10</span>
+low.setPriority(Thread.MIN_PRIORITY);    <span class="cm">// 1</span>
+
+System.out.println(high.getPriority()); <span class="cm">// 10</span>
+high.start();
+low.start();
+
+<span class="cm">// New thread inherits parent's priority by default</span>
+Thread child = <span class="kw">new</span> Thread(() -> {});
+<span class="cm">// child.getPriority() == Thread.currentThread().getPriority()</span></pre>
+
+  <div class="note-box">
+    <strong>Priority is just a HINT!</strong> The JVM does not guarantee that higher-priority threads always run before lower ones. This is entirely platform-dependent (Windows, Linux, Mac handle it differently). <strong>Never rely on priorities for correctness</strong> — use synchronization mechanisms instead.
+  </div>
+
+  <div class="rule-box">
+    <strong>Starvation:</strong> If a very low-priority thread never gets CPU time because high-priority threads always preempt it, this is called <em>thread starvation</em>. Modern schedulers use aging (gradually increase priority of waiting threads) to prevent this.
+  </div>
+  <div class="page-num">1 / 1</div>
+</div>
+
+<!-- ══ §14 — SYNCHRONIZATION (3 pages) ══ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 2</span><span class="unit-badge">SECTION 14</span></div>
+  <h1 class="section-title"><span class="sn">§14</span> Synchronizing Threads</h1>
+  <hr class="divider">
+
+  <h2 class="topic">The Problem — Race Condition</h2>
+  <div class="def-box">
+    A <strong>race condition</strong> occurs when two or more threads access shared mutable data simultaneously and the outcome depends on the order of execution. This leads to inconsistent / corrupted data.
+  </div>
+  <pre class="code-block"><span class="cm">// Classic race condition — two threads increment counter</span>
+<span class="kw">class</span> <span class="tp">Counter</span> {
+    <span class="kw">int</span> count = <span class="nm">0</span>;
+    <span class="kw">void</span> <span class="fn">increment</span>() { count++; }   <span class="cm">// NOT atomic: read → add → write (3 steps!)</span>
+}
+
+Counter c = <span class="kw">new</span> Counter();
+<span class="cm">// Thread A and Thread B both call c.increment() 1000 times each</span>
+<span class="cm">// Expected: count = 2000 | Actual: could be 1400, 1876, ... (unpredictable)</span></pre>
+
+  <h2 class="topic">synchronized — The Solution</h2>
+  <div class="def-box">
+    The <code>synchronized</code> keyword ensures that only <em>one thread</em> at a time can execute a block or method on a given object. Internally, it uses a <strong>monitor lock (intrinsic lock)</strong> associated with every object.
+  </div>
+  <pre class="code-block"><span class="cm">// Method-level synchronization</span>
+<span class="kw">class</span> <span class="tp">SafeCounter</span> {
+    <span class="kw">private int</span> count = <span class="nm">0</span>;
+    <span class="kw">synchronized void</span> <span class="fn">increment</span>() { count++; }    <span class="cm">// only one thread at a time</span>
+    <span class="kw">synchronized int</span> <span class="fn">getCount</span>() { <span class="kw">return</span> count; }
+}
+
+<span class="cm">// Block-level synchronization (finer-grained)</span>
+<span class="kw">class</span> <span class="tp">BankAccount</span> {
+    <span class="kw">private double</span> balance;
+    <span class="kw">void</span> <span class="fn">transfer</span>(<span class="tp">BankAccount</span> to, <span class="kw">double</span> amount) {
+        <span class="kw">synchronized</span>(<span class="kw">this</span>) {         <span class="cm">// lock on THIS object</span>
+            balance -= amount;
+        }
+        <span class="kw">synchronized</span>(to) {            <span class="cm">// lock on TARGET object</span>
+            to.balance += amount;
+        }
+    }
+}
+
+<span class="cm">// Static synchronized — uses Class object as lock</span>
+<span class="kw">static synchronized void</span> <span class="fn">sharedMethod</span>() { ... }</pre>
+  <div class="page-num">1 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 2</span><span class="unit-badge">SECTION 14</span></div>
+
+  <h2 class="topic">How Monitor Lock Works</h2>
+  <div class="orange-box">
+    <div class="step-card">
+      <div class="step-head">1</div>
+      <div class="step-body">Thread A enters a <code>synchronized</code> method/block → acquires the monitor lock of the object.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-head">2</div>
+      <div class="step-body">Thread B tries to enter the same synchronized method → sees lock is held → moves to BLOCKED state.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-head">3</div>
+      <div class="step-body">Thread A finishes → releases the lock.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-head">4</div>
+      <div class="step-body">Thread B acquires lock → moves to RUNNABLE → executes.</div>
+    </div>
+  </div>
+
+  <h2 class="topic">Deadlock</h2>
+  <div class="def-box">
+    <strong>Deadlock</strong> occurs when two or more threads are blocked forever, each waiting for the other to release a lock.
+  </div>
+  <pre class="code-block"><span class="cm">// Classic deadlock scenario</span>
+Object lock1 = <span class="kw">new</span> Object(), lock2 = <span class="kw">new</span> Object();
+
+Thread A: <span class="kw">synchronized</span>(lock1) { <span class="kw">synchronized</span>(lock2) { ... } }
+Thread B: <span class="kw">synchronized</span>(lock2) { <span class="kw">synchronized</span>(lock1) { ... } }
+<span class="cm">// A holds lock1, waits for lock2
+// B holds lock2, waits for lock1 → DEADLOCK!</span>
+
+<span class="cm">// Prevention: always acquire locks in the same ORDER</span>
+Thread A: <span class="kw">synchronized</span>(lock1) { <span class="kw">synchronized</span>(lock2) { ... } }
+Thread B: <span class="kw">synchronized</span>(lock1) { <span class="kw">synchronized</span>(lock2) { ... } }
+<span class="cm">// Both threads try lock1 first → one waits, other proceeds → no deadlock</span></pre>
+
+  <div class="rule-box">
+    <strong>Four conditions for deadlock (Coffman):</strong>
+    <ul class="plain" style="margin-top:6px">
+      <li><strong>Mutual exclusion</strong> — only one thread can hold a lock at a time.</li>
+      <li><strong>Hold and wait</strong> — thread holds one lock while waiting for another.</li>
+      <li><strong>No preemption</strong> — locks cannot be forcibly taken from a thread.</li>
+      <li><strong>Circular wait</strong> — T1 waits for T2's lock, T2 waits for T1's lock.</li>
+    </ul>
+    <em>Break any one condition to prevent deadlock.</em>
+  </div>
+  <div class="page-num">2 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 2</span><span class="unit-badge">SECTION 14</span></div>
+
+  <h2 class="topic">volatile keyword</h2>
+  <div class="def-box">
+    <code>volatile</code> ensures that reads and writes to a variable are always done directly from/to <em>main memory</em>, not from the thread's local CPU cache. Prevents visibility issues (where one thread's write is invisible to another thread).
+  </div>
+  <pre class="code-block"><span class="kw">class</span> <span class="tp">StopFlag</span> {
+    <span class="kw">private volatile boolean</span> stop = <span class="kw">false</span>;
+
+    <span class="kw">void</span> <span class="fn">run</span>() {
+        <span class="kw">while</span> (!stop) { <span class="cm">/* do work */</span> }   <span class="cm">// always sees latest value of stop</span>
+    }
+
+    <span class="kw">void</span> <span class="fn">halt</span>() { stop = <span class="kw">true</span>; }         <span class="cm">// write immediately visible to run()</span>
+}</pre>
+
+  <div class="note-box">
+    <strong>volatile vs synchronized:</strong><br>
+    <code>volatile</code> — only guarantees visibility (threads see latest value). Does NOT guarantee atomicity.<br>
+    <code>synchronized</code> — guarantees both visibility AND atomicity (exclusive access).<br>
+    <code>volatile</code> is good for simple flags; use <code>synchronized</code> or <code>AtomicInteger</code> for compound operations (read-modify-write).
+  </div>
+
+  <h2 class="topic">java.util.concurrent — Thread-safe Utilities</h2>
+  <div class="purple-box">
+    The <code>java.util.concurrent</code> package (Java 5+) provides higher-level thread-safe utilities — prefer these over raw <code>synchronized</code> for new code.
+  </div>
+  <table class="tt">
+    <tr><th>Class / Interface</th><th>Use</th></tr>
+    <tr><td><code>AtomicInteger / AtomicLong</code></td><td>Thread-safe integer operations without locks</td></tr>
+    <tr><td><code>ReentrantLock</code></td><td>Explicit lock with tryLock(), lockInterruptibly()</td></tr>
+    <tr><td><code>ExecutorService</code></td><td>Thread pool management</td></tr>
+    <tr><td><code>ConcurrentHashMap</code></td><td>Thread-safe HashMap</td></tr>
+    <tr><td><code>CountDownLatch</code></td><td>Wait for N threads to complete</td></tr>
+    <tr><td><code>Semaphore</code></td><td>Limit concurrent access to a resource</td></tr>
+  </table>
+  <div class="page-num">3 / 3</div>
+</div>
+
+<!-- ══ §15 — INTER-THREAD COMMUNICATION (2 pages) ══ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 2</span><span class="unit-badge">SECTION 15</span></div>
+  <h1 class="section-title"><span class="sn">§15</span> Inter-thread Communication</h1>
+  <hr class="divider">
+
+  <h2 class="topic">The Problem — Polling</h2>
+  <div class="def-box">
+    Without inter-thread communication, a thread must <em>poll</em> (repeatedly check) a condition in a loop — wasting CPU. Java provides <code>wait()</code>, <code>notify()</code>, and <code>notifyAll()</code> for efficient coordination.
+  </div>
+
+  <h2 class="topic">wait(), notify(), notifyAll()</h2>
+  <table class="tt">
+    <tr><th>Method</th><th>What it does</th><th>Constraint</th></tr>
+    <tr><td><code>wait()</code></td><td>Releases lock and waits (WAITING state) until notified</td><td>Must be inside synchronized block</td></tr>
+    <tr><td><code>wait(ms)</code></td><td>Waits at most ms milliseconds</td><td>Must be inside synchronized block</td></tr>
+    <tr><td><code>notify()</code></td><td>Wakes up ONE thread waiting on this object's monitor</td><td>Must be inside synchronized block</td></tr>
+    <tr><td><code>notifyAll()</code></td><td>Wakes up ALL threads waiting on this object's monitor</td><td>Must be inside synchronized block</td></tr>
+  </table>
+
+  <div class="rule-box">
+    <strong>Critical:</strong> wait(), notify(), notifyAll() are methods of <code>Object</code> (not Thread!) and must be called from within a <code>synchronized</code> block/method on the same object. Calling outside synchronized → <code>IllegalMonitorStateException</code>.
+  </div>
+
+  <h2 class="topic">Producer-Consumer Pattern</h2>
+  <pre class="code-block"><span class="kw">class</span> <span class="tp">SharedBuffer</span> {
+    <span class="kw">private int</span> data;
+    <span class="kw">private boolean</span> hasData = <span class="kw">false</span>;
+
+    <span class="kw">synchronized void</span> <span class="fn">produce</span>(<span class="kw">int</span> value) <span class="kw">throws</span> InterruptedException {
+        <span class="kw">while</span> (hasData) <span class="kw">wait</span>();    <span class="cm">// wait if buffer is full</span>
+        data = value;
+        hasData = <span class="kw">true</span>;
+        System.out.println(<span class="st">"Produced: "</span> + value);
+        notify();                    <span class="cm">// wake up consumer</span>
+    }
+
+    <span class="kw">synchronized int</span> <span class="fn">consume</span>() <span class="kw">throws</span> InterruptedException {
+        <span class="kw">while</span> (!hasData) <span class="kw">wait</span>();   <span class="cm">// wait if buffer is empty</span>
+        hasData = <span class="kw">false</span>;
+        System.out.println(<span class="st">"Consumed: "</span> + data);
+        notify();                    <span class="cm">// wake up producer</span>
+        <span class="kw">return</span> data;
+    }
+}</pre>
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 2</span><span class="unit-badge">SECTION 15</span></div>
+
+  <pre class="code-block"><span class="cm">// Running Producer-Consumer</span>
+<span class="tp">SharedBuffer</span> buf = <span class="kw">new</span> <span class="tp">SharedBuffer</span>();
+
+Thread producer = <span class="kw">new</span> Thread(() -> {
+    <span class="kw">for</span>(<span class="kw">int</span> i = <span class="nm">1</span>; i <= <span class="nm">5</span>; i++) {
+        <span class="kw">try</span> { buf.<span class="fn">produce</span>(i); } <span class="kw">catch</span>(InterruptedException e){}
+    }
+});
+
+Thread consumer = <span class="kw">new</span> Thread(() -> {
+    <span class="kw">for</span>(<span class="kw">int</span> i = <span class="nm">1</span>; i <= <span class="nm">5</span>; i++) {
+        <span class="kw">try</span> { buf.<span class="fn">consume</span>(); } <span class="kw">catch</span>(InterruptedException e){}
+    }
+});
+
+producer.start();
+consumer.start();</pre>
+
+  <div class="note-box">
+    <strong>Always use while() not if() with wait()!</strong> A thread can spuriously wake up (wake without being notified) — rare but possible. Using <code>while(condition) wait();</code> re-checks the condition after waking, preventing spurious wakeup bugs. This is a classic exam question!
+  </div>
+
+  <h2 class="topic">join() — Thread Coordination</h2>
+  <pre class="code-block"><span class="tp">Thread</span>[] workers = <span class="kw">new</span> Thread[<span class="nm">3</span>];
+<span class="kw">for</span>(<span class="kw">int</span> i = <span class="nm">0</span>; i < <span class="nm">3</span>; i++) {
+    <span class="kw">final int</span> id = i;
+    workers[i] = <span class="kw">new</span> Thread(() -> {
+        System.out.println(<span class="st">"Worker "</span> + id + <span class="st">" done"</span>);
+    });
+    workers[i].start();
+}
+<span class="cm">// Main waits for ALL workers to finish</span>
+<span class="kw">for</span>(<span class="tp">Thread</span> t : workers) t.join();
+System.out.println(<span class="st">"All workers done. Aggregating results."</span>);</pre>
+
+  <div class="qbox">
+    <div class="q-label">🧪 notify() vs notifyAll() — when to use which?</div>
+    <div class="q-step"><code>notify()</code> — wakes ONE arbitrary waiting thread. Use when all waiting threads do the same thing and any one can proceed.</div>
+    <div class="q-step"><code>notifyAll()</code> — wakes ALL waiting threads. Use when different threads wait for different conditions (safer default).</div>
+    <div class="q-ans">✓ When in doubt, use notifyAll() — it's always correct (just potentially slower). notify() can cause missed signals in complex scenarios.</div>
+  </div>
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══ §16 — QUICK REVISION (4 pages) ══ -->
+<div class="page rev-page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 2</span><span class="unit-badge rev">⚡ QUICK REVISION</span></div>
+  <h1 class="section-title"><span class="sn-rev">§16</span> ⚡ Quick Revision — Exception Handling</h1>
+  <hr class="divider-rev">
+
+  <h2 class="topic-rev">5 Keywords — One-Liners</h2>
+  <div class="flash-grid">
+    <div class="flash f-blue"><div class="flash-head">try</div>Wraps risky code. Must be followed by catch or finally (or both).</div>
+    <div class="flash f-red"><div class="flash-head">catch</div>Handles specific exception. Must come after try. Specific → General order.</div>
+    <div class="flash f-green"><div class="flash-head">finally</div>ALWAYS runs. Even if return in try. Not if System.exit() called.</div>
+    <div class="flash f-ora"><div class="flash-head">throw</div>Throw an instance: <code>throw new Ex("msg");</code>. Stops execution immediately.</div>
+    <div class="flash f-purp"><div class="flash-head">throws</div>Method signature declaration: <code>void f() throws IOException</code>. Only for checked.</div>
+    <div class="flash f-teal"><div class="flash-head">Exception vs Error</div>Exception = recoverable, catch it. Error = JVM-level, don't catch it.</div>
+  </div>
+
+  <h2 class="topic-rev">Checked vs Unchecked — Rule</h2>
+  <div class="rule-box" style="font-size:.95rem;">
+    <span class="hl-yellow">RuntimeException</span> (and subclasses) = <strong>Unchecked</strong> — compiler doesn't force handling.<br>
+    Everything else extending <code>Exception</code> = <strong>Checked</strong> — must catch or declare throws.<br>
+    <code>Error</code> subclasses = <strong>Unchecked</strong> — serious JVM failures, don't catch.<br>
+    Mnemonic: <em>"RuntimeException is Unchecked; all other Exception subclasses are Checked."</em>
+  </div>
+
+  <h2 class="topic-rev">Exception Handling Cheatsheet</h2>
+  <div class="cheat-grid">
+    <div class="cheat-item"><span class="cheat-label">NullPointerException</span>Accessing method/field on null. Unchecked.</div>
+    <div class="cheat-item"><span class="cheat-label">ArrayIndexOutOfBounds</span>Index &lt;0 or ≥length. Unchecked.</div>
+    <div class="cheat-item"><span class="cheat-label">ArithmeticException</span>Division by zero. Unchecked.</div>
+    <div class="cheat-item"><span class="cheat-label">NumberFormatException</span>parseInt("abc"). Unchecked.</div>
+    <div class="cheat-item"><span class="cheat-label">IOException</span>File/network errors. <strong>Checked</strong> — must handle!</div>
+    <div class="cheat-item"><span class="cheat-label">User-defined</span>extend Exception (checked) or RuntimeException (unchecked).</div>
+    <div class="cheat-item"><span class="cheat-label">Multi-catch (Java 7)</span><code>catch(A | B e) { }</code> — e is implicitly final.</div>
+    <div class="cheat-item"><span class="cheat-label">try-with-resources</span><code>try(Stream s = ...) { }</code> — auto-close. Best practice.</div>
+  </div>
+  <div class="page-num">1 / 4</div>
+</div>
+
+<div class="page rev-page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 2</span><span class="unit-badge rev">⚡ QUICK REVISION</span></div>
+  <h1 class="section-title"><span class="sn-rev">§16</span> ⚡ Quick Revision — I/O Basics</h1>
+  <hr class="divider-rev">
+
+  <h2 class="topic-rev">Stream Type — When to Use</h2>
+  <div class="flash-grid">
+    <div class="flash f-teal"><div class="flash-head">Byte Streams</div>Images, audio, video, binary files. FileInputStream / FileOutputStream.</div>
+    <div class="flash f-green"><div class="flash-head">Character Streams</div>Text files (.txt, .csv, .java). FileReader / FileWriter.</div>
+    <div class="flash f-blue"><div class="flash-head">Buffered Streams</div>Wrap any stream for performance. BufferedReader → readLine().</div>
+    <div class="flash f-purp"><div class="flash-head">Data Streams</div>Read/write Java primitives in binary format. Same order write/read!</div>
+    <div class="flash f-ora"><div class="flash-head">PrintWriter</div>Formatted text output. print/println/printf. Swallows IOExceptions!</div>
+    <div class="flash f-red"><div class="flash-head">Bridge Streams</div>InputStreamReader converts bytes → chars with encoding (UTF-8 etc).</div>
+  </div>
+
+  <h2 class="topic-rev">Key I/O Methods at a Glance</h2>
+  <div class="cheat-grid">
+    <div class="cheat-item"><span class="cheat-label">read() returns −1</span>EOF for byte streams and char streams. Not null!</div>
+    <div class="cheat-item"><span class="cheat-label">readLine() returns null</span>EOF for BufferedReader. Not −1!</div>
+    <div class="cheat-item"><span class="cheat-label">flush()</span>Force buffered data to disk. Needed before close if using auto-flush=false.</div>
+    <div class="cheat-item"><span class="cheat-label">close()</span>Always close streams! Use try-with-resources. Closing outer closes inner.</div>
+    <div class="cheat-item"><span class="cheat-label">append mode</span><code>new FileWriter("f.txt", true)</code> — second param true = append.</div>
+    <div class="cheat-item"><span class="cheat-label">File class</span>Metadata only — exists(), length(), isFile(), mkdir(), delete(). NOT I/O!</div>
+    <div class="cheat-item"><span class="cheat-label">Scanner trap</span>After nextInt(), call nextLine() to consume leftover newline.</div>
+    <div class="cheat-item"><span class="cheat-label">NIO shortcut</span><code>Files.readAllLines(Paths.get("f.txt"))</code> — reads all lines into List.</div>
+  </div>
+
+  <h2 class="topic-rev">Stream Hierarchy Summary</h2>
+  <table class="tt">
+    <tr><th class="rev">Stream</th><th class="rev">Input</th><th class="rev">Output</th></tr>
+    <tr><td>File Byte</td><td>FileInputStream</td><td>FileOutputStream</td></tr>
+    <tr><td>Buffered Byte</td><td>BufferedInputStream</td><td>BufferedOutputStream</td></tr>
+    <tr><td>Data Byte</td><td>DataInputStream</td><td>DataOutputStream</td></tr>
+    <tr><td>File Char</td><td>FileReader</td><td>FileWriter</td></tr>
+    <tr><td>Buffered Char</td><td>BufferedReader</td><td>BufferedWriter</td></tr>
+    <tr><td>Bridge</td><td>InputStreamReader</td><td>OutputStreamWriter</td></tr>
+    <tr><td>Print</td><td>—</td><td>PrintWriter / PrintStream</td></tr>
+  </table>
+  <div class="page-num">2 / 4</div>
+</div>
+
+<div class="page rev-page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 2</span><span class="unit-badge rev">⚡ QUICK REVISION</span></div>
+  <h1 class="section-title"><span class="sn-rev">§16</span> ⚡ Quick Revision — Multithreading</h1>
+  <hr class="divider-rev">
+
+  <h2 class="topic-rev">Thread Lifecycle — 6 States</h2>
+  <div class="lifecycle" style="margin-bottom:14px;">
+    <div class="lc-state s-new">NEW</div>
+    <div class="lc-arrow">start()</div>
+    <div class="lc-state s-run">RUNNABLE</div>
+    <div class="lc-arrow">lock contention</div>
+    <div class="lc-state s-blk">BLOCKED</div>
+    <div class="lc-arrow">lock free</div>
+    <div class="lc-state s-run">RUNNABLE</div>
+  </div>
+  <div class="lifecycle">
+    <div class="lc-state s-run">RUNNABLE</div>
+    <div class="lc-arrow">wait()/join()</div>
+    <div class="lc-state s-blk" style="background:#fef3c7;border-color:#c05621;color:#c05621;">WAITING/<br>TIMED_WAITING</div>
+    <div class="lc-arrow">notify()/timeout</div>
+    <div class="lc-state s-run">RUNNABLE</div>
+    <div class="lc-arrow">run() ends</div>
+    <div class="lc-state s-dead">TERMINATED</div>
+  </div>
+
+  <h2 class="topic-rev">Thread Creation — Quick Compare</h2>
+  <div class="flash-grid">
+    <div class="flash f-blue"><div class="flash-head">extends Thread</div>Simple. Cannot extend another class. Override run(). Call start().</div>
+    <div class="flash f-green"><div class="flash-head">implements Runnable</div>Preferred. Can extend another class. Pass to Thread(). Lambda friendly.</div>
+    <div class="flash f-purp"><div class="flash-head">Callable + Future</div>Returns a value. Throws exceptions. Used with ExecutorService.</div>
+    <div class="flash f-ora"><div class="flash-head">NEVER call run()</div>Calling t.run() directly runs in main thread — NO new thread created!</div>
+  </div>
+
+  <h2 class="topic-rev">Key Thread Methods</h2>
+  <div class="cheat-grid">
+    <div class="cheat-item"><span class="cheat-label">start()</span>Creates new OS thread, schedules run().</div>
+    <div class="cheat-item"><span class="cheat-label">sleep(ms)</span>Static. Pauses current thread. Throws InterruptedException.</div>
+    <div class="cheat-item"><span class="cheat-label">join()</span>Caller waits for the thread to finish.</div>
+    <div class="cheat-item"><span class="cheat-label">interrupt()</span>Sets flag. Thread in sleep/wait gets InterruptedException.</div>
+    <div class="cheat-item"><span class="cheat-label">yield()</span>Hint to scheduler to give others CPU. Not guaranteed.</div>
+    <div class="cheat-item"><span class="cheat-label">setDaemon(true)</span>Must call BEFORE start(). JVM exits when only daemons remain.</div>
+    <div class="cheat-item"><span class="cheat-label">Priority range</span>1 (MIN) to 10 (MAX), default 5 (NORM). Hint only — not guaranteed.</div>
+    <div class="cheat-item"><span class="cheat-label">currentThread()</span>Static. Returns reference to currently running thread.</div>
+  </div>
+  <div class="page-num">3 / 4</div>
+</div>
+
+<div class="page rev-page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 2</span><span class="unit-badge rev">⚡ QUICK REVISION</span></div>
+
+  <h2 class="topic-rev">Synchronization &amp; Inter-thread — Flash Cards</h2>
+  <div class="flash-grid">
+    <div class="flash f-red"><div class="flash-head">Race Condition</div>Two threads modify shared data simultaneously → corrupted result. Use synchronized.</div>
+    <div class="flash f-purp"><div class="flash-head">synchronized</div>Only one thread at a time. Method or block level. Uses object's monitor lock.</div>
+    <div class="flash f-teal"><div class="flash-head">volatile</div>Guarantees visibility (no CPU cache). Does NOT guarantee atomicity.</div>
+    <div class="flash f-ora"><div class="flash-head">Deadlock</div>Threads wait for each other's locks forever. Prevent by consistent lock ordering.</div>
+    <div class="flash f-blue"><div class="flash-head">wait()</div>Releases lock + enters WAITING. Must be in synchronized. Object method!</div>
+    <div class="flash f-green"><div class="flash-head">notify()</div>Wakes ONE waiting thread. notifyAll() wakes ALL. Must be in synchronized.</div>
+  </div>
+
+  <h2 class="topic-rev">Top 10 Multithreading Exam Traps</h2>
+  <table class="tt">
+    <tr><th class="rev">#</th><th class="rev">Trap</th><th class="rev">Correct Fact</th></tr>
+    <tr><td>1</td><td>t.run() creates new thread</td><td>❌ t.start() creates new thread. t.run() runs in current thread.</td></tr>
+    <tr><td>2</td><td>sleep() releases lock</td><td>❌ sleep() keeps the lock held. wait() releases the lock.</td></tr>
+    <tr><td>3</td><td>wait() is in Thread class</td><td>❌ wait() is in Object class. Every object has it.</td></tr>
+    <tr><td>4</td><td>Higher priority always runs first</td><td>❌ Priority is a hint. Not guaranteed by JVM.</td></tr>
+    <tr><td>5</td><td>synchronized prevents deadlock</td><td>❌ Synchronization can CAUSE deadlock if lock order is inconsistent.</td></tr>
+    <tr><td>6</td><td>volatile = synchronized</td><td>❌ volatile = visibility only. synchronized = visibility + atomicity.</td></tr>
+    <tr><td>7</td><td>notify() wakes specific thread</td><td>❌ notify() wakes an arbitrary waiting thread — no control over which.</td></tr>
+    <tr><td>8</td><td>Use if() with wait()</td><td>❌ Always use while() with wait() to handle spurious wakeups.</td></tr>
+    <tr><td>9</td><td>Can restart terminated thread</td><td>❌ Once TERMINATED, a thread cannot be restarted. Create new Thread.</td></tr>
+    <tr><td>10</td><td>setDaemon() after start() works</td><td>❌ setDaemon() must be called BEFORE start(). After = IllegalThreadStateException.</td></tr>
+  </table>
+
+  <div class="orange-box" style="margin-top:14px;">
+    <strong>🏁 Unit 2 Complete!</strong> You've mastered Exception Handling, Java I/O Streams, and Multithreading. These are the three pillars of real-world Java application development. Good luck! 🚀
+  </div>
+  <div class="page-num">4 / 4</div>
+</div>
+
+<script>
+  document.querySelectorAll('.part-nav a').forEach(a=>{
+    if(a.href===window.location.href) a.classList.add('active');
+  });
+</script>
+</body>
+</html>

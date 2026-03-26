@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OOP in Java — Unit 1 | Part 3</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Kalam:wght@300;400;700&family=Special+Elite&display=swap');
+
+  :root {
+    --paper: #fdf9f0;
+    --ink: #1a1a2e;
+    --ink-light: #2d2d4e;
+    --blue: #1a56db;
+    --blue-light: #dbeafe;
+    --green: #0d6b3f;
+    --green-light: #d1fae5;
+    --orange: #c05621;
+    --orange-light: #fef3c7;
+    --purple: #5b21b6;
+    --purple-light: #ede9fe;
+    --red: #b91c1c;
+    --red-light: #fee2e2;
+    --teal: #0e7490;
+    --rule-line: #c8d8e8;
+    --margin-line: #f4a0a0;
+    --hole-bg: #e8e0d0;
+    --shadow: rgba(0,0,0,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #a8a090;
+    background-image:
+      radial-gradient(circle at 30% 60%, rgba(13,107,63,0.12) 0%, transparent 55%),
+      radial-gradient(circle at 70% 20%, rgba(192,86,33,0.1) 0%, transparent 50%);
+    font-family: 'Kalam', cursive;
+    color: var(--ink);
+    padding: 20px 0 40px;
+    min-height: 100vh;
+  }
+
+  /* ── PART NAV ── */
+  .part-nav {
+    display: flex; justify-content: center; gap: 10px;
+    margin-bottom: 28px; flex-wrap: wrap; padding: 0 16px;
+  }
+  .part-nav a {
+    font-family: 'Caveat', cursive; font-size: 1rem; font-weight: 600;
+    padding: 7px 20px; border-radius: 20px; text-decoration: none;
+    background: rgba(255,255,255,0.5); color: #555;
+    border: 2px solid rgba(255,255,255,0.7); transition: all 0.2s;
+  }
+  .part-nav a.active {
+    background: var(--green); color: #fff; border-color: var(--green);
+    box-shadow: 0 4px 12px rgba(13,107,63,0.4);
+  }
+  .part-nav a:hover:not(.active) { background: rgba(255,255,255,0.8); color: #333; }
+
+  /* ── PAGE ── */
+  .page {
+    width: 760px; max-width: 98vw; margin: 0 auto 28px;
+    background: var(--paper); border-radius: 3px;
+    box-shadow: 4px 4px 14px var(--shadow), 0 1px 3px rgba(0,0,0,0.12);
+    position: relative; padding: 36px 44px 44px 80px; min-height: 600px;
+    background-image: repeating-linear-gradient(
+      transparent, transparent 31px, var(--rule-line) 31px, var(--rule-line) 32px);
+    background-position: 0 64px;
+  }
+  .page::before {
+    content: ''; position: absolute; left: 68px; top: 0; bottom: 0;
+    width: 2px; background: var(--margin-line); opacity: 0.7;
+  }
+
+  /* revision page special */
+  .page.revision-page { background-color: #fffff8; }
+  .page.revision-page::before { background: #a0d0a0; }
+
+  /* ── HOLES ── */
+  .holes {
+    position: absolute; left: 18px; top: 0; bottom: 0;
+    display: flex; flex-direction: column; justify-content: space-evenly;
+    align-items: center; width: 32px;
+  }
+  .hole {
+    width: 18px; height: 18px; border-radius: 50%;
+    background: var(--hole-bg); border: 1.5px solid #b8a898;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+  }
+
+  /* ── PAGE HEADER ── */
+  .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .date-tag { font-family: 'Special Elite', cursive; font-size: 0.72rem; color: var(--teal); letter-spacing: 0.05em; text-transform: uppercase; }
+  .unit-badge { font-family: 'Caveat', cursive; font-size: 0.85rem; font-weight: 700; background: var(--green); color: white; padding: 2px 12px; border-radius: 10px; letter-spacing: 0.08em; }
+  .unit-badge.rev { background: #c05621; }
+
+  /* ── SECTION TITLE ── */
+  .section-title { font-family: 'Caveat', cursive; font-size: 2rem; font-weight: 700; color: var(--ink); margin: 8px 0 4px; line-height: 1.2; }
+  .sn { font-family: 'Special Elite', cursive; color: var(--green); margin-right: 6px; font-size: 1.7rem; }
+  .sn-rev { font-family: 'Special Elite', cursive; color: var(--orange); margin-right: 6px; font-size: 1.7rem; }
+  .divider { border: none; border-top: 2.5px solid var(--green); margin: 6px 0 18px; border-radius: 2px; }
+  .divider-rev { border: none; border-top: 2.5px solid var(--orange); margin: 6px 0 18px; border-radius: 2px; }
+
+  /* ── HEADINGS ── */
+  h2.topic { font-family: 'Caveat', cursive; font-size: 1.45rem; font-weight: 700; color: var(--green); margin: 20px 0 8px; padding-bottom: 3px; border-bottom: 1.5px dashed var(--rule-line); }
+  h2.topic-rev { font-family: 'Caveat', cursive; font-size: 1.35rem; font-weight: 700; color: var(--orange); margin: 18px 0 8px; padding-bottom: 3px; border-bottom: 1.5px dashed #e4cc88; }
+  h3.sub { font-family: 'Kalam', cursive; font-size: 1.1rem; font-weight: 700; color: var(--blue); margin: 14px 0 6px; }
+
+  /* ── BOXES ── */
+  .def-box, .rule-box, .note-box, .purple-box, .orange-box {
+    border-radius: 8px; padding: 13px 16px; margin: 14px 0;
+    position: relative; font-size: 0.97rem; line-height: 1.65;
+  }
+  .def-box { background: var(--blue-light); border-left: 4px solid var(--blue); }
+  .def-box::before { content: '📘 Definition'; font-family: 'Caveat', cursive; font-weight: 700; font-size: 0.82rem; color: var(--blue); display: block; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .rule-box { background: var(--green-light); border-left: 4px solid var(--green); }
+  .rule-box::before { content: '📗 Key Result'; font-family: 'Caveat', cursive; font-weight: 700; font-size: 0.82rem; color: var(--green); display: block; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .note-box { background: var(--red-light); border-left: 4px solid var(--red); }
+  .note-box::before { content: '⚠️ Exam Tip / Warning'; font-family: 'Caveat', cursive; font-weight: 700; font-size: 0.82rem; color: var(--red); display: block; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .purple-box { background: var(--purple-light); border-left: 4px solid var(--purple); }
+  .purple-box::before { content: '💡 Important'; font-family: 'Caveat', cursive; font-weight: 700; font-size: 0.82rem; color: var(--purple); display: block; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .orange-box { background: var(--orange-light); border-left: 4px solid var(--orange); }
+  .orange-box::before { content: '🔧 Procedure / Algorithm'; font-family: 'Caveat', cursive; font-weight: 700; font-size: 0.82rem; color: var(--orange); display: block; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* revision flash boxes */
+  .flash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
+  .flash { border-radius: 8px; padding: 11px 14px; font-size: 0.92rem; line-height: 1.6; }
+  .flash .flash-head { font-family: 'Caveat', cursive; font-weight: 700; font-size: 1.05rem; margin-bottom: 4px; }
+  .f-blue  { background: #dbeafe; border-top: 3px solid var(--blue);   } .f-blue  .flash-head { color: var(--blue);   }
+  .f-green { background: #d1fae5; border-top: 3px solid var(--green);  } .f-green .flash-head { color: var(--green);  }
+  .f-purp  { background: #ede9fe; border-top: 3px solid var(--purple); } .f-purp  .flash-head { color: var(--purple); }
+  .f-red   { background: #fee2e2; border-top: 3px solid var(--red);    } .f-red   .flash-head { color: var(--red);    }
+  .f-ora   { background: #fef3c7; border-top: 3px solid var(--orange); } .f-ora   .flash-head { color: var(--orange); }
+  .f-teal  { background: #cffafe; border-top: 3px solid var(--teal);   } .f-teal  .flash-head { color: var(--teal);   }
+
+  /* ── Q BOX ── */
+  .qbox { background: #fffbf0; border: 1.5px solid #e4cc88; border-radius: 8px; padding: 14px 16px; margin: 14px 0; font-size: 0.96rem; }
+  .q-label { font-family: 'Caveat', cursive; font-weight: 700; font-size: 1.05rem; color: var(--orange); margin-bottom: 6px; }
+  .q-step { margin: 5px 0; padding-left: 16px; position: relative; line-height: 1.6; color: var(--ink-light); }
+  .q-step::before { content: '→'; position: absolute; left: 0; color: var(--green); font-weight: 700; }
+  .q-ans { font-family: 'Caveat', cursive; font-weight: 700; font-size: 1.05rem; color: var(--green); margin-top: 8px; padding-top: 6px; border-top: 1px dashed #e4cc88; }
+
+  /* ── PLAIN LIST ── */
+  ul.plain { list-style: none; padding-left: 0; margin: 8px 0; }
+  ul.plain li { padding: 4px 0 4px 22px; position: relative; line-height: 1.6; font-size: 0.97rem; }
+  ul.plain li::before { content: '→'; position: absolute; left: 2px; color: var(--green); font-weight: 700; }
+
+  /* ── FORMULA ── */
+  .formula { font-family: 'Special Elite', cursive; background: rgba(13,107,63,0.09); color: var(--green); padding: 2px 8px; border-radius: 4px; font-size: 0.95em; display: inline-block; }
+  .formula-o { font-family: 'Special Elite', cursive; background: rgba(192,86,33,0.1); color: var(--orange); padding: 2px 8px; border-radius: 4px; font-size: 0.95em; display: inline-block; }
+
+  pre.code-block {
+    background: #1e1e2e; color: #cdd6f4; border-radius: 8px;
+    padding: 14px 16px; font-family: 'Courier New', monospace;
+    font-size: 0.82rem; line-height: 1.7; margin: 12px 0;
+    overflow-x: auto; border-left: 4px solid var(--green);
+  }
+  .kw { color: #89b4fa; font-weight: bold; }
+  .cm { color: #6c7086; font-style: italic; }
+  .st { color: #a6e3a1; }
+  .nm { color: #fab387; }
+  .tp { color: #f38ba8; }
+  .fn { color: #cba6f7; }
+
+  /* ── TWO-COL ── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 12px 0; }
+  @media (max-width:600px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* ── VS BOX ── */
+  .vs-box { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin: 12px 0; border-radius: 8px; overflow: hidden; border: 1.5px solid #d0d0d0; font-size: 0.93rem; }
+  .vs-left { background: #e8f0fe; padding: 12px 14px; border-right: 1.5px solid #d0d0d0; }
+  .vs-right { background: #e6f4ea; padding: 12px 14px; }
+  .vs-left strong, .vs-right strong { font-family: 'Caveat', cursive; font-size: 1.05rem; display: block; margin-bottom: 6px; }
+  .vs-left strong { color: var(--blue); } .vs-right strong { color: var(--green); }
+
+  /* ── TABLE ── */
+  table.tt { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin: 12px 0; }
+  table.tt th { background: var(--green); color: white; padding: 8px 12px; text-align: left; font-family: 'Caveat', cursive; font-size: 1rem; }
+  table.tt th.rev-head { background: var(--orange); }
+  table.tt td { padding: 7px 12px; border-bottom: 1px solid var(--rule-line); }
+  table.tt tr:nth-child(even) td { background: rgba(13,107,63,0.04); }
+  table.tt tr:hover td { background: rgba(13,107,63,0.08); }
+
+  /* ── STEP CARDS ── */
+  .step-card { display: flex; gap: 12px; margin: 10px 0; align-items: flex-start; }
+  .step-head { background: var(--green); color: white; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-family: 'Caveat', cursive; font-weight: 700; font-size: 1rem; flex-shrink: 0; margin-top: 2px; }
+  .step-body { flex: 1; line-height: 1.65; font-size: 0.97rem; }
+
+  /* ── PAGE NUM ── */
+  .page-num { position: absolute; bottom: 14px; right: 22px; font-family: 'Caveat', cursive; font-size: 0.85rem; color: #999; }
+
+  /* ── FORMULA CHEATSHEET ── */
+  .cheat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0; }
+  .cheat-item { background: #fff; border: 1.5px solid var(--rule-line); border-radius: 7px; padding: 8px 12px; font-size: 0.88rem; line-height: 1.55; }
+  .cheat-item .cheat-label { font-family: 'Caveat', cursive; font-weight: 700; font-size: 0.95rem; color: var(--orange); display: block; margin-bottom: 3px; }
+  .cheat-item code { font-family: 'Courier New', monospace; font-size: 0.82em; background: rgba(0,0,0,0.06); padding: 1px 4px; border-radius: 3px; }
+
+  /* ── COVER PAGE ── */
+  .cover-page {
+    width: 760px; max-width: 98vw; margin: 0 auto 28px;
+    background: linear-gradient(135deg, #052e16 0%, #14532d 50%, #166534 100%);
+    border-radius: 6px; box-shadow: 6px 6px 20px rgba(0,0,0,0.35);
+    padding: 50px 60px 50px 80px; position: relative; overflow: hidden;
+    color: white; min-height: 440px;
+  }
+  .cover-page::before { content: ''; position: absolute; top: -60px; right: -60px; width: 280px; height: 280px; background: radial-gradient(circle, rgba(134,239,172,0.25) 0%, transparent 70%); border-radius: 50%; }
+  .cover-page::after  { content: ''; position: absolute; bottom: -40px; left: 40px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(251,191,36,0.2) 0%, transparent 70%); border-radius: 50%; }
+  .cover-holes { position: absolute; left: 18px; top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: space-evenly; align-items: center; width: 32px; }
+  .cover-subject { font-family: 'Special Elite', cursive; font-size: 0.78rem; letter-spacing: 0.25em; text-transform: uppercase; color: #86efac; margin-bottom: 8px; position: relative; z-index: 1; }
+  .cover-title  { font-family: 'Caveat', cursive; font-size: 3rem; font-weight: 700; line-height: 1.1; margin-bottom: 6px; position: relative; z-index: 1; }
+  .cover-unit   { font-family: 'Kalam', cursive; font-size: 1.15rem; color: #bbf7d0; margin-bottom: 4px; position: relative; z-index: 1; }
+  .cover-subtitle { font-family: 'Kalam', cursive; font-size: 1rem; color: #fde68a; margin-bottom: 28px; position: relative; z-index: 1; }
+  .cover-part-badge { display: inline-block; background: var(--green); color: white; font-family: 'Caveat', cursive; font-weight: 700; font-size: 1.1rem; padding: 6px 20px; border-radius: 20px; margin-bottom: 28px; position: relative; z-index: 1; letter-spacing: 0.06em; }
+  .cover-toc { position: relative; z-index: 1; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 18px; }
+  .cover-toc h3 { font-family: 'Special Elite', cursive; font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: #86efac; margin-bottom: 12px; }
+  .toc-row { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: 1px dotted rgba(255,255,255,0.12); }
+  .toc-sec { font-family: 'Caveat', cursive; font-size: 1rem; font-weight: 600; color: #f5f5f5; }
+  .toc-sec span.toc-num { color: #86efac; margin-right: 8px; font-family: 'Special Elite', cursive; }
+  .toc-pages { font-family: 'Special Elite', cursive; font-size: 0.75rem; color: #a6adc8; background: rgba(255,255,255,0.07); padding: 2px 8px; border-radius: 8px; }
+
+  .hl-yellow { background: #fff176; border-radius: 3px; padding: 0 3px; }
+  .hl-green  { background: #bbf7d0; border-radius: 3px; padding: 0 3px; }
+  p { line-height: 1.7; margin: 8px 0; font-size: 0.97rem; }
+  strong { color: var(--ink); }
+  code { font-family: 'Courier New', monospace; font-size: 0.9em; background: rgba(0,0,0,0.07); padding: 1px 5px; border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<!-- ══════════ PART NAV ══════════ -->
+<nav class="part-nav">
+        <a href="../index.html">&#8617; Units</a>
+  <a href="part1.html">◆ Part 1 — Intro &amp; Fundamentals</a>
+  <a href="part2.html">◆ Part 2 — OOP Concepts</a>
+  <a href="part3.html" class="active">◆ Part 3 — Packages &amp; Revision</a>
+</nav>
+
+<!-- ══════════ COVER PAGE ══════════ -->
+<div class="cover-page">
+  <div class="cover-holes">
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+  </div>
+  <div class="cover-subject">Object-Oriented Programming in Java</div>
+  <div class="cover-title">Unit 1 Notes</div>
+  <div class="cover-unit">Unit 1 — Packages &amp; Quick Revision</div>
+  <div class="cover-subtitle">Defining Packages · CLASSPATH · JAR Files · Import · Naming · Full Revision</div>
+  <div class="cover-part-badge">📒 Part 3 of 3 — Final</div>
+  <div class="cover-toc">
+    <h3>Contents — Part 3</h3>
+    <div class="toc-row">
+      <div class="toc-sec"><span class="toc-num">§14</span> Defining a Package</div>
+      <div class="toc-pages">2 pages</div>
+    </div>
+    <div class="toc-row">
+      <div class="toc-sec"><span class="toc-num">§15</span> CLASSPATH &amp; Compiling Packages</div>
+      <div class="toc-pages">2 pages</div>
+    </div>
+    <div class="toc-row">
+      <div class="toc-sec"><span class="toc-num">§16</span> JAR Files for Library Packages</div>
+      <div class="toc-pages">2 pages</div>
+    </div>
+    <div class="toc-row">
+      <div class="toc-sec"><span class="toc-num">§17</span> Import &amp; Static Import</div>
+      <div class="toc-pages">2 pages</div>
+    </div>
+    <div class="toc-row">
+      <div class="toc-sec"><span class="toc-num">§18</span> Naming Conventions for Packages</div>
+      <div class="toc-pages">1 page</div>
+    </div>
+    <div class="toc-row">
+      <div class="toc-sec"><span class="toc-num">§19</span> ⚡ Quick Revision — All Key Formulas &amp; Facts</div>
+      <div class="toc-pages">4 pages</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     §14 — DEFINING A PACKAGE (2 pages)
+══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">OOP in Java — Unit 1</span>
+    <span class="unit-badge">SECTION 14</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§14</span> Defining a Package</h1>
+  <hr class="divider">
+
+  <h2 class="topic">What is a Package?</h2>
+  <div class="def-box">
+    A <strong>package</strong> is a namespace that organises related classes and interfaces into groups — like folders on a computer. It prevents name conflicts and controls access.
+    <br><br>
+    Two types: <strong>Built-in packages</strong> (java.lang, java.util, java.io…) and <strong>User-defined packages</strong>.
+  </div>
+
+  <h2 class="topic">Why Use Packages?</h2>
+  <ul class="plain">
+    <li><strong>Name collision prevention:</strong> Two classes with the same name can coexist if in different packages (e.g., <code>java.util.Date</code> vs <code>java.sql.Date</code>).</li>
+    <li><strong>Access control:</strong> Package-private (default) access restricts visibility to classes in the same package.</li>
+    <li><strong>Organisation:</strong> Logical grouping makes large projects manageable.</li>
+    <li><strong>Reusability:</strong> Packages can be compiled into JAR files and reused across projects.</li>
+  </ul>
+
+  <h2 class="topic">Defining a Package</h2>
+  <div class="orange-box">
+    The <code>package</code> statement must be the <span class="hl-yellow">very first line</span> of the source file (before any imports or class declaration). Only one package statement per file.
+  </div>
+
+  <pre class="code-block"><span class="cm">// File: com/example/shapes/Circle.java</span>
+<span class="kw">package</span> com.example.shapes;      <span class="cm">// ← MUST be first line</span>
+
+<span class="kw">import</span> java.lang.Math;
+
+<span class="kw">public class</span> <span class="tp">Circle</span> {
+    <span class="kw">private double</span> radius;
+
+    <span class="kw">public</span> <span class="tp">Circle</span>(<span class="kw">double</span> r) { <span class="kw">this</span>.radius = r; }
+
+    <span class="kw">public double</span> <span class="fn">area</span>() { <span class="kw">return</span> Math.PI * radius * radius; }
+}</pre>
+
+  <div class="rule-box">
+    <strong>Directory structure must match package name!</strong><br>
+    Package <code>com.example.shapes</code> → file must be in folder <code>com/example/shapes/</code><br>
+    The JVM looks for the class file in directories that match the package hierarchy.
+  </div>
+
+  <div class="note-box">
+    If no package statement is given, the class belongs to the <strong>default (unnamed) package</strong>. This is fine for small programs but <span class="hl-yellow">never use default package in production</span> — you cannot import classes from the default package into named packages.
+  </div>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">OOP in Java — Unit 1</span>
+    <span class="unit-badge">SECTION 14</span>
+  </div>
+
+  <h2 class="topic">Built-in Java Packages</h2>
+  <table class="tt">
+    <tr><th>Package</th><th>Contains</th></tr>
+    <tr><td><code>java.lang</code></td><td>Core classes: String, Math, Object, System, Thread, Integer… (auto-imported)</td></tr>
+    <tr><td><code>java.util</code></td><td>Collections: ArrayList, HashMap, Scanner, Date, Arrays, Collections…</td></tr>
+    <tr><td><code>java.io</code></td><td>I/O: File, InputStream, OutputStream, BufferedReader, PrintWriter…</td></tr>
+    <tr><td><code>java.nio</code></td><td>New I/O: Channels, Buffers, Paths (faster than java.io)</td></tr>
+    <tr><td><code>java.net</code></td><td>Networking: Socket, ServerSocket, URL, HttpURLConnection…</td></tr>
+    <tr><td><code>java.sql</code></td><td>Database connectivity: Connection, Statement, ResultSet (JDBC)</td></tr>
+    <tr><td><code>java.awt</code></td><td>GUI components: Frame, Button, TextField (older)</td></tr>
+    <tr><td><code>javax.swing</code></td><td>Swing GUI: JFrame, JButton, JPanel (modern)</td></tr>
+    <tr><td><code>java.math</code></td><td>BigInteger, BigDecimal for high-precision arithmetic</td></tr>
+    <tr><td><code>java.time</code></td><td>Date/Time API (Java 8+): LocalDate, LocalTime, Duration…</td></tr>
+  </table>
+
+  <div class="purple-box">
+    <strong>java.lang is always imported automatically.</strong> That's why you can use <code>String</code>, <code>System</code>, <code>Math</code>, <code>Integer</code> without any import statement.
+  </div>
+
+  <h2 class="topic">Package as Access Boundary</h2>
+  <div class="rule-box">
+    Members with <strong>default (package-private) access</strong> — declared with no access modifier — are accessible to <em>all classes in the same package</em>, but not to classes in other packages. This is a key reason to group related classes in a package.
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">🧪 Quick Check — Package access</div>
+    <div class="q-step">Class A (in pkg <code>com.a</code>) has field <code>int x = 5;</code> (default access).</div>
+    <div class="q-step">Class B (in pkg <code>com.a</code>) — can B access A.x? <strong>YES</strong> — same package.</div>
+    <div class="q-step">Class C (in pkg <code>com.b</code>) — can C access A.x? <strong>NO</strong> — different package, not public/protected.</div>
+    <div class="q-ans">✓ Default access = package-visible only.</div>
+  </div>
+
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     §15 — CLASSPATH & COMPILING PACKAGES (2 pages)
+══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">OOP in Java — Unit 1</span>
+    <span class="unit-badge">SECTION 15</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§15</span> CLASSPATH &amp; Compiling Packages</h1>
+  <hr class="divider">
+
+  <h2 class="topic">What is CLASSPATH?</h2>
+  <div class="def-box">
+    <strong>CLASSPATH</strong> is an environment variable (or command-line option) that tells the Java compiler (<code>javac</code>) and JVM (<code>java</code>) where to look for user-defined classes and packages. It is a list of directories, JAR files, or ZIP files.
+  </div>
+
+  <h2 class="topic">Setting CLASSPATH</h2>
+  <div class="orange-box">
+    Three ways to set CLASSPATH:
+    <div class="step-card" style="margin-top:8px">
+      <div class="step-head">1</div>
+      <div class="step-body"><strong>Environment Variable (permanent):</strong><br>
+        Windows: <code>set CLASSPATH=C:\myproject\classes;.</code><br>
+        Linux/Mac: <code>export CLASSPATH=/home/user/myproject/classes:.</code><br>
+        <em>The dot <code>.</code> means "current directory" — always include it!</em>
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-head">2</div>
+      <div class="step-body"><strong>Command-line flag (temporary, recommended):</strong><br>
+        <code>javac -classpath /path/to/classes MyClass.java</code><br>
+        <code>java -classpath /path/to/classes MyClass</code><br>
+        Also: <code>-cp</code> is a shorthand for <code>-classpath</code>.
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-head">3</div>
+      <div class="step-body"><strong>In IDE:</strong> Eclipse / IntelliJ / NetBeans manage CLASSPATH automatically via project settings (Build Path / Module dependencies).</div>
+    </div>
+  </div>
+
+  <div class="note-box">
+    <strong>Multiple paths</strong> are separated by <code>;</code> on Windows and <code>:</code> on Linux/Mac.<br>
+    If CLASSPATH is not set, the JVM only looks in the <strong>current directory</strong> by default. Setting CLASSPATH without <code>.</code> means the current directory is no longer searched!
+  </div>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">OOP in Java — Unit 1</span>
+    <span class="unit-badge">SECTION 15</span>
+  </div>
+
+  <h2 class="topic">Compiling &amp; Running Packages — Step by Step</h2>
+  <div class="orange-box">
+    Suppose package is <code>com.example.shapes</code> and file is <code>Circle.java</code>:
+    <div class="step-card" style="margin-top:8px">
+      <div class="step-head">1</div>
+      <div class="step-body"><strong>Create directory structure:</strong><br><code>mkdir -p com/example/shapes</code></div>
+    </div>
+    <div class="step-card">
+      <div class="step-head">2</div>
+      <div class="step-body"><strong>Place source file in matching directory:</strong><br><code>com/example/shapes/Circle.java</code></div>
+    </div>
+    <div class="step-card">
+      <div class="step-head">3</div>
+      <div class="step-body"><strong>Compile from project root:</strong><br><code>javac com/example/shapes/Circle.java</code><br>Output: <code>com/example/shapes/Circle.class</code></div>
+    </div>
+    <div class="step-card">
+      <div class="step-head">4</div>
+      <div class="step-body"><strong>Run using fully qualified class name:</strong><br><code>java com.example.shapes.Circle</code><br>Note: use <strong>dots</strong>, not slashes, for the class name!</div>
+    </div>
+  </div>
+
+  <h2 class="topic">The -d Flag for Compilation</h2>
+  <div class="rule-box">
+    <span class="formula">javac -d . Circle.java</span><br><br>
+    The <code>-d</code> flag specifies the <em>destination directory</em> for compiled .class files. With <code>-d .</code>, the compiler automatically creates the package subdirectories and places .class files in the correct location.<br><br>
+    Example: <code>javac -d bin src/com/example/shapes/Circle.java</code><br>
+    Creates: <code>bin/com/example/shapes/Circle.class</code>
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">🧪 Full compile + run workflow</div>
+    <div class="q-step">Source file: <code>src/com/demo/Hello.java</code> with <code>package com.demo;</code></div>
+    <div class="q-step">Compile: <code>javac -d out src/com/demo/Hello.java</code></div>
+    <div class="q-step">Run: <code>java -cp out com.demo.Hello</code></div>
+    <div class="q-ans">✓ Always use fully qualified name (package.ClassName) when running packaged classes.</div>
+  </div>
+
+  <div class="note-box">
+    <strong>JAVA_HOME vs CLASSPATH:</strong> JAVA_HOME points to the JDK installation directory (used by build tools). CLASSPATH tells JVM where your compiled classes are. These are different environment variables with different purposes!
+  </div>
+
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     §16 — JAR FILES FOR LIBRARY PACKAGES (2 pages)
+══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">OOP in Java — Unit 1</span>
+    <span class="unit-badge">SECTION 16</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§16</span> JAR Files for Library Packages</h1>
+  <hr class="divider">
+
+  <h2 class="topic">What is a JAR File?</h2>
+  <div class="def-box">
+    <strong>JAR (Java ARchive)</strong> — a file format based on ZIP that bundles multiple compiled .class files, resources (images, config files), and a <code>MANIFEST.MF</code> file into a single distributable archive. Used to distribute libraries and executable programs.
+  </div>
+
+  <ul class="plain">
+    <li>Extension: <code>.jar</code></li>
+    <li>Created with the <code>jar</code> command-line tool (part of JDK).</li>
+    <li>Can be used in CLASSPATH just like a directory.</li>
+    <li><strong>Executable JAR:</strong> can be run directly with <code>java -jar myapp.jar</code> if Main-Class is set in MANIFEST.</li>
+  </ul>
+
+  <h2 class="topic">Creating a JAR File</h2>
+  <div class="orange-box">
+    <div class="step-card">
+      <div class="step-head">1</div>
+      <div class="step-body"><strong>Compile your classes first:</strong><br><code>javac -d out src/com/example/shapes/*.java</code></div>
+    </div>
+    <div class="step-card">
+      <div class="step-head">2</div>
+      <div class="step-body"><strong>Create the JAR from the out/ directory:</strong><br><code>jar cf shapes.jar -C out .</code><br>
+      <code>cf</code> = create file. <code>-C out .</code> = change to <code>out/</code> directory and include everything.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-head">3</div>
+      <div class="step-body"><strong>Create executable JAR (with entry point):</strong><br><code>jar cfe app.jar com.example.Main -C out .</code><br>
+      <code>e</code> flag sets the entry point (Main-Class) in the manifest.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-head">4</div>
+      <div class="step-body"><strong>Run the executable JAR:</strong><br><code>java -jar app.jar</code></div>
+    </div>
+  </div>
+
+  <h2 class="topic">JAR Command Flags</h2>
+  <table class="tt">
+    <tr><th>Flag</th><th>Meaning</th></tr>
+    <tr><td><code>c</code></td><td>Create a new JAR file</td></tr>
+    <tr><td><code>f</code></td><td>Specify the JAR filename</td></tr>
+    <tr><td><code>e</code></td><td>Set entry point (Main-Class) in manifest</td></tr>
+    <tr><td><code>v</code></td><td>Verbose output (list files being added)</td></tr>
+    <tr><td><code>t</code></td><td>List contents of JAR</td></tr>
+    <tr><td><code>x</code></td><td>Extract contents of JAR</td></tr>
+    <tr><td><code>u</code></td><td>Update existing JAR file</td></tr>
+    <tr><td><code>m</code></td><td>Include a custom MANIFEST.MF file</td></tr>
+  </table>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">OOP in Java — Unit 1</span>
+    <span class="unit-badge">SECTION 16</span>
+  </div>
+
+  <h2 class="topic">MANIFEST.MF — The JAR Metadata File</h2>
+  <div class="def-box">
+    Every JAR contains a <code>META-INF/MANIFEST.MF</code> file that describes the archive. Key manifest entries:
+  </div>
+  <pre class="code-block"><span class="cm"># MANIFEST.MF example</span>
+Manifest-Version: <span class="nm">1.0</span>
+Main-Class: com.example.Main        <span class="cm"># for executable JARs</span>
+Class-Path: lib/helper.jar .        <span class="cm"># additional JARs this JAR depends on</span>
+Created-By: <span class="nm">17</span>.0.5 (Oracle Corporation)</pre>
+
+  <h2 class="topic">Using a JAR as a Library</h2>
+  <div class="rule-box">
+    Add the JAR to your CLASSPATH when compiling and running:
+    <pre style="background:rgba(0,0,0,0.07);padding:8px;border-radius:4px;margin-top:8px;font-family:monospace;font-size:0.82rem;">javac -cp shapes.jar:. MyApp.java
+java  -cp shapes.jar:. MyApp</pre>
+    In Windows: use <code>;</code> instead of <code>:</code>
+    <pre style="background:rgba(0,0,0,0.07);padding:8px;border-radius:4px;margin-top:6px;font-family:monospace;font-size:0.82rem;">javac -cp shapes.jar;. MyApp.java</pre>
+    IDEs handle this via "Add External JAR" in the Build Path settings.
+  </div>
+
+  <h2 class="topic">JAR vs Class Files — Why JAR?</h2>
+  <div class="vs-box">
+    <div class="vs-left">
+      <strong>Raw .class files</strong>
+      Multiple files to distribute<br>
+      Directory structure must be preserved<br>
+      No version/metadata info<br>
+      Harder to manage large libraries
+    </div>
+    <div class="vs-right">
+      <strong>JAR file</strong>
+      Single file — easy to share<br>
+      Package structure preserved internally<br>
+      Contains MANIFEST with metadata<br>
+      Can be signed for security<br>
+      Standard format for Java libraries
+    </div>
+  </div>
+
+  <div class="note-box">
+    Popular Java libraries (Apache Commons, Google Guava, Gson, JUnit) are all distributed as JAR files. When you add a dependency in Maven/Gradle, it downloads the JAR automatically.
+  </div>
+
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     §17 — IMPORT & STATIC IMPORT (2 pages)
+══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">OOP in Java — Unit 1</span>
+    <span class="unit-badge">SECTION 17</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§17</span> Import &amp; Static Import</h1>
+  <hr class="divider">
+
+  <h2 class="topic">The import Statement</h2>
+  <div class="def-box">
+    <code>import</code> allows you to use a class from another package by its <em>simple name</em> instead of the <em>fully qualified name</em>. It is a convenience — the class is not physically copied.
+  </div>
+  <pre class="code-block"><span class="cm">// Without import — use fully qualified name every time</span>
+java.util.ArrayList&lt;String&gt; list = <span class="kw">new</span> java.util.ArrayList&lt;&gt;();
+
+<span class="cm">// With import — use simple name</span>
+<span class="kw">import</span> java.util.ArrayList;
+ArrayList&lt;String&gt; list = <span class="kw">new</span> ArrayList&lt;&gt;();
+
+<span class="cm">// Wildcard import — imports all PUBLIC classes from java.util</span>
+<span class="kw">import</span> java.util.*;
+<span class="cm">// Does NOT import sub-packages! java.util.* does not import java.util.concurrent.*</span>
+
+<span class="cm">// Both import — compiler resolves by which one you actually use</span>
+<span class="kw">import</span> java.util.Date;
+<span class="kw">import</span> java.sql.Date;       <span class="cm">// ❌ Ambiguous! Must use fully qualified names.</span></pre>
+
+  <div class="rule-box">
+    <strong>Import does NOT:</strong>
+    <ul class="plain" style="margin-top:6px">
+      <li>Make the code larger — it's purely a compile-time tool.</li>
+      <li>Import sub-packages: <code>import java.util.*</code> does NOT include <code>java.util.concurrent.*</code></li>
+      <li>Affect runtime performance.</li>
+    </ul>
+    <strong>java.lang is always implicitly imported</strong> — never write <code>import java.lang.String</code>.
+  </div>
+
+  <h2 class="topic">Resolving Name Conflicts</h2>
+  <pre class="code-block"><span class="kw">import</span> java.util.Date;    <span class="cm">// import one</span>
+<span class="cm">// use the other via fully qualified name</span>
+java.sql.Date sqlDate = <span class="kw">new</span> java.sql.Date(System.currentTimeMillis());
+Date utilDate = <span class="kw">new</span> Date();</pre>
+
+  <div class="note-box">
+    <strong>Wildcard vs Specific import:</strong> <code>import java.util.*</code> and <code>import java.util.ArrayList</code> have identical performance. Specific imports are preferred in professional code for clarity. IDEs (like IntelliJ) auto-manage imports.
+  </div>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">OOP in Java — Unit 1</span>
+    <span class="unit-badge">SECTION 17</span>
+  </div>
+
+  <h2 class="topic">Static Import (Java 5+)</h2>
+  <div class="def-box">
+    <strong>Static import</strong> allows you to use <em>static members</em> (fields and methods) of a class directly, without prefixing with the class name.
+    <br>Syntax: <span class="formula">import static packageName.ClassName.memberName;</span>
+  </div>
+
+  <pre class="code-block"><span class="cm">// Without static import</span>
+<span class="kw">double</span> area = Math.PI * Math.pow(radius, <span class="nm">2</span>);
+System.out.println(Math.sqrt(<span class="nm">16</span>));
+
+<span class="cm">// With static import</span>
+<span class="kw">import static</span> java.lang.Math.PI;
+<span class="kw">import static</span> java.lang.Math.pow;
+<span class="kw">import static</span> java.lang.Math.sqrt;
+<span class="kw">import static</span> java.lang.Math.*;    <span class="cm">// wildcard — imports all static members</span>
+
+<span class="kw">double</span> area = PI * pow(radius, <span class="nm">2</span>);
+System.out.println(sqrt(<span class="nm">16</span>));      <span class="cm">// 4.0</span>
+
+<span class="cm">// Very common in JUnit tests:</span>
+<span class="kw">import static</span> org.junit.Assert.*;
+assertEquals(<span class="nm">42</span>, result);           <span class="cm">// instead of Assert.assertEquals(...)</span></pre>
+
+  <div class="vs-box">
+    <div class="vs-left">
+      <strong>Regular import</strong>
+      Imports a class type<br>
+      <code>import java.util.ArrayList;</code><br>
+      Lets you write <code>ArrayList</code> instead of <code>java.util.ArrayList</code>
+    </div>
+    <div class="vs-right">
+      <strong>Static import</strong>
+      Imports static members<br>
+      <code>import static java.lang.Math.PI;</code><br>
+      Lets you write <code>PI</code> instead of <code>Math.PI</code>
+    </div>
+  </div>
+
+  <div class="note-box">
+    <strong>Overuse of static import is bad practice.</strong> It reduces code clarity — a reader can't tell which class <code>sqrt()</code> or <code>PI</code> comes from. Use only when the static member is very well-known (e.g., Math constants, JUnit assertions).
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">🧪 Static import conflict — what happens?</div>
+    <div class="q-step"><code>import static java.lang.Integer.MAX_VALUE;</code></div>
+    <div class="q-step"><code>import static java.lang.Long.MAX_VALUE;</code> ← ambiguous!</div>
+    <div class="q-step">Compiler error: "reference to MAX_VALUE is ambiguous." Must use <code>Integer.MAX_VALUE</code> or <code>Long.MAX_VALUE</code> explicitly.</div>
+    <div class="q-ans">✓ Just like regular import conflicts — resolve by using the fully qualified form.</div>
+  </div>
+
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     §18 — NAMING CONVENTIONS (1 page)
+══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">OOP in Java — Unit 1</span>
+    <span class="unit-badge">SECTION 18</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§18</span> Naming Conventions for Packages</h1>
+  <hr class="divider">
+
+  <h2 class="topic">Java Naming Conventions — Complete Reference</h2>
+  <table class="tt">
+    <tr><th>Element</th><th>Convention</th><th>Example</th></tr>
+    <tr><td><strong>Package</strong></td><td>All lowercase, reverse domain name</td><td><code>com.google.gson</code>, <code>org.apache.commons</code></td></tr>
+    <tr><td><strong>Class</strong></td><td>PascalCase (UpperCamelCase)</td><td><code>StudentRecord</code>, <code>BankAccount</code></td></tr>
+    <tr><td><strong>Interface</strong></td><td>PascalCase, often adjective</td><td><code>Serializable</code>, <code>Runnable</code>, <code>Drawable</code></td></tr>
+    <tr><td><strong>Method</strong></td><td>camelCase, starts with verb</td><td><code>getName()</code>, <code>calculateArea()</code></td></tr>
+    <tr><td><strong>Variable</strong></td><td>camelCase</td><td><code>studentAge</code>, <code>totalMarks</code></td></tr>
+    <tr><td><strong>Constant</strong></td><td>ALL_CAPS_WITH_UNDERSCORES</td><td><code>MAX_SIZE</code>, <code>PI</code>, <code>DEFAULT_COLOR</code></td></tr>
+    <tr><td><strong>Constructor</strong></td><td>Same as class name (PascalCase)</td><td><code>Student()</code>, <code>Circle(double r)</code></td></tr>
+    <tr><td><strong>Generic type param</strong></td><td>Single uppercase letter</td><td><code>T</code> (type), <code>E</code> (element), <code>K</code>/<code>V</code> (key/value)</td></tr>
+  </table>
+
+  <h2 class="topic">Package Naming — Reverse Domain Convention</h2>
+  <div class="purple-box">
+    Convention: use your organisation's domain name in reverse order to guarantee global uniqueness.
+    <ul class="plain" style="margin-top:6px">
+      <li>Domain: <code>example.com</code> → Package: <code>com.example</code></li>
+      <li>Full: <code>com.example.project.module</code></li>
+      <li>Open source: <code>org.springframework.core</code>, <code>io.netty.channel</code></li>
+      <li>Google: <code>com.google.common.collect</code></li>
+      <li>Apache: <code>org.apache.commons.lang3</code></li>
+    </ul>
+  </div>
+
+  <div class="rule-box">
+    <strong>Package naming rules:</strong>
+    <ul class="plain" style="margin-top:6px">
+      <li>All <strong>lowercase</strong> only (to avoid conflicts with class names).</li>
+      <li>No hyphens — use underscores if needed: <code>com.example.my_module</code></li>
+      <li>No Java reserved words.</li>
+      <li>Start with a letter (not a digit).</li>
+      <li>If domain starts with digit/reserved word: prefix with underscore: <code>_123abc.com</code> → <code>com._123abc</code></li>
+    </ul>
+  </div>
+
+  <div class="note-box">
+    These are <em>conventions</em>, not enforced by the compiler. But violating them makes your code unprofessional and confusing. Every exam and interview expects you to follow them correctly.
+  </div>
+
+  <div class="page-num">1 / 1</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     §19 — QUICK REVISION (4 pages)
+══════════════════════════════════════════════════════ -->
+<div class="page revision-page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">OOP in Java — Unit 1</span>
+    <span class="unit-badge rev">⚡ QUICK REVISION</span>
+  </div>
+  <h1 class="section-title"><span class="sn-rev">§19</span> ⚡ Quick Revision — Part 1 Topics</h1>
+  <hr class="divider-rev">
+
+  <h2 class="topic-rev">Java Basics — 60-Second Facts</h2>
+  <div class="flash-grid">
+    <div class="flash f-blue">
+      <div class="flash-head">WORA</div>
+      Write Once, Run Anywhere. Java bytecode runs on any JVM regardless of OS.
+    </div>
+    <div class="flash f-green">
+      <div class="flash-head">JDK ⊇ JRE ⊇ JVM</div>
+      JVM = executes bytecode. JRE = JVM + libraries (to run). JDK = JRE + tools (to develop).
+    </div>
+    <div class="flash f-purp">
+      <div class="flash-head">Compilation Flow</div>
+      <code>.java</code> → <code>javac</code> → <code>.class</code> (bytecode) → JVM → native code
+    </div>
+    <div class="flash f-ora">
+      <div class="flash-head">main() Signature</div>
+      <code>public static void main(String[] args)</code> — every word matters!
+    </div>
+    <div class="flash f-teal">
+      <div class="flash-head">File Rule</div>
+      Filename = public class name. Only ONE public class per .java file.
+    </div>
+    <div class="flash f-red">
+      <div class="flash-head">JIT Compiler</div>
+      Compiles "hot" bytecode to native machine code at runtime for speed.
+    </div>
+  </div>
+
+  <h2 class="topic-rev">8 Primitive Types Snapshot</h2>
+  <div class="cheat-grid">
+    <div class="cheat-item"><span class="cheat-label">byte</span>1B · −128 to 127</div>
+    <div class="cheat-item"><span class="cheat-label">short</span>2B · −32768 to 32767</div>
+    <div class="cheat-item"><span class="cheat-label">int</span>4B · ~±2 billion</div>
+    <div class="cheat-item"><span class="cheat-label">long</span>8B · append <code>L</code></div>
+    <div class="cheat-item"><span class="cheat-label">float</span>4B · append <code>f</code> · ~7 decimal digits</div>
+    <div class="cheat-item"><span class="cheat-label">double</span>8B · default decimal · ~15 digits</div>
+    <div class="cheat-item"><span class="cheat-label">char</span>2B · Unicode · <code>'\u0000'</code> to <code>'\uFFFF'</code></div>
+    <div class="cheat-item"><span class="cheat-label">boolean</span>~1b · <code>true</code> / <code>false</code> only</div>
+  </div>
+
+  <h2 class="topic-rev">Widening Chain</h2>
+  <div class="rule-box" style="font-size:0.95rem;">
+    <span class="formula-o">byte</span> → <span class="formula-o">short</span> → <span class="formula-o">int</span> → <span class="formula-o">long</span> → <span class="formula-o">float</span> → <span class="formula-o">double</span><br>
+    <span style="color:var(--green);font-size:0.88rem;">→ automatic (no cast needed) &nbsp;|&nbsp; reverse requires explicit cast &nbsp;|&nbsp; narrowing may lose data</span>
+  </div>
+
+  <div class="page-num">1 / 4</div>
+</div>
+
+<div class="page revision-page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">OOP in Java — Unit 1</span>
+    <span class="unit-badge rev">⚡ QUICK REVISION</span>
+  </div>
+
+  <h2 class="topic-rev">OOP Pillars — One-Liners</h2>
+  <div class="flash-grid">
+    <div class="flash f-blue">
+      <div class="flash-head">Encapsulation</div>
+      <code>private</code> fields + <code>public</code> getters/setters = data hiding + control.
+    </div>
+    <div class="flash f-green">
+      <div class="flash-head">Inheritance</div>
+      <code>extends</code> = child gets parent's members. IS-A relationship. Code reuse.
+    </div>
+    <div class="flash f-purp">
+      <div class="flash-head">Polymorphism</div>
+      Same method, different behaviour. Overloading = compile-time. Overriding = runtime.
+    </div>
+    <div class="flash f-ora">
+      <div class="flash-head">Abstraction</div>
+      Hide HOW. Show WHAT. Via <code>abstract class</code> or <code>interface</code>.
+    </div>
+  </div>
+
+  <h2 class="topic-rev">Critical Keyword Cheatsheet</h2>
+  <div class="cheat-grid">
+    <div class="cheat-item"><span class="cheat-label">this</span>Reference to current object. Used to resolve name conflicts or call another constructor.</div>
+    <div class="cheat-item"><span class="cheat-label">super</span>Reference to parent class. <code>super()</code> calls parent constructor — must be first statement.</div>
+    <div class="cheat-item"><span class="cheat-label">static</span>Belongs to class, not instance. Shared. Can't use <code>this</code>/<code>super</code> in static methods.</div>
+    <div class="cheat-item"><span class="cheat-label">final</span>Variable = constant. Method = can't override. Class = can't extend.</div>
+    <div class="cheat-item"><span class="cheat-label">abstract</span>Class = can't instantiate. Method = no body, must be overridden.</div>
+    <div class="cheat-item"><span class="cheat-label">new</span>Allocates heap memory + calls constructor. Returns reference.</div>
+    <div class="cheat-item"><span class="cheat-label">instanceof</span>Tests if object is of a type. Returns boolean. Safe before casting.</div>
+    <div class="cheat-item"><span class="cheat-label">extends</span>Class inherits from one class. Interface extends interface(s).</div>
+    <div class="cheat-item"><span class="cheat-label">implements</span>Class commits to implementing all methods of interface(s).</div>
+    <div class="cheat-item"><span class="cheat-label">interface</span>Pure contract. All fields = <code>public static final</code>. Methods = <code>public abstract</code> by default.</div>
+  </div>
+
+  <h2 class="topic-rev">Overloading vs Overriding — 3-Line Summary</h2>
+  <div class="rule-box" style="font-size:0.95rem;">
+    <strong>Overloading:</strong> Same class · Different params · Compile-time · Return type can differ.<br>
+    <strong>Overriding:</strong> Subclass · Same params · Runtime · Return type same (or covariant) · Cannot narrow access · Cannot override static/final/private.
+  </div>
+
+  <div class="page-num">2 / 4</div>
+</div>
+
+<div class="page revision-page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">OOP in Java — Unit 1</span>
+    <span class="unit-badge rev">⚡ QUICK REVISION</span>
+  </div>
+
+  <h2 class="topic-rev">Abstract Class vs Interface — 5-Point Diff</h2>
+  <div class="flash-grid">
+    <div class="flash f-blue"><div class="flash-head">1. Constructor</div>Abstract class HAS constructor. Interface has NO constructor.</div>
+    <div class="flash f-green"><div class="flash-head">2. Fields</div>Abstract class: any. Interface: only <code>public static final</code>.</div>
+    <div class="flash f-purp"><div class="flash-head">3. Multiple</div>Class extends ONE abstract class. Class implements MULTIPLE interfaces.</div>
+    <div class="flash f-ora"><div class="flash-head">4. Methods</div>Abstract class: any mix. Interface: abstract + default + static (Java 8+).</div>
+    <div class="flash f-red"><div class="flash-head">5. When to use</div>Abstract class: shared code + IS-A. Interface: contract + multiple capabilities.</div>
+    <div class="flash f-teal"><div class="flash-head">6. Access</div>Abstract class methods: any modifier. Interface methods: public only.</div>
+  </div>
+
+  <h2 class="topic-rev">Access Modifier Quick Table</h2>
+  <table class="tt">
+    <tr><th class="rev-head">Modifier</th><th class="rev-head">Same Class</th><th class="rev-head">Same Package</th><th class="rev-head">Subclass</th><th class="rev-head">Other Package</th></tr>
+    <tr><td><code>private</code></td><td>✅</td><td>❌</td><td>❌</td><td>❌</td></tr>
+    <tr><td><code>default</code></td><td>✅</td><td>✅</td><td>❌</td><td>❌</td></tr>
+    <tr><td><code>protected</code></td><td>✅</td><td>✅</td><td>✅</td><td>❌</td></tr>
+    <tr><td><code>public</code></td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr>
+  </table>
+
+  <h2 class="topic-rev">Inheritance Types — Java Support</h2>
+  <table class="tt">
+    <tr><th class="rev-head">Type</th><th class="rev-head">Supported via Classes?</th><th class="rev-head">Supported via Interfaces?</th></tr>
+    <tr><td>Single</td><td>✅</td><td>✅</td></tr>
+    <tr><td>Multilevel</td><td>✅</td><td>✅</td></tr>
+    <tr><td>Hierarchical</td><td>✅</td><td>✅</td></tr>
+    <tr><td>Multiple</td><td>❌ (Diamond Problem)</td><td>✅ (with default method override)</td></tr>
+    <tr><td>Hybrid</td><td>❌</td><td>✅</td></tr>
+  </table>
+
+  <div class="page-num">3 / 4</div>
+</div>
+
+<div class="page revision-page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">OOP in Java — Unit 1</span>
+    <span class="unit-badge rev">⚡ QUICK REVISION</span>
+  </div>
+
+  <h2 class="topic-rev">Packages — All Key Facts</h2>
+  <div class="cheat-grid">
+    <div class="cheat-item"><span class="cheat-label">Package statement</span>First line of .java file. Only ONE per file. <code>package com.example;</code></div>
+    <div class="cheat-item"><span class="cheat-label">Default package</span>No package statement. Classes not importable into named packages.</div>
+    <div class="cheat-item"><span class="cheat-label">Import</span>After package, before class. <code>import java.util.ArrayList;</code> or wildcard <code>java.util.*</code></div>
+    <div class="cheat-item"><span class="cheat-label">Static import</span><code>import static java.lang.Math.PI;</code> → use <code>PI</code> directly.</div>
+    <div class="cheat-item"><span class="cheat-label">CLASSPATH</span>Tells JVM where to find class files. Set via env var or <code>-cp</code> flag.</div>
+    <div class="cheat-item"><span class="cheat-label">-d flag</span><code>javac -d out File.java</code> → creates package dirs + puts .class there.</div>
+    <div class="cheat-item"><span class="cheat-label">Run packaged class</span><code>java -cp out com.example.ClassName</code> — fully qualified name with dots.</div>
+    <div class="cheat-item"><span class="cheat-label">JAR create</span><code>jar cf mylib.jar -C out .</code></div>
+    <div class="cheat-item"><span class="cheat-label">JAR run</span><code>java -jar app.jar</code> (needs Main-Class in MANIFEST)</div>
+    <div class="cheat-item"><span class="cheat-label">Naming rule</span>Package: all lowercase. Reverse domain: <code>com.company.project</code></div>
+  </div>
+
+  <h2 class="topic-rev">Top 10 Exam Traps — Don't Fall!</h2>
+  <table class="tt">
+    <tr><th class="rev-head">#</th><th class="rev-head">Trap</th><th class="rev-head">Correct Fact</th></tr>
+    <tr><td>1</td><td><code>==</code> for Strings</td><td>Use <code>.equals()</code> for String content comparison.</td></tr>
+    <tr><td>2</td><td>Constructor has return type?</td><td>NO — constructors have NO return type, not even void.</td></tr>
+    <tr><td>3</td><td>static method uses <code>this</code></td><td>❌ Compile error — <code>this</code> doesn't exist in static context.</td></tr>
+    <tr><td>4</td><td>Can instantiate abstract class?</td><td>❌ Never directly. Only through subclass reference.</td></tr>
+    <tr><td>5</td><td>final array elements are fixed?</td><td>❌ Only the reference is final, not the elements!</td></tr>
+    <tr><td>6</td><td>Multiple class inheritance?</td><td>❌ Not via classes. Use multiple interfaces.</td></tr>
+    <tr><td>7</td><td>super() can be anywhere?</td><td>❌ Must be the FIRST statement in constructor.</td></tr>
+    <tr><td>8</td><td>char is 1 byte like C?</td><td>❌ Java char = 2 bytes (Unicode UTF-16).</td></tr>
+    <tr><td>9</td><td>Overriding changes access to private?</td><td>❌ Can't reduce visibility. Can only widen it.</td></tr>
+    <tr><td>10</td><td>import java.util.* imports sub-packages?</td><td>❌ Wildcard imports only classes in that package, NOT sub-packages.</td></tr>
+  </table>
+
+  <div class="orange-box" style="margin-top:14px;">
+    <strong>🏁 You've completed Unit 1!</strong> Revise these 4 pages before any exam. Understand the concepts — don't just memorise. Java rewards logical thinking!
+  </div>
+
+  <div class="page-num">4 / 4</div>
+</div>
+
+<script>
+  document.querySelectorAll('.part-nav a').forEach(a => {
+    if (a.href === window.location.href) a.classList.add('active');
+  });
+</script>
+</body>
+</html>

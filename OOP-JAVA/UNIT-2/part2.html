@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OOP in Java — Unit 2 | Part 2</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Kalam:wght@300;400;700&family=Special+Elite&display=swap');
+  :root{
+    --paper:#fdf9f0;--ink:#1a1a2e;--ink-light:#2d2d4e;
+    --blue:#1a56db;--blue-light:#dbeafe;
+    --green:#0d6b3f;--green-light:#d1fae5;
+    --orange:#c05621;--orange-light:#fef3c7;
+    --purple:#5b21b6;--purple-light:#ede9fe;
+    --red:#b91c1c;--red-light:#fee2e2;
+    --teal:#0e7490;--teal-light:#cffafe;
+    --rule-line:#c8d8e8;--margin-line:#f4a0a0;
+    --hole-bg:#e8e0d0;--shadow:rgba(0,0,0,0.08);
+    --accent:#0e7490;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:#0a2533;
+    background-image:radial-gradient(circle at 25% 50%,rgba(14,116,144,.2) 0%,transparent 55%),
+                     radial-gradient(circle at 75% 25%,rgba(13,107,63,.12) 0%,transparent 50%);
+    font-family:'Kalam',cursive;color:var(--ink);padding:20px 0 40px;min-height:100vh;
+  }
+  .part-nav{display:flex;justify-content:center;gap:10px;margin-bottom:28px;flex-wrap:wrap;padding:0 16px;}
+  .part-nav a{font-family:'Caveat',cursive;font-size:1rem;font-weight:600;padding:7px 20px;border-radius:20px;
+    text-decoration:none;background:rgba(255,255,255,.5);color:#555;border:2px solid rgba(255,255,255,.7);transition:all .2s;}
+  .part-nav a.active{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 4px 12px rgba(14,116,144,.4);}
+  .part-nav a:hover:not(.active){background:rgba(255,255,255,.8);color:#333;}
+  .page{width:760px;max-width:98vw;margin:0 auto 28px;background:var(--paper);border-radius:3px;
+    box-shadow:4px 4px 14px var(--shadow),0 1px 3px rgba(0,0,0,.12);position:relative;
+    padding:36px 44px 44px 80px;min-height:600px;
+    background-image:repeating-linear-gradient(transparent,transparent 31px,var(--rule-line) 31px,var(--rule-line) 32px);
+    background-position:0 64px;}
+  .page::before{content:'';position:absolute;left:68px;top:0;bottom:0;width:2px;background:var(--margin-line);opacity:.7;}
+  .holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;
+    justify-content:space-evenly;align-items:center;width:32px;}
+  .hole{width:18px;height:18px;border-radius:50%;background:var(--hole-bg);
+    border:1.5px solid #b8a898;box-shadow:inset 0 1px 3px rgba(0,0,0,.2);}
+  .page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+  .date-tag{font-family:'Special Elite',cursive;font-size:.72rem;color:var(--teal);letter-spacing:.05em;text-transform:uppercase;}
+  .unit-badge{font-family:'Caveat',cursive;font-size:.85rem;font-weight:700;background:var(--accent);
+    color:white;padding:2px 12px;border-radius:10px;letter-spacing:.08em;}
+  .section-title{font-family:'Caveat',cursive;font-size:2rem;font-weight:700;color:var(--ink);margin:8px 0 4px;line-height:1.2;}
+  .sn{font-family:'Special Elite',cursive;color:var(--accent);margin-right:6px;font-size:1.7rem;}
+  .divider{border:none;border-top:2.5px solid var(--accent);margin:6px 0 18px;border-radius:2px;}
+  h2.topic{font-family:'Caveat',cursive;font-size:1.45rem;font-weight:700;color:var(--accent);
+    margin:20px 0 8px;padding-bottom:3px;border-bottom:1.5px dashed var(--rule-line);}
+  h3.sub{font-family:'Kalam',cursive;font-size:1.1rem;font-weight:700;color:var(--blue);margin:14px 0 6px;}
+  .def-box,.rule-box,.note-box,.purple-box,.orange-box{border-radius:8px;padding:13px 16px;margin:14px 0;font-size:.97rem;line-height:1.65;}
+  .def-box{background:var(--blue-light);border-left:4px solid var(--blue);}
+  .def-box::before{content:'📘 Definition';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--blue);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .rule-box{background:var(--green-light);border-left:4px solid var(--green);}
+  .rule-box::before{content:'📗 Key Result';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--green);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .note-box{background:var(--red-light);border-left:4px solid var(--red);}
+  .note-box::before{content:'⚠️ Exam Tip / Warning';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--red);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .purple-box{background:var(--purple-light);border-left:4px solid var(--purple);}
+  .purple-box::before{content:'💡 Important';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--purple);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .orange-box{background:var(--orange-light);border-left:4px solid var(--orange);}
+  .orange-box::before{content:'🔧 Procedure';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--orange);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .teal-box{background:var(--teal-light);border-left:4px solid var(--teal);border-radius:8px;padding:13px 16px;margin:14px 0;font-size:.97rem;line-height:1.65;}
+  .teal-box::before{content:'🌊 Stream Info';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--teal);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .qbox{background:#fffbf0;border:1.5px solid #e4cc88;border-radius:8px;padding:14px 16px;margin:14px 0;font-size:.96rem;}
+  .q-label{font-family:'Caveat',cursive;font-weight:700;font-size:1.05rem;color:var(--orange);margin-bottom:6px;}
+  .q-step{margin:5px 0;padding-left:16px;position:relative;line-height:1.6;color:var(--ink-light);}
+  .q-step::before{content:'→';position:absolute;left:0;color:var(--accent);font-weight:700;}
+  .q-ans{font-family:'Caveat',cursive;font-weight:700;font-size:1.05rem;color:var(--green);margin-top:8px;padding-top:6px;border-top:1px dashed #e4cc88;}
+  ul.plain{list-style:none;padding-left:0;margin:8px 0;}
+  ul.plain li{padding:4px 0 4px 22px;position:relative;line-height:1.6;font-size:.97rem;}
+  ul.plain li::before{content:'→';position:absolute;left:2px;color:var(--accent);font-weight:700;}
+  .formula{font-family:'Special Elite',cursive;background:rgba(14,116,144,.1);color:var(--teal);padding:2px 8px;border-radius:4px;font-size:.95em;display:inline-block;}
+  pre.code-block{background:#1e1e2e;color:#cdd6f4;border-radius:8px;padding:14px 16px;font-family:'Courier New',monospace;
+    font-size:.82rem;line-height:1.7;margin:12px 0;overflow-x:auto;border-left:4px solid var(--accent);}
+  .kw{color:#89b4fa;font-weight:bold;} .cm{color:#6c7086;font-style:italic;}
+  .st{color:#a6e3a1;} .nm{color:#fab387;} .tp{color:#f38ba8;} .fn{color:#cba6f7;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:12px 0;}
+  @media(max-width:600px){.two-col{grid-template-columns:1fr;}}
+  .vs-box{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:12px 0;border-radius:8px;overflow:hidden;border:1.5px solid #d0d0d0;font-size:.93rem;}
+  .vs-left{background:#e0f2fe;padding:12px 14px;border-right:1.5px solid #d0d0d0;}
+  .vs-right{background:#e6f4ea;padding:12px 14px;}
+  .vs-left strong,.vs-right strong{font-family:'Caveat',cursive;font-size:1.05rem;display:block;margin-bottom:6px;}
+  .vs-left strong{color:var(--teal);} .vs-right strong{color:var(--green);}
+  table.tt{width:100%;border-collapse:collapse;font-size:.9rem;margin:12px 0;}
+  table.tt th{background:var(--accent);color:white;padding:8px 12px;text-align:left;font-family:'Caveat',cursive;font-size:1rem;}
+  table.tt td{padding:7px 12px;border-bottom:1px solid var(--rule-line);}
+  table.tt tr:nth-child(even) td{background:rgba(14,116,144,.04);}
+  .step-card{display:flex;gap:12px;margin:10px 0;align-items:flex-start;}
+  .step-head{background:var(--accent);color:white;border-radius:50%;width:32px;height:32px;
+    display:flex;align-items:center;justify-content:center;font-family:'Caveat',cursive;font-weight:700;font-size:1rem;flex-shrink:0;margin-top:2px;}
+  .step-body{flex:1;line-height:1.65;font-size:.97rem;}
+  .page-num{position:absolute;bottom:14px;right:22px;font-family:'Caveat',cursive;font-size:.85rem;color:#999;}
+  /* STREAM HIERARCHY */
+  .stream-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0;}
+  .stream-card{border-radius:8px;padding:12px 14px;font-size:.9rem;line-height:1.7;}
+  .sc-byte{background:#e0f2fe;border-top:3px solid var(--teal);}
+  .sc-char{background:#dcfce7;border-top:3px solid var(--green);}
+  .sc-byte .sc-head{font-family:'Caveat',cursive;font-weight:700;color:var(--teal);font-size:1.05rem;display:block;margin-bottom:4px;}
+  .sc-char .sc-head{font-family:'Caveat',cursive;font-weight:700;color:var(--green);font-size:1.05rem;display:block;margin-bottom:4px;}
+  /* COVER */
+  .cover-page{width:760px;max-width:98vw;margin:0 auto 28px;
+    background:linear-gradient(135deg,#082f49 0%,#0c4a6e 50%,#0369a1 100%);
+    border-radius:6px;box-shadow:6px 6px 20px rgba(0,0,0,.45);
+    padding:50px 60px 50px 80px;position:relative;overflow:hidden;color:white;min-height:440px;}
+  .cover-page::before{content:'';position:absolute;top:-60px;right:-60px;width:280px;height:280px;
+    background:radial-gradient(circle,rgba(125,211,252,.25) 0%,transparent 70%);border-radius:50%;}
+  .cover-page::after{content:'';position:absolute;bottom:-40px;left:40px;width:200px;height:200px;
+    background:radial-gradient(circle,rgba(134,239,172,.15) 0%,transparent 70%);border-radius:50%;}
+  .cover-holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-evenly;align-items:center;width:32px;}
+  .cover-subject{font-family:'Special Elite',cursive;font-size:.78rem;letter-spacing:.25em;text-transform:uppercase;color:#7dd3fc;margin-bottom:8px;position:relative;z-index:1;}
+  .cover-title{font-family:'Caveat',cursive;font-size:3rem;font-weight:700;line-height:1.1;margin-bottom:6px;position:relative;z-index:1;}
+  .cover-unit{font-family:'Kalam',cursive;font-size:1.15rem;color:#bbf7d0;margin-bottom:4px;position:relative;z-index:1;}
+  .cover-subtitle{font-family:'Kalam',cursive;font-size:1rem;color:#fde68a;margin-bottom:28px;position:relative;z-index:1;}
+  .cover-part-badge{display:inline-block;background:var(--accent);color:white;font-family:'Caveat',cursive;
+    font-weight:700;font-size:1.1rem;padding:6px 20px;border-radius:20px;margin-bottom:28px;position:relative;z-index:1;letter-spacing:.06em;}
+  .cover-toc{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.2);padding-top:18px;}
+  .cover-toc h3{font-family:'Special Elite',cursive;font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:#7dd3fc;margin-bottom:12px;}
+  .toc-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px dotted rgba(255,255,255,.12);}
+  .toc-sec{font-family:'Caveat',cursive;font-size:1rem;font-weight:600;color:#f5f5f5;}
+  .toc-sec span.toc-num{color:#7dd3fc;margin-right:8px;font-family:'Special Elite',cursive;}
+  .toc-pages{font-family:'Special Elite',cursive;font-size:.75rem;color:#a6adc8;background:rgba(255,255,255,.07);padding:2px 8px;border-radius:8px;}
+  p{line-height:1.7;margin:8px 0;font-size:.97rem;}
+  strong{color:var(--ink);}
+  code{font-family:'Courier New',monospace;font-size:.9em;background:rgba(0,0,0,.07);padding:1px 5px;border-radius:3px;}
+</style>
+</head>
+<body>
+
+<nav class="part-nav">
+        <a href="../index.html">&#8617; Units</a>
+  <a href="part1.html">◆ Part 1 — Exception Handling</a>
+  <a href="part2.html" class="active">◆ Part 2 — I/O Basics</a>
+  <a href="part3.html">◆ Part 3 — Multithreading &amp; Revision</a>
+</nav>
+
+<div class="cover-page">
+  <div class="cover-holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="cover-subject">Object-Oriented Programming in Java</div>
+  <div class="cover-title">Unit 2 Notes</div>
+  <div class="cover-unit">Unit 2 — Input / Output Basics</div>
+  <div class="cover-subtitle">Byte Streams · Character Streams · Reading &amp; Writing Files in Java</div>
+  <div class="cover-part-badge">📒 Part 2 of 3 — I/O Basics</div>
+  <div class="cover-toc">
+    <h3>Contents — Part 2</h3>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§7</span> Java I/O Overview &amp; Stream Concept</div><div class="toc-pages">2 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§8</span> Byte Streams</div><div class="toc-pages">3 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§9</span> Character Streams</div><div class="toc-pages">3 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§10</span> Reading &amp; Writing Files — Complete Patterns</div><div class="toc-pages">3 pages</div></div>
+  </div>
+</div>
+
+<!-- ══ §7 — I/O OVERVIEW (2 pages) ══ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 2</span><span class="unit-badge">SECTION 7</span></div>
+  <h1 class="section-title"><span class="sn">§7</span> Java I/O Overview &amp; Stream Concept</h1>
+  <hr class="divider">
+
+  <h2 class="topic">What is a Stream?</h2>
+  <div class="def-box">
+    A <strong>stream</strong> is an ordered sequence of data flowing from a source to a destination. Java I/O is based on streams — you read from an input stream and write to an output stream. Streams are one-directional.
+  </div>
+
+  <div class="teal-box">
+    <strong>Source → [Input Stream] → Program → [Output Stream] → Destination</strong><br><br>
+    Sources / Destinations: files, network sockets, memory (byte arrays), keyboard, console, pipes.
+  </div>
+
+  <h2 class="topic">Two Types of Streams</h2>
+  <div class="stream-grid">
+    <div class="stream-card sc-byte">
+      <span class="sc-head">🔵 Byte Streams</span>
+      Handle raw binary data (8-bit bytes).<br>
+      Good for: images, audio, video, executables.<br>
+      Base classes: <code>InputStream</code> / <code>OutputStream</code><br>
+      Package: <code>java.io</code>
+    </div>
+    <div class="stream-card sc-char">
+      <span class="sc-head">🟢 Character Streams</span>
+      Handle text data (Unicode 16-bit chars).<br>
+      Good for: text files, .java, .xml, .csv.<br>
+      Base classes: <code>Reader</code> / <code>Writer</code><br>
+      Package: <code>java.io</code>
+    </div>
+  </div>
+
+  <h2 class="topic">The java.io Hierarchy — At a Glance</h2>
+  <table class="tt">
+    <tr><th>Category</th><th>Input Class</th><th>Output Class</th><th>Use For</th></tr>
+    <tr><td><strong>Byte (base)</strong></td><td>InputStream</td><td>OutputStream</td><td>Abstract base</td></tr>
+    <tr><td><strong>File (byte)</strong></td><td>FileInputStream</td><td>FileOutputStream</td><td>Binary files</td></tr>
+    <tr><td><strong>Buffered (byte)</strong></td><td>BufferedInputStream</td><td>BufferedOutputStream</td><td>Buffered binary</td></tr>
+    <tr><td><strong>Data (byte)</strong></td><td>DataInputStream</td><td>DataOutputStream</td><td>Primitives as bytes</td></tr>
+    <tr><td><strong>Char (base)</strong></td><td>Reader</td><td>Writer</td><td>Abstract base</td></tr>
+    <tr><td><strong>File (char)</strong></td><td>FileReader</td><td>FileWriter</td><td>Text files</td></tr>
+    <tr><td><strong>Buffered (char)</strong></td><td>BufferedReader</td><td>BufferedWriter</td><td>Efficient text I/O</td></tr>
+    <tr><td><strong>Print</strong></td><td>—</td><td>PrintWriter / PrintStream</td><td>Formatted output</td></tr>
+    <tr><td><strong>Bridge</strong></td><td>InputStreamReader</td><td>OutputStreamWriter</td><td>Byte ↔ Char conversion</td></tr>
+  </table>
+
+  <div class="note-box">
+    <strong>Standard streams:</strong> Java provides three pre-connected streams in the <code>System</code> class:<br>
+    <code>System.in</code> — InputStream (keyboard) &nbsp;·&nbsp; <code>System.out</code> — PrintStream (console) &nbsp;·&nbsp; <code>System.err</code> — PrintStream (error console)
+  </div>
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 2</span><span class="unit-badge">SECTION 7</span></div>
+
+  <h2 class="topic">Byte Streams vs Character Streams</h2>
+  <div class="vs-box">
+    <div class="vs-left">
+      <strong>Byte Streams</strong>
+      Work with 8-bit raw bytes<br>
+      No character encoding/decoding<br>
+      For binary data (images, audio)<br>
+      read() returns int (0–255 or −1)<br>
+      May corrupt text on multi-byte chars
+    </div>
+    <div class="vs-right">
+      <strong>Character Streams</strong>
+      Work with 16-bit Unicode chars<br>
+      Handle encoding automatically (UTF-8, UTF-16…)<br>
+      For text data (.txt, .csv, .java)<br>
+      read() returns int (0–65535 or −1)<br>
+      Safe for international text
+    </div>
+  </div>
+
+  <h2 class="topic">Stream Chaining (Decorator Pattern)</h2>
+  <div class="purple-box">
+    Java I/O uses the <em>decorator pattern</em> — you wrap one stream inside another to add functionality. This is called <strong>stream chaining</strong>.
+  </div>
+  <pre class="code-block"><span class="cm">// Chain: File → Buffered → Data</span>
+FileOutputStream fos = <span class="kw">new</span> FileOutputStream(<span class="st">"data.bin"</span>);
+BufferedOutputStream bos = <span class="kw">new</span> BufferedOutputStream(fos);   <span class="cm">// adds buffering</span>
+DataOutputStream dos = <span class="kw">new</span> DataOutputStream(bos);           <span class="cm">// adds typed writes</span>
+dos.writeInt(<span class="nm">42</span>);
+dos.writeDouble(<span class="nm">3.14</span>);
+dos.writeUTF(<span class="st">"Hello"</span>);
+dos.close();   <span class="cm">// closing outer stream closes all inner streams</span>
+
+<span class="cm">// Chain for text: File → InputStreamReader (encoding) → BufferedReader (line reading)</span>
+BufferedReader br = <span class="kw">new</span> BufferedReader(
+    <span class="kw">new</span> InputStreamReader(
+        <span class="kw">new</span> FileInputStream(<span class="st">"text.txt"</span>), <span class="st">"UTF-8"</span>));</pre>
+
+  <div class="rule-box">
+    <strong>Always close streams!</strong> Use try-with-resources (Java 7+) to guarantee closure:<br>
+    <code>try (BufferedReader br = new BufferedReader(...)) { ... }</code><br>
+    Unclosed streams = resource leaks = file locks and memory waste.
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">🧪 Why buffer streams?</div>
+    <div class="q-step">Without buffering: every read/write = one system call = very slow.</div>
+    <div class="q-step">BufferedInputStream reads a chunk (e.g., 8KB) at once into memory buffer.</div>
+    <div class="q-step">Subsequent reads come from buffer — no disk I/O until buffer is exhausted.</div>
+    <div class="q-ans">✓ Buffering can improve I/O performance by 10x–100x. Always buffer file I/O!</div>
+  </div>
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══ §8 — BYTE STREAMS (3 pages) ══ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 2</span><span class="unit-badge">SECTION 8</span></div>
+  <h1 class="section-title"><span class="sn">§8</span> Byte Streams</h1>
+  <hr class="divider">
+
+  <h2 class="topic">InputStream — Key Methods</h2>
+  <div class="def-box">
+    <code>java.io.InputStream</code> is the abstract superclass for all byte input streams.
+  </div>
+  <table class="tt">
+    <tr><th>Method</th><th>Description</th></tr>
+    <tr><td><code>int read()</code></td><td>Reads one byte. Returns byte value (0–255) or <strong>−1</strong> at end of stream.</td></tr>
+    <tr><td><code>int read(byte[] b)</code></td><td>Reads bytes into array. Returns count read, or −1.</td></tr>
+    <tr><td><code>int read(byte[] b, int off, int len)</code></td><td>Reads up to len bytes into b starting at off.</td></tr>
+    <tr><td><code>long skip(long n)</code></td><td>Skips n bytes.</td></tr>
+    <tr><td><code>int available()</code></td><td>Returns estimated available bytes without blocking.</td></tr>
+    <tr><td><code>void close()</code></td><td>Closes stream and releases resources.</td></tr>
+    <tr><td><code>void mark(int limit)</code></td><td>Marks current position (if markSupported()).</td></tr>
+    <tr><td><code>void reset()</code></td><td>Resets to last mark.</td></tr>
+  </table>
+
+  <h2 class="topic">OutputStream — Key Methods</h2>
+  <table class="tt">
+    <tr><th>Method</th><th>Description</th></tr>
+    <tr><td><code>void write(int b)</code></td><td>Writes one byte (low 8 bits of int).</td></tr>
+    <tr><td><code>void write(byte[] b)</code></td><td>Writes all bytes in array.</td></tr>
+    <tr><td><code>void write(byte[] b, int off, int len)</code></td><td>Writes len bytes from b starting at off.</td></tr>
+    <tr><td><code>void flush()</code></td><td>Flushes internal buffer to underlying stream / file.</td></tr>
+    <tr><td><code>void close()</code></td><td>Flushes and closes the stream.</td></tr>
+  </table>
+
+  <div class="note-box">
+    <strong>return −1 means EOF:</strong> Always check for −1 when reading. The classic loop pattern is: <code>int b; while((b = in.read()) != -1) { process(b); }</code>
+  </div>
+  <div class="page-num">1 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 2</span><span class="unit-badge">SECTION 8</span></div>
+
+  <h2 class="topic">FileInputStream &amp; FileOutputStream</h2>
+  <pre class="code-block"><span class="cm">// ── Writing bytes to a file ──</span>
+<span class="kw">try</span> (FileOutputStream fos = <span class="kw">new</span> FileOutputStream(<span class="st">"output.dat"</span>)) {
+    <span class="kw">byte</span>[] data = {<span class="nm">72</span>, <span class="nm">101</span>, <span class="nm">108</span>, <span class="nm">108</span>, <span class="nm">111</span>};   <span class="cm">// "Hello" in bytes</span>
+    fos.write(data);
+    System.out.println(<span class="st">"Written successfully"</span>);
+}
+
+<span class="cm">// ── Reading bytes from a file ──</span>
+<span class="kw">try</span> (FileInputStream fis = <span class="kw">new</span> FileInputStream(<span class="st">"output.dat"</span>)) {
+    <span class="kw">int</span> b;
+    <span class="kw">while</span> ((b = fis.read()) != -<span class="nm">1</span>) {
+        System.out.print((<span class="kw">char</span>) b);   <span class="cm">// cast byte to char for display</span>
+    }
+}
+
+<span class="cm">// ── Append mode (second param = true) ──</span>
+<span class="kw">try</span> (FileOutputStream fos = <span class="kw">new</span> FileOutputStream(<span class="st">"output.dat"</span>, <span class="kw">true</span>)) {
+    fos.write(<span class="st">"World"</span>.getBytes());
+}</pre>
+
+  <h2 class="topic">BufferedInputStream &amp; BufferedOutputStream</h2>
+  <pre class="code-block"><span class="cm">// ── Buffered copy — efficient file copying ──</span>
+<span class="kw">try</span> (BufferedInputStream bis = <span class="kw">new</span> BufferedInputStream(
+                                   <span class="kw">new</span> FileInputStream(<span class="st">"source.jpg"</span>));
+     BufferedOutputStream bos = <span class="kw">new</span> BufferedOutputStream(
+                                   <span class="kw">new</span> FileOutputStream(<span class="st">"dest.jpg"</span>))) {
+    <span class="kw">byte</span>[] buffer = <span class="kw">new byte</span>[<span class="nm">8192</span>];   <span class="cm">// 8KB buffer</span>
+    <span class="kw">int</span> bytesRead;
+    <span class="kw">while</span> ((bytesRead = bis.read(buffer)) != -<span class="nm">1</span>) {
+        bos.write(buffer, <span class="nm">0</span>, bytesRead);
+    }
+    System.out.println(<span class="st">"File copied successfully!"</span>);
+}
+<span class="cm">// Default buffer size = 8192 bytes. Can customize: new BufferedInputStream(fis, 16384)</span></pre>
+
+  <div class="rule-box">
+    <strong>Buffer size tip:</strong> Default buffer (8192B) works fine for most cases. For large binary files (images, videos), use 64KB (65536) buffers. Always use array read, not byte-by-byte, for performance.
+  </div>
+  <div class="page-num">2 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 2</span><span class="unit-badge">SECTION 8</span></div>
+
+  <h2 class="topic">DataInputStream &amp; DataOutputStream</h2>
+  <div class="def-box">
+    Allow reading/writing Java primitive types (int, double, boolean, etc.) and Strings in a machine-independent format. Data written with DataOutputStream can be reliably read back with DataInputStream.
+  </div>
+  <pre class="code-block"><span class="cm">// ── Writing primitives ──</span>
+<span class="kw">try</span> (DataOutputStream dos = <span class="kw">new</span> DataOutputStream(
+        <span class="kw">new</span> BufferedOutputStream(<span class="kw">new</span> FileOutputStream(<span class="st">"data.bin"</span>)))) {
+    dos.writeInt(<span class="nm">42</span>);
+    dos.writeDouble(<span class="nm">3.14159</span>);
+    dos.writeBoolean(<span class="kw">true</span>);
+    dos.writeUTF(<span class="st">"Hello Java"</span>);   <span class="cm">// writes length + bytes</span>
+}
+
+<span class="cm">// ── Reading back in SAME ORDER ──</span>
+<span class="kw">try</span> (DataInputStream dis = <span class="kw">new</span> DataInputStream(
+        <span class="kw">new</span> BufferedInputStream(<span class="kw">new</span> FileInputStream(<span class="st">"data.bin"</span>)))) {
+    System.out.println(dis.readInt());      <span class="cm">// 42</span>
+    System.out.println(dis.readDouble());   <span class="cm">// 3.14159</span>
+    System.out.println(dis.readBoolean());  <span class="cm">// true</span>
+    System.out.println(dis.readUTF());      <span class="cm">// Hello Java</span>
+}</pre>
+
+  <div class="note-box">
+    <strong>Critical:</strong> Must read data in the EXACT SAME ORDER it was written. Reading int where double was written = corrupted data. DataInputStream/OutputStream are great for binary protocols and custom file formats.
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">🧪 Identify: Byte or Character stream?</div>
+    <div class="q-step">Copying a .jpg image file → <strong>Byte stream</strong> (binary data)</div>
+    <div class="q-step">Reading a .txt file to display on console → <strong>Character stream</strong> (text data)</div>
+    <div class="q-step">Reading from keyboard (System.in) → <strong>Byte stream</strong>, but wrap in InputStreamReader for chars</div>
+    <div class="q-ans">✓ Rule: binary data → byte streams; text data → character streams.</div>
+  </div>
+  <div class="page-num">3 / 3</div>
+</div>
+
+<!-- ══ §9 — CHARACTER STREAMS (3 pages) ══ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 2</span><span class="unit-badge">SECTION 9</span></div>
+  <h1 class="section-title"><span class="sn">§9</span> Character Streams</h1>
+  <hr class="divider">
+
+  <h2 class="topic">Reader — Key Methods</h2>
+  <div class="def-box">
+    <code>java.io.Reader</code> is the abstract superclass for all character input streams. Works with chars (16-bit Unicode), not bytes.
+  </div>
+  <table class="tt">
+    <tr><th>Method</th><th>Description</th></tr>
+    <tr><td><code>int read()</code></td><td>Reads one char (0–65535) or −1 at EOF.</td></tr>
+    <tr><td><code>int read(char[] cbuf)</code></td><td>Reads chars into array. Returns count or −1.</td></tr>
+    <tr><td><code>int read(char[] cbuf, int off, int len)</code></td><td>Reads up to len chars into cbuf.</td></tr>
+    <tr><td><code>long skip(long n)</code></td><td>Skips n chars.</td></tr>
+    <tr><td><code>boolean ready()</code></td><td>True if stream ready to be read without blocking.</td></tr>
+    <tr><td><code>void close()</code></td><td>Closes stream.</td></tr>
+  </table>
+
+  <h2 class="topic">Writer — Key Methods</h2>
+  <table class="tt">
+    <tr><th>Method</th><th>Description</th></tr>
+    <tr><td><code>void write(int c)</code></td><td>Writes one char.</td></tr>
+    <tr><td><code>void write(char[] cbuf)</code></td><td>Writes entire char array.</td></tr>
+    <tr><td><code>void write(String str)</code></td><td>Writes a String directly.</td></tr>
+    <tr><td><code>void write(String str, int off, int len)</code></td><td>Writes substring.</td></tr>
+    <tr><td><code>Writer append(CharSequence cs)</code></td><td>Appends char sequence, returns this (fluent).</td></tr>
+    <tr><td><code>void flush()</code></td><td>Flushes buffer.</td></tr>
+    <tr><td><code>void close()</code></td><td>Flushes and closes.</td></tr>
+  </table>
+
+  <h2 class="topic">FileReader &amp; FileWriter</h2>
+  <pre class="code-block"><span class="cm">// ── Write text to file ──</span>
+<span class="kw">try</span> (FileWriter fw = <span class="kw">new</span> FileWriter(<span class="st">"hello.txt"</span>)) {
+    fw.write(<span class="st">"Hello, World!\n"</span>);
+    fw.write(<span class="st">"Java I/O is fun!"</span>);
+}
+
+<span class="cm">// ── Read text from file char by char ──</span>
+<span class="kw">try</span> (FileReader fr = <span class="kw">new</span> FileReader(<span class="st">"hello.txt"</span>)) {
+    <span class="kw">int</span> c;
+    <span class="kw">while</span> ((c = fr.read()) != -<span class="nm">1</span>) {
+        System.out.print((<span class="kw">char</span>) c);
+    }
+}
+
+<span class="cm">// ── Append mode ──</span>
+<span class="kw">try</span> (FileWriter fw = <span class="kw">new</span> FileWriter(<span class="st">"hello.txt"</span>, <span class="kw">true</span>)) {
+    fw.write(<span class="st">"\nAppended text!"</span>);
+}</pre>
+  <div class="page-num">1 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 2</span><span class="unit-badge">SECTION 9</span></div>
+
+  <h2 class="topic">BufferedReader &amp; BufferedWriter</h2>
+  <div class="purple-box">
+    The most commonly used character stream pair for text file processing. <code>BufferedReader.readLine()</code> is the most convenient way to read text line by line.
+  </div>
+  <pre class="code-block"><span class="cm">// ── Write lines efficiently ──</span>
+<span class="kw">try</span> (BufferedWriter bw = <span class="kw">new</span> BufferedWriter(<span class="kw">new</span> FileWriter(<span class="st">"output.txt"</span>))) {
+    bw.write(<span class="st">"Line 1"</span>);
+    bw.newLine();          <span class="cm">// platform-independent line separator (\n or \r\n)</span>
+    bw.write(<span class="st">"Line 2"</span>);
+    bw.newLine();
+    bw.write(<span class="st">"Line 3"</span>);
+}
+
+<span class="cm">// ── Read line by line — the classic pattern ──</span>
+<span class="kw">try</span> (BufferedReader br = <span class="kw">new</span> BufferedReader(<span class="kw">new</span> FileReader(<span class="st">"output.txt"</span>))) {
+    String line;
+    <span class="kw">while</span> ((line = br.readLine()) != <span class="kw">null</span>) {   <span class="cm">// null = EOF (not -1!)</span>
+        System.out.println(line);
+    }
+}
+<span class="cm">// readLine() returns null at end of file, NOT -1 (important!)</span></pre>
+
+  <h2 class="topic">PrintWriter — Formatted Text Output</h2>
+  <pre class="code-block"><span class="cm">// PrintWriter wraps any Writer or OutputStream, adds print/println/printf</span>
+<span class="kw">try</span> (PrintWriter pw = <span class="kw">new</span> PrintWriter(<span class="kw">new</span> BufferedWriter(<span class="kw">new</span> FileWriter(<span class="st">"report.txt"</span>)))) {
+    pw.println(<span class="st">"Student Report"</span>);
+    pw.println(<span class="st">"=================="</span>);
+    pw.printf(<span class="st">"%-10s %5s%n"</span>, <span class="st">"Name"</span>, <span class="st">"Score"</span>);   <span class="cm">// formatted columns</span>
+    pw.printf(<span class="st">"%-10s %5d%n"</span>, <span class="st">"Alice"</span>, <span class="nm">92</span>);
+    pw.printf(<span class="st">"%-10s %5d%n"</span>, <span class="st">"Bob"</span>, <span class="nm">87</span>);
+    pw.flush();  <span class="cm">// PrintWriter buffers — always flush!</span>
+}
+
+<span class="cm">// Auto-flush mode (slower but safer):</span>
+PrintWriter pw = <span class="kw">new</span> PrintWriter(<span class="kw">new</span> FileWriter(<span class="st">"out.txt"</span>), <span class="kw">true</span>); <span class="cm">// autoFlush=true</span></pre>
+
+  <div class="note-box">
+    <strong>PrintWriter checkError():</strong> Unlike other streams, PrintWriter swallows exceptions (no IOException from print methods). Use <code>pw.checkError()</code> to check if an error occurred. This is a common gotcha!
+  </div>
+  <div class="page-num">2 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 2</span><span class="unit-badge">SECTION 9</span></div>
+
+  <h2 class="topic">InputStreamReader — Bridge Class</h2>
+  <div class="def-box">
+    <code>InputStreamReader</code> converts a byte stream (InputStream) into a character stream (Reader), applying a character encoding. Essential for reading text from <code>System.in</code> or network sockets.
+  </div>
+  <pre class="code-block"><span class="cm">// Read from keyboard (System.in is a byte stream) as text</span>
+BufferedReader keyboard = <span class="kw">new</span> BufferedReader(<span class="kw">new</span> InputStreamReader(System.in));
+System.out.print(<span class="st">"Enter name: "</span>);
+String name = keyboard.readLine();
+System.out.println(<span class="st">"Hello, "</span> + name);
+
+<span class="cm">// Read file with specific encoding (e.g., UTF-8)</span>
+<span class="kw">try</span> (BufferedReader br = <span class="kw">new</span> BufferedReader(
+        <span class="kw">new</span> InputStreamReader(<span class="kw">new</span> FileInputStream(<span class="st">"arabic.txt"</span>), <span class="st">"UTF-8"</span>))) {
+    String line;
+    <span class="kw">while</span> ((line = br.readLine()) != <span class="kw">null</span>) System.out.println(line);
+}
+
+<span class="cm">// OutputStreamWriter — reverse bridge</span>
+<span class="kw">try</span> (PrintWriter pw = <span class="kw">new</span> PrintWriter(
+        <span class="kw">new</span> OutputStreamWriter(<span class="kw">new</span> FileOutputStream(<span class="st">"out.txt"</span>), <span class="st">"UTF-8"</span>))) {
+    pw.println(<span class="st">"Unicode text: こんにちは"</span>);
+}</pre>
+
+  <h2 class="topic">Scanner — Easy User Input</h2>
+  <pre class="code-block"><span class="kw">import</span> java.util.Scanner;
+
+Scanner sc = <span class="kw">new</span> Scanner(System.in);     <span class="cm">// reads from keyboard</span>
+System.out.print(<span class="st">"Enter age: "</span>);
+<span class="kw">int</span> age = sc.nextInt();
+System.out.print(<span class="st">"Enter name: "</span>);
+sc.nextLine();                             <span class="cm">// consume leftover newline</span>
+String name = sc.nextLine();
+
+Scanner fileSc = <span class="kw">new</span> Scanner(<span class="kw">new</span> File(<span class="st">"data.txt"</span>));   <span class="cm">// scan a file</span>
+<span class="kw">while</span> (fileSc.hasNextLine()) System.out.println(fileSc.nextLine());
+fileSc.close();</pre>
+
+  <div class="note-box">
+    <strong>Scanner trap:</strong> After <code>nextInt()</code> or <code>nextDouble()</code>, the newline character '\n' remains in the buffer. The next <code>nextLine()</code> will read the empty line. Fix: call <code>sc.nextLine()</code> once extra to consume the newline.
+  </div>
+  <div class="page-num">3 / 3</div>
+</div>
+
+<!-- ══ §10 — READING & WRITING FILES (3 pages) ══ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 2</span><span class="unit-badge">SECTION 10</span></div>
+  <h1 class="section-title"><span class="sn">§10</span> Reading &amp; Writing Files — Complete Patterns</h1>
+  <hr class="divider">
+
+  <h2 class="topic">The File Class</h2>
+  <div class="def-box">
+    <code>java.io.File</code> represents a file or directory path. It does NOT read/write data — it's used for metadata operations: exists, create, delete, list, rename.
+  </div>
+  <pre class="code-block">File f = <span class="kw">new</span> File(<span class="st">"notes.txt"</span>);
+System.out.println(f.exists());       <span class="cm">// true/false</span>
+System.out.println(f.length());       <span class="cm">// file size in bytes</span>
+System.out.println(f.getName());      <span class="cm">// "notes.txt"</span>
+System.out.println(f.getAbsolutePath()); <span class="cm">// full path</span>
+System.out.println(f.isFile());       <span class="cm">// true</span>
+System.out.println(f.isDirectory());  <span class="cm">// false</span>
+System.out.println(f.canRead());      <span class="cm">// true/false</span>
+f.createNewFile();                    <span class="cm">// creates empty file (throws IOException)</span>
+f.delete();                           <span class="cm">// deletes file</span>
+f.mkdir();                            <span class="cm">// creates directory</span>
+String[] files = f.list();            <span class="cm">// lists directory contents</span></pre>
+
+  <h2 class="topic">Pattern 1: Write text to a file</h2>
+  <pre class="code-block"><span class="kw">try</span> (BufferedWriter bw = <span class="kw">new</span> BufferedWriter(<span class="kw">new</span> FileWriter(<span class="st">"student.txt"</span>))) {
+    bw.write(<span class="st">"Roll: 101"</span>); bw.newLine();
+    bw.write(<span class="st">"Name: Alice"</span>); bw.newLine();
+    bw.write(<span class="st">"Marks: 92"</span>);
+    System.out.println(<span class="st">"File written."</span>);
+} <span class="kw">catch</span> (IOException e) {
+    System.err.println(<span class="st">"Write error: "</span> + e.getMessage());
+}</pre>
+
+  <h2 class="topic">Pattern 2: Read text from a file line by line</h2>
+  <pre class="code-block"><span class="kw">try</span> (BufferedReader br = <span class="kw">new</span> BufferedReader(<span class="kw">new</span> FileReader(<span class="st">"student.txt"</span>))) {
+    String line;
+    <span class="kw">while</span> ((line = br.readLine()) != <span class="kw">null</span>) {
+        System.out.println(line);
+    }
+} <span class="kw">catch</span> (FileNotFoundException e) {
+    System.err.println(<span class="st">"File not found!"</span>);
+} <span class="kw">catch</span> (IOException e) {
+    System.err.println(<span class="st">"Read error: "</span> + e.getMessage());
+}</pre>
+  <div class="page-num">1 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 2</span><span class="unit-badge">SECTION 10</span></div>
+
+  <h2 class="topic">Pattern 3: Copy a binary file (Byte Streams)</h2>
+  <pre class="code-block"><span class="kw">public static void</span> <span class="fn">copyFile</span>(String src, String dest) <span class="kw">throws</span> IOException {
+    <span class="kw">try</span> (BufferedInputStream in = <span class="kw">new</span> BufferedInputStream(<span class="kw">new</span> FileInputStream(src));
+         BufferedOutputStream out = <span class="kw">new</span> BufferedOutputStream(<span class="kw">new</span> FileOutputStream(dest))) {
+        <span class="kw">byte</span>[] buf = <span class="kw">new byte</span>[<span class="nm">8192</span>];
+        <span class="kw">int</span> n;
+        <span class="kw">while</span> ((n = in.read(buf)) != -<span class="nm">1</span>) out.write(buf, <span class="nm">0</span>, n);
+    }
+    System.out.println(<span class="st">"Copied: "</span> + src + <span class="st">" → "</span> + dest);
+}</pre>
+
+  <h2 class="topic">Pattern 4: Read all lines into a List (Java 8+ NIO)</h2>
+  <pre class="code-block"><span class="kw">import</span> java.nio.file.*;
+<span class="kw">import</span> java.util.List;
+
+<span class="cm">// Read all lines at once — convenient for small files</span>
+List&lt;String&gt; lines = Files.readAllLines(Paths.get(<span class="st">"student.txt"</span>));
+lines.forEach(System.out::println);
+
+<span class="cm">// Write all lines at once</span>
+List&lt;String&gt; data = List.of(<span class="st">"Alice"</span>, <span class="st">"Bob"</span>, <span class="st">"Charlie"</span>);
+Files.write(Paths.get(<span class="st">"names.txt"</span>), data);
+
+<span class="cm">// Read entire file as a String (Java 11+)</span>
+String content = Files.readString(Paths.get(<span class="st">"student.txt"</span>));
+
+<span class="cm">// Write entire String to file (Java 11+)</span>
+Files.writeString(Paths.get(<span class="st">"out.txt"</span>), <span class="st">"Hello World"</span>);
+
+<span class="cm">// Stream lines lazily (good for large files)</span>
+<span class="kw">try</span> (java.util.stream.Stream&lt;String&gt; stream = Files.lines(Paths.get(<span class="st">"big.txt"</span>))) {
+    stream.filter(l -&gt; l.startsWith(<span class="st">"ERROR"</span>)).forEach(System.out::println);
+}</pre>
+
+  <div class="purple-box">
+    <strong>java.nio.file (New I/O — Java 7+):</strong> The <code>Files</code> and <code>Paths</code> classes in <code>java.nio.file</code> provide a much cleaner API than the old <code>java.io.File</code>. Prefer NIO for new code. Old File class is mainly used for compatibility.
+  </div>
+  <div class="page-num">2 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 2</span><span class="unit-badge">SECTION 10</span></div>
+
+  <h2 class="topic">Complete File Read/Write Program</h2>
+  <pre class="code-block"><span class="kw">import</span> java.io.*;
+
+<span class="kw">public class</span> <span class="tp">FileDemo</span> {
+
+    <span class="kw">public static void</span> <span class="fn">writeStudents</span>(<span class="tp">String</span>[] students) <span class="kw">throws</span> IOException {
+        <span class="kw">try</span> (PrintWriter pw = <span class="kw">new</span> PrintWriter(<span class="kw">new</span> BufferedWriter(
+                              <span class="kw">new</span> FileWriter(<span class="st">"students.txt"</span>)))) {
+            <span class="kw">for</span> (String s : students) pw.println(s);
+        }
+    }
+
+    <span class="kw">public static void</span> <span class="fn">readStudents</span>() <span class="kw">throws</span> IOException {
+        <span class="kw">try</span> (BufferedReader br = <span class="kw">new</span> BufferedReader(
+                                 <span class="kw">new</span> FileReader(<span class="st">"students.txt"</span>))) {
+            String line;
+            <span class="kw">int</span> i = <span class="nm">1</span>;
+            <span class="kw">while</span> ((line = br.readLine()) != <span class="kw">null</span>)
+                System.out.println(i++ + <span class="st">". "</span> + line);
+        }
+    }
+
+    <span class="kw">public static void</span> <span class="fn">main</span>(String[] args) {
+        <span class="kw">try</span> {
+            String[] names = {<span class="st">"Alice"</span>, <span class="st">"Bob"</span>, <span class="st">"Charlie"</span>};
+            <span class="fn">writeStudents</span>(names);
+            System.out.println(<span class="st">"--- Reading back ---"</span>);
+            <span class="fn">readStudents</span>();
+        } <span class="kw">catch</span> (IOException e) {
+            System.err.println(<span class="st">"I/O Error: "</span> + e.getMessage());
+        }
+    }
+}</pre>
+
+  <div class="qbox">
+    <div class="q-label">🧪 Which to use: FileReader or InputStreamReader?</div>
+    <div class="q-step">FileReader uses the default system charset — not portable across machines!</div>
+    <div class="q-step">InputStreamReader lets you specify encoding: <code>new InputStreamReader(fis, "UTF-8")</code></div>
+    <div class="q-ans">✓ Best practice: always specify encoding explicitly. Use InputStreamReader + UTF-8 for portability.</div>
+  </div>
+
+  <table class="tt">
+    <tr><th>Task</th><th>Best Choice</th></tr>
+    <tr><td>Read text file line-by-line</td><td>BufferedReader + FileReader</td></tr>
+    <tr><td>Write formatted text</td><td>PrintWriter + BufferedWriter + FileWriter</td></tr>
+    <tr><td>Copy binary file</td><td>BufferedInputStream + BufferedOutputStream</td></tr>
+    <tr><td>Read/write primitives</td><td>DataInputStream / DataOutputStream</td></tr>
+    <tr><td>Read keyboard input</td><td>Scanner(System.in) or BufferedReader(InputStreamReader(System.in))</td></tr>
+    <tr><td>Read entire file (small)</td><td>Files.readAllLines() (NIO)</td></tr>
+    <tr><td>Process large file</td><td>Files.lines() stream (lazy, NIO)</td></tr>
+  </table>
+  <div class="page-num">3 / 3</div>
+</div>
+
+<script>
+  document.querySelectorAll('.part-nav a').forEach(a=>{
+    if(a.href===window.location.href) a.classList.add('active');
+  });
+</script>
+</body>
+</html>
