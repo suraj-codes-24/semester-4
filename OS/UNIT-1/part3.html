@@ -3,138 +3,797 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OS Unit 1 — Part 3</title>
-<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+<title>Operating Systems — Unit 1 | Part 3</title>
 <style>
-:root{--ink:#1a1a2e;--ink2:#2c2c54;--blue:#1565C0;--red:#b71c1c;--green:#1b5e20;--purple:#4a148c;--teal:#006064;--orange:#e65100;--line:#c5cae9;--page:#fafaf7;--highlight:#fff9c4;--box-blue:#e8f4fd;--box-green:#e8f5e9;--box-purple:#f3e5f5;--box-orange:#fff3e0;--box-red:#fce4ec;--box-teal:#e0f7fa;}
-*{margin:0;padding:0;box-sizing:border-box;}
-body{background:#e0e0e0;font-family:'Kalam',cursive;color:var(--ink);padding:30px 20px;}
-.page{background:var(--page);max-width:820px;margin:0 auto 40px;border-radius:4px;box-shadow:0 2px 16px rgba(0,0,0,0.18),0 0 0 1px rgba(0,0,0,0.08);padding:60px 70px 70px 90px;position:relative;min-height:1060px;background-image:repeating-linear-gradient(transparent,transparent 31px,var(--line) 31px,var(--line) 32px);background-position:0 56px;}
-.page::before{content:'';position:absolute;left:72px;top:0;bottom:0;width:1.5px;background:#ef9a9a;opacity:0.7;}
-.holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-around;padding:40px 0;}
-.hole{width:22px;height:22px;border-radius:50%;background:#e0e0e0;border:1.5px solid #bdbdbd;box-shadow:inset 0 1px 3px rgba(0,0,0,0.2);}
-.page-num{position:absolute;bottom:28px;right:50px;font-size:13px;color:#9e9e9e;}
-.page-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
-.date-tag{font-size:13px;color:#9e9e9e;}
-.unit-badge{color:#fff;font-size:13px;padding:2px 14px;border-radius:20px;font-weight:700;}
-h1.section-title{font-size:24px;font-weight:700;color:var(--ink2);text-align:center;margin:8px 0 4px;text-decoration:underline;text-underline-offset:5px;}
-h2.topic{font-size:18px;font-weight:700;color:var(--blue);margin:18px 0 6px;border-bottom:1.5px solid var(--blue);padding-bottom:2px;display:inline-block;}
-h3.sub{font-size:15px;font-weight:700;color:var(--purple);margin:12px 0 4px;}
-p,li{font-size:15px;line-height:32px;}
-.def-box{background:var(--box-blue);border-left:4px solid var(--blue);border-radius:0 6px 6px 0;padding:10px 16px;margin:10px 0 12px;font-size:15px;line-height:30px;}
-.note-box{background:var(--highlight);border-left:4px solid #f9a825;border-radius:0 6px 6px 0;padding:8px 14px;margin:8px 0 10px;font-size:14px;line-height:26px;}
-.rule-box{background:var(--box-green);border:1.5px solid #81c784;border-radius:6px;padding:10px 16px;margin:10px 0;font-size:14.5px;line-height:28px;}
-.purple-box{background:var(--box-purple);border-left:4px solid var(--purple);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
-.orange-box{background:var(--box-orange);border-left:4px solid var(--orange);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
-.teal-box{background:var(--box-teal);border-left:4px solid var(--teal);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
-.formula{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--blue);}
-.divider{border:none;border-top:1px dashed #b0bec5;margin:14px 0 10px;}
-ul.plain{list-style:none;padding-left:4px;}
-ul.plain li::before{content:'→ ';color:var(--blue);font-weight:700;}
-ul.plain li{font-size:15px;line-height:32px;}
-.qbox{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:12px 16px;margin:10px 0;}
-.q-label{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:2px;}
-.q-step{font-size:14px;color:var(--green);margin-top:4px;line-height:26px;}
-.q-ans{font-size:15px;color:var(--red);font-family:'Patrick Hand',cursive;margin-top:4px;}
-table.tt{width:100%;border-collapse:collapse;margin:8px 0;font-size:14px;}
-table.tt th{color:#fff;padding:7px 10px;text-align:center;}
-table.tt td{padding:6px 10px;border-bottom:1px solid #e0e0e0;text-align:center;font-family:'Patrick Hand',cursive;font-size:14px;}
-table.tt tr:nth-child(even) td{background:#f5f5f5;}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0;}
-.vs-box{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:12px 0;border-radius:8px;overflow:hidden;border:1.5px solid #90caf9;}
-.vs-left{background:#e8f4fd;padding:12px 14px;}
-.vs-right{background:var(--box-purple);padding:12px 14px;border-left:1px solid #90caf9;}
-.vs-head{font-size:15px;font-weight:700;margin-bottom:8px;}
-.vs-item{font-size:14px;line-height:26px;}
-.step-card{background:var(--box-purple);border-left:4px solid var(--purple);padding:8px 14px;margin:5px 0;border-radius:0 6px 6px 0;}
-.step-head{font-size:14px;font-weight:700;color:var(--purple);}
-.step-body{font-size:13.5px;line-height:24px;color:var(--ink2);}
-.cover-page{max-width:820px;margin:0 auto 40px;border-radius:8px;padding:80px 60px;text-align:center;color:#fff;box-shadow:0 4px 24px rgba(0,0,0,0.3);position:relative;overflow:hidden;}
-.cover-subject{font-size:14px;letter-spacing:3px;opacity:0.7;margin-bottom:16px;}
-.cover-title{font-size:40px;font-weight:700;line-height:1.2;margin-bottom:12px;}
-.cover-unit{font-size:20px;opacity:0.85;margin-bottom:30px;}
-.cover-divider{width:80px;height:3px;background:rgba(255,255,255,0.4);margin:0 auto 24px;border-radius:2px;}
-.cover-toc{text-align:left;background:rgba(255,255,255,0.1);border-radius:8px;padding:20px 28px;display:inline-block;min-width:420px;}
-.cover-toc-item{font-size:15px;line-height:32px;display:flex;justify-content:space-between;gap:20px;}
-.part-nav{max-width:820px;margin:0 auto 20px;display:flex;gap:10px;justify-content:center;align-items:center;font-family:'Kalam',cursive;flex-wrap:wrap;}
-.part-nav a{padding:6px 20px;border-radius:20px;background:#fff;border:1.5px solid #90caf9;color:var(--blue);text-decoration:none;font-size:14px;font-weight:700;}
-.part-nav a:hover:not(.active){background:#e3f2fd;}
-.part-nav .back{background:#f5f5f5;border-color:#ccc;color:#555;font-size:13px;}
-.unit-badge{background:#4a148c;}
-h1.section-title{text-decoration-color:#4a148c;}
-h1.section-title .sn{color:#4a148c;}
-.part-nav a.active{background:#4a148c;border-color:#4a148c;color:#fff;}
-@media(max-width:600px){
-body{padding:10px 0 30px;}
-.page{padding:20px 16px 30px 16px;min-height:unset;}
-.page::before{display:none;}
-.holes{display:none;}
-.cover-page{padding:40px 20px;margin:0 10px 20px;}
-.cover-toc{min-width:unset;width:100%;padding:14px 16px;}
-.part-nav{padding:0 10px;gap:6px;}
-.part-nav a{padding:5px 12px;font-size:13px;}
-.two-col{grid-template-columns:1fr;}
-.vs-box{grid-template-columns:1fr;}
-.vs-right{border-left:none;border-top:1px solid #90caf9;}
-nav.part-nav{padding:0 10px;gap:6px;}
-.cover-title{font-size:28px;}
-}</style>
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Kalam:wght@300;400;700&family=Special+Elite&display=swap');
+  :root{
+    --paper:#fdf9f0;--ink:#1a1a2e;--ink-light:#2d2d4e;
+    --blue:#1a56db;--blue-light:#dbeafe;
+    --green:#0d6b3f;--green-light:#d1fae5;
+    --orange:#c05621;--orange-light:#fef3c7;
+    --purple:#5b21b6;--purple-light:#ede9fe;
+    --red:#b91c1c;--red-light:#fee2e2;
+    --teal:#0e7490;--teal-light:#cffafe;
+    --rule-line:#c8d8e8;--margin-line:#f4a0a0;
+    --hole-bg:#e8e0d0;--shadow:rgba(0,0,0,0.08);
+    --accent:#0e7490;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:#082030;
+    background-image:radial-gradient(circle at 20% 50%,rgba(14,116,144,.2) 0%,transparent 55%),
+                     radial-gradient(circle at 80% 20%,rgba(13,107,63,.15) 0%,transparent 50%);
+    font-family:'Kalam',cursive;color:var(--ink);padding:20px 0 40px;min-height:100vh;
+  }
+  .part-nav{display:flex;justify-content:center;gap:10px;margin-bottom:28px;flex-wrap:wrap;padding:0 16px;}
+  .part-nav a{font-family:'Caveat',cursive;font-size:1rem;font-weight:600;padding:7px 20px;border-radius:20px;
+    text-decoration:none;background:rgba(255,255,255,.5);color:#555;border:2px solid rgba(255,255,255,.7);transition:all .2s;}
+  .part-nav a.active{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 4px 12px rgba(14,116,144,.45);}
+  .part-nav a:hover:not(.active){background:rgba(255,255,255,.8);color:#333;}
+  .page{width:760px;max-width:98vw;margin:0 auto 28px;background:var(--paper);border-radius:3px;
+    box-shadow:4px 4px 14px var(--shadow),0 1px 3px rgba(0,0,0,.12);position:relative;
+    padding:36px 44px 44px 80px;min-height:600px;
+    background-image:repeating-linear-gradient(transparent,transparent 31px,var(--rule-line) 31px,var(--rule-line) 32px);
+    background-position:0 64px;}
+  .page::before{content:'';position:absolute;left:68px;top:0;bottom:0;width:2px;background:var(--margin-line);opacity:.7;}
+  .holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;
+    justify-content:space-evenly;align-items:center;width:32px;}
+  .hole{width:18px;height:18px;border-radius:50%;background:var(--hole-bg);
+    border:1.5px solid #b8a898;box-shadow:inset 0 1px 3px rgba(0,0,0,.2);}
+  .page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+  .date-tag{font-family:'Special Elite',cursive;font-size:.72rem;color:var(--teal);letter-spacing:.05em;text-transform:uppercase;}
+  .unit-badge{font-family:'Caveat',cursive;font-size:.85rem;font-weight:700;background:var(--accent);
+    color:white;padding:2px 12px;border-radius:10px;letter-spacing:.08em;}
+  .section-title{font-family:'Caveat',cursive;font-size:2rem;font-weight:700;color:var(--ink);margin:8px 0 4px;line-height:1.2;}
+  .sn{font-family:'Special Elite',cursive;color:var(--accent);margin-right:6px;font-size:1.7rem;}
+  .divider{border:none;border-top:2.5px solid var(--accent);margin:6px 0 18px;border-radius:2px;}
+  h2.topic{font-family:'Caveat',cursive;font-size:1.45rem;font-weight:700;color:var(--accent);
+    margin:20px 0 8px;padding-bottom:3px;border-bottom:1.5px dashed var(--rule-line);}
+  h3.sub{font-family:'Kalam',cursive;font-size:1.1rem;font-weight:700;color:var(--purple);margin:14px 0 6px;}
+  .def-box,.rule-box,.note-box,.purple-box,.orange-box{border-radius:8px;padding:13px 16px;margin:14px 0;font-size:.97rem;line-height:1.65;}
+  .def-box{background:var(--blue-light);border-left:4px solid var(--blue);}
+  .def-box::before{content:'📘 Definition';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--blue);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .rule-box{background:var(--green-light);border-left:4px solid var(--green);}
+  .rule-box::before{content:'📗 Key Result';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--green);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .note-box{background:var(--red-light);border-left:4px solid var(--red);}
+  .note-box::before{content:'⚠️ Exam Tip';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--red);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .purple-box{background:var(--purple-light);border-left:4px solid var(--purple);}
+  .purple-box::before{content:'💡 Important';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--purple);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .orange-box{background:var(--orange-light);border-left:4px solid var(--orange);}
+  .orange-box::before{content:'🔧 How it Works';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--orange);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .teal-box{background:var(--teal-light);border-left:4px solid var(--teal);border-radius:8px;padding:13px 16px;margin:14px 0;font-size:.97rem;line-height:1.65;}
+  .teal-box::before{content:'✨ Feature';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--teal);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .qbox{background:#fffbf0;border:1.5px solid #e4cc88;border-radius:8px;padding:14px 16px;margin:14px 0;font-size:.96rem;}
+  .q-label{font-family:'Caveat',cursive;font-weight:700;font-size:1.05rem;color:var(--orange);margin-bottom:6px;}
+  .q-step{margin:5px 0;padding-left:16px;position:relative;line-height:1.6;color:var(--ink-light);}
+  .q-step::before{content:'→';position:absolute;left:0;color:var(--accent);font-weight:700;}
+  .q-ans{font-family:'Caveat',cursive;font-weight:700;font-size:1.05rem;color:var(--green);margin-top:8px;padding-top:6px;border-top:1px dashed #e4cc88;}
+  ul.plain{list-style:none;padding-left:0;margin:8px 0;}
+  ul.plain li{padding:4px 0 4px 22px;position:relative;line-height:1.6;font-size:.97rem;}
+  ul.plain li::before{content:'→';position:absolute;left:2px;color:var(--accent);font-weight:700;}
+  .formula{font-family:'Special Elite',cursive;background:rgba(14,116,144,.1);color:var(--teal);padding:2px 8px;border-radius:4px;font-size:.95em;display:inline-block;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:12px 0;}
+  @media(max-width:600px){.two-col{grid-template-columns:1fr;}}
+  .vs-box{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:12px 0;border-radius:8px;overflow:hidden;border:1.5px solid #d0d0d0;font-size:.93rem;}
+  .vs-left{background:#e0f2fe;padding:12px 14px;border-right:1.5px solid #d0d0d0;}
+  .vs-right{background:#d1fae5;padding:12px 14px;}
+  .vs-left strong,.vs-right strong{font-family:'Caveat',cursive;font-size:1.05rem;display:block;margin-bottom:6px;}
+  .vs-left strong{color:var(--blue);} .vs-right strong{color:var(--green);}
+  table.tt{width:100%;border-collapse:collapse;font-size:.9rem;margin:12px 0;}
+  table.tt th{background:var(--accent);color:white;padding:8px 12px;text-align:left;font-family:'Caveat',cursive;font-size:1rem;}
+  table.tt td{padding:7px 12px;border-bottom:1px solid var(--rule-line);}
+  table.tt tr:nth-child(even) td{background:rgba(14,116,144,.04);}
+  .step-card{display:flex;gap:12px;margin:10px 0;align-items:flex-start;}
+  .step-head{background:var(--accent);color:white;border-radius:50%;width:32px;height:32px;
+    display:flex;align-items:center;justify-content:center;font-family:'Caveat',cursive;font-weight:700;font-size:1rem;flex-shrink:0;margin-top:2px;}
+  .step-body{flex:1;line-height:1.65;font-size:.97rem;}
+  .page-num{position:absolute;bottom:14px;right:22px;font-family:'Caveat',cursive;font-size:.85rem;color:#999;}
+  .evo{display:flex;gap:0;margin:12px 0;border-radius:8px;overflow:hidden;font-size:.88rem;}
+  .evo-block{flex:1;padding:10px 12px;text-align:center;}
+  .evo-block .ev-label{font-family:'Caveat',cursive;font-weight:700;font-size:.9rem;display:block;margin-bottom:4px;}
+  .eb1{background:#fee2e2;} .eb1 .ev-label{color:var(--red);}
+  .eb2{background:#fef3c7;} .eb2 .ev-label{color:var(--orange);}
+  .eb3{background:#d1fae5;} .eb3 .ev-label{color:var(--green);}
+  .eb4{background:#dbeafe;} .eb4 .ev-label{color:var(--blue);}
+  .cover-page{width:760px;max-width:98vw;margin:0 auto 28px;
+    background:linear-gradient(135deg,#1c0a00 0%,#7c2d12 50%,#c2410c 100%);
+    border-radius:6px;box-shadow:6px 6px 20px rgba(0,0,0,.45);
+    padding:50px 60px 50px 80px;position:relative;overflow:hidden;color:white;min-height:460px;}
+  .cover-page::before{content:'';position:absolute;top:-60px;right:-60px;width:300px;height:300px;
+    background:radial-gradient(circle,rgba(253,186,116,.25) 0%,transparent 70%);border-radius:50%;}
+  .cover-page::after{content:'';position:absolute;bottom:-40px;left:40px;width:220px;height:220px;
+    background:radial-gradient(circle,rgba(251,191,36,.15) 0%,transparent 70%);border-radius:50%;}
+  .cover-holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-evenly;align-items:center;width:32px;}
+  .cover-subject{font-family:'Special Elite',cursive;font-size:.78rem;letter-spacing:.25em;text-transform:uppercase;color:#fed7aa;margin-bottom:8px;position:relative;z-index:1;}
+  .cover-title{font-family:'Caveat',cursive;font-size:3rem;font-weight:700;line-height:1.1;margin-bottom:6px;position:relative;z-index:1;}
+  .cover-unit{font-family:'Kalam',cursive;font-size:1.15rem;color:#fed7aa;margin-bottom:4px;position:relative;z-index:1;}
+  .cover-subtitle{font-family:'Kalam',cursive;font-size:.95rem;color:#fde68a;margin-bottom:22px;position:relative;z-index:1;}
+  .cover-part-badge{display:inline-block;background:#c2410c;color:white;font-family:'Caveat',cursive;
+    font-weight:700;font-size:1.1rem;padding:6px 20px;border-radius:20px;margin-bottom:22px;position:relative;z-index:1;letter-spacing:.06em;}
+  .cover-toc{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.2);padding-top:18px;}
+  .cover-toc h3{font-family:'Special Elite',cursive;font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:#fed7aa;margin-bottom:10px;}
+  .toc-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px dotted rgba(255,255,255,.12);}
+  .toc-sec{font-family:'Caveat',cursive;font-size:.98rem;font-weight:600;color:#f5f5f5;}
+  .toc-sec span.toc-num{color:#fed7aa;margin-right:8px;font-family:'Special Elite',cursive;}
+  .toc-pages{font-family:'Special Elite',cursive;font-size:.75rem;color:#a6adc8;background:rgba(255,255,255,.07);padding:2px 8px;border-radius:8px;}
+  .hl-yellow{background:#fff176;border-radius:3px;padding:0 3px;}
+  .hl-teal{background:#ccfbf1;border-radius:3px;padding:0 3px;}
+  p{line-height:1.7;margin:8px 0;font-size:.97rem;}
+  strong{color:var(--ink);}
+  /* Quick Revision special styles */
+  .rev-section{background:linear-gradient(135deg,#042f2e,#134e4a);color:white;border-radius:10px;padding:16px 20px;margin:14px 0;}
+  .rev-section h3{font-family:'Caveat',cursive;font-size:1.15rem;color:#5eead4;margin-bottom:8px;border-bottom:1px solid rgba(255,255,255,.2);padding-bottom:4px;}
+  .rev-section ul{list-style:none;padding:0;}
+  .rev-section ul li{padding:3px 0 3px 20px;position:relative;font-size:.9rem;color:#e2e8f0;line-height:1.55;}
+  .rev-section ul li::before{content:'◆';position:absolute;left:2px;color:#5eead4;font-size:.65rem;top:6px;}
+  .rev-formula{font-family:'Special Elite',cursive;background:rgba(94,234,212,.15);color:#5eead4;padding:2px 8px;border-radius:4px;font-size:.9em;}
+</style>
 </head>
 <body>
 
-<div class="part-nav">
-  <a href="../index.html" class="back">↩ Units</a>
-  <a href="part1.html">Part 1</a>
-  <a href="part2.html">Part 2</a>
-  <a href="part3.html" class="active">Part 3</a>
-</div>
+<!-- ═══ PART NAV ═══ -->
+<nav class="part-nav">
+  <a href="../index.html">↩ Units</a>
+  <a href="part1.html">◆ Part 1 — OS Intro &amp; Classifications</a>
+  <a href="part2.html">◆ Part 2 — Advanced System Types</a>
+  <a href="part3.html" class="active">◆ Part 3 — OS Structure &amp; Architecture</a>
+</nav>
 
-<div class="cover-page" style="background:linear-gradient(135deg,#4a148c 0%,#1a237e 100%);">
-  <div class="cover-subject">OPERATING SYSTEMS</div>
-  <div class="cover-title">Unit 1 — Part 3</div>
-  <div class="cover-unit">[ Awaiting Content ]</div>
-  <div class="cover-divider"></div>
+<!-- ═══ COVER PAGE ═══ -->
+<div class="cover-page">
+  <div class="cover-holes">
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+  </div>
+  <div class="cover-subject">Operating Systems</div>
+  <div class="cover-title">Unit 1 Notes</div>
+  <div class="cover-unit">Unit 1 — Introduction to Operating Systems</div>
+  <div class="cover-subtitle">Layered Structure · OS Components · Services · Reentrant Kernels · Monolithic · Microkernel</div>
+  <div class="cover-part-badge">📒 Part 3 of 3 — OS Structure &amp; Architecture</div>
   <div class="cover-toc">
-    <div class="cover-toc-item" style="opacity:0.6;font-style:italic;justify-content:center;"><span>Content to be added</span></div>
+    <h3>Contents — Part 3</h3>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§1</span> OS Structure — Layered Approach</div><div class="toc-pages">2 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§2</span> System Components</div><div class="toc-pages">2 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§3</span> Operating System Services</div><div class="toc-pages">2 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§4</span> Reentrant Kernels</div><div class="toc-pages">2 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§5</span> Monolithic vs Microkernel</div><div class="toc-pages">3 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§6</span> Quick Revision — All of Unit 1</div><div class="toc-pages">2 pages</div></div>
   </div>
 </div>
 
-<!-- ================================================
-     ADD CONTENT SECTIONS BELOW THIS LINE
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- §1 — OS STRUCTURE: LAYERED APPROACH  (2 pages)       -->
+<!-- ══════════════════════════════════════════════════════ -->
 
-     Each section pattern:
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Operating Systems — Unit 1</span>
+    <span class="unit-badge">SECTION 1</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§1</span> OS Structure — Layered Approach</h1>
+  <hr class="divider">
 
-     <div class="page">
-       <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
-       <div class="page-header">
-         <span class="date-tag">OS — Unit 1</span>
-         <span class="unit-badge">SECTION X</span>
-       </div>
-       <h1 class="section-title"><span class="sn">§X</span> Title Here</h1>
-       <hr class="divider">
-       ... content ...
-       <div class="page-num">1 / 1</div>
-     </div>
-     ================================================ -->
+  <div class="def-box">
+    The <strong>Layered Structure</strong> organizes the OS into a hierarchy of layers (levels), each built on top of the one below it. The <strong>bottom layer (Layer 0)</strong> is the hardware. The <strong>top layer</strong> is the user interface. Each layer uses services only from the layer directly below it and provides services only to the layer directly above it.
+  </div>
+
+  <h2 class="topic">The Layers (from bottom to top)</h2>
+
+  <div class="step-card">
+    <div class="step-head">0</div>
+    <div class="step-body"><strong>Hardware:</strong> Physical devices — CPU, memory, I/O controllers, buses. The foundation everything is built on.</div>
+  </div>
+  <div class="step-card">
+    <div class="step-head">1</div>
+    <div class="step-body"><strong>Kernel Interface to Hardware:</strong> Device drivers, interrupt handlers, memory controllers, disk controllers. Directly manages physical hardware.</div>
+  </div>
+  <div class="step-card">
+    <div class="step-head">2</div>
+    <div class="step-body"><strong>Kernel (Core OS):</strong> CPU scheduling, memory management (paging, virtual memory), file system, swapping, block I/O, signals, terminal handling.</div>
+  </div>
+  <div class="step-card">
+    <div class="step-head">3</div>
+    <div class="step-body"><strong>System Call Interface:</strong> The boundary between user space and kernel space. System calls like <code>open()</code>, <code>read()</code>, <code>write()</code>, <code>fork()</code>, <code>close()</code>.</div>
+  </div>
+  <div class="step-card">
+    <div class="step-head">4</div>
+    <div class="step-body"><strong>System Programs:</strong> Shells (sh, bash), compilers (cc), interpreters, libraries. Use system calls to provide utilities.</div>
+  </div>
+  <div class="step-card">
+    <div class="step-head">5</div>
+    <div class="step-body"><strong>Application Programs:</strong> Text editors (VI, pico), word processors (a.out), user applications. Interact with system programs and system calls.</div>
+  </div>
+
+  <div class="rule-box">
+    <strong>THE THE key principle:</strong> Layer N can ONLY use services provided by Layer N−1. It CANNOT skip layers. This enforces modularity and simplifies debugging — if a layer works correctly, only the layer above it can cause problems at that level.
+  </div>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Operating Systems — Unit 1</span>
+    <span class="unit-badge">SECTION 1</span>
+  </div>
+
+  <h2 class="topic">Advantages of Layered Structure</h2>
+  <ul class="plain">
+    <li><strong>Modularity:</strong> Each layer can be designed, implemented, and tested independently</li>
+    <li><strong>Simplicity of construction:</strong> Layers are built one at a time — each uses a simpler, tested foundation</li>
+    <li><strong>Easy debugging:</strong> Bugs are isolated to specific layers</li>
+    <li><strong>Abstraction:</strong> Higher layers don't need to know hardware details</li>
+    <li><strong>Maintainability:</strong> Changes in one layer don't affect other layers (if interface is preserved)</li>
+  </ul>
+
+  <h2 class="topic">Disadvantages of Layered Structure</h2>
+  <ul class="plain">
+    <li><strong>Performance overhead:</strong> Each call must traverse multiple layers — slower than a monolithic approach</li>
+    <li><strong>Difficult to define layers clearly:</strong> Some functions overlap layers (e.g., disk cache affects both I/O and memory management)</li>
+    <li><strong>Less efficient:</strong> Cannot optimize across layer boundaries</li>
+  </ul>
+
+  <h2 class="topic">Real OS Layered Structure (UNIX)</h2>
+  <table class="tt">
+    <tr><th>Layer</th><th>Contents</th></tr>
+    <tr><td>User Programs</td><td>Application software, utilities</td></tr>
+    <tr><td>Shells, Compilers, Libraries</td><td>System-level programs</td></tr>
+    <tr><td>System Call Interface</td><td>fork, exec, open, read, write, close...</td></tr>
+    <tr><td>Kernel</td><td>Signals, I/O, file system, CPU scheduling, virtual memory, device drivers</td></tr>
+    <tr><td>Kernel–Hardware Interface</td><td>Interrupt handlers, device controllers</td></tr>
+    <tr><td>Hardware</td><td>CPU, RAM, Disks, Terminals, Controllers</td></tr>
+  </table>
+
+  <div class="note-box">
+    <strong>Most asked:</strong> "What are the advantages and disadvantages of layered OS structure?"<br>
+    <strong>Classic example system:</strong> THE Operating System by Dijkstra — first to use layered design (6 layers).<br>
+    <strong>Remember the system call boundary:</strong> System calls are how user programs request services from the kernel — this is the key boundary between user mode and kernel mode.
+  </div>
+
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- §2 — SYSTEM COMPONENTS  (2 pages)                    -->
+<!-- ══════════════════════════════════════════════════════ -->
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Operating Systems — Unit 1</span>
+    <span class="unit-badge">SECTION 2</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§2</span> System Components</h1>
+  <hr class="divider">
+
+  <p>An OS is composed of several major subsystems (components), each responsible for managing a specific category of resources. These components work together to provide a complete computing environment.</p>
+
+  <h2 class="topic">1. Process Management Component</h2>
+  <div class="def-box">
+    Responsible for creating, scheduling, and terminating processes. Manages process synchronization and communication (IPC). Handles deadlock detection and recovery.
+  </div>
+  <ul class="plain">
+    <li>Process creation and deletion</li>
+    <li>Process suspension and resumption</li>
+    <li>Mechanisms for process synchronization (semaphores, mutexes)</li>
+    <li>Mechanisms for process communication (pipes, shared memory, sockets)</li>
+    <li>Deadlock handling</li>
+  </ul>
+
+  <h2 class="topic">2. Memory Management Component</h2>
+  <div class="def-box">
+    Tracks which parts of memory are in use and by whom. Decides which processes to load into memory when space is available. Allocates and deallocates memory space as needed.
+  </div>
+  <ul class="plain">
+    <li>Process isolation (each process has its own memory space)</li>
+    <li>Automatic allocation and deallocation</li>
+    <li>Support for modular programming (dynamic linking)</li>
+    <li>Virtual memory support (paging, segmentation)</li>
+    <li>Protection and sharing</li>
+    <li>Long-term storage mapping</li>
+  </ul>
+
+  <h2 class="topic">3. File System Component</h2>
+  <div class="def-box">
+    Manages the long-term storage of information. Organizes data into files and directories. Controls access permissions to files and directories.
+  </div>
+  <ul class="plain">
+    <li>File creation, deletion, reading, writing</li>
+    <li>Directory creation and deletion</li>
+    <li>File permission management (read/write/execute)</li>
+    <li>Mapping files onto secondary storage (disk blocks)</li>
+    <li>Backup and recovery</li>
+  </ul>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Operating Systems — Unit 1</span>
+    <span class="unit-badge">SECTION 2</span>
+  </div>
+
+  <h2 class="topic">4. I/O System (Device Management) Component</h2>
+  <div class="orange-box">
+    Hides the peculiarities of hardware devices from the rest of the OS. Provides a uniform interface to all I/O devices.<br><br>
+    → <strong>Memory-management component</strong> — buffering, caching, spooling<br>
+    → <strong>General device-driver interface</strong> — uniform API for all devices<br>
+    → <strong>Drivers</strong> for specific hardware devices
+  </div>
+
+  <h2 class="topic">5. Secondary Storage Management</h2>
+  <ul class="plain">
+    <li>Free-space management (tracking empty disk blocks)</li>
+    <li>Storage allocation (allocating disk blocks to files)</li>
+    <li>Disk scheduling (minimizing seek time)</li>
+  </ul>
+
+  <h2 class="topic">6. Networking Component</h2>
+  <ul class="plain">
+    <li>Implementation of network protocols (TCP/IP)</li>
+    <li>Socket management</li>
+    <li>Remote file access, distributed computing support</li>
+  </ul>
+
+  <h2 class="topic">7. Protection System Component</h2>
+  <div class="purple-box">
+    Controls access by programs and users to resources defined by the OS.<br>
+    → Distinguish authorized from unauthorized use<br>
+    → Specify the controls to be imposed<br>
+    → Provide a means of enforcement<br>
+    → Hardware protection: dual mode (user/kernel), memory protection, CPU protection (timer)<br>
+    → Software protection: access control lists, capability lists, user/group permissions
+  </div>
+
+  <div class="note-box">
+    <strong>Exam tip:</strong> You may be asked to "list OS system components" — there are 7 major ones. The most important for exams are: Process Management, Memory Management, File System, I/O System, and Protection System.<br>
+    <strong>Virtual Memory</strong> is part of Memory Management. It allows programs to use more memory than physically available by using disk as an extension of RAM.
+  </div>
+
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- §3 — OPERATING SYSTEM SERVICES  (2 pages)            -->
+<!-- ══════════════════════════════════════════════════════ -->
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Operating Systems — Unit 1</span>
+    <span class="unit-badge">SECTION 3</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§3</span> Operating System Services</h1>
+  <hr class="divider">
+
+  <p>OS services are the facilities provided by the OS — to users, to programs, and for the efficient operation of the system itself.</p>
+
+  <h2 class="topic">Services for User / Program Benefit</h2>
+  <table class="tt">
+    <tr><th>Service</th><th>Description</th></tr>
+    <tr><td><strong>Program Execution</strong></td><td>Load program into memory, run it, terminate it (normally or abnormally)</td></tr>
+    <tr><td><strong>I/O Operations</strong></td><td>Running programs need I/O — OS provides controlled access to I/O devices</td></tr>
+    <tr><td><strong>File System Manipulation</strong></td><td>Read, write, create, delete, search, list files and directories</td></tr>
+    <tr><td><strong>Communications</strong></td><td>Exchange info between processes — on same computer or over network via shared memory or message passing</td></tr>
+    <tr><td><strong>Error Detection</strong></td><td>Detect and handle errors in CPU, memory, I/O devices, and user programs. Take appropriate action</td></tr>
+  </table>
+
+  <h2 class="topic">Services for System Efficiency</h2>
+  <table class="tt">
+    <tr><th>Service</th><th>Description</th></tr>
+    <tr><td><strong>Resource Allocation</strong></td><td>Allocate CPU, memory, files, I/O devices to multiple users/jobs running concurrently</td></tr>
+    <tr><td><strong>Accounting</strong></td><td>Track which users use how many and which kinds of resources — for billing or quota enforcement</td></tr>
+    <tr><td><strong>Protection &amp; Security</strong></td><td>Ensure all access to system resources is controlled; defend against insider and outsider threats</td></tr>
+  </table>
+
+  <h2 class="topic">System Calls — The Interface to OS Services</h2>
+  <div class="def-box">
+    <strong>System Call:</strong> A programmatic way for a process to request a service from the OS kernel. When a user program needs an OS service (e.g., read a file), it makes a system call which causes a <em>trap</em> into the kernel (switches from user mode to kernel mode). The kernel performs the requested operation and returns control to the user program.
+  </div>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Operating Systems — Unit 1</span>
+    <span class="unit-badge">SECTION 3</span>
+  </div>
+
+  <h2 class="topic">Categories of System Calls</h2>
+  <table class="tt">
+    <tr><th>Category</th><th>UNIX Examples</th><th>Windows Examples</th></tr>
+    <tr><td><strong>Process Control</strong></td><td>fork(), exit(), wait(), exec()</td><td>CreateProcess(), ExitProcess()</td></tr>
+    <tr><td><strong>File Management</strong></td><td>open(), read(), write(), close()</td><td>CreateFile(), ReadFile()</td></tr>
+    <tr><td><strong>Device Management</strong></td><td>ioctl(), read(), write()</td><td>SetConsoleMode()</td></tr>
+    <tr><td><strong>Information Maintenance</strong></td><td>getpid(), time(), alarm()</td><td>GetCurrentProcessId()</td></tr>
+    <tr><td><strong>Communications</strong></td><td>pipe(), socket(), send(), recv()</td><td>CreatePipe(), socket()</td></tr>
+    <tr><td><strong>Protection</strong></td><td>chmod(), umask(), chown()</td><td>SetFileSecurity()</td></tr>
+  </table>
+
+  <h2 class="topic">System Call Execution Flow</h2>
+  <div class="orange-box">
+    <strong>Step-by-step system call flow:</strong><br>
+    1. User program calls a library function (e.g., <code>printf()</code>)<br>
+    2. Library function invokes a system call (e.g., <code>write()</code>)<br>
+    3. System call places a system call number in a CPU register<br>
+    4. <strong>TRAP instruction</strong> switches CPU from User Mode → Kernel Mode<br>
+    5. Kernel reads the system call number → dispatches to the appropriate handler<br>
+    6. Handler executes the requested operation (e.g., writes to screen buffer)<br>
+    7. Returns result to user program; CPU switches back to User Mode
+  </div>
+
+  <div class="teal-box">
+    <strong>Key OS Service Interfaces:</strong><br>
+    → <strong>ISA (Instruction Set Architecture):</strong> Hardware–OS interface<br>
+    → <strong>ABI (Application Binary Interface):</strong> OS–compiled binary interface<br>
+    → <strong>API (Application Programming Interface):</strong> OS–source code interface (what programmers use)
+  </div>
+
+  <div class="note-box">
+    <strong>System call vs Library call:</strong> Library calls (like printf) run in user space. System calls cause a mode switch to kernel space. printf internally calls write() system call.<br>
+    <strong>Trap:</strong> A software-generated interrupt that switches to kernel mode — this is how system calls work.<br>
+    <strong>OS services = 8 main ones</strong> — 5 for users (execution, I/O, file, communications, error detection) + 3 for efficiency (resource allocation, accounting, protection).
+  </div>
+
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- §4 — REENTRANT KERNELS  (2 pages)                    -->
+<!-- ══════════════════════════════════════════════════════ -->
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Operating Systems — Unit 1</span>
+    <span class="unit-badge">SECTION 4</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§4</span> Reentrant Kernels</h1>
+  <hr class="divider">
+
+  <div class="def-box">
+    A <strong>Reentrant Kernel</strong> is one that can be interrupted while executing in kernel mode on behalf of one process, and then re-entered to execute kernel code on behalf of another process. In other words, multiple processes can be <strong>simultaneously inside the kernel</strong> at the same time.
+  </div>
+
+  <h2 class="topic">Why is Reentrancy Needed?</h2>
+  <p>In a non-reentrant kernel (like early UNIX): when one process makes a system call and is executing in kernel mode, if an interrupt arrives (e.g., a hardware interrupt), the kernel <em>cannot</em> switch to another process until the current kernel operation finishes. This causes poor CPU utilization and poor response time.</p>
+
+  <div class="purple-box">
+    A reentrant kernel allows:<br>
+    → Process A is executing a system call (e.g., read from disk)<br>
+    → Disk interrupt arrives — kernel suspends Process A's kernel execution<br>
+    → Kernel switches to Process B (which may also be in kernel mode for its own system call)<br>
+    → Both processes are "inside" the kernel simultaneously, each with their own kernel stack<br>
+    → This gives much better CPU utilization and faster response
+  </div>
+
+  <h2 class="topic">How Reentrancy is Achieved</h2>
+  <div class="orange-box">
+    Two main techniques to make a kernel reentrant:<br><br>
+    <strong>1. Kernel Functions Written as Reentrant Code:</strong><br>
+    → Kernel functions use only local variables (on the stack) — no shared global state during execution<br>
+    → If a function uses shared data, it must use locking mechanisms (mutexes, spinlocks) to protect it<br><br>
+    <strong>2. Per-Process Kernel Stack:</strong><br>
+    → Each process has its own kernel-mode stack<br>
+    → When a process enters the kernel (via system call), it uses its own stack<br>
+    → If the kernel switches to another process, that process uses its own separate kernel stack<br>
+    → The two stacks don't interfere with each other
+  </div>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Operating Systems — Unit 1</span>
+    <span class="unit-badge">SECTION 4</span>
+  </div>
+
+  <h2 class="topic">Non-Reentrant vs Reentrant Kernel</h2>
+  <div class="vs-box">
+    <div class="vs-left">
+      <strong>Non-Reentrant Kernel</strong>
+      Only one process can be in kernel mode at a time. Other processes must wait even if they have valid kernel requests. Simple to implement (no synchronization needed). Poor performance in multiprocessor systems. Example: Early UNIX kernels.
+    </div>
+    <div class="vs-right">
+      <strong>Reentrant Kernel</strong>
+      Multiple processes can be in kernel mode simultaneously. Each has its own kernel stack. Better performance and utilization. Requires careful synchronization of shared kernel data. Example: Linux kernel (fully preemptive/reentrant). Modern Windows kernel.
+    </div>
+  </div>
+
+  <h2 class="topic">Kernel Preemption</h2>
+  <div class="def-box">
+    A <strong>Preemptive Kernel</strong> (a stronger form of reentrant kernel) allows a process running in kernel mode to be <strong>forcibly preempted</strong> (interrupted and switched out) even while executing kernel code — not just at safe suspension points. This gives even better responsiveness for real-time tasks. Linux 2.6+ supports fully preemptive kernel.
+  </div>
+
+  <h2 class="topic">Importance in SMP Systems</h2>
+  <div class="teal-box">
+    In Symmetric Multiprocessing (SMP) systems, reentrancy is <em>essential</em>:<br>
+    → Multiple CPUs can execute kernel code simultaneously (for different processes)<br>
+    → The kernel must be reentrant so that CPU₀ and CPU₁ can both be in kernel mode at the same time without corrupting shared kernel data structures<br>
+    → Fine-grained locking (spinlocks, per-CPU data) is used to protect shared kernel data
+  </div>
+
+  <div class="note-box">
+    <strong>Key definition for exams:</strong> A reentrant kernel allows multiple processes to be in kernel mode simultaneously, each with its own kernel stack.<br>
+    <strong>Reentrant ≠ Multithreaded kernel:</strong> Reentrancy is about safe concurrent access to kernel code. A multithreaded kernel actually runs multiple kernel threads.<br>
+    <strong>Per-process kernel stack</strong> is the most common implementation technique — this is what enables reentrancy safely.
+  </div>
+
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- §5 — MONOLITHIC vs MICROKERNEL  (3 pages)            -->
+<!-- ══════════════════════════════════════════════════════ -->
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Operating Systems — Unit 1</span>
+    <span class="unit-badge">SECTION 5</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§5</span> Monolithic vs Microkernel</h1>
+  <hr class="divider">
+
+  <h2 class="topic">Monolithic Kernel</h2>
+  <div class="def-box">
+    In a <strong>Monolithic Kernel</strong>, the <strong>entire OS runs as a single large program in kernel space</strong>. All OS services — process management, memory management, file system, device drivers, networking — run in a single privileged address space. All services can directly call each other without any message passing overhead.
+  </div>
+
+  <div class="orange-box">
+    <strong>Structure:</strong> User programs → System Call Interface → [ONE BIG KERNEL: process mgmt + memory mgmt + file system + device drivers + networking + IPC + ...] → Hardware
+  </div>
+
+  <h3 class="sub">Advantages of Monolithic Kernel</h3>
+  <ul class="plain">
+    <li>Very <strong>fast performance</strong> — all subsystems communicate by direct function calls (no overhead)</li>
+    <li>Simple design — all OS code shares the same memory space</li>
+    <li>Easy to access shared kernel data structures directly</li>
+    <li>Mature, well-optimized (e.g., Linux has been tuned for decades)</li>
+  </ul>
+
+  <h3 class="sub">Disadvantages of Monolithic Kernel</h3>
+  <ul class="plain">
+    <li>A bug in <em>any</em> driver or subsystem can <strong>crash the entire OS</strong> (kernel panic / Blue Screen of Death)</li>
+    <li>Large kernel size — complex and hard to maintain</li>
+    <li>Adding new features requires recompiling the kernel</li>
+    <li>Poor security isolation — a compromised driver has full kernel privileges</li>
+  </ul>
+
+  <div class="teal-box">
+    <strong>Examples:</strong> Linux, UNIX (traditional), MS-DOS, original Windows (up to 9x)<br>
+    Linux uses <strong>Loadable Kernel Modules (LKMs)</strong> — a hybrid approach where device drivers can be added/removed dynamically without recompiling the full kernel.
+  </div>
+
+  <div class="page-num">1 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Operating Systems — Unit 1</span>
+    <span class="unit-badge">SECTION 5</span>
+  </div>
+
+  <h2 class="topic">Microkernel Architecture</h2>
+  <div class="def-box">
+    In a <strong>Microkernel</strong>, only the most <strong>essential functions</strong> are kept in the kernel (kernel space). Everything else — device drivers, file systems, networking, protocol stacks — is moved to <strong>user space</strong> as separate server processes. Communication between components happens via <strong>message passing (IPC)</strong>.
+  </div>
+
+  <div class="orange-box">
+    <strong>What stays in the Microkernel (minimal kernel):</strong><br>
+    → Basic process management &amp; scheduling<br>
+    → Basic memory management (address space management)<br>
+    → Inter-Process Communication (IPC / message passing)<br>
+    → Basic hardware abstraction<br><br>
+    <strong>What moves to user space (as servers):</strong><br>
+    → File system server<br>
+    → Device driver servers<br>
+    → Network protocol server<br>
+    → Security server<br>
+    → Virtual memory server
+  </div>
+
+  <h3 class="sub">How services work in a Microkernel</h3>
+  <div class="step-card">
+    <div class="step-head">1</div>
+    <div class="step-body">User program sends a <strong>request message</strong> to the kernel</div>
+  </div>
+  <div class="step-card">
+    <div class="step-head">2</div>
+    <div class="step-body">Kernel passes the message to the appropriate <strong>server process</strong> (e.g., file server)</div>
+  </div>
+  <div class="step-card">
+    <div class="step-head">3</div>
+    <div class="step-body">Server processes the request in <strong>user space</strong> and sends a reply message</div>
+  </div>
+  <div class="step-card">
+    <div class="step-head">4</div>
+    <div class="step-body">Kernel passes the <strong>reply</strong> back to the user program</div>
+  </div>
+
+  <div class="page-num">2 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Operating Systems — Unit 1</span>
+    <span class="unit-badge">SECTION 5</span>
+  </div>
+
+  <h2 class="topic">Microkernel: Advantages &amp; Disadvantages</h2>
+  <div class="two-col">
+    <div class="rule-box" style="margin:0;">
+      <strong>Advantages:</strong><br>
+      → <strong>Reliability:</strong> A crash in a driver/server doesn't crash the OS — just restart that server<br>
+      → <strong>Security:</strong> Services run in user space with limited privileges<br>
+      → <strong>Portability:</strong> Small kernel is easier to port to new hardware<br>
+      → <strong>Extensibility:</strong> Add new services without touching kernel code<br>
+      → <strong>Flexibility:</strong> Services can be added, removed, or modified at runtime
+    </div>
+    <div class="note-box" style="margin:0;">
+      <strong>Disadvantages:</strong><br>
+      → <strong>Performance overhead:</strong> Every service request needs multiple IPC message-passing operations — much slower than direct kernel calls<br>
+      → <strong>Complexity:</strong> IPC mechanisms are complex to implement correctly<br>
+      → <strong>Context switches:</strong> More mode switches between user/kernel space
+    </div>
+  </div>
+
+  <h2 class="topic">Monolithic vs Microkernel — Master Comparison</h2>
+  <table class="tt">
+    <tr><th>Feature</th><th>Monolithic</th><th>Microkernel</th></tr>
+    <tr><td>Services in kernel</td><td>All OS services</td><td>Only IPC, basic scheduling &amp; memory</td></tr>
+    <tr><td>Communication</td><td>Direct function calls</td><td>Message passing (IPC)</td></tr>
+    <tr><td>Performance</td><td>High (fast)</td><td>Lower (IPC overhead)</td></tr>
+    <tr><td>Reliability</td><td>Low (one bug crashes all)</td><td>High (isolated services)</td></tr>
+    <tr><td>Security</td><td>Low (all in kernel space)</td><td>High (services in user space)</td></tr>
+    <tr><td>Size</td><td>Large</td><td>Small (tiny kernel)</td></tr>
+    <tr><td>Portability</td><td>Harder (hardware-specific code in kernel)</td><td>Easier (small kernel)</td></tr>
+    <tr><td>Examples</td><td>Linux, UNIX, MS-DOS</td><td>Mach, QNX, MINIX, macOS (hybrid)</td></tr>
+  </table>
+
+  <div class="purple-box">
+    <strong>Hybrid Kernels</strong> — Most modern OS use a <em>hybrid</em> approach:<br>
+    → <strong>Windows NT/XP/10/11:</strong> Hybrid — microkernel design with some services (like graphics) running in kernel space for performance<br>
+    → <strong>macOS / iOS:</strong> Based on Mach microkernel + BSD Unix services (XNU kernel)<br>
+    → <strong>Linux:</strong> Monolithic but with loadable kernel modules for flexibility
+  </div>
+
+  <div class="note-box">
+    <strong>Most asked:</strong> "Compare monolithic and microkernel with advantages and disadvantages"<br>
+    <strong>Microkernel examples: Mach, QNX, MINIX</strong> — memorize these.<br>
+    <strong>Key microkernel fact:</strong> Only IPC + basic scheduling + basic memory management stay in kernel.<br>
+    <strong>Performance tradeoff:</strong> Monolithic = fast but fragile. Microkernel = reliable but slow due to IPC.
+  </div>
+
+  <div class="page-num">3 / 3</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- §6 — QUICK REVISION: ALL OF UNIT 1  (2 pages)        -->
+<!-- ══════════════════════════════════════════════════════ -->
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Operating Systems — Unit 1</span>
+    <span class="unit-badge">SECTION 6</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§6</span> Quick Revision — Unit 1</h1>
+  <hr class="divider">
+
+  <div class="rev-section">
+    <h3>🔵 OS Fundamentals</h3>
+    <ul>
+      <li>OS = intermediary between user and hardware; also Resource Allocator + Control Program</li>
+      <li>Kernel = program always running. Shell = user interface to kernel</li>
+      <li>Goals: Convenience, Efficiency, Ability to evolve</li>
+      <li>4 System Components: Hardware → OS → Application Programs → Users</li>
+      <li>ISA (hardware-OS) · ABI (OS-binary) · API (OS-source code)</li>
+    </ul>
+  </div>
+
+  <div class="rev-section">
+    <h3>🔴 OS Classification Summary</h3>
+    <ul>
+      <li><strong>Batch:</strong> No user interaction, similar jobs grouped, automatic job sequencing</li>
+      <li><strong>Multiprogrammed Batch:</strong> Multiple jobs in memory, CPU never idle, needs scheduling + memory mgmt</li>
+      <li><strong>SPOOL:</strong> Simultaneous Peripheral Operation On-Line — overlaps I/O and computation on disk</li>
+      <li><strong>Time-Sharing:</strong> CPU multiplexed with time quanta, interactive, minimizes response time</li>
+      <li><strong>Real-Time:</strong> Strict timing constraints. Hard (miss = fail) vs Soft (miss = degraded quality)</li>
+      <li><strong>Multiprocessor:</strong> Multiple CPUs, shared memory (tightly coupled). AMP (master-slave) vs SMP (all peers)</li>
+      <li><strong>Distributed:</strong> Multiple machines, separate memory, message passing (loosely coupled). C-S vs P2P</li>
+      <li><strong>Multithreaded:</strong> Multiple threads in one process. Threads share memory, have own PC + stack + registers</li>
+    </ul>
+  </div>
+
+  <div class="rev-section">
+    <h3>🟡 Booting Sequence</h3>
+    <ul>
+      <li>Power On Reset → CS=0xF000, IP=0xFFF0 → Physical addr = <span class="rev-formula">(CS&lt;&lt;4)+IP = 0xFFFF0</span></li>
+      <li>Real Mode (1MB limit, no protection) → BIOS (POST, device init, identify boot device)</li>
+      <li>BIOS reads Sector 0 (MBR) → loads to <span class="rev-formula">0x7C00</span></li>
+      <li>MBR = 512 bytes: <span class="rev-formula">446 (code) + 64 (partition table) + 2 (signature 0x55AA)</span></li>
+      <li>Bootloader: Real Mode → Protected Mode, setup GDT, load OS from disk</li>
+      <li>OS: sets up virtual memory, interrupt vectors, initializes devices, starts user process</li>
+    </ul>
+  </div>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Operating Systems — Unit 1</span>
+    <span class="unit-badge">SECTION 6</span>
+  </div>
+
+  <div class="rev-section">
+    <h3>🟢 OS Structure</h3>
+    <ul>
+      <li><strong>Layered:</strong> Each layer uses only the layer below it. THE OS by Dijkstra = first layered OS (6 layers). Advantage: modular, easy debug. Disadvantage: overhead, hard to define layers.</li>
+      <li><strong>System Components (7):</strong> Process Mgmt, Memory Mgmt, File System, I/O System, Secondary Storage, Networking, Protection</li>
+      <li><strong>OS Services (8):</strong> Program execution, I/O ops, File manipulation, Communications, Error detection | Resource allocation, Accounting, Protection &amp; Security</li>
+      <li><strong>System Call:</strong> User program → library → TRAP → Kernel mode → handler → return to user mode</li>
+    </ul>
+  </div>
+
+  <div class="rev-section">
+    <h3>🟣 Kernel Architecture</h3>
+    <ul>
+      <li><strong>Reentrant Kernel:</strong> Multiple processes can be in kernel mode simultaneously, each with own kernel stack. Essential for SMP. Linux kernel is fully preemptive/reentrant.</li>
+      <li><strong>Monolithic:</strong> All OS in one big kernel. Fast (direct calls) but fragile (one bug = kernel crash). Example: Linux, UNIX.</li>
+      <li><strong>Microkernel:</strong> Only IPC + basic scheduling + basic memory in kernel. Rest in user-space servers. Reliable, portable, extensible — but slow (IPC overhead). Examples: Mach, QNX, MINIX.</li>
+      <li><strong>Hybrid:</strong> Windows NT/10/11 (monolithic + micro), macOS/iOS (Mach + BSD = XNU), Linux (monolithic + LKMs)</li>
+    </ul>
+  </div>
+
+  <div class="rev-section">
+    <h3>⚡ Key Formulas &amp; Facts</h3>
+    <ul>
+      <li>Physical Address (Real Mode): <span class="rev-formula">(CS &lt;&lt; 4) + IP</span></li>
+      <li>MBR Size: <span class="rev-formula">512 bytes = 446 + 64 + 2</span></li>
+      <li>First instruction address on power-on: <span class="rev-formula">0xFFFF0</span></li>
+      <li>BIOS loads MBR to: <span class="rev-formula">0x7C00</span></li>
+      <li>SPOOL = <span class="rev-formula">Simultaneous Peripheral Operation On-Line</span></li>
+      <li>Multiprocessor throughput with N CPUs: <span class="rev-formula">actual &lt; N × single-CPU</span> (overhead)</li>
+      <li>Tightly coupled = shared memory | Loosely coupled = message passing</li>
+      <li>Hard RT: miss deadline = FAIL | Soft RT: miss deadline = degraded quality only</li>
+    </ul>
+  </div>
+
+  <div class="rev-section">
+    <h3>🔥 Top Exam Questions in Unit 1</h3>
+    <ul>
+      <li>Define OS. What are its goals / functions? (2 marks)</li>
+      <li>What is SPOOL? Explain with diagram. (4 marks)</li>
+      <li>Differentiate: Batch vs Time-Sharing OS (5 marks)</li>
+      <li>Differentiate: Hard Real-Time vs Soft Real-Time (4 marks)</li>
+      <li>Explain SMP vs AMP with diagrams (5 marks)</li>
+      <li>Explain the booting process / boot sequence (5 marks)</li>
+      <li>What is a Reentrant Kernel? Why is it needed? (4 marks)</li>
+      <li>Compare Monolithic and Microkernel architectures (10 marks)</li>
+      <li>What are OS services? List and explain. (5 marks)</li>
+      <li>Explain layered structure of OS with advantages and disadvantages (5 marks)</li>
+    </ul>
+  </div>
+
+  <div class="page-num">2 / 2</div>
+</div>
 
 <script>
-(function(){
-  var pages = document.querySelectorAll('.page');
-  var secPages = [];
-  pages.forEach(function(p){ if(p.querySelector('h1.section-title')) secPages.push(p); });
-  secPages.forEach(function(p,i){ p.id = 'sec-'+(i+1); });
-  var tocItems = document.querySelectorAll('.cover-toc-item');
-  tocItems.forEach(function(item, i){
-    if(i >= secPages.length) return;
-    item.style.cursor = 'pointer';
-    item.style.borderRadius = '4px';
-    item.style.transition = 'background 0.18s';
-    item.setAttribute('title', 'Click to jump to this section');
-    item.addEventListener('mouseenter', function(){ item.style.background='rgba(255,255,255,0.18)'; });
-    item.addEventListener('mouseleave', function(){ item.style.background=''; });
-    item.addEventListener('click', function(){ secPages[i].scrollIntoView({behavior:'smooth'}); });
-  });
-})();
+  document.querySelectorAll('.part-nav a').forEach(a=>{if(a.href===window.location.href)a.classList.add('active');});
 </script>
 </body>
 </html>

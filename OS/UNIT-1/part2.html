@@ -3,138 +3,715 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OS Unit 1 — Part 2</title>
-<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+<title>Operating Systems — Unit 1 | Part 2</title>
 <style>
-:root{--ink:#1a1a2e;--ink2:#2c2c54;--blue:#1565C0;--red:#b71c1c;--green:#1b5e20;--purple:#4a148c;--teal:#006064;--orange:#e65100;--line:#c5cae9;--page:#fafaf7;--highlight:#fff9c4;--box-blue:#e8f4fd;--box-green:#e8f5e9;--box-purple:#f3e5f5;--box-orange:#fff3e0;--box-red:#fce4ec;--box-teal:#e0f7fa;}
-*{margin:0;padding:0;box-sizing:border-box;}
-body{background:#e0e0e0;font-family:'Kalam',cursive;color:var(--ink);padding:30px 20px;}
-.page{background:var(--page);max-width:820px;margin:0 auto 40px;border-radius:4px;box-shadow:0 2px 16px rgba(0,0,0,0.18),0 0 0 1px rgba(0,0,0,0.08);padding:60px 70px 70px 90px;position:relative;min-height:1060px;background-image:repeating-linear-gradient(transparent,transparent 31px,var(--line) 31px,var(--line) 32px);background-position:0 56px;}
-.page::before{content:'';position:absolute;left:72px;top:0;bottom:0;width:1.5px;background:#ef9a9a;opacity:0.7;}
-.holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-around;padding:40px 0;}
-.hole{width:22px;height:22px;border-radius:50%;background:#e0e0e0;border:1.5px solid #bdbdbd;box-shadow:inset 0 1px 3px rgba(0,0,0,0.2);}
-.page-num{position:absolute;bottom:28px;right:50px;font-size:13px;color:#9e9e9e;}
-.page-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
-.date-tag{font-size:13px;color:#9e9e9e;}
-.unit-badge{color:#fff;font-size:13px;padding:2px 14px;border-radius:20px;font-weight:700;}
-h1.section-title{font-size:24px;font-weight:700;color:var(--ink2);text-align:center;margin:8px 0 4px;text-decoration:underline;text-underline-offset:5px;}
-h2.topic{font-size:18px;font-weight:700;color:var(--blue);margin:18px 0 6px;border-bottom:1.5px solid var(--blue);padding-bottom:2px;display:inline-block;}
-h3.sub{font-size:15px;font-weight:700;color:var(--purple);margin:12px 0 4px;}
-p,li{font-size:15px;line-height:32px;}
-.def-box{background:var(--box-blue);border-left:4px solid var(--blue);border-radius:0 6px 6px 0;padding:10px 16px;margin:10px 0 12px;font-size:15px;line-height:30px;}
-.note-box{background:var(--highlight);border-left:4px solid #f9a825;border-radius:0 6px 6px 0;padding:8px 14px;margin:8px 0 10px;font-size:14px;line-height:26px;}
-.rule-box{background:var(--box-green);border:1.5px solid #81c784;border-radius:6px;padding:10px 16px;margin:10px 0;font-size:14.5px;line-height:28px;}
-.purple-box{background:var(--box-purple);border-left:4px solid var(--purple);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
-.orange-box{background:var(--box-orange);border-left:4px solid var(--orange);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
-.teal-box{background:var(--box-teal);border-left:4px solid var(--teal);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
-.formula{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--blue);}
-.divider{border:none;border-top:1px dashed #b0bec5;margin:14px 0 10px;}
-ul.plain{list-style:none;padding-left:4px;}
-ul.plain li::before{content:'→ ';color:var(--blue);font-weight:700;}
-ul.plain li{font-size:15px;line-height:32px;}
-.qbox{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:12px 16px;margin:10px 0;}
-.q-label{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:2px;}
-.q-step{font-size:14px;color:var(--green);margin-top:4px;line-height:26px;}
-.q-ans{font-size:15px;color:var(--red);font-family:'Patrick Hand',cursive;margin-top:4px;}
-table.tt{width:100%;border-collapse:collapse;margin:8px 0;font-size:14px;}
-table.tt th{color:#fff;padding:7px 10px;text-align:center;}
-table.tt td{padding:6px 10px;border-bottom:1px solid #e0e0e0;text-align:center;font-family:'Patrick Hand',cursive;font-size:14px;}
-table.tt tr:nth-child(even) td{background:#f5f5f5;}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0;}
-.vs-box{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:12px 0;border-radius:8px;overflow:hidden;border:1.5px solid #90caf9;}
-.vs-left{background:#e8f4fd;padding:12px 14px;}
-.vs-right{background:var(--box-purple);padding:12px 14px;border-left:1px solid #90caf9;}
-.vs-head{font-size:15px;font-weight:700;margin-bottom:8px;}
-.vs-item{font-size:14px;line-height:26px;}
-.step-card{background:var(--box-purple);border-left:4px solid var(--purple);padding:8px 14px;margin:5px 0;border-radius:0 6px 6px 0;}
-.step-head{font-size:14px;font-weight:700;color:var(--purple);}
-.step-body{font-size:13.5px;line-height:24px;color:var(--ink2);}
-.cover-page{max-width:820px;margin:0 auto 40px;border-radius:8px;padding:80px 60px;text-align:center;color:#fff;box-shadow:0 4px 24px rgba(0,0,0,0.3);position:relative;overflow:hidden;}
-.cover-subject{font-size:14px;letter-spacing:3px;opacity:0.7;margin-bottom:16px;}
-.cover-title{font-size:40px;font-weight:700;line-height:1.2;margin-bottom:12px;}
-.cover-unit{font-size:20px;opacity:0.85;margin-bottom:30px;}
-.cover-divider{width:80px;height:3px;background:rgba(255,255,255,0.4);margin:0 auto 24px;border-radius:2px;}
-.cover-toc{text-align:left;background:rgba(255,255,255,0.1);border-radius:8px;padding:20px 28px;display:inline-block;min-width:420px;}
-.cover-toc-item{font-size:15px;line-height:32px;display:flex;justify-content:space-between;gap:20px;}
-.part-nav{max-width:820px;margin:0 auto 20px;display:flex;gap:10px;justify-content:center;align-items:center;font-family:'Kalam',cursive;flex-wrap:wrap;}
-.part-nav a{padding:6px 20px;border-radius:20px;background:#fff;border:1.5px solid #90caf9;color:var(--blue);text-decoration:none;font-size:14px;font-weight:700;}
-.part-nav a:hover:not(.active){background:#e3f2fd;}
-.part-nav .back{background:#f5f5f5;border-color:#ccc;color:#555;font-size:13px;}
-.unit-badge{background:#4a148c;}
-h1.section-title{text-decoration-color:#4a148c;}
-h1.section-title .sn{color:#4a148c;}
-.part-nav a.active{background:#4a148c;border-color:#4a148c;color:#fff;}
-@media(max-width:600px){
-body{padding:10px 0 30px;}
-.page{padding:20px 16px 30px 16px;min-height:unset;}
-.page::before{display:none;}
-.holes{display:none;}
-.cover-page{padding:40px 20px;margin:0 10px 20px;}
-.cover-toc{min-width:unset;width:100%;padding:14px 16px;}
-.part-nav{padding:0 10px;gap:6px;}
-.part-nav a{padding:5px 12px;font-size:13px;}
-.two-col{grid-template-columns:1fr;}
-.vs-box{grid-template-columns:1fr;}
-.vs-right{border-left:none;border-top:1px solid #90caf9;}
-nav.part-nav{padding:0 10px;gap:6px;}
-.cover-title{font-size:28px;}
-}</style>
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Kalam:wght@300;400;700&family=Special+Elite&display=swap');
+  :root{
+    --paper:#fdf9f0;--ink:#1a1a2e;--ink-light:#2d2d4e;
+    --blue:#1a56db;--blue-light:#dbeafe;
+    --green:#0d6b3f;--green-light:#d1fae5;
+    --orange:#c05621;--orange-light:#fef3c7;
+    --purple:#5b21b6;--purple-light:#ede9fe;
+    --red:#b91c1c;--red-light:#fee2e2;
+    --teal:#0e7490;--teal-light:#cffafe;
+    --rule-line:#c8d8e8;--margin-line:#f4a0a0;
+    --hole-bg:#e8e0d0;--shadow:rgba(0,0,0,0.08);
+    --accent:#0e7490;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:#082030;
+    background-image:radial-gradient(circle at 20% 50%,rgba(14,116,144,.2) 0%,transparent 55%),
+                     radial-gradient(circle at 80% 20%,rgba(13,107,63,.15) 0%,transparent 50%);
+    font-family:'Kalam',cursive;color:var(--ink);padding:20px 0 40px;min-height:100vh;
+  }
+  .part-nav{display:flex;justify-content:center;gap:10px;margin-bottom:28px;flex-wrap:wrap;padding:0 16px;}
+  .part-nav a{font-family:'Caveat',cursive;font-size:1rem;font-weight:600;padding:7px 20px;border-radius:20px;
+    text-decoration:none;background:rgba(255,255,255,.5);color:#555;border:2px solid rgba(255,255,255,.7);transition:all .2s;}
+  .part-nav a.active{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 4px 12px rgba(14,116,144,.45);}
+  .part-nav a:hover:not(.active){background:rgba(255,255,255,.8);color:#333;}
+  .page{width:760px;max-width:98vw;margin:0 auto 28px;background:var(--paper);border-radius:3px;
+    box-shadow:4px 4px 14px var(--shadow),0 1px 3px rgba(0,0,0,.12);position:relative;
+    padding:36px 44px 44px 80px;min-height:600px;
+    background-image:repeating-linear-gradient(transparent,transparent 31px,var(--rule-line) 31px,var(--rule-line) 32px);
+    background-position:0 64px;}
+  .page::before{content:'';position:absolute;left:68px;top:0;bottom:0;width:2px;background:var(--margin-line);opacity:.7;}
+  .holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;
+    justify-content:space-evenly;align-items:center;width:32px;}
+  .hole{width:18px;height:18px;border-radius:50%;background:var(--hole-bg);
+    border:1.5px solid #b8a898;box-shadow:inset 0 1px 3px rgba(0,0,0,.2);}
+  .page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+  .date-tag{font-family:'Special Elite',cursive;font-size:.72rem;color:var(--teal);letter-spacing:.05em;text-transform:uppercase;}
+  .unit-badge{font-family:'Caveat',cursive;font-size:.85rem;font-weight:700;background:var(--accent);
+    color:white;padding:2px 12px;border-radius:10px;letter-spacing:.08em;}
+  .section-title{font-family:'Caveat',cursive;font-size:2rem;font-weight:700;color:var(--ink);margin:8px 0 4px;line-height:1.2;}
+  .sn{font-family:'Special Elite',cursive;color:var(--accent);margin-right:6px;font-size:1.7rem;}
+  .divider{border:none;border-top:2.5px solid var(--accent);margin:6px 0 18px;border-radius:2px;}
+  h2.topic{font-family:'Caveat',cursive;font-size:1.45rem;font-weight:700;color:var(--accent);
+    margin:20px 0 8px;padding-bottom:3px;border-bottom:1.5px dashed var(--rule-line);}
+  h3.sub{font-family:'Kalam',cursive;font-size:1.1rem;font-weight:700;color:var(--purple);margin:14px 0 6px;}
+  .def-box,.rule-box,.note-box,.purple-box,.orange-box{border-radius:8px;padding:13px 16px;margin:14px 0;font-size:.97rem;line-height:1.65;}
+  .def-box{background:var(--blue-light);border-left:4px solid var(--blue);}
+  .def-box::before{content:'📘 Definition';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--blue);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .rule-box{background:var(--green-light);border-left:4px solid var(--green);}
+  .rule-box::before{content:'📗 Key Result';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--green);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .note-box{background:var(--red-light);border-left:4px solid var(--red);}
+  .note-box::before{content:'⚠️ Exam Tip';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--red);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .purple-box{background:var(--purple-light);border-left:4px solid var(--purple);}
+  .purple-box::before{content:'💡 Important';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--purple);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .orange-box{background:var(--orange-light);border-left:4px solid var(--orange);}
+  .orange-box::before{content:'🔧 How it Works';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--orange);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .teal-box{background:var(--teal-light);border-left:4px solid var(--teal);border-radius:8px;padding:13px 16px;margin:14px 0;font-size:.97rem;line-height:1.65;}
+  .teal-box::before{content:'✨ Feature';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--teal);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .qbox{background:#fffbf0;border:1.5px solid #e4cc88;border-radius:8px;padding:14px 16px;margin:14px 0;font-size:.96rem;}
+  .q-label{font-family:'Caveat',cursive;font-weight:700;font-size:1.05rem;color:var(--orange);margin-bottom:6px;}
+  .q-step{margin:5px 0;padding-left:16px;position:relative;line-height:1.6;color:var(--ink-light);}
+  .q-step::before{content:'→';position:absolute;left:0;color:var(--accent);font-weight:700;}
+  .q-ans{font-family:'Caveat',cursive;font-weight:700;font-size:1.05rem;color:var(--green);margin-top:8px;padding-top:6px;border-top:1px dashed #e4cc88;}
+  ul.plain{list-style:none;padding-left:0;margin:8px 0;}
+  ul.plain li{padding:4px 0 4px 22px;position:relative;line-height:1.6;font-size:.97rem;}
+  ul.plain li::before{content:'→';position:absolute;left:2px;color:var(--accent);font-weight:700;}
+  .formula{font-family:'Special Elite',cursive;background:rgba(14,116,144,.1);color:var(--teal);padding:2px 8px;border-radius:4px;font-size:.95em;display:inline-block;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:12px 0;}
+  @media(max-width:600px){.two-col{grid-template-columns:1fr;}}
+  .vs-box{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:12px 0;border-radius:8px;overflow:hidden;border:1.5px solid #d0d0d0;font-size:.93rem;}
+  .vs-left{background:#e0f2fe;padding:12px 14px;border-right:1.5px solid #d0d0d0;}
+  .vs-right{background:#d1fae5;padding:12px 14px;}
+  .vs-left strong,.vs-right strong{font-family:'Caveat',cursive;font-size:1.05rem;display:block;margin-bottom:6px;}
+  .vs-left strong{color:var(--blue);} .vs-right strong{color:var(--green);}
+  table.tt{width:100%;border-collapse:collapse;font-size:.9rem;margin:12px 0;}
+  table.tt th{background:var(--accent);color:white;padding:8px 12px;text-align:left;font-family:'Caveat',cursive;font-size:1rem;}
+  table.tt td{padding:7px 12px;border-bottom:1px solid var(--rule-line);}
+  table.tt tr:nth-child(even) td{background:rgba(14,116,144,.04);}
+  .step-card{display:flex;gap:12px;margin:10px 0;align-items:flex-start;}
+  .step-head{background:var(--accent);color:white;border-radius:50%;width:32px;height:32px;
+    display:flex;align-items:center;justify-content:center;font-family:'Caveat',cursive;font-weight:700;font-size:1rem;flex-shrink:0;margin-top:2px;}
+  .step-body{flex:1;line-height:1.65;font-size:.97rem;}
+  .page-num{position:absolute;bottom:14px;right:22px;font-family:'Caveat',cursive;font-size:.85rem;color:#999;}
+  .evo{display:flex;gap:0;margin:12px 0;border-radius:8px;overflow:hidden;font-size:.88rem;}
+  .evo-block{flex:1;padding:10px 12px;text-align:center;}
+  .evo-block .ev-label{font-family:'Caveat',cursive;font-weight:700;font-size:.9rem;display:block;margin-bottom:4px;}
+  .eb1{background:#fee2e2;} .eb1 .ev-label{color:var(--red);}
+  .eb2{background:#fef3c7;} .eb2 .ev-label{color:var(--orange);}
+  .eb3{background:#d1fae5;} .eb3 .ev-label{color:var(--green);}
+  .eb4{background:#dbeafe;} .eb4 .ev-label{color:var(--blue);}
+  .cover-page{width:760px;max-width:98vw;margin:0 auto 28px;
+    background:linear-gradient(135deg,#1e1b4b 0%,#312e81 50%,#4f46e5 100%);
+    border-radius:6px;box-shadow:6px 6px 20px rgba(0,0,0,.45);
+    padding:50px 60px 50px 80px;position:relative;overflow:hidden;color:white;min-height:460px;}
+  .cover-page::before{content:'';position:absolute;top:-60px;right:-60px;width:300px;height:300px;
+    background:radial-gradient(circle,rgba(167,139,250,.25) 0%,transparent 70%);border-radius:50%;}
+  .cover-page::after{content:'';position:absolute;bottom:-40px;left:40px;width:220px;height:220px;
+    background:radial-gradient(circle,rgba(251,191,36,.15) 0%,transparent 70%);border-radius:50%;}
+  .cover-holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-evenly;align-items:center;width:32px;}
+  .cover-subject{font-family:'Special Elite',cursive;font-size:.78rem;letter-spacing:.25em;text-transform:uppercase;color:#a5b4fc;margin-bottom:8px;position:relative;z-index:1;}
+  .cover-title{font-family:'Caveat',cursive;font-size:3rem;font-weight:700;line-height:1.1;margin-bottom:6px;position:relative;z-index:1;}
+  .cover-unit{font-family:'Kalam',cursive;font-size:1.15rem;color:#c7d2fe;margin-bottom:4px;position:relative;z-index:1;}
+  .cover-subtitle{font-family:'Kalam',cursive;font-size:.95rem;color:#fde68a;margin-bottom:22px;position:relative;z-index:1;}
+  .cover-part-badge{display:inline-block;background:#4f46e5;color:white;font-family:'Caveat',cursive;
+    font-weight:700;font-size:1.1rem;padding:6px 20px;border-radius:20px;margin-bottom:22px;position:relative;z-index:1;letter-spacing:.06em;}
+  .cover-toc{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.2);padding-top:18px;}
+  .cover-toc h3{font-family:'Special Elite',cursive;font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:#a5b4fc;margin-bottom:10px;}
+  .toc-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px dotted rgba(255,255,255,.12);}
+  .toc-sec{font-family:'Caveat',cursive;font-size:.98rem;font-weight:600;color:#f5f5f5;}
+  .toc-sec span.toc-num{color:#a5b4fc;margin-right:8px;font-family:'Special Elite',cursive;}
+  .toc-pages{font-family:'Special Elite',cursive;font-size:.75rem;color:#a6adc8;background:rgba(255,255,255,.07);padding:2px 8px;border-radius:8px;}
+  .hl-yellow{background:#fff176;border-radius:3px;padding:0 3px;}
+  .hl-teal{background:#ccfbf1;border-radius:3px;padding:0 3px;}
+  p{line-height:1.7;margin:8px 0;font-size:.97rem;}
+  strong{color:var(--ink);}
+  code{font-family:'Courier New',monospace;font-size:.9em;background:rgba(0,0,0,.07);padding:1px 5px;border-radius:3px;}
+</style>
 </head>
 <body>
 
-<div class="part-nav">
-  <a href="../index.html" class="back">↩ Units</a>
-  <a href="part1.html">Part 1</a>
-  <a href="part2.html" class="active">Part 2</a>
-  <a href="part3.html">Part 3</a>
-</div>
+<!-- ═══ PART NAV ═══ -->
+<nav class="part-nav">
+  <a href="../index.html">↩ Units</a>
+  <a href="part1.html">◆ Part 1 — OS Intro &amp; Classifications</a>
+  <a href="part2.html" class="active">◆ Part 2 — Advanced System Types</a>
+  <a href="part3.html">◆ Part 3 — OS Structure &amp; Architecture</a>
+</nav>
 
-<div class="cover-page" style="background:linear-gradient(135deg,#4a148c 0%,#1a237e 100%);">
-  <div class="cover-subject">OPERATING SYSTEMS</div>
-  <div class="cover-title">Unit 1 — Part 2</div>
-  <div class="cover-unit">[ Awaiting Content ]</div>
-  <div class="cover-divider"></div>
+<!-- ═══ COVER PAGE ═══ -->
+<div class="cover-page">
+  <div class="cover-holes">
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+  </div>
+  <div class="cover-subject">Operating Systems</div>
+  <div class="cover-title">Unit 1 Notes</div>
+  <div class="cover-unit">Unit 1 — Introduction to Operating Systems</div>
+  <div class="cover-subtitle">Multiprocessor · Multiuser · Multiprocess · Multithreaded · Distributed</div>
+  <div class="cover-part-badge">📒 Part 2 of 3 — Advanced System Types</div>
   <div class="cover-toc">
-    <div class="cover-toc-item" style="opacity:0.6;font-style:italic;justify-content:center;"><span>Content to be added</span></div>
+    <h3>Contents — Part 2</h3>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§1</span> Multiprocessor Systems</div><div class="toc-pages">3 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§2</span> Multiuser Systems</div><div class="toc-pages">2 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§3</span> Multiprocess Systems</div><div class="toc-pages">2 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§4</span> Multithreaded Systems</div><div class="toc-pages">2 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§5</span> Distributed Systems</div><div class="toc-pages">3 pages</div></div>
   </div>
 </div>
 
-<!-- ================================================
-     ADD CONTENT SECTIONS BELOW THIS LINE
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- §1 — MULTIPROCESSOR SYSTEMS  (3 pages)               -->
+<!-- ══════════════════════════════════════════════════════ -->
 
-     Each section pattern:
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Operating Systems — Unit 1</span>
+    <span class="unit-badge">SECTION 1</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§1</span> Multiprocessor Systems</h1>
+  <hr class="divider">
 
-     <div class="page">
-       <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
-       <div class="page-header">
-         <span class="date-tag">OS — Unit 1</span>
-         <span class="unit-badge">SECTION X</span>
-       </div>
-       <h1 class="section-title"><span class="sn">§X</span> Title Here</h1>
-       <hr class="divider">
-       ... content ...
-       <div class="page-num">1 / 1</div>
-     </div>
-     ================================================ -->
+  <div class="def-box">
+    <strong>Multiprocessor System (Parallel System)</strong> — A system with <strong>more than one CPU</strong> in close communication. Also called a <strong>tightly coupled system</strong> because processors share the same main memory, I/O devices, and other resources. Communication between processors happens through the shared memory bus.
+  </div>
+
+  <h2 class="topic">Advantages of Multiprocessor Systems</h2>
+  <ul class="plain">
+    <li><strong>Increased Throughput:</strong> More work is done in the same time. However, increasing processors by N does <em>not</em> decrease time by N due to overhead in coordination</li>
+    <li><strong>Economy of Scale (Economical):</strong> Shared peripherals (disk, printer) and power supplies. Multiple programs can run on the same data set on a shared disk</li>
+    <li><strong>Increased Reliability:</strong> Failure of one processor does not halt the entire system — remaining processors continue working</li>
+    <li><strong>Graceful Degradation:</strong> Ability to continue providing service proportional to the level of surviving hardware (also called <em>fail-soft</em> system)</li>
+  </ul>
+
+  <div class="purple-box">
+    <strong>Fault Tolerance Types (from Stallings):</strong><br>
+    → <strong>Spatial Redundancy:</strong> Multiple copies of hardware components<br>
+    → <strong>Temporal Redundancy:</strong> Repeat the operation if it fails<br>
+    → <strong>Information Redundancy:</strong> Add extra bits (like checksums) to allow error detection/correction
+  </div>
+
+  <h2 class="topic">Types of Multiprocessing</h2>
+  <div class="vs-box">
+    <div class="vs-left">
+      <strong>Asymmetric Multiprocessing (AMP)</strong>
+      One <strong>master</strong> processor controls the system and schedules tasks to <strong>slave</strong> processors. Each slave is assigned a specific task. More common in extremely large systems. Simple to implement but the master can become a bottleneck.
+    </div>
+    <div class="vs-right">
+      <strong>Symmetric Multiprocessing (SMP)</strong>
+      All processors are <strong>peers</strong> — no master/slave relationship. Each processor can perform ALL OS tasks. All processors share the same memory and I/O. Most modern operating systems support SMP. Example: Modern Linux, Windows Server.
+    </div>
+  </div>
+
+  <div class="page-num">1 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Operating Systems — Unit 1</span>
+    <span class="unit-badge">SECTION 1</span>
+  </div>
+
+  <h2 class="topic">SMP Architecture (in detail)</h2>
+  <div class="orange-box">
+    In SMP, each CPU has its own set of <strong>registers</strong> and its own <strong>cache</strong>, but all CPUs share the same <strong>main memory</strong>. The structure looks like:<br><br>
+    CPU₀ [registers + cache] ─┐<br>
+    CPU₁ [registers + cache] ─┼── Shared Memory Bus ── RAM<br>
+    CPU₂ [registers + cache] ─┘<br><br>
+    All CPUs can run any OS process. The OS must synchronize access to shared data structures (ready queue, memory allocator, etc.) to avoid race conditions.
+  </div>
+
+  <h2 class="topic">Multicore Systems</h2>
+  <div class="def-box">
+    A <strong>multicore processor</strong> has multiple computing cores on a <strong>single chip</strong>. Each core has its own registers and cache but shares the chip-level cache and memory bus.<br><br>
+    <strong>Advantage over multi-chip:</strong> On-chip communication is <em>faster</em> than between-chip communication. Also more power-efficient and cheaper to manufacture.
+  </div>
+
+  <div class="teal-box">
+    <strong>Dual-Core Design:</strong> Two cores on the same chip — CPU core₀ and CPU core₁, each with registers and cache, both connected to shared memory. Modern processors are quad-core (4), octa-core (8), or more.
+  </div>
+
+  <h2 class="topic">AMP vs SMP Comparison</h2>
+  <table class="tt">
+    <tr><th>Feature</th><th>Asymmetric (AMP)</th><th>Symmetric (SMP)</th></tr>
+    <tr><td>Processor roles</td><td>Master + Slaves</td><td>All equal peers</td></tr>
+    <tr><td>Task assignment</td><td>Master assigns to slaves</td><td>Any CPU picks any task</td></tr>
+    <tr><td>Bottleneck</td><td>Master can bottleneck</td><td>No single bottleneck</td></tr>
+    <tr><td>Complexity</td><td>Simpler to implement</td><td>More complex synchronization</td></tr>
+    <tr><td>Use case</td><td>Very large systems</td><td>Modern desktops/servers</td></tr>
+    <tr><td>Example</td><td>Old mainframes</td><td>Linux, Windows Server</td></tr>
+  </table>
+
+  <div class="page-num">2 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Operating Systems — Unit 1</span>
+    <span class="unit-badge">SECTION 1</span>
+  </div>
+
+  <h2 class="topic">CPU Throughput Calculation</h2>
+  <div class="qbox">
+    <div class="q-label">🧪 Example: Throughput Speedup</div>
+    <div class="q-step">A single CPU system processes 100 jobs per hour. A 4-processor SMP system is used. Assuming 80% efficiency (due to coordination overhead), what is the throughput?</div>
+    <div class="q-step">Ideal throughput = 4 × 100 = 400 jobs/hour</div>
+    <div class="q-step">Actual throughput = 400 × 0.80 = <strong>320 jobs/hour</strong></div>
+    <div class="q-step">Speedup = 320 / 100 = <strong>3.2×</strong> (not 4× due to overhead)</div>
+    <div class="q-ans">✓ This illustrates why "increasing N processors does NOT decrease time by exactly N"</div>
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">🧪 Example: Graceful Degradation</div>
+    <div class="q-step">A 4-processor fail-soft system is running. Suddenly 1 processor fails. How does a graceful degradation system behave?</div>
+    <div class="q-step">System does NOT crash entirely.</div>
+    <div class="q-step">Remaining 3 processors take over — system continues to run at 75% capacity (3/4 of original power).</div>
+    <div class="q-step">This is called <strong>graceful degradation</strong> — service continues proportional to surviving hardware.</div>
+    <div class="q-ans">✓ Graceful degradation = partial failure → partial service (not complete failure)</div>
+  </div>
+
+  <div class="note-box">
+    <strong>Most asked in exams:</strong> "What is SMP? Advantages of multiprocessor systems?"<br>
+    <strong>Remember:</strong> Tightly coupled = shared memory (multiprocessor). Loosely coupled = separate memory (distributed).<br>
+    <strong>Graceful degradation vs fail-safe:</strong> Graceful degradation continues at reduced capacity. Fail-safe ensures safe shutdown.<br>
+    <strong>Multicore ≠ Multiprocessor:</strong> Multicore = multiple cores on ONE chip. Multiprocessor = multiple separate chips.
+  </div>
+
+  <div class="page-num">3 / 3</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- §2 — MULTIUSER SYSTEMS  (2 pages)                    -->
+<!-- ══════════════════════════════════════════════════════ -->
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Operating Systems — Unit 1</span>
+    <span class="unit-badge">SECTION 2</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§2</span> Multiuser Systems</h1>
+  <hr class="divider">
+
+  <div class="def-box">
+    A <strong>Multiuser System</strong> is an OS that allows <strong>multiple users to access the same computer system simultaneously</strong>. Each user appears to have dedicated resources, but actually shares the CPU, memory, and I/O through time-sharing and resource management techniques.
+  </div>
+
+  <h2 class="topic">Key Characteristics</h2>
+  <ul class="plain">
+    <li><strong>Simultaneous Access:</strong> Multiple users log in and work at the same time via terminals or network connections</li>
+    <li><strong>Resource Sharing:</strong> CPU, memory, disk, and peripherals are shared among all users</li>
+    <li><strong>User Isolation:</strong> Each user's data and processes are protected from other users</li>
+    <li><strong>Authentication:</strong> Each user must log in with credentials (username/password) — OS manages user accounts</li>
+    <li><strong>Fair CPU Allocation:</strong> Time-sharing ensures each user gets a fair share of CPU time</li>
+    <li><strong>File Permissions:</strong> Users can protect their files from being read or modified by other users</li>
+  </ul>
+
+  <h2 class="topic">Multiuser OS Requirements</h2>
+  <div class="orange-box">
+    To support multiple users, the OS must provide:<br>
+    → <strong>User account management</strong> (creation, deletion, password management)<br>
+    → <strong>Memory protection:</strong> User A cannot read/write User B's memory space<br>
+    → <strong>File system permissions:</strong> Read/Write/Execute permissions per user<br>
+    → <strong>CPU scheduling:</strong> Fair allocation among competing users<br>
+    → <strong>Quota management:</strong> Limit disk space, CPU time, memory per user<br>
+    → <strong>Audit/logging:</strong> Track who did what for security and accountability
+  </div>
+
+  <div class="teal-box">
+    <strong>Examples of Multiuser OS:</strong><br>
+    → <strong>UNIX / Linux:</strong> Classic multiuser OS — supports hundreds of simultaneous users<br>
+    → <strong>Windows Server:</strong> Multiuser through Remote Desktop Services<br>
+    → <strong>mainframe OS:</strong> IBM z/OS — thousands of simultaneous users<br>
+    → <strong>macOS:</strong> Supports multiple user accounts (UNIX-based)
+  </div>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Operating Systems — Unit 1</span>
+    <span class="unit-badge">SECTION 2</span>
+  </div>
+
+  <h2 class="topic">Multiuser vs Single-User OS</h2>
+  <table class="tt">
+    <tr><th>Feature</th><th>Single-User OS</th><th>Multiuser OS</th></tr>
+    <tr><td>Concurrent users</td><td>One at a time</td><td>Multiple simultaneously</td></tr>
+    <tr><td>Resource isolation</td><td>Not needed</td><td>Strictly enforced</td></tr>
+    <tr><td>Security &amp; permissions</td><td>Minimal</td><td>Full user-level permissions</td></tr>
+    <tr><td>CPU scheduling</td><td>Simple</td><td>Fair-share, priority-based</td></tr>
+    <tr><td>File protection</td><td>Optional</td><td>Mandatory (rwx bits)</td></tr>
+    <tr><td>Authentication</td><td>Optional login</td><td>Required login for each user</td></tr>
+    <tr><td>Examples</td><td>MS-DOS, early Windows</td><td>UNIX, Linux, Windows Server</td></tr>
+  </table>
+
+  <h2 class="topic">Protection &amp; Security in Multiuser Systems</h2>
+  <div class="purple-box">
+    The four main security concerns in multiuser systems (from Stallings):<br>
+    → <strong>Availability:</strong> System and data are available to authorized users when needed<br>
+    → <strong>Confidentiality:</strong> Only authorized users can read sensitive data<br>
+    → <strong>Data Integrity:</strong> Data cannot be altered by unauthorized users<br>
+    → <strong>Authenticity:</strong> Users and data sources can be verified as genuine
+  </div>
+
+  <div class="note-box">
+    <strong>Exam tip:</strong> Multiuser OS is often confused with Multitasking OS. Remember: Multiuser = multiple <em>people</em>. Multitasking = multiple <em>programs</em> (can be single user).<br>
+    <strong>UNIX permission model:</strong> rwxrwxrwx — owner, group, others. This is the foundation of multiuser file security.<br>
+    <strong>Multiuser requires:</strong> time-sharing (for CPU) + virtual memory (for memory isolation) + file permissions (for data isolation).
+  </div>
+
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- §3 — MULTIPROCESS SYSTEMS  (2 pages)                 -->
+<!-- ══════════════════════════════════════════════════════ -->
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Operating Systems — Unit 1</span>
+    <span class="unit-badge">SECTION 3</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§3</span> Multiprocess Systems</h1>
+  <hr class="divider">
+
+  <div class="def-box">
+    A <strong>Multiprocess System</strong> is one where multiple processes exist simultaneously in memory and compete for CPU time. The OS manages their execution through <strong>process scheduling, memory management, and IPC (Inter-Process Communication)</strong>. Processes are independent units with their own memory space.
+  </div>
+
+  <h2 class="topic">Process Recap (from context)</h2>
+  <div class="orange-box">
+    A <strong>Process</strong> = program in execution. It consists of:<br>
+    → <strong>Text section</strong> — the program code<br>
+    → <strong>Data section</strong> — global variables<br>
+    → <strong>Stack</strong> — function calls, local variables, return addresses<br>
+    → <strong>Heap</strong> — dynamically allocated memory (malloc, new)<br>
+    → <strong>Program Counter + CPU Registers</strong> — current execution state<br><br>
+    One program can create <strong>multiple processes</strong> (e.g., Chrome browser creates separate processes for each tab).
+  </div>
+
+  <h2 class="topic">Process States</h2>
+  <div class="evo">
+    <div class="evo-block eb1"><span class="ev-label">New</span>Being created</div>
+    <div class="evo-block eb2"><span class="ev-label">Ready</span>Waiting for CPU</div>
+    <div class="evo-block eb3"><span class="ev-label">Running</span>Executing on CPU</div>
+    <div class="evo-block eb4"><span class="ev-label">Waiting</span>Waiting for I/O</div>
+    <div class="evo-block eb1"><span class="ev-label">Terminated</span>Finished</div>
+  </div>
+
+  <h2 class="topic">Process Control Block (PCB)</h2>
+  <div class="def-box">
+    The <strong>PCB (Process Control Block)</strong> is a data structure maintained by the OS for every process. It stores everything the OS needs to know about a process — it is the "identity card" of a process.
+  </div>
+
+  <div class="two-col">
+    <ul class="plain">
+      <li>Process State (ready/running/waiting)</li>
+      <li>Program Counter</li>
+      <li>CPU Registers</li>
+      <li>CPU Scheduling info (priority)</li>
+    </ul>
+    <ul class="plain">
+      <li>Memory management info</li>
+      <li>Accounting info (CPU time used)</li>
+      <li>I/O status (open files, devices)</li>
+      <li>Process ID (PID)</li>
+    </ul>
+  </div>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Operating Systems — Unit 1</span>
+    <span class="unit-badge">SECTION 3</span>
+  </div>
+
+  <h2 class="topic">Context Switching</h2>
+  <div class="def-box">
+    <strong>Context Switch:</strong> When the CPU switches from one process to another, the OS must:<br>
+    1. Save the state of the <em>current</em> process into its PCB<br>
+    2. Load the state of the <em>next</em> process from its PCB<br><br>
+    ⚠️ Context switch = <strong>pure overhead</strong> — no useful computation happens during a switch.
+  </div>
+
+  <h2 class="topic">Process Scheduling Queues</h2>
+  <table class="tt">
+    <tr><th>Queue</th><th>Contains</th><th>Managed by</th></tr>
+    <tr><td><strong>Job Queue</strong></td><td>All processes in the system</td><td>Long-term scheduler</td></tr>
+    <tr><td><strong>Ready Queue</strong></td><td>Processes waiting for CPU in memory</td><td>Short-term scheduler</td></tr>
+    <tr><td><strong>Device Queue</strong></td><td>Processes waiting for a specific I/O device</td><td>Device manager</td></tr>
+  </table>
+
+  <h2 class="topic">Types of Schedulers</h2>
+  <div class="two-col">
+    <div class="def-box" style="margin:0;">
+      <strong>Short-Term (CPU) Scheduler</strong><br>
+      Selects which ready process runs next on CPU. Runs very frequently (milliseconds). Also called the <em>dispatcher</em>.
+    </div>
+    <div class="def-box" style="margin:0;">
+      <strong>Long-Term (Job) Scheduler</strong><br>
+      Decides which processes enter the ready queue from job queue. Controls degree of multiprogramming. Runs infrequently.
+    </div>
+  </div>
+  <div class="teal-box" style="margin-top:12px;">
+    <strong>Medium-Term Scheduler:</strong> Swaps processes in and out of memory to disk (swapping). Used to reduce the load on memory. Improves the mix of CPU-bound and I/O-bound processes.
+  </div>
+
+  <div class="note-box">
+    <strong>Process ≠ Program:</strong> A program is passive (a file on disk). A process is active (loaded into memory and running).<br>
+    <strong>Context switch overhead:</strong> Every time the CPU switches processes, time is wasted saving/loading state. This is why short time quanta in time-sharing = more overhead.<br>
+    <strong>PCB = identity of a process</strong> — if you're asked "what info does OS maintain per process?" the answer is PCB contents.
+  </div>
+
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- §4 — MULTITHREADED SYSTEMS  (2 pages)                -->
+<!-- ══════════════════════════════════════════════════════ -->
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Operating Systems — Unit 1</span>
+    <span class="unit-badge">SECTION 4</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§4</span> Multithreaded Systems</h1>
+  <hr class="divider">
+
+  <div class="def-box">
+    <strong>Multithreading</strong> is the ability of an OS to support <strong>multiple threads of execution within a single process</strong>. A <strong>thread</strong> is a lightweight unit of execution — also called a <em>lightweight process (LWP)</em>. Threads within the same process share the process's memory space, open files, and resources.
+  </div>
+
+  <h2 class="topic">Thread vs Process</h2>
+  <div class="vs-box">
+    <div class="vs-left">
+      <strong>Process</strong>
+      Heavyweight — has its own memory space, PCB, resources. Creating a process is expensive. Processes are isolated from each other. Communication via IPC (pipes, sockets). Context switch is costly.
+    </div>
+    <div class="vs-right">
+      <strong>Thread</strong>
+      Lightweight — shares memory with its process. Creating a thread is cheap. Threads share code, data, and heap. Communication via shared memory directly. Context switch is fast.
+    </div>
+  </div>
+
+  <h2 class="topic">What Each Thread Has (Private) vs Shares</h2>
+  <div class="two-col">
+    <div class="orange-box" style="margin:0;">
+      <strong>Private to each thread:</strong><br>
+      → Program Counter (PC)<br>
+      → CPU Registers<br>
+      → Stack (local variables)<br>
+      → Thread state (ready/running/waiting)
+    </div>
+    <div class="teal-box" style="margin:0;">
+      <strong>Shared by all threads in process:</strong><br>
+      → Code section (text)<br>
+      → Data section (global vars)<br>
+      → Heap (dynamic memory)<br>
+      → Open files and I/O resources
+    </div>
+  </div>
+
+  <h2 class="topic">Benefits of Multithreading</h2>
+  <ul class="plain">
+    <li><strong>Responsiveness:</strong> One thread can respond to user input while another does computation in the background</li>
+    <li><strong>Resource Sharing:</strong> Threads share process memory — no need for IPC mechanisms</li>
+    <li><strong>Economy:</strong> Much cheaper to create/destroy threads than processes</li>
+    <li><strong>Scalability:</strong> In multiprocessor systems, threads can run truly in parallel on different CPUs</li>
+    <li><strong>Utilization:</strong> While one thread waits for I/O, another thread can use the CPU</li>
+  </ul>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Operating Systems — Unit 1</span>
+    <span class="unit-badge">SECTION 4</span>
+  </div>
+
+  <h2 class="topic">Types of Threads</h2>
+  <div class="vs-box">
+    <div class="vs-left">
+      <strong>User-Level Threads (ULT)</strong>
+      Managed by a user-space thread library (e.g., POSIX pthreads). OS is unaware — sees only one process. Fast to create and switch. If one thread blocks, the whole process blocks.
+    </div>
+    <div class="vs-right">
+      <strong>Kernel-Level Threads (KLT)</strong>
+      Managed directly by the OS kernel. OS can schedule individual threads on different CPUs. If one thread blocks, others can still run. Slower to create due to kernel involvement.
+    </div>
+  </div>
+
+  <h2 class="topic">Real-World Multithreading Examples</h2>
+  <div class="purple-box">
+    → <strong>Web Server:</strong> Each client request handled by a separate thread — thousands of concurrent connections<br>
+    → <strong>Web Browser:</strong> Separate threads for rendering, JavaScript execution, network I/O, and UI updates<br>
+    → <strong>Word Processor:</strong> One thread for display, one for auto-save, one for spell-check<br>
+    → <strong>Database Server:</strong> One thread per transaction — concurrent queries handled in parallel<br>
+    → <strong>Video Game:</strong> Separate threads for graphics rendering, physics, AI, audio, and input
+  </div>
+
+  <h2 class="topic">Multithreading with SMP</h2>
+  <div class="rule-box">
+    In a <strong>Symmetric Multiprocessing (SMP)</strong> system with multithreading, the OS can schedule threads across multiple CPUs simultaneously. This is <strong>true parallelism</strong> — two threads of the same process can literally execute at the exact same moment on different processors.
+  </div>
+
+  <div class="note-box">
+    <strong>Thread vs Process — most asked comparison:</strong> Key answer = threads share memory, processes don't. Creating a thread is faster and cheaper.<br>
+    <strong>Concurrency vs Parallelism:</strong> Concurrency = multiple threads making progress (possibly by time-slicing on 1 CPU). Parallelism = threads running simultaneously on multiple CPUs.<br>
+    <strong>Multithreading ≠ Multiprocessing:</strong> Multithreading is within ONE process. Multiprocessing involves multiple separate processes.
+  </div>
+
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- §5 — DISTRIBUTED SYSTEMS  (3 pages)                  -->
+<!-- ══════════════════════════════════════════════════════ -->
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Operating Systems — Unit 1</span>
+    <span class="unit-badge">SECTION 5</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§5</span> Distributed Systems</h1>
+  <hr class="divider">
+
+  <div class="def-box">
+    A <strong>Distributed System</strong> is a collection of physically separate, possibly heterogeneous, computer systems that are <strong>networked together</strong> and appear to the user as a single coherent system. Each node has its own <strong>local memory</strong> and processors communicate via message passing over a network (not shared memory).
+  </div>
+
+  <div class="vs-box">
+    <div class="vs-left">
+      <strong>Tightly Coupled (Multiprocessor)</strong>
+      Shared memory. Processors on the same motherboard. Communication via memory bus. Fast communication. Examples: SMP servers, multicore CPUs.
+    </div>
+    <div class="vs-right">
+      <strong>Loosely Coupled (Distributed)</strong>
+      Separate memory per node. Communication via network (LAN/WAN). Slower communication. Examples: Cloud computing, clusters, P2P networks.
+    </div>
+  </div>
+
+  <h2 class="topic">Advantages of Distributed Systems</h2>
+  <ul class="plain">
+    <li><strong>Resource Sharing:</strong> Share printers, files, databases across the network</li>
+    <li><strong>Computation Speedup (Load Sharing):</strong> Distribute computation across multiple nodes to reduce processing time</li>
+    <li><strong>Reliability:</strong> If one site fails, remaining sites can continue operating — no single point of failure</li>
+    <li><strong>Communication:</strong> Easy information exchange (email, file transfer, messaging) between nodes</li>
+    <li><strong>Scalability:</strong> Add more nodes easily to increase capacity</li>
+  </ul>
+
+  <h2 class="topic">Network Types Used</h2>
+  <table class="tt">
+    <tr><th>Network</th><th>Full Form</th><th>Coverage</th><th>Example</th></tr>
+    <tr><td><strong>PAN</strong></td><td>Personal Area Network</td><td>~10 meters</td><td>Bluetooth, USB</td></tr>
+    <tr><td><strong>LAN</strong></td><td>Local Area Network</td><td>Building/campus</td><td>Ethernet, Wi-Fi</td></tr>
+    <tr><td><strong>MAN</strong></td><td>Metropolitan Area Network</td><td>City</td><td>Cable TV networks</td></tr>
+    <tr><td><strong>WAN</strong></td><td>Wide Area Network</td><td>Country/global</td><td>Internet, leased lines</td></tr>
+  </table>
+
+  <div class="page-num">1 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Operating Systems — Unit 1</span>
+    <span class="unit-badge">SECTION 5</span>
+  </div>
+
+  <h2 class="topic">Client-Server Model</h2>
+  <div class="def-box">
+    In the <strong>Client-Server</strong> model, the network is divided into <strong>servers</strong> (systems that provide services) and <strong>clients</strong> (systems that request services). Clients and servers communicate via request-response messages over the network.
+  </div>
+
+  <div class="two-col">
+    <div class="teal-box" style="margin:0;">
+      <strong>Compute-Server System</strong><br>
+      Provides an interface for clients to request computation services — e.g., running a database query, email processing, or printer services.
+    </div>
+    <div class="teal-box" style="margin:0;">
+      <strong>File-Server System</strong><br>
+      Provides an interface for clients to store and retrieve files — e.g., a web server (HTTP), FTP server, NFS (Network File System).
+    </div>
+  </div>
+
+  <h2 class="topic">Peer-to-Peer (P2P) Model</h2>
+  <div class="def-box">
+    In the <strong>P2P</strong> model, there is <strong>no distinction between clients and servers</strong>. All nodes are peers — each can act as client, server, or both simultaneously. To join a P2P network, a node either:<br>
+    → Registers its service with a central lookup service, OR<br>
+    → Broadcasts requests via a <strong>discovery protocol</strong>
+  </div>
+
+  <div class="purple-box">
+    <strong>P2P Examples:</strong><br>
+    → <strong>Napster / Gnutella:</strong> File sharing (music/video)<br>
+    → <strong>BitTorrent:</strong> Distributed file download<br>
+    → <strong>Skype:</strong> Hybrid P2P — centralized login server + decentralized peer communication (VoIP)<br>
+    → <strong>Blockchain networks:</strong> Bitcoin, Ethereum — fully decentralized P2P
+  </div>
+
+  <h2 class="topic">Client-Server vs P2P</h2>
+  <table class="tt">
+    <tr><th>Feature</th><th>Client-Server</th><th>Peer-to-Peer</th></tr>
+    <tr><td>Roles</td><td>Distinct client &amp; server</td><td>All nodes equal (peers)</td></tr>
+    <tr><td>Centralization</td><td>Centralized server</td><td>Decentralized</td></tr>
+    <tr><td>Single point of failure</td><td>Yes (server fails → system fails)</td><td>No (other peers continue)</td></tr>
+    <tr><td>Scalability</td><td>Limited by server capacity</td><td>Scales with more peers</td></tr>
+    <tr><td>Security</td><td>Easier to secure</td><td>Harder to secure</td></tr>
+    <tr><td>Example</td><td>Web servers, email servers</td><td>BitTorrent, Skype, Bitcoin</td></tr>
+  </table>
+
+  <div class="page-num">2 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Operating Systems — Unit 1</span>
+    <span class="unit-badge">SECTION 5</span>
+  </div>
+
+  <h2 class="topic">Big Picture: All System Types Compared</h2>
+  <table class="tt">
+    <tr><th>System Type</th><th>Core Idea</th><th>Coupling</th><th>Key Trait</th></tr>
+    <tr><td><strong>Multiprocessor</strong></td><td>Multiple CPUs, shared memory</td><td>Tight</td><td>Parallel execution, throughput</td></tr>
+    <tr><td><strong>Multiuser</strong></td><td>Multiple users share one system</td><td>N/A</td><td>Time-sharing, isolation</td></tr>
+    <tr><td><strong>Multiprocess</strong></td><td>Multiple processes, one CPU</td><td>N/A</td><td>Concurrent execution, scheduling</td></tr>
+    <tr><td><strong>Multithreaded</strong></td><td>Multiple threads in one process</td><td>N/A</td><td>Shared memory, lightweight</td></tr>
+    <tr><td><strong>Distributed</strong></td><td>Multiple machines over network</td><td>Loose</td><td>Resource sharing, reliability</td></tr>
+    <tr><td><strong>Real-Time</strong></td><td>Timing-critical tasks</td><td>N/A</td><td>Deterministic, deadline-driven</td></tr>
+  </table>
+
+  <h2 class="topic">IPC in Distributed Systems</h2>
+  <div class="orange-box">
+    Distributed systems use <strong>message passing</strong> for IPC (not shared memory, since there is no shared memory):<br>
+    → <strong>Sockets:</strong> Low-level communication using IP address + port number. Format: <span class="formula">IP:PORT</span> e.g., 161.25.19.8:80<br>
+    → <strong>RPC (Remote Procedure Call):</strong> Call a function on a remote machine as if it were local<br>
+    → <strong>RMI (Remote Method Invocation):</strong> Java version of RPC — invoke methods on remote Java objects<br>
+    → <strong>Pipes:</strong> Unidirectional channel between two processes (ordinary pipes) or bidirectional (named pipes)
+  </div>
+
+  <div class="note-box">
+    <strong>Tightly vs Loosely coupled</strong> — always asked. Tightly = shared memory (multiprocessor). Loosely = message passing over network (distributed).<br>
+    <strong>Skype is hybrid P2P</strong> — it has a centralized login server but decentralized communication. This is a classic exam trick question.<br>
+    <strong>Advantages of distributed systems</strong> — 4 key ones: resource sharing, computation speedup, reliability, communication.<br>
+    <strong>TCP/IP is the most common</strong> network protocol for distributed systems communication.
+  </div>
+
+  <div class="page-num">3 / 3</div>
+</div>
 
 <script>
-(function(){
-  var pages = document.querySelectorAll('.page');
-  var secPages = [];
-  pages.forEach(function(p){ if(p.querySelector('h1.section-title')) secPages.push(p); });
-  secPages.forEach(function(p,i){ p.id = 'sec-'+(i+1); });
-  var tocItems = document.querySelectorAll('.cover-toc-item');
-  tocItems.forEach(function(item, i){
-    if(i >= secPages.length) return;
-    item.style.cursor = 'pointer';
-    item.style.borderRadius = '4px';
-    item.style.transition = 'background 0.18s';
-    item.setAttribute('title', 'Click to jump to this section');
-    item.addEventListener('mouseenter', function(){ item.style.background='rgba(255,255,255,0.18)'; });
-    item.addEventListener('mouseleave', function(){ item.style.background=''; });
-    item.addEventListener('click', function(){ secPages[i].scrollIntoView({behavior:'smooth'}); });
-  });
-})();
+  document.querySelectorAll('.part-nav a').forEach(a=>{if(a.href===window.location.href)a.classList.add('active');});
 </script>
 </body>
 </html>

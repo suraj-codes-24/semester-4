@@ -3,138 +3,686 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OS Unit 1 — Part 1</title>
-<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+<title>Operating Systems — Unit 1 | Part 1</title>
 <style>
-:root{--ink:#1a1a2e;--ink2:#2c2c54;--blue:#1565C0;--red:#b71c1c;--green:#1b5e20;--purple:#4a148c;--teal:#006064;--orange:#e65100;--line:#c5cae9;--page:#fafaf7;--highlight:#fff9c4;--box-blue:#e8f4fd;--box-green:#e8f5e9;--box-purple:#f3e5f5;--box-orange:#fff3e0;--box-red:#fce4ec;--box-teal:#e0f7fa;}
-*{margin:0;padding:0;box-sizing:border-box;}
-body{background:#e0e0e0;font-family:'Kalam',cursive;color:var(--ink);padding:30px 20px;}
-.page{background:var(--page);max-width:820px;margin:0 auto 40px;border-radius:4px;box-shadow:0 2px 16px rgba(0,0,0,0.18),0 0 0 1px rgba(0,0,0,0.08);padding:60px 70px 70px 90px;position:relative;min-height:1060px;background-image:repeating-linear-gradient(transparent,transparent 31px,var(--line) 31px,var(--line) 32px);background-position:0 56px;}
-.page::before{content:'';position:absolute;left:72px;top:0;bottom:0;width:1.5px;background:#ef9a9a;opacity:0.7;}
-.holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-around;padding:40px 0;}
-.hole{width:22px;height:22px;border-radius:50%;background:#e0e0e0;border:1.5px solid #bdbdbd;box-shadow:inset 0 1px 3px rgba(0,0,0,0.2);}
-.page-num{position:absolute;bottom:28px;right:50px;font-size:13px;color:#9e9e9e;}
-.page-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
-.date-tag{font-size:13px;color:#9e9e9e;}
-.unit-badge{color:#fff;font-size:13px;padding:2px 14px;border-radius:20px;font-weight:700;}
-h1.section-title{font-size:24px;font-weight:700;color:var(--ink2);text-align:center;margin:8px 0 4px;text-decoration:underline;text-underline-offset:5px;}
-h2.topic{font-size:18px;font-weight:700;color:var(--blue);margin:18px 0 6px;border-bottom:1.5px solid var(--blue);padding-bottom:2px;display:inline-block;}
-h3.sub{font-size:15px;font-weight:700;color:var(--purple);margin:12px 0 4px;}
-p,li{font-size:15px;line-height:32px;}
-.def-box{background:var(--box-blue);border-left:4px solid var(--blue);border-radius:0 6px 6px 0;padding:10px 16px;margin:10px 0 12px;font-size:15px;line-height:30px;}
-.note-box{background:var(--highlight);border-left:4px solid #f9a825;border-radius:0 6px 6px 0;padding:8px 14px;margin:8px 0 10px;font-size:14px;line-height:26px;}
-.rule-box{background:var(--box-green);border:1.5px solid #81c784;border-radius:6px;padding:10px 16px;margin:10px 0;font-size:14.5px;line-height:28px;}
-.purple-box{background:var(--box-purple);border-left:4px solid var(--purple);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
-.orange-box{background:var(--box-orange);border-left:4px solid var(--orange);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
-.teal-box{background:var(--box-teal);border-left:4px solid var(--teal);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
-.formula{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--blue);}
-.divider{border:none;border-top:1px dashed #b0bec5;margin:14px 0 10px;}
-ul.plain{list-style:none;padding-left:4px;}
-ul.plain li::before{content:'→ ';color:var(--blue);font-weight:700;}
-ul.plain li{font-size:15px;line-height:32px;}
-.qbox{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:12px 16px;margin:10px 0;}
-.q-label{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:2px;}
-.q-step{font-size:14px;color:var(--green);margin-top:4px;line-height:26px;}
-.q-ans{font-size:15px;color:var(--red);font-family:'Patrick Hand',cursive;margin-top:4px;}
-table.tt{width:100%;border-collapse:collapse;margin:8px 0;font-size:14px;}
-table.tt th{color:#fff;padding:7px 10px;text-align:center;}
-table.tt td{padding:6px 10px;border-bottom:1px solid #e0e0e0;text-align:center;font-family:'Patrick Hand',cursive;font-size:14px;}
-table.tt tr:nth-child(even) td{background:#f5f5f5;}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0;}
-.vs-box{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:12px 0;border-radius:8px;overflow:hidden;border:1.5px solid #90caf9;}
-.vs-left{background:#e8f4fd;padding:12px 14px;}
-.vs-right{background:var(--box-purple);padding:12px 14px;border-left:1px solid #90caf9;}
-.vs-head{font-size:15px;font-weight:700;margin-bottom:8px;}
-.vs-item{font-size:14px;line-height:26px;}
-.step-card{background:var(--box-purple);border-left:4px solid var(--purple);padding:8px 14px;margin:5px 0;border-radius:0 6px 6px 0;}
-.step-head{font-size:14px;font-weight:700;color:var(--purple);}
-.step-body{font-size:13.5px;line-height:24px;color:var(--ink2);}
-.cover-page{max-width:820px;margin:0 auto 40px;border-radius:8px;padding:80px 60px;text-align:center;color:#fff;box-shadow:0 4px 24px rgba(0,0,0,0.3);position:relative;overflow:hidden;}
-.cover-subject{font-size:14px;letter-spacing:3px;opacity:0.7;margin-bottom:16px;}
-.cover-title{font-size:40px;font-weight:700;line-height:1.2;margin-bottom:12px;}
-.cover-unit{font-size:20px;opacity:0.85;margin-bottom:30px;}
-.cover-divider{width:80px;height:3px;background:rgba(255,255,255,0.4);margin:0 auto 24px;border-radius:2px;}
-.cover-toc{text-align:left;background:rgba(255,255,255,0.1);border-radius:8px;padding:20px 28px;display:inline-block;min-width:420px;}
-.cover-toc-item{font-size:15px;line-height:32px;display:flex;justify-content:space-between;gap:20px;}
-.part-nav{max-width:820px;margin:0 auto 20px;display:flex;gap:10px;justify-content:center;align-items:center;font-family:'Kalam',cursive;flex-wrap:wrap;}
-.part-nav a{padding:6px 20px;border-radius:20px;background:#fff;border:1.5px solid #90caf9;color:var(--blue);text-decoration:none;font-size:14px;font-weight:700;}
-.part-nav a:hover:not(.active){background:#e3f2fd;}
-.part-nav .back{background:#f5f5f5;border-color:#ccc;color:#555;font-size:13px;}
-.unit-badge{background:#4a148c;}
-h1.section-title{text-decoration-color:#4a148c;}
-h1.section-title .sn{color:#4a148c;}
-.part-nav a.active{background:#4a148c;border-color:#4a148c;color:#fff;}
-@media(max-width:600px){
-body{padding:10px 0 30px;}
-.page{padding:20px 16px 30px 16px;min-height:unset;}
-.page::before{display:none;}
-.holes{display:none;}
-.cover-page{padding:40px 20px;margin:0 10px 20px;}
-.cover-toc{min-width:unset;width:100%;padding:14px 16px;}
-.part-nav{padding:0 10px;gap:6px;}
-.part-nav a{padding:5px 12px;font-size:13px;}
-.two-col{grid-template-columns:1fr;}
-.vs-box{grid-template-columns:1fr;}
-.vs-right{border-left:none;border-top:1px solid #90caf9;}
-nav.part-nav{padding:0 10px;gap:6px;}
-.cover-title{font-size:28px;}
-}</style>
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Kalam:wght@300;400;700&family=Special+Elite&display=swap');
+  :root{
+    --paper:#fdf9f0;--ink:#1a1a2e;--ink-light:#2d2d4e;
+    --blue:#1a56db;--blue-light:#dbeafe;
+    --green:#0d6b3f;--green-light:#d1fae5;
+    --orange:#c05621;--orange-light:#fef3c7;
+    --purple:#5b21b6;--purple-light:#ede9fe;
+    --red:#b91c1c;--red-light:#fee2e2;
+    --teal:#0e7490;--teal-light:#cffafe;
+    --rule-line:#c8d8e8;--margin-line:#f4a0a0;
+    --hole-bg:#e8e0d0;--shadow:rgba(0,0,0,0.08);
+    --accent:#0e7490;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:#082030;
+    background-image:radial-gradient(circle at 20% 50%,rgba(14,116,144,.2) 0%,transparent 55%),
+                     radial-gradient(circle at 80% 20%,rgba(13,107,63,.15) 0%,transparent 50%);
+    font-family:'Kalam',cursive;color:var(--ink);padding:20px 0 40px;min-height:100vh;
+  }
+  .part-nav{display:flex;justify-content:center;gap:10px;margin-bottom:28px;flex-wrap:wrap;padding:0 16px;}
+  .part-nav a{font-family:'Caveat',cursive;font-size:1rem;font-weight:600;padding:7px 20px;border-radius:20px;
+    text-decoration:none;background:rgba(255,255,255,.5);color:#555;border:2px solid rgba(255,255,255,.7);transition:all .2s;}
+  .part-nav a.active{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 4px 12px rgba(14,116,144,.45);}
+  .part-nav a:hover:not(.active){background:rgba(255,255,255,.8);color:#333;}
+  .page{width:760px;max-width:98vw;margin:0 auto 28px;background:var(--paper);border-radius:3px;
+    box-shadow:4px 4px 14px var(--shadow),0 1px 3px rgba(0,0,0,.12);position:relative;
+    padding:36px 44px 44px 80px;min-height:600px;
+    background-image:repeating-linear-gradient(transparent,transparent 31px,var(--rule-line) 31px,var(--rule-line) 32px);
+    background-position:0 64px;}
+  .page::before{content:'';position:absolute;left:68px;top:0;bottom:0;width:2px;background:var(--margin-line);opacity:.7;}
+  .holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;
+    justify-content:space-evenly;align-items:center;width:32px;}
+  .hole{width:18px;height:18px;border-radius:50%;background:var(--hole-bg);
+    border:1.5px solid #b8a898;box-shadow:inset 0 1px 3px rgba(0,0,0,.2);}
+  .page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+  .date-tag{font-family:'Special Elite',cursive;font-size:.72rem;color:var(--teal);letter-spacing:.05em;text-transform:uppercase;}
+  .unit-badge{font-family:'Caveat',cursive;font-size:.85rem;font-weight:700;background:var(--accent);
+    color:white;padding:2px 12px;border-radius:10px;letter-spacing:.08em;}
+  .section-title{font-family:'Caveat',cursive;font-size:2rem;font-weight:700;color:var(--ink);margin:8px 0 4px;line-height:1.2;}
+  .sn{font-family:'Special Elite',cursive;color:var(--accent);margin-right:6px;font-size:1.7rem;}
+  .divider{border:none;border-top:2.5px solid var(--accent);margin:6px 0 18px;border-radius:2px;}
+  h2.topic{font-family:'Caveat',cursive;font-size:1.45rem;font-weight:700;color:var(--accent);
+    margin:20px 0 8px;padding-bottom:3px;border-bottom:1.5px dashed var(--rule-line);}
+  h3.sub{font-family:'Kalam',cursive;font-size:1.1rem;font-weight:700;color:var(--purple);margin:14px 0 6px;}
+  .def-box,.rule-box,.note-box,.purple-box,.orange-box{border-radius:8px;padding:13px 16px;margin:14px 0;font-size:.97rem;line-height:1.65;}
+  .def-box{background:var(--blue-light);border-left:4px solid var(--blue);}
+  .def-box::before{content:'📘 Definition';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--blue);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .rule-box{background:var(--green-light);border-left:4px solid var(--green);}
+  .rule-box::before{content:'📗 Key Result';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--green);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .note-box{background:var(--red-light);border-left:4px solid var(--red);}
+  .note-box::before{content:'⚠️ Exam Tip';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--red);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .purple-box{background:var(--purple-light);border-left:4px solid var(--purple);}
+  .purple-box::before{content:'💡 Important';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--purple);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .orange-box{background:var(--orange-light);border-left:4px solid var(--orange);}
+  .orange-box::before{content:'🔧 How it Works';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--orange);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .teal-box{background:var(--teal-light);border-left:4px solid var(--teal);border-radius:8px;padding:13px 16px;margin:14px 0;font-size:.97rem;line-height:1.65;}
+  .teal-box::before{content:'✨ Feature';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--teal);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .qbox{background:#fffbf0;border:1.5px solid #e4cc88;border-radius:8px;padding:14px 16px;margin:14px 0;font-size:.96rem;}
+  .q-label{font-family:'Caveat',cursive;font-weight:700;font-size:1.05rem;color:var(--orange);margin-bottom:6px;}
+  .q-step{margin:5px 0;padding-left:16px;position:relative;line-height:1.6;color:var(--ink-light);}
+  .q-step::before{content:'→';position:absolute;left:0;color:var(--accent);font-weight:700;}
+  .q-ans{font-family:'Caveat',cursive;font-weight:700;font-size:1.05rem;color:var(--green);margin-top:8px;padding-top:6px;border-top:1px dashed #e4cc88;}
+  ul.plain{list-style:none;padding-left:0;margin:8px 0;}
+  ul.plain li{padding:4px 0 4px 22px;position:relative;line-height:1.6;font-size:.97rem;}
+  ul.plain li::before{content:'→';position:absolute;left:2px;color:var(--accent);font-weight:700;}
+  .formula{font-family:'Special Elite',cursive;background:rgba(14,116,144,.1);color:var(--teal);padding:2px 8px;border-radius:4px;font-size:.95em;display:inline-block;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:12px 0;}
+  @media(max-width:600px){.two-col{grid-template-columns:1fr;}}
+  .vs-box{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:12px 0;border-radius:8px;overflow:hidden;border:1.5px solid #d0d0d0;font-size:.93rem;}
+  .vs-left{background:#e0f2fe;padding:12px 14px;border-right:1.5px solid #d0d0d0;}
+  .vs-right{background:#d1fae5;padding:12px 14px;}
+  .vs-left strong,.vs-right strong{font-family:'Caveat',cursive;font-size:1.05rem;display:block;margin-bottom:6px;}
+  .vs-left strong{color:var(--blue);} .vs-right strong{color:var(--green);}
+  table.tt{width:100%;border-collapse:collapse;font-size:.9rem;margin:12px 0;}
+  table.tt th{background:var(--accent);color:white;padding:8px 12px;text-align:left;font-family:'Caveat',cursive;font-size:1rem;}
+  table.tt td{padding:7px 12px;border-bottom:1px solid var(--rule-line);}
+  table.tt tr:nth-child(even) td{background:rgba(14,116,144,.04);}
+  .step-card{display:flex;gap:12px;margin:10px 0;align-items:flex-start;}
+  .step-head{background:var(--accent);color:white;border-radius:50%;width:32px;height:32px;
+    display:flex;align-items:center;justify-content:center;font-family:'Caveat',cursive;font-weight:700;font-size:1rem;flex-shrink:0;margin-top:2px;}
+  .step-body{flex:1;line-height:1.65;font-size:.97rem;}
+  .page-num{position:absolute;bottom:14px;right:22px;font-family:'Caveat',cursive;font-size:.85rem;color:#999;}
+  .evo{display:flex;gap:0;margin:12px 0;border-radius:8px;overflow:hidden;font-size:.88rem;}
+  .evo-block{flex:1;padding:10px 12px;text-align:center;}
+  .evo-block .ev-label{font-family:'Caveat',cursive;font-weight:700;font-size:.9rem;display:block;margin-bottom:4px;}
+  .eb1{background:#fee2e2;} .eb1 .ev-label{color:var(--red);}
+  .eb2{background:#fef3c7;} .eb2 .ev-label{color:var(--orange);}
+  .eb3{background:#d1fae5;} .eb3 .ev-label{color:var(--green);}
+  .eb4{background:#dbeafe;} .eb4 .ev-label{color:var(--blue);}
+  .cover-page{width:760px;max-width:98vw;margin:0 auto 28px;
+    background:linear-gradient(135deg,#042f2e 0%,#134e4a 50%,#0d9488 100%);
+    border-radius:6px;box-shadow:6px 6px 20px rgba(0,0,0,.45);
+    padding:50px 60px 50px 80px;position:relative;overflow:hidden;color:white;min-height:460px;}
+  .cover-page::before{content:'';position:absolute;top:-60px;right:-60px;width:300px;height:300px;
+    background:radial-gradient(circle,rgba(94,234,212,.25) 0%,transparent 70%);border-radius:50%;}
+  .cover-page::after{content:'';position:absolute;bottom:-40px;left:40px;width:220px;height:220px;
+    background:radial-gradient(circle,rgba(251,191,36,.15) 0%,transparent 70%);border-radius:50%;}
+  .cover-holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-evenly;align-items:center;width:32px;}
+  .cover-subject{font-family:'Special Elite',cursive;font-size:.78rem;letter-spacing:.25em;text-transform:uppercase;color:#5eead4;margin-bottom:8px;position:relative;z-index:1;}
+  .cover-title{font-family:'Caveat',cursive;font-size:3rem;font-weight:700;line-height:1.1;margin-bottom:6px;position:relative;z-index:1;}
+  .cover-unit{font-family:'Kalam',cursive;font-size:1.15rem;color:#bbf7d0;margin-bottom:4px;position:relative;z-index:1;}
+  .cover-subtitle{font-family:'Kalam',cursive;font-size:.95rem;color:#fde68a;margin-bottom:22px;position:relative;z-index:1;}
+  .cover-part-badge{display:inline-block;background:var(--accent);color:white;font-family:'Caveat',cursive;
+    font-weight:700;font-size:1.1rem;padding:6px 20px;border-radius:20px;margin-bottom:22px;position:relative;z-index:1;letter-spacing:.06em;}
+  .cover-toc{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.2);padding-top:18px;}
+  .cover-toc h3{font-family:'Special Elite',cursive;font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:#5eead4;margin-bottom:10px;}
+  .toc-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px dotted rgba(255,255,255,.12);}
+  .toc-sec{font-family:'Caveat',cursive;font-size:.98rem;font-weight:600;color:#f5f5f5;}
+  .toc-sec span.toc-num{color:#5eead4;margin-right:8px;font-family:'Special Elite',cursive;}
+  .toc-pages{font-family:'Special Elite',cursive;font-size:.75rem;color:#a6adc8;background:rgba(255,255,255,.07);padding:2px 8px;border-radius:8px;}
+  .hl-yellow{background:#fff176;border-radius:3px;padding:0 3px;}
+  .hl-teal{background:#ccfbf1;border-radius:3px;padding:0 3px;}
+  p{line-height:1.7;margin:8px 0;font-size:.97rem;}
+  strong{color:var(--ink);}
+</style>
 </head>
 <body>
 
-<div class="part-nav">
-  <a href="../index.html" class="back">↩ Units</a>
-  <a href="part1.html" class="active">Part 1</a>
-  <a href="part2.html">Part 2</a>
-  <a href="part3.html">Part 3</a>
-</div>
+<!-- ═══ PART NAV ═══ -->
+<nav class="part-nav">
+  <a href="../index.html">↩ Units</a>
+  <a href="part1.html" class="active">◆ Part 1 — OS Intro &amp; Classifications</a>
+  <a href="part2.html">◆ Part 2 — Advanced System Types</a>
+  <a href="part3.html">◆ Part 3 — OS Structure &amp; Architecture</a>
+</nav>
 
-<div class="cover-page" style="background:linear-gradient(135deg,#4a148c 0%,#1a237e 100%);">
-  <div class="cover-subject">OPERATING SYSTEMS</div>
-  <div class="cover-title">Unit 1 — Part 1</div>
-  <div class="cover-unit">[ Awaiting Content ]</div>
-  <div class="cover-divider"></div>
+<!-- ═══ COVER PAGE ═══ -->
+<div class="cover-page">
+  <div class="cover-holes">
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+  </div>
+  <div class="cover-subject">Operating Systems</div>
+  <div class="cover-title">Unit 1 Notes</div>
+  <div class="cover-unit">Unit 1 — Introduction to Operating Systems</div>
+  <div class="cover-subtitle">OS Definitions · Batch Systems · Time-Sharing · Real-Time · Booting</div>
+  <div class="cover-part-badge">📒 Part 1 of 3 — OS Intro &amp; Basic Classifications</div>
   <div class="cover-toc">
-    <div class="cover-toc-item" style="opacity:0.6;font-style:italic;justify-content:center;"><span>Content to be added</span></div>
+    <h3>Contents — Part 1</h3>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§1</span> What is an OS &amp; Its Functions</div><div class="toc-pages">2 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§2</span> Batch Systems &amp; Spooling</div><div class="toc-pages">2 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§3</span> Interactive &amp; Time-Sharing Systems</div><div class="toc-pages">2 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§4</span> Real-Time Systems</div><div class="toc-pages">2 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§5</span> Computer Startup &amp; Booting Process</div><div class="toc-pages">2 pages</div></div>
   </div>
 </div>
 
-<!-- ================================================
-     ADD CONTENT SECTIONS BELOW THIS LINE
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- §1 — WHAT IS AN OS & ITS FUNCTIONS  (2 pages)        -->
+<!-- ══════════════════════════════════════════════════════ -->
 
-     Each section pattern:
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Operating Systems — Unit 1</span>
+    <span class="unit-badge">SECTION 1</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§1</span> What is an OS &amp; Its Functions</h1>
+  <hr class="divider">
 
-     <div class="page">
-       <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
-       <div class="page-header">
-         <span class="date-tag">OS — Unit 1</span>
-         <span class="unit-badge">SECTION X</span>
-       </div>
-       <h1 class="section-title"><span class="sn">§X</span> Title Here</h1>
-       <hr class="divider">
-       ... content ...
-       <div class="page-num">1 / 1</div>
-     </div>
-     ================================================ -->
+  <div class="def-box">
+    An <strong>Operating System (OS)</strong> is a program that acts as an <strong>intermediary between the user and the computer hardware</strong>. It manages the computer's hardware resources and provides a platform for application programs to run.<br><br>
+    It serves as an interface between: <em>User ↔ Hardware</em>, <em>Application Program ↔ Hardware</em>, and <em>Program ↔ Program</em>.
+  </div>
+
+  <h2 class="topic">Goals of an Operating System</h2>
+  <ul class="plain">
+    <li><strong>Convenience:</strong> Make the computer easier to use for the end user</li>
+    <li><strong>Efficiency:</strong> Use computer hardware resources in an efficient manner</li>
+    <li><strong>Ability to Evolve:</strong> Allow development &amp; testing of new functions without disrupting service</li>
+    <li><strong>Execute Programs:</strong> Provide an environment where user programs can run and problems can be solved</li>
+  </ul>
+
+  <h2 class="topic">Computer System Components</h2>
+  <p>A computer system has <strong>four</strong> main components:</p>
+  <table class="tt">
+    <tr><th>Component</th><th>Description</th><th>Examples</th></tr>
+    <tr><td><strong>Hardware</strong></td><td>Provides basic computing resources</td><td>CPU, Memory, I/O devices</td></tr>
+    <tr><td><strong>Operating System</strong></td><td>Controls &amp; coordinates hardware use among applications</td><td>Windows, Linux, macOS</td></tr>
+    <tr><td><strong>Application Programs</strong></td><td>Define how resources are used to solve user problems</td><td>Word processors, browsers, compilers</td></tr>
+    <tr><td><strong>Users</strong></td><td>People, machines, or other computers</td><td>End users, automated systems</td></tr>
+  </table>
+
+  <div class="purple-box">
+    <strong>Two views of OS:</strong><br>
+    🔷 <strong>Resource Allocator</strong> — Manages and allocates all resources (CPU time, memory, I/O, file storage). Decides between conflicting requests for efficient &amp; fair use.<br>
+    🔷 <strong>Control Program</strong> — Controls execution of programs to prevent errors and improper use of the computer; especially controls I/O device operations.
+  </div>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Operating Systems — Unit 1</span>
+    <span class="unit-badge">SECTION 1</span>
+  </div>
+
+  <h2 class="topic">Kernel &amp; Shell</h2>
+  <div class="def-box">
+    <strong>Kernel:</strong> The one program running at all times on the computer. It is the core of the OS, directly managing hardware resources. Everything else is either a system program or an application program.<br><br>
+    <strong>Shell:</strong> An interface between the user and the kernel. Application programs are started from the shell. Examples: <em>bash, sh, zsh</em> (Linux), <em>cmd, PowerShell</em> (Windows).
+  </div>
+
+  <h2 class="topic">Kernel Services</h2>
+  <div class="two-col">
+    <ul class="plain">
+      <li>I/O Management</li>
+      <li>Process Management</li>
+      <li>Memory Management</li>
+      <li>File System Management</li>
+      <li>Device Drivers Management</li>
+    </ul>
+    <ul class="plain">
+      <li>System Calls (API)</li>
+      <li>Interprocess Communication</li>
+      <li>Protection System</li>
+      <li>Networking</li>
+    </ul>
+  </div>
+
+  <h2 class="topic">OS Interfaces: ISA, ABI, API</h2>
+  <table class="tt">
+    <tr><th>Interface</th><th>Full Form</th><th>Between</th></tr>
+    <tr><td><strong>ISA</strong></td><td>Instruction Set Architecture</td><td>Hardware &amp; OS</td></tr>
+    <tr><td><strong>ABI</strong></td><td>Application Binary Interface</td><td>OS &amp; compiled programs</td></tr>
+    <tr><td><strong>API</strong></td><td>Application Programming Interface</td><td>OS &amp; application source code</td></tr>
+  </table>
+
+  <h2 class="topic">Evolution of OS — Generations</h2>
+  <div class="evo">
+    <div class="evo-block eb1"><span class="ev-label">1st Gen (1945–55)</span>Vacuum Tubes · Plugboards · No OS</div>
+    <div class="evo-block eb2"><span class="ev-label">2nd Gen (1955–65)</span>Transistors · Batch Systems</div>
+    <div class="evo-block eb3"><span class="ev-label">3rd Gen (1965–80)</span>ICs · Multiprogramming</div>
+    <div class="evo-block eb4"><span class="ev-label">4th Gen (1980–now)</span>LSI · Personal Computers</div>
+  </div>
+
+  <div class="note-box">
+    <strong>Common exam question:</strong> "What are the two main roles of an OS?" → Answer: <em>Resource Allocator</em> and <em>Control Program</em>.<br>
+    <strong>Don't confuse</strong> the Kernel (always running) with the Shell (user interface to kernel). The kernel IS the OS core; the shell is just a program on top of it.<br>
+    <strong>ISA vs ABI vs API</strong> — frequently asked as a short note. ISA = hardware level, ABI = binary level, API = source code level.
+  </div>
+
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- §2 — BATCH SYSTEMS & SPOOLING  (2 pages)             -->
+<!-- ══════════════════════════════════════════════════════ -->
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Operating Systems — Unit 1</span>
+    <span class="unit-badge">SECTION 2</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§2</span> Batch Systems &amp; Spooling</h1>
+  <hr class="divider">
+
+  <div class="def-box">
+    A <strong>Batch System</strong> is an OS where similar jobs are collected (batched) together and executed as a group <strong>without user interaction</strong>. An operator (not the user) manages job submission. The CPU often sits idle because mechanical I/O devices (e.g. punch card readers) are much slower than the CPU.
+  </div>
+
+  <h2 class="topic">Simple Batch System</h2>
+  <div class="orange-box">
+    <strong>How it works:</strong><br>
+    1. Jobs submitted by users to an operator on punch cards<br>
+    2. Operator sorts jobs into batches of similar type<br>
+    3. Batch loaded onto input device (card reader)<br>
+    4. OS runs jobs one by one using <strong>automatic job sequencing</strong><br>
+    5. Output printed; next job begins automatically<br><br>
+    <strong>Problem:</strong> CPU is idle during I/O operations (I/O is very slow compared to CPU speed)
+  </div>
+
+  <h2 class="topic">Spooling — Overlapping I/O with Computation</h2>
+  <div class="def-box">
+    <strong>SPOOL = Simultaneous Peripheral Operation On-Line</strong><br>
+    Jobs are NOT read directly into memory but first written onto a <strong>disk (job queue)</strong>. While one job is executing, the OS simultaneously:<br>
+    → Reads the next job from the card reader to disk<br>
+    → Sends the previous job's output from disk to the printer
+  </div>
+
+  <div class="rule-box">
+    <strong>Goal of Spooling:</strong> Overlap I/O of one job with CPU computation of another job, thereby <strong>reducing CPU idle time</strong>.<br><br>
+    <span class="formula">CPU utilization ↑ because I/O of Job N+1 happens while Job N is computing</span>
+  </div>
+
+  <h2 class="topic">Multiprogrammed Batch System</h2>
+  <div class="def-box">
+    <strong>Multiprogramming:</strong> Several jobs are kept in main memory simultaneously (called the <strong>job pool</strong>). The OS picks one job to execute. When that job must wait (e.g., for I/O), the OS switches to another ready job. As long as jobs exist, the CPU is never idle.
+  </div>
+
+  <div class="purple-box">
+    <strong>Memory Layout:</strong> Memory is divided into OS area + multiple job partitions (Job 1, Job 2, Job 3, Job 4 …). All loaded jobs are ready to run — OS selects among them.<br><br>
+    <strong>Key difference from simple batch:</strong> In simple batch, only ONE job is in memory. In multiprogrammed batch, MULTIPLE jobs are in memory simultaneously.
+  </div>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Operating Systems — Unit 1</span>
+    <span class="unit-badge">SECTION 2</span>
+  </div>
+
+  <h2 class="topic">Features Required for Multiprogramming</h2>
+  <ul class="plain">
+    <li><strong>Memory Management:</strong> OS must allocate memory to several jobs simultaneously and track their locations</li>
+    <li><strong>CPU Scheduling:</strong> OS must choose which of the ready jobs to run next (job scheduling)</li>
+    <li><strong>I/O Routine &amp; Device Management:</strong> OS must safely manage allocation of I/O devices to jobs</li>
+    <li><strong>Protection:</strong> Jobs must be isolated — one job must not interfere with another's memory</li>
+  </ul>
+
+  <h2 class="topic">Comparison: Simple vs Multiprogrammed Batch</h2>
+  <table class="tt">
+    <tr><th>Feature</th><th>Simple Batch</th><th>Multiprogrammed Batch</th></tr>
+    <tr><td>Jobs in memory</td><td>One at a time</td><td>Multiple simultaneously</td></tr>
+    <tr><td>CPU when job waits</td><td>CPU sits idle</td><td>CPU switches to next job</td></tr>
+    <tr><td>CPU utilization</td><td>Low</td><td>High</td></tr>
+    <tr><td>Complexity</td><td>Simple</td><td>Complex (needs scheduling)</td></tr>
+    <tr><td>User interaction</td><td>None</td><td>None (still batch)</td></tr>
+    <tr><td>Example</td><td>Early IBM systems</td><td>IBM OS/360</td></tr>
+  </table>
+
+  <h2 class="topic">User Mode vs Kernel Mode (introduced in Batch era)</h2>
+  <div class="vs-box">
+    <div class="vs-left">
+      <strong>User Mode</strong>
+      Programs run with restricted access. Cannot directly access hardware. If a protected instruction is attempted → trap to OS.
+    </div>
+    <div class="vs-right">
+      <strong>Kernel Mode</strong>
+      OS (monitor) runs here. Has full access to all hardware and privileged instructions. Switches to user mode when running a job.
+    </div>
+  </div>
+
+  <div class="note-box">
+    <strong>Exam tip:</strong> SPOOL full form is always asked — <em>Simultaneous Peripheral Operation On-Line</em>.<br>
+    <strong>Remember:</strong> Spooling ≠ Buffering. Spooling uses <em>disk</em> as an intermediate; buffering uses <em>memory</em>.<br>
+    <strong>Multiprogramming ≠ Multiprocessing.</strong> Multiprogramming = multiple programs sharing ONE CPU. Multiprocessing = multiple CPUs.
+  </div>
+
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- §3 — INTERACTIVE & TIME-SHARING SYSTEMS  (2 pages)   -->
+<!-- ══════════════════════════════════════════════════════ -->
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Operating Systems — Unit 1</span>
+    <span class="unit-badge">SECTION 3</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§3</span> Interactive &amp; Time-Sharing Systems</h1>
+  <hr class="divider">
+
+  <div class="def-box">
+    An <strong>Interactive System</strong> allows direct communication between the user and the OS during program execution. The user can provide input, see output, and modify execution in real time — unlike batch systems where jobs run unattended.
+  </div>
+
+  <div class="def-box">
+    A <strong>Time-Sharing (Multitasking) System</strong> uses CPU scheduling + multiprogramming to give each user a small slice of CPU time (called a <strong>time quantum</strong>). The CPU is switched among multiple jobs so rapidly that each user feels they have exclusive use of the machine.
+  </div>
+
+  <h2 class="topic">How Time-Sharing Works</h2>
+  <div class="orange-box">
+    <strong>Mechanism:</strong><br>
+    1. Multiple users are logged in simultaneously<br>
+    2. Each job is given a small time slice (quantum) of CPU time<br>
+    3. After the quantum expires, the job is preempted (interrupted)<br>
+    4. CPU moves to the next job's quantum<br>
+    5. If a job is too large to fit in memory → it is <strong>swapped</strong> to disk and brought back when its turn comes<br>
+    6. On-line communication between user and system is maintained at all times<br><br>
+    <strong>Key concept:</strong> A program loaded into memory and currently executing = a <strong>Process</strong>
+  </div>
+
+  <h2 class="topic">Key Features of Time-Sharing OS</h2>
+  <ul class="plain">
+    <li>CPU is <strong>multiplexed</strong> among several jobs in memory and on disk</li>
+    <li>CPU allocated to a job only while that job is in memory</li>
+    <li>Compensates for slow I/O (e.g., slow keyboard typing doesn't waste CPU)</li>
+    <li>Allows many users to share a computer simultaneously</li>
+    <li>Response time is very short (typically &lt; 1 second)</li>
+    <li>Each user has the illusion of a dedicated machine</li>
+  </ul>
+
+  <div class="rule-box">
+    <strong>Response Time Goal:</strong> Time-sharing systems aim to keep response time short enough that users can <em>interact</em> with the system. Batch systems focus on maximizing throughput; time-sharing systems focus on minimizing <strong>response time</strong>.
+  </div>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Operating Systems — Unit 1</span>
+    <span class="unit-badge">SECTION 3</span>
+  </div>
+
+  <h2 class="topic">Personal Computer (Single-Processor) Systems</h2>
+  <div class="teal-box">
+    A <strong>personal computer</strong> is a system dedicated to a single user. It borrows technology from large OS systems but is optimized for convenience. Examples: Windows PC, MacBook, Linux desktop. Peripherals: keyboard, mouse, screen, small printer. Can run different OS types — Windows, macOS, UNIX, Linux.
+  </div>
+
+  <h2 class="topic">Batch vs Time-Sharing: Full Comparison</h2>
+  <table class="tt">
+    <tr><th>Feature</th><th>Batch System</th><th>Time-Sharing System</th></tr>
+    <tr><td>User interaction</td><td>None (submit &amp; wait)</td><td>Direct, interactive</td></tr>
+    <tr><td>Response time</td><td>Hours/days</td><td>Seconds (&lt;1s ideally)</td></tr>
+    <tr><td>Primary goal</td><td>Maximize throughput</td><td>Minimize response time</td></tr>
+    <tr><td>CPU scheduling</td><td>Job scheduling (FCFS)</td><td>Round Robin (time quantum)</td></tr>
+    <tr><td>Memory usage</td><td>One or more jobs loaded</td><td>Many jobs; swapping used</td></tr>
+    <tr><td>Suitable for</td><td>Payroll, billing, data processing</td><td>Editing, compiling, querying</td></tr>
+    <tr><td>Example OS</td><td>IBM OS/360 batch</td><td>UNIX, Windows, Linux</td></tr>
+  </table>
+
+  <h2 class="topic">Key Term: Process</h2>
+  <div class="def-box">
+    A <strong>Process</strong> is a program loaded into memory that is currently executing. It is an active entity with:<br>
+    → An executable program (text section)<br>
+    → Associated data (data section, heap, stack)<br>
+    → An execution context (program counter, registers, process state)
+  </div>
+
+  <div class="note-box">
+    <strong>Exam question:</strong> "Differentiate between batch and time-sharing OS" — always expected in exams.<br>
+    <strong>Key difference:</strong> Batch = no user interaction, focuses on throughput. Time-sharing = interactive, focuses on response time.<br>
+    <strong>Remember:</strong> Time-sharing is also called <em>multitasking</em>. The term "time quantum" or "time slice" is the CPU time allotted to each process.
+  </div>
+
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- §4 — REAL-TIME SYSTEMS  (2 pages)                    -->
+<!-- ══════════════════════════════════════════════════════ -->
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Operating Systems — Unit 1</span>
+    <span class="unit-badge">SECTION 4</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§4</span> Real-Time Systems</h1>
+  <hr class="divider">
+
+  <div class="def-box">
+    A <strong>Real-Time Operating System (RTOS)</strong> is an OS with well-defined, fixed time constraints. Processing must be completed within these defined constraints — a result is only <strong>correct</strong> if it is produced within the deadline. If timing constraints are not met, the system fails.
+  </div>
+
+  <h2 class="topic">Types of Real-Time Systems</h2>
+  <div class="vs-box">
+    <div class="vs-left">
+      <strong>Hard Real-Time</strong>
+      Missing a deadline = system FAILURE. Safety-critical systems.<br><br>
+      Examples:<br>
+      → Pacemakers<br>
+      → Airbag controllers<br>
+      → Nuclear reactor control<br>
+      → Aircraft flight control<br>
+      → Anti-lock braking systems (ABS)
+    </div>
+    <div class="vs-right">
+      <strong>Soft Real-Time</strong>
+      Missing a deadline = degraded performance, but NOT catastrophic failure.<br><br>
+      Examples:<br>
+      → Video streaming / DVD players<br>
+      → Multimedia applications<br>
+      → Online gaming<br>
+      → Video conferencing<br>
+      → Smartphone apps
+    </div>
+  </div>
+
+  <h2 class="topic">Real-Time Embedded Systems</h2>
+  <div class="orange-box">
+    Embedded systems run real-time operating systems. They are typically:<br>
+    → Dedicated to a specific task (single purpose)<br>
+    → Have no user interface (or very minimal UI)<br>
+    → Perform hardware monitoring and control<br>
+    → Must respond to sensor data within a very small time interval<br><br>
+    <strong>Examples:</strong> Car engines, manufacturing robots, DVDs, microwave ovens, firewalls, industrial control systems, medical imaging systems, scientific experiments
+  </div>
+
+  <div class="rule-box">
+    <strong>Key constraint:</strong> Data brought in by sensors must be <strong>analyzed</strong> and corresponding <strong>control adjustments</strong> must be applied within a fixed small time interval — this is the defining characteristic of RTOS.
+  </div>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Operating Systems — Unit 1</span>
+    <span class="unit-badge">SECTION 4</span>
+  </div>
+
+  <h2 class="topic">Characteristics of a Real-Time OS</h2>
+  <ul class="plain">
+    <li><strong>Determinism:</strong> Operations are performed at fixed, predetermined times or within predetermined time intervals</li>
+    <li><strong>Responsiveness:</strong> After being interrupted, OS acknowledges and services the interrupt quickly</li>
+    <li><strong>User Control:</strong> User has fine-grained control over task priority and scheduling</li>
+    <li><strong>Reliability:</strong> Must be highly reliable — used in safety-critical environments</li>
+    <li><strong>Fail-Safe:</strong> Ability to maintain safe operation even when components fail</li>
+  </ul>
+
+  <h2 class="topic">Mobile Real-Time Systems</h2>
+  <div class="teal-box">
+    <strong>Mobile / Handheld Systems</strong> (PDAs, smartphones, tablets) face unique constraints:<br>
+    → Limited memory → Slow processors → Small displays<br>
+    → Connect via IEEE 802.11 wireless or cellular networks<br>
+    → Leaders: Apple iOS and Google Android<br>
+    → Android = Linux-based, includes Dalvik VM, Activity Manager, Window Manager
+  </div>
+
+  <h2 class="topic">Hard vs Soft Real-Time: Quick Summary</h2>
+  <table class="tt">
+    <tr><th>Property</th><th>Hard Real-Time</th><th>Soft Real-Time</th></tr>
+    <tr><td>Deadline miss</td><td>System failure / catastrophe</td><td>Degraded quality only</td></tr>
+    <tr><td>Predictability</td><td>Must be 100% deterministic</td><td>Statistical guarantees okay</td></tr>
+    <tr><td>Virtual memory</td><td>Usually NOT allowed (unpredictable)</td><td>May be allowed</td></tr>
+    <tr><td>Response time</td><td>Microseconds to milliseconds</td><td>Milliseconds to seconds</td></tr>
+    <tr><td>Use case</td><td>Safety-critical control</td><td>Multimedia, entertainment</td></tr>
+  </table>
+
+  <div class="note-box">
+    <strong>Most asked:</strong> Difference between Hard and Soft real-time systems with examples.<br>
+    <strong>Remember:</strong> Real-time ≠ Fast. Real-time means <em>predictable and timely</em>, not necessarily super fast.<br>
+    <strong>Embedded systems always run RTOS</strong> — this is a standard fact asked in exams.<br>
+    Virtual memory is generally avoided in hard real-time systems because page faults are unpredictable.
+  </div>
+
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- §5 — COMPUTER STARTUP & BOOTING PROCESS  (2 pages)   -->
+<!-- ══════════════════════════════════════════════════════ -->
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Operating Systems — Unit 1</span>
+    <span class="unit-badge">SECTION 5</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§5</span> Computer Startup &amp; Booting</h1>
+  <hr class="divider">
+
+  <div class="def-box">
+    <strong>Bootstrap Program:</strong> A small piece of code loaded into memory at power-up or reboot. Stored in <strong>ROM or EEPROM</strong> (Electrically Erasable Programmable ROM), commonly known as <strong>firmware</strong>. Its job: initialize all system aspects and load the OS kernel into memory to begin execution.
+  </div>
+
+  <h2 class="topic">Complete Boot Sequence</h2>
+
+  <div class="step-card">
+    <div class="step-head">1</div>
+    <div class="step-body">
+      <strong>Power On Reset (POR):</strong> An electrical pulse is sent to the CPU. All CPU registers are initialized to 0 <em>except</em> <span class="formula">CS = 0xF000</span> and <span class="formula">IP = 0xFFF0</span>.<br>
+      Physical address = <span class="formula">(CS &lt;&lt; 4) + IP = 0xFFFF0</span> → CPU fetches first instruction from this location.
+    </div>
+  </div>
+
+  <div class="step-card">
+    <div class="step-head">2</div>
+    <div class="step-body">
+      <strong>Real Mode:</strong> CPU starts in real mode (backward compatible to 8088). Limited to 1MB address space. No protection, no privilege levels, no multitasking. First instruction at 0xFFFFF0 is a jump into BIOS ROM.
+    </div>
+  </div>
+
+  <div class="step-card">
+    <div class="step-head">3</div>
+    <div class="step-body">
+      <strong>BIOS (Basic Input/Output System):</strong> Stored in Flash/EPROM chip. Performs the following in order:<br>
+      → <strong>POST</strong> (Power-On Self Test) — tests hardware<br>
+      → Initialize video card &amp; other devices<br>
+      → Display BIOS screen<br>
+      → Perform memory test &amp; set DRAM parameters<br>
+      → Configure Plug &amp; Play devices, assign DMA channels &amp; IRQs<br>
+      → <strong>Identify boot device</strong> → Read sector 0 from boot device into memory at <span class="formula">0x7C00</span> → Jump to 0x7C00
+    </div>
+  </div>
+
+  <div class="step-card">
+    <div class="step-head">4</div>
+    <div class="step-body">
+      <strong>MBR (Master Boot Record):</strong> Sector 0 of the disk. Loaded by BIOS to RAM at address <span class="formula">0x7C00</span>.<br>
+      MBR Structure (512 bytes total):<br>
+      → <strong>446 bytes</strong> — Bootable code<br>
+      → <strong>64 bytes</strong> — Disk partition table (16 bytes × 4 partitions)<br>
+      → <strong>2 bytes</strong> — Signature (0x55AA)<br>
+      MBR code looks through partition table → loads the bootloader.
+    </div>
+  </div>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Operating Systems — Unit 1</span>
+    <span class="unit-badge">SECTION 5</span>
+  </div>
+
+  <div class="step-card">
+    <div class="step-head">5</div>
+    <div class="step-body">
+      <strong>Bootloader:</strong> Loads the Operating System. May present a menu to choose which OS to load (e.g., GRUB for Linux/Windows dual boot). Also performs:<br>
+      → Disable interrupts (don't want interruptions at this critical stage)<br>
+      → Setup <strong>GDT</strong> (Global Descriptor Table)<br>
+      → Switch CPU from <strong>Real Mode → Protected Mode</strong> (full memory access, privilege levels enabled)<br>
+      → Read OS from disk into memory
+    </div>
+  </div>
+
+  <div class="step-card">
+    <div class="step-head">6</div>
+    <div class="step-body">
+      <strong>OS Initialization:</strong> The OS kernel takes over and performs:<br>
+      → Set up virtual memory<br>
+      → Initialize interrupt vectors<br>
+      → Initialize timers, monitors, hard disks, consoles, filesystems<br>
+      → Initialize other processors (if multiprocessor system)<br>
+      → Start the first user process (e.g., <code>init</code> or <code>systemd</code> on Linux)
+    </div>
+  </div>
+
+  <h2 class="topic">Boot Sequence Summary Diagram</h2>
+  <div class="evo">
+    <div class="evo-block eb1"><span class="ev-label">Power On</span>CPU Reset<br>CS=0xF000<br>IP=0xFFF0</div>
+    <div class="evo-block eb2"><span class="ev-label">BIOS</span>POST &amp; device init<br>Read sector 0<br>→ 0x7C00</div>
+    <div class="evo-block eb3"><span class="ev-label">MBR</span>512 bytes<br>Finds bootloader<br>446+64+2</div>
+    <div class="evo-block eb4"><span class="ev-label">Bootloader</span>Real→Protected<br>GDT setup<br>Load OS</div>
+  </div>
+
+  <h2 class="topic">Real Mode vs Protected Mode</h2>
+  <div class="vs-box">
+    <div class="vs-left">
+      <strong>Real Mode</strong>
+      1MB memory limit<br>
+      No memory protection<br>
+      No privilege levels<br>
+      No multitasking<br>
+      Direct hardware access<br>
+      Used during BIOS/early boot
+    </div>
+    <div class="vs-right">
+      <strong>Protected Mode</strong>
+      Full 4GB memory (32-bit)<br>
+      Memory protection enabled<br>
+      Ring 0–3 privilege levels<br>
+      Multitasking supported<br>
+      Virtual memory available<br>
+      Used by modern OS
+    </div>
+  </div>
+
+  <div class="note-box">
+    <strong>MBR structure is a common exam question:</strong> 512 bytes = 446 (code) + 64 (partition table) + 2 (signature 0x55AA).<br>
+    <strong>BIOS vs UEFI:</strong> Modern systems use UEFI instead of BIOS — UEFI supports drives &gt;2TB and has a GUI.<br>
+    <strong>Bootstrap program</strong> stored in ROM/EEPROM = firmware. Not stored in RAM (RAM is wiped at power off).<br>
+    <strong>Physical address formula:</strong> <span class="formula">(CS &lt;&lt; 4) + IP</span> — this is real-mode segmented addressing.
+  </div>
+
+  <div class="page-num">2 / 2</div>
+</div>
 
 <script>
-(function(){
-  var pages = document.querySelectorAll('.page');
-  var secPages = [];
-  pages.forEach(function(p){ if(p.querySelector('h1.section-title')) secPages.push(p); });
-  secPages.forEach(function(p,i){ p.id = 'sec-'+(i+1); });
-  var tocItems = document.querySelectorAll('.cover-toc-item');
-  tocItems.forEach(function(item, i){
-    if(i >= secPages.length) return;
-    item.style.cursor = 'pointer';
-    item.style.borderRadius = '4px';
-    item.style.transition = 'background 0.18s';
-    item.setAttribute('title', 'Click to jump to this section');
-    item.addEventListener('mouseenter', function(){ item.style.background='rgba(255,255,255,0.18)'; });
-    item.addEventListener('mouseleave', function(){ item.style.background=''; });
-    item.addEventListener('click', function(){ secPages[i].scrollIntoView({behavior:'smooth'}); });
-  });
-})();
+  document.querySelectorAll('.part-nav a').forEach(a=>{if(a.href===window.location.href)a.classList.add('active');});
 </script>
 </body>
 </html>
