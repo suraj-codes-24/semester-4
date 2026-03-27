@@ -3,138 +3,691 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DIGITAL-ELECTRONICS Unit 3 — Part 3</title>
-<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+<title>Digital Electronics — Unit 3 | Part 3</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#1a1a2e;--ink2:#2c2c54;--blue:#1565C0;--red:#b71c1c;--green:#1b5e20;--purple:#4a148c;--teal:#006064;--orange:#e65100;--line:#c5cae9;--page:#fafaf7;--highlight:#fff9c4;--box-blue:#e8f4fd;--box-green:#e8f5e9;--box-purple:#f3e5f5;--box-orange:#fff3e0;--box-red:#fce4ec;--box-teal:#e0f7fa;}
-*{margin:0;padding:0;box-sizing:border-box;}
-body{background:#e0e0e0;font-family:'Kalam',cursive;color:var(--ink);padding:30px 20px;}
-.page{background:var(--page);max-width:820px;margin:0 auto 40px;border-radius:4px;box-shadow:0 2px 16px rgba(0,0,0,0.18),0 0 0 1px rgba(0,0,0,0.08);padding:60px 70px 70px 90px;position:relative;min-height:1060px;background-image:repeating-linear-gradient(transparent,transparent 31px,var(--line) 31px,var(--line) 32px);background-position:0 56px;}
-.page::before{content:'';position:absolute;left:72px;top:0;bottom:0;width:1.5px;background:#ef9a9a;opacity:0.7;}
-.holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-around;padding:40px 0;}
-.hole{width:22px;height:22px;border-radius:50%;background:#e0e0e0;border:1.5px solid #bdbdbd;box-shadow:inset 0 1px 3px rgba(0,0,0,0.2);}
-.page-num{position:absolute;bottom:28px;right:50px;font-size:13px;color:#9e9e9e;}
-.page-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
-.date-tag{font-size:13px;color:#9e9e9e;}
-.unit-badge{color:#fff;font-size:13px;padding:2px 14px;border-radius:20px;font-weight:700;}
-h1.section-title{font-size:24px;font-weight:700;color:var(--ink2);text-align:center;margin:8px 0 4px;text-decoration:underline;text-underline-offset:5px;}
-h2.topic{font-size:18px;font-weight:700;color:var(--blue);margin:18px 0 6px;border-bottom:1.5px solid var(--blue);padding-bottom:2px;display:inline-block;}
-h3.sub{font-size:15px;font-weight:700;color:var(--purple);margin:12px 0 4px;}
-p,li{font-size:15px;line-height:32px;}
-.def-box{background:var(--box-blue);border-left:4px solid var(--blue);border-radius:0 6px 6px 0;padding:10px 16px;margin:10px 0 12px;font-size:15px;line-height:30px;}
-.note-box{background:var(--highlight);border-left:4px solid #f9a825;border-radius:0 6px 6px 0;padding:8px 14px;margin:8px 0 10px;font-size:14px;line-height:26px;}
-.rule-box{background:var(--box-green);border:1.5px solid #81c784;border-radius:6px;padding:10px 16px;margin:10px 0;font-size:14.5px;line-height:28px;}
-.purple-box{background:var(--box-purple);border-left:4px solid var(--purple);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
-.orange-box{background:var(--box-orange);border-left:4px solid var(--orange);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
-.teal-box{background:var(--box-teal);border-left:4px solid var(--teal);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
-.formula{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--blue);}
-.divider{border:none;border-top:1px dashed #b0bec5;margin:14px 0 10px;}
-ul.plain{list-style:none;padding-left:4px;}
-ul.plain li::before{content:'→ ';color:var(--blue);font-weight:700;}
-ul.plain li{font-size:15px;line-height:32px;}
-.qbox{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:12px 16px;margin:10px 0;}
-.q-label{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:2px;}
-.q-step{font-size:14px;color:var(--green);margin-top:4px;line-height:26px;}
-.q-ans{font-size:15px;color:var(--red);font-family:'Patrick Hand',cursive;margin-top:4px;}
-table.tt{width:100%;border-collapse:collapse;margin:8px 0;font-size:14px;}
-table.tt th{color:#fff;padding:7px 10px;text-align:center;}
-table.tt td{padding:6px 10px;border-bottom:1px solid #e0e0e0;text-align:center;font-family:'Patrick Hand',cursive;font-size:14px;}
-table.tt tr:nth-child(even) td{background:#f5f5f5;}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0;}
-.vs-box{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:12px 0;border-radius:8px;overflow:hidden;border:1.5px solid #90caf9;}
-.vs-left{background:#e8f4fd;padding:12px 14px;}
-.vs-right{background:var(--box-purple);padding:12px 14px;border-left:1px solid #90caf9;}
-.vs-head{font-size:15px;font-weight:700;margin-bottom:8px;}
-.vs-item{font-size:14px;line-height:26px;}
-.step-card{background:var(--box-purple);border-left:4px solid var(--purple);padding:8px 14px;margin:5px 0;border-radius:0 6px 6px 0;}
-.step-head{font-size:14px;font-weight:700;color:var(--purple);}
-.step-body{font-size:13.5px;line-height:24px;color:var(--ink2);}
-.cover-page{max-width:820px;margin:0 auto 40px;border-radius:8px;padding:80px 60px;text-align:center;color:#fff;box-shadow:0 4px 24px rgba(0,0,0,0.3);position:relative;overflow:hidden;}
-.cover-subject{font-size:14px;letter-spacing:3px;opacity:0.7;margin-bottom:16px;}
-.cover-title{font-size:40px;font-weight:700;line-height:1.2;margin-bottom:12px;}
-.cover-unit{font-size:20px;opacity:0.85;margin-bottom:30px;}
-.cover-divider{width:80px;height:3px;background:rgba(255,255,255,0.4);margin:0 auto 24px;border-radius:2px;}
-.cover-toc{text-align:left;background:rgba(255,255,255,0.1);border-radius:8px;padding:20px 28px;display:inline-block;min-width:420px;}
-.cover-toc-item{font-size:15px;line-height:32px;display:flex;justify-content:space-between;gap:20px;}
-.part-nav{max-width:820px;margin:0 auto 20px;display:flex;gap:10px;justify-content:center;align-items:center;font-family:'Kalam',cursive;flex-wrap:wrap;}
-.part-nav a{padding:6px 20px;border-radius:20px;background:#fff;border:1.5px solid #90caf9;color:var(--blue);text-decoration:none;font-size:14px;font-weight:700;}
-.part-nav a:hover:not(.active){background:#e3f2fd;}
-.part-nav .back{background:#f5f5f5;border-color:#ccc;color:#555;font-size:13px;}
-.unit-badge{background:#e65100;}
-h1.section-title{text-decoration-color:#e65100;}
-h1.section-title .sn{color:#e65100;}
-.part-nav a.active{background:#e65100;border-color:#e65100;color:#fff;}
-@media(max-width:600px){
-body{padding:10px 0 30px;}
-.page{padding:20px 16px 30px 16px;min-height:unset;}
-.page::before{display:none;}
-.holes{display:none;}
-.cover-page{padding:40px 20px;margin:0 10px 20px;}
-.cover-toc{min-width:unset;width:100%;padding:14px 16px;}
-.part-nav{padding:0 10px;gap:6px;}
-.part-nav a{padding:5px 12px;font-size:13px;}
-.two-col{grid-template-columns:1fr;}
-.vs-box{grid-template-columns:1fr;}
-.vs-right{border-left:none;border-top:1px solid #90caf9;}
-nav.part-nav{padding:0 10px;gap:6px;}
-.cover-title{font-size:28px;}
-}</style>
+  :root{
+    --ink:#1a1a2e;--ink2:#16213e;--pencil:#4a4a6a;
+    --blue:#2563eb;--purple:#7c3aed;--green:#059669;
+    --orange:#ea580c;--red:#dc2626;--yellow:#ca8a04;
+    --bg-page:#fffef7;--bg-cover:#fff5f5;
+    --line:#d4d0c8;--hole:#c9c5bd;
+    --def:#dbeafe;--def-b:#2563eb;
+    --rule:#ede9fe;--rule-b:#7c3aed;
+    --note:#fef9c3;--note-b:#ca8a04;
+    --purple-b:#f3e8ff;--purple-bb:#7c3aed;
+    --orange-b:#fff7ed;--orange-bb:#ea580c;
+    --q:#f0fdf4;--q-b:#059669;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:#e8e4dc;font-family:'Kalam',cursive;color:var(--ink);min-height:100vh;}
+  .part-nav{position:sticky;top:0;z-index:100;background:#2d2d44;display:flex;align-items:center;padding:10px 20px;gap:10px;box-shadow:0 2px 8px rgba(0,0,0,.4);flex-wrap:wrap;}
+  .part-nav .nav-label{color:#aaa;font-size:.85rem;font-family:sans-serif;margin-right:6px;}
+  .part-nav a{color:#ccc;text-decoration:none;font-family:sans-serif;font-size:.85rem;padding:5px 14px;border-radius:20px;border:1px solid #555;transition:.2s;}
+  .part-nav a.active{background:#dc2626;color:#fff;border-color:#dc2626;}
+  .part-nav a:hover:not(.active){background:#444;color:#fff;}
+  .part-nav .subject-tag{margin-left:auto;color:#7c9ec9;font-family:sans-serif;font-size:.8rem;font-weight:700;letter-spacing:1px;}
+  .book{max-width:760px;margin:30px auto;padding:0 15px 60px;}
+  .cover-page{background:var(--bg-cover);border-radius:4px;box-shadow:4px 4px 0 #aaa,6px 6px 0 #bbb;margin-bottom:40px;padding:50px 50px 40px 70px;border-left:8px solid #dc2626;min-height:520px;position:relative;}
+  .cover-subject{font-family:'Caveat',cursive;font-size:1rem;color:#888;letter-spacing:2px;text-transform:uppercase;}
+  .cover-unit{font-family:'Caveat',cursive;font-size:3.2rem;font-weight:700;color:var(--blue);line-height:1.1;margin:8px 0;}
+  .cover-subtitle{font-family:'Caveat',cursive;font-size:1.6rem;color:#dc2626;margin-bottom:30px;}
+  .cover-part-badge{display:inline-block;background:#dc2626;color:#fff;font-family:sans-serif;font-size:.75rem;font-weight:700;padding:4px 14px;border-radius:20px;letter-spacing:2px;margin-bottom:24px;}
+  .cover-divider{border:none;border-top:2px dashed #fca5a5;margin:20px 0;}
+  .cover-toc{margin-top:16px;}
+  .cover-toc h3{font-family:'Caveat',cursive;font-size:1.3rem;color:#555;margin-bottom:12px;}
+  .toc-item{display:flex;align-items:baseline;font-family:'Kalam',cursive;font-size:1rem;padding:5px 0;border-bottom:1px dotted #ccc;}
+  .toc-num{color:#dc2626;font-weight:700;min-width:36px;}
+  .toc-title{flex:1;}
+  .toc-pages{color:#888;font-size:.9rem;white-space:nowrap;margin-left:10px;}
+  .cover-watermark{position:absolute;bottom:20px;right:30px;font-family:'Caveat',cursive;font-size:4rem;color:rgba(220,38,38,.06);font-weight:700;user-select:none;}
+  .page{background:var(--bg-page);border-radius:4px;box-shadow:3px 3px 0 #bbb,5px 5px 0 #ccc;margin-bottom:36px;padding:30px 40px 30px 70px;position:relative;min-height:600px;background-image:repeating-linear-gradient(transparent,transparent 31px,var(--line) 31px,var(--line) 32px);background-position:0 60px;}
+  .holes{position:absolute;left:0;top:0;bottom:0;width:44px;display:flex;flex-direction:column;justify-content:space-evenly;align-items:center;background:linear-gradient(to right,#d0ccbf,#e8e4dc);border-right:1px solid #c0bcb0;border-radius:4px 0 0 4px;}
+  .hole{width:18px;height:18px;border-radius:50%;background:#d8d0c0;border:2px solid var(--hole);box-shadow:inset 0 1px 3px rgba(0,0,0,.2);}
+  .page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid #dc2626;}
+  .date-tag{font-family:sans-serif;font-size:.75rem;color:#888;letter-spacing:.5px;}
+  .unit-badge{background:#dc2626;color:#fff;font-family:sans-serif;font-size:.7rem;font-weight:700;padding:3px 10px;border-radius:12px;letter-spacing:1px;}
+  .section-title{font-family:'Caveat',cursive;font-size:2rem;font-weight:700;color:var(--ink2);margin:4px 0 6px;line-height:1.2;}
+  .sn{color:#dc2626;margin-right:8px;}
+  .divider{border:none;border-top:2px dashed #d0ccc0;margin:12px 0 16px;}
+  h2.topic{font-family:'Caveat',cursive;font-size:1.5rem;font-weight:700;color:var(--blue);margin:18px 0 8px;padding-bottom:3px;border-bottom:1px solid #c8d8f0;}
+  h3.sub{font-family:'Caveat',cursive;font-size:1.2rem;color:var(--purple);margin:12px 0 6px;}
+  .def-box,.rule-box,.note-box,.purple-box,.orange-box{border-radius:8px;margin:12px 0;padding:12px 16px;line-height:1.7;font-size:1rem;position:relative;}
+  .def-box{background:var(--def);border-left:4px solid var(--def-b);}
+  .def-box::before{content:"📘 Definition";font-size:.72rem;font-family:sans-serif;font-weight:700;color:var(--def-b);display:block;margin-bottom:4px;letter-spacing:.5px;}
+  .rule-box{background:var(--rule);border-left:4px solid var(--rule-b);}
+  .rule-box::before{content:"📐 Theorem / Key Result";font-size:.72rem;font-family:sans-serif;font-weight:700;color:var(--rule-b);display:block;margin-bottom:4px;letter-spacing:.5px;}
+  .note-box{background:var(--note);border-left:4px solid var(--note-b);}
+  .note-box::before{content:"⚠️ Exam Tip / Warning";font-size:.72rem;font-family:sans-serif;font-weight:700;color:var(--note-b);display:block;margin-bottom:4px;letter-spacing:.5px;}
+  .purple-box{background:var(--purple-b);border:1px solid #c4b5fd;border-left:4px solid var(--purple-bb);}
+  .orange-box{background:var(--orange-b);border-left:4px solid var(--orange-bb);}
+  .orange-box::before{content:"🔢 Algorithm / Procedure";font-size:.72rem;font-family:sans-serif;font-weight:700;color:var(--orange-bb);display:block;margin-bottom:4px;letter-spacing:.5px;}
+  .qbox{background:var(--q);border:1px solid #a7f3d0;border-left:4px solid var(--q-b);border-radius:8px;margin:12px 0;padding:12px 16px;}
+  .q-label{font-size:.72rem;font-family:sans-serif;font-weight:700;color:var(--q-b);margin-bottom:6px;letter-spacing:.5px;}
+  .q-step{border-top:1px dashed #a7f3d0;margin-top:8px;padding-top:8px;font-size:.97rem;line-height:1.7;}
+  .q-ans{background:#d1fae5;border-radius:4px;padding:6px 10px;margin-top:8px;font-weight:700;font-size:.97rem;}
+  ul.plain{list-style:none;padding-left:6px;margin:6px 0;}
+  ul.plain li{padding:3px 0;line-height:1.6;}
+  ul.plain li::before{content:"→ ";color:var(--purple);font-weight:700;}
+  .formula{font-family:'Courier New',monospace;background:#f1f0eb;border:1px solid #d8d4c8;border-radius:4px;padding:2px 8px;font-size:.95rem;color:#333;display:inline-block;margin:2px 0;}
+  .formula-block{font-family:'Courier New',monospace;background:#f1f0eb;border:1px solid #d8d4c8;border-radius:6px;padding:10px 16px;font-size:.95rem;color:#333;margin:10px 0;text-align:center;letter-spacing:.5px;display:block;}
+  table.tt{border-collapse:collapse;margin:12px auto;font-size:.95rem;width:auto;}
+  table.tt th,table.tt td{border:1px solid #b0b0c0;padding:6px 14px;text-align:center;}
+  table.tt th{background:#fee2e2;color:#dc2626;font-weight:700;}
+  table.tt tr:nth-child(even) td{background:#fff5f5;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:12px 0;}
+  .vs-box{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:12px 0;border-radius:8px;overflow:hidden;border:1px solid #ddd;}
+  .vs-left,.vs-right{padding:12px 16px;}
+  .vs-left{background:#dbeafe;}
+  .vs-right{background:#fce7f3;}
+  .vs-left h4,.vs-right h4{font-family:'Caveat',cursive;font-size:1.1rem;margin-bottom:6px;}
+  .vs-left h4{color:#1d4ed8;}
+  .vs-right h4{color:#be185d;}
+  .step-card{border:1px solid #e2e8f0;border-radius:8px;margin:6px 0;overflow:hidden;}
+  .step-head{background:#dc2626;color:#fff;font-family:sans-serif;font-size:.8rem;font-weight:700;padding:5px 14px;letter-spacing:.5px;}
+  .step-body{padding:10px 16px;line-height:1.7;font-size:.97rem;}
+  .page-num{position:absolute;bottom:14px;right:24px;font-family:sans-serif;font-size:.78rem;color:#aaa;background:#f8f6f0;padding:2px 8px;border-radius:10px;border:1px solid #e0ddd5;}
+  .pq-section{background:#fff5f5;border:2px solid #fca5a5;border-radius:10px;padding:16px 20px;margin:14px 0;}
+  .pq-section h4{font-family:'Caveat',cursive;font-size:1.3rem;color:#dc2626;margin-bottom:10px;}
+  .pq-item{background:#fff;border:1px solid #fecaca;border-radius:6px;padding:10px 14px;margin:8px 0;line-height:1.6;}
+  .pq-num{color:#dc2626;font-weight:700;}
+
+  /* Quick Revision specific */
+  .rev-page{background:linear-gradient(135deg,#1a1a2e,#2d1a3e)!important;color:#e2e8f0!important;}
+  .rev-page .page-header{border-bottom-color:#7c3aed!important;}
+  .rev-page .unit-badge{background:#7c3aed!important;}
+  .rev-page .section-title{color:#e2e8f0!important;}
+  .rev-page .divider{border-top-color:#444!important;}
+  .rev-page h2.topic{color:#a78bfa!important;border-bottom-color:#4c2889!important;}
+  .rev-page h3.sub{color:#67e8f9!important;}
+  .formula-rev{font-family:'Courier New',monospace;background:#2d2d44;border:1px solid #4c4c6a;color:#a5f3fc;border-radius:4px;padding:2px 8px;font-size:.93rem;display:inline-block;margin:2px 0;}
+  .rev-card{background:#2a2a40;border:1px solid #4c3872;border-radius:8px;padding:12px 16px;margin:10px 0;color:#e2e8f0;line-height:1.7;}
+  .rev-card strong{color:#a78bfa;}
+  .rev-row{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #3a3a5c;padding:5px 0;}
+  .rev-row:last-child{border-bottom:none;}
+  .rev-label{color:#94a3b8;font-size:.9rem;}
+  .rev-val{color:#a5f3fc;font-family:'Courier New',monospace;font-size:.9rem;}
+</style>
 </head>
 <body>
 
-<div class="part-nav">
+<nav class="part-nav">
   <a href="../index.html" class="back">↩ Units</a>
+  <span class="nav-label">UNIT 3 ›</span>
   <a href="part1.html">Part 1</a>
   <a href="part2.html">Part 2</a>
   <a href="part3.html" class="active">Part 3</a>
-</div>
+  <span class="subject-tag">DIGITAL ELECTRONICS</span>
+</nav>
 
-<div class="cover-page" style="background:linear-gradient(135deg,#e65100 0%,#bf360c 100%);">
-  <div class="cover-subject">DIGITAL ELECTRONICS</div>
-  <div class="cover-title">Unit 3 — Part 3</div>
-  <div class="cover-unit">[ Awaiting Content ]</div>
-  <div class="cover-divider"></div>
+<div class="book">
+
+<!-- ═══ COVER ═══ -->
+<div class="cover-page">
+  <div class="cover-subject">Digital Electronics · BEC 302 / BOE 310</div>
+  <div class="cover-unit">Unit 3</div>
+  <div class="cover-subtitle">Combinational Logic — Adders & Subtractors</div>
+  <div class="cover-part-badge">PART 3 OF 3</div>
+  <hr class="cover-divider">
   <div class="cover-toc">
-    <div class="cover-toc-item" style="opacity:0.6;font-style:italic;justify-content:center;"><span>Content to be added</span></div>
+    <h3>📋 Contents — Part 3</h3>
+    <div class="toc-item"><span class="toc-num">§8</span><span class="toc-title">Half Adder & Full Adder</span><span class="toc-pages">3 pages</span></div>
+    <div class="toc-item"><span class="toc-num">§9</span><span class="toc-title">Half Subtractor & Full Subtractor</span><span class="toc-pages">2 pages</span></div>
+    <div class="toc-item"><span class="toc-num">§10</span><span class="toc-title">Serial and Parallel Adders</span><span class="toc-pages">2 pages</span></div>
+    <div class="toc-item"><span class="toc-num">§11</span><span class="toc-title">BCD Adder</span><span class="toc-pages">2 pages</span></div>
+    <div class="toc-item"><span class="toc-num">§12</span><span class="toc-title">⚡ Quick Revision — All Key Formulas</span><span class="toc-pages">2 pages</span></div>
+    <div class="toc-item"><span class="toc-num">🎯</span><span class="toc-title">Practice Questions — Part 3</span><span class="toc-pages">1 page</span></div>
   </div>
+  <div class="cover-watermark">P3</div>
 </div>
 
-<!-- ================================================
-     ADD CONTENT SECTIONS BELOW THIS LINE
+<!-- ══════════════════ §8 HALF ADDER & FULL ADDER ════════════════════ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital Electronics — Unit 3</span>
+    <span class="unit-badge">SECTION 8</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§8</span> Half Adder & Full Adder</h1>
+  <hr class="divider">
 
-     Each section pattern:
+  <h2 class="topic">Half Adder (HA)</h2>
+  <div class="def-box">
+    A <strong>Half Adder</strong> is a combinational circuit that adds <strong>two single-bit binary numbers</strong> and produces a <strong>Sum</strong> and a <strong>Carry</strong>. It is called "half" because it cannot accept a carry-in from a previous addition.
+  </div>
 
-     <div class="page">
-       <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
-       <div class="page-header">
-         <span class="date-tag">DIGITAL-ELECTRONICS — Unit 3</span>
-         <span class="unit-badge">SECTION X</span>
-       </div>
-       <h1 class="section-title"><span class="sn">§X</span> Title Here</h1>
-       <hr class="divider">
-       ... content ...
-       <div class="page-num">1 / 1</div>
-     </div>
-     ================================================ -->
+  <table class="tt">
+    <tr><th>A</th><th>B</th><th>Sum (S)</th><th>Carry (C)</th></tr>
+    <tr><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+    <tr><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+    <tr><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+    <tr><td>1</td><td>1</td><td>0</td><td>1</td></tr>
+  </table>
+
+  <div class="rule-box">
+    <strong>Boolean Expressions:</strong><br>
+    <span class="formula">S = A ⊕ B</span> (XOR gate)<br>
+    <span class="formula">C = A · B</span> (AND gate)<br><br>
+    <strong>Gate Count:</strong> 1 XOR + 1 AND = 2 gates total
+  </div>
+
+  <div class="purple-box">
+    <strong>Alternative implementation:</strong> Half adder using NAND gates only (universal gate):<br>
+    <span class="formula">S = [(A·B)' · (A·(AB)')' · (B·(AB)')']'</span> — uses 5 NAND gates<br>
+    Or more simply: Can be built with 4 NAND gates using XOR from NAND identity.
+  </div>
+
+  <h2 class="topic">Full Adder (FA)</h2>
+  <div class="def-box">
+    A <strong>Full Adder</strong> adds <strong>three 1-bit binary numbers</strong>: two operand bits (A, B) and a <strong>Carry-in (Cin)</strong> from the previous stage. It produces a <strong>Sum</strong> and a <strong>Carry-out (Cout)</strong>. Full adders can be chained to add multi-bit numbers.
+  </div>
+
+  <table class="tt">
+    <tr><th>A</th><th>B</th><th>Cin</th><th>Sum (S)</th><th>Cout</th></tr>
+    <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+    <tr><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+    <tr><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+    <tr><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td></tr>
+    <tr><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+    <tr><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td></tr>
+    <tr><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+    <tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+  </table>
+
+  <div class="page-num">1 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital Electronics — Unit 3</span>
+    <span class="unit-badge">SECTION 8</span>
+  </div>
+
+  <h2 class="topic">Full Adder — Boolean Expressions</h2>
+  <div class="rule-box">
+    From K-map simplification:<br>
+    <span class="formula">S = A ⊕ B ⊕ Cin</span><br>
+    <span class="formula">Cout = A·B + B·Cin + A·Cin</span><br>
+    Or equivalently:<br>
+    <span class="formula">Cout = A·B + Cin·(A ⊕ B)</span><br><br>
+    <strong>Minterms:</strong> S = Σm(1,2,4,7), Cout = Σm(3,5,6,7)
+  </div>
+
+  <h2 class="topic">Full Adder using Two Half Adders</h2>
+  <div class="orange-box">
+    <strong>Construction:</strong><br>
+    <div class="step-card">
+      <div class="step-head">Stage 1 — First Half Adder</div>
+      <div class="step-body">HA₁ inputs: A and B<br>HA₁ outputs: S₁ = A⊕B, C₁ = A·B</div>
+    </div>
+    <div class="step-card">
+      <div class="step-head">Stage 2 — Second Half Adder</div>
+      <div class="step-body">HA₂ inputs: S₁ and Cin<br>HA₂ outputs: S = S₁⊕Cin = A⊕B⊕Cin, C₂ = S₁·Cin</div>
+    </div>
+    <div class="step-card">
+      <div class="step-head">Stage 3 — OR gate</div>
+      <div class="step-body">Cout = C₁ + C₂ = A·B + Cin·(A⊕B)</div>
+    </div>
+  </div>
+
+  <div class="note-box">
+    <strong>Why can't two HAs alone replace an FA?</strong> Because the two HAs might both generate a carry simultaneously, and you need one OR gate to combine them. FA = HA + HA + OR gate. Total: 2 XOR + 2 AND + 1 OR = 5 gates.
+  </div>
+
+  <h2 class="topic">Full Adder — Carry Propagation</h2>
+  <div class="purple-box">
+    The carry output Cout has two terms:<br>
+    <strong>Carry Generate (G):</strong> <span class="formula">G = A·B</span> — carry generated even if Cin=0<br>
+    <strong>Carry Propagate (P):</strong> <span class="formula">P = A⊕B</span> — carry propagated from Cin<br>
+    So: <span class="formula">Cout = G + P·Cin</span> and <span class="formula">Sum = P ⊕ Cin</span><br>
+    This G/P concept is fundamental to <strong>Carry Lookahead Adder (CLA)</strong>!
+  </div>
+
+  <div class="page-num">2 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital Electronics — Unit 3</span>
+    <span class="unit-badge">SECTION 8</span>
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">🧪 SOLVED EXAMPLE — Add binary numbers 1011 + 0110 using Full Adders</div>
+    <div class="q-step"><strong>Numbers:</strong> A = 1011 (11 in decimal), B = 0110 (6 in decimal)</div>
+    <div class="q-step">
+      <strong>Column-by-column (right to left):</strong><br>
+      Bit 0: A₀=1, B₀=0, Cin=0 → S₀=1, Cout=0<br>
+      Bit 1: A₁=1, B₁=1, Cin=0 → S₁=0, Cout=1<br>
+      Bit 2: A₂=0, B₂=1, Cin=1 → S₂=0, Cout=1<br>
+      Bit 3: A₃=1, B₃=0, Cin=1 → S₃=0, Cout=1<br>
+      Final carry: 1 (overflow into bit 4)
+    </div>
+    <div class="q-ans">Result = 1 0001 = 17 in decimal ✓ (11+6=17)</div>
+  </div>
+
+  <div class="note-box">
+    For n-bit addition: you need n Full Adders chained together, with the Cout of each stage feeding the Cin of the next. The LSB FA can have Cin=0 (or be replaced with a Half Adder if no carry-in is ever needed).
+  </div>
+
+  <div class="page-num">3 / 3</div>
+</div>
+
+<!-- ══════════════════ §9 SUBTRACTORS ═══════════════════════════════ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital Electronics — Unit 3</span>
+    <span class="unit-badge">SECTION 9</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§9</span> Subtractors</h1>
+  <hr class="divider">
+
+  <h2 class="topic">Half Subtractor (HS)</h2>
+  <div class="def-box">
+    A <strong>Half Subtractor</strong> subtracts two 1-bit numbers A and B, producing a <strong>Difference (D)</strong> and a <strong>Borrow (B_out)</strong>. Like the half adder, it cannot accept a borrow-in from a previous stage.
+  </div>
+
+  <table class="tt">
+    <tr><th>A</th><th>B</th><th>Diff (D)</th><th>Borrow (Bo)</th></tr>
+    <tr><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+    <tr><td>0</td><td>1</td><td>1</td><td>1</td></tr>
+    <tr><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+    <tr><td>1</td><td>1</td><td>0</td><td>0</td></tr>
+  </table>
+
+  <div class="rule-box">
+    <strong>Boolean Expressions:</strong><br>
+    <span class="formula">D = A ⊕ B</span> (XOR gate — same as Half Adder Sum!)<br>
+    <span class="formula">Bo = A'·B</span> (AND gate with A complemented)<br><br>
+    <strong>Key difference from HA:</strong> Borrow = A'·B (not A·B like carry)
+  </div>
+
+  <h2 class="topic">Full Subtractor (FS)</h2>
+  <div class="def-box">
+    A <strong>Full Subtractor</strong> computes A − B − Bin, where Bin is the <strong>Borrow-in</strong> from the previous stage. Produces a <strong>Difference (D)</strong> and <strong>Borrow-out (Bout)</strong>.
+  </div>
+  <table class="tt">
+    <tr><th>A</th><th>B</th><th>Bin</th><th>D</th><th>Bout</th></tr>
+    <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+    <tr><td>0</td><td>0</td><td>1</td><td>1</td><td>1</td></tr>
+    <tr><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td></tr>
+    <tr><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td></tr>
+    <tr><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+    <tr><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+    <tr><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td></tr>
+    <tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+  </table>
+
+  <div class="rule-box">
+    <strong>Expressions (from K-map):</strong><br>
+    <span class="formula">D = A ⊕ B ⊕ Bin</span><br>
+    <span class="formula">Bout = A'·B + A'·Bin + B·Bin</span><br>
+    Or: <span class="formula">Bout = A'·B + Bin·(A ⊕ B)'</span>
+  </div>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital Electronics — Unit 3</span>
+    <span class="unit-badge">SECTION 9</span>
+  </div>
+
+  <h2 class="topic">Adder-Subtractor Circuit</h2>
+  <div class="def-box">
+    A <strong>4-bit Adder-Subtractor</strong> performs both A+B and A−B using the same hardware. It exploits the fact that subtraction can be done as: <strong>A − B = A + 2's complement of B = A + B̄ + 1</strong>.
+  </div>
+
+  <div class="orange-box">
+    <strong>Design using mode control M:</strong><br>
+    — When M=0: XOR gates pass B unchanged → performs A + B<br>
+    — When M=1: XOR gates invert B (B⊕1 = B̄) + M=1 fed to Cin of first FA = +1 → performs A + B̄ + 1 = A − B (2's complement subtraction)<br>
+    Each B bit goes through XOR with M: <span class="formula">Bᵢ ⊕ M</span>
+  </div>
+
+  <div class="note-box">
+    <strong>Overflow detection:</strong> In signed arithmetic, overflow occurs when the carry into the MSB ≠ carry out of the MSB. <span class="formula">Overflow = Cₙ ⊕ Cₙ₋₁</span>. This can be detected with an XOR gate on the last two carries.
+  </div>
+
+  <div class="vs-box">
+    <div class="vs-left">
+      <h4>Adder (M=0)</h4>
+      <ul class="plain">
+        <li>B bits pass through XOR unchanged</li>
+        <li>Cin = 0</li>
+        <li>Result = A + B</li>
+      </ul>
+    </div>
+    <div class="vs-right">
+      <h4>Subtractor (M=1)</h4>
+      <ul class="plain">
+        <li>B bits inverted by XOR</li>
+        <li>Cin = 1 (adds the +1)</li>
+        <li>Result = A − B</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══════════════════ §10 SERIAL & PARALLEL ADDERS ═════════════════ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital Electronics — Unit 3</span>
+    <span class="unit-badge">SECTION 10</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§10</span> Serial & Parallel Adders</h1>
+  <hr class="divider">
+
+  <h2 class="topic">Parallel Adder (Ripple Carry Adder)</h2>
+  <div class="def-box">
+    A <strong>Parallel (Ripple Carry) Adder</strong> adds two n-bit numbers simultaneously by cascading n Full Adders. All input bits are presented at the same time, but the carry must <em>ripple</em> through from LSB to MSB. Also called <strong>Ripple Carry Adder (RCA)</strong>.
+  </div>
+
+  <div class="rule-box">
+    <strong>4-bit Parallel Adder (IC 7483 / 74283):</strong><br>
+    4 Full Adders connected in cascade. C₀ = 0 (no initial carry)<br>
+    Each stage: <span class="formula">Sᵢ = Aᵢ ⊕ Bᵢ ⊕ Cᵢ</span> and <span class="formula">Cᵢ₊₁ = AᵢBᵢ + Cᵢ(Aᵢ ⊕ Bᵢ)</span><br>
+    Carry ripples: C₀ → C₁ → C₂ → C₃ → C₄ (final carry out)
+  </div>
+
+  <div class="note-box">
+    <strong>Propagation delay problem:</strong> Each FA introduces ~2 gate delays for carry. For n-bit adder, worst-case delay = 2n gate delays (carry ripples through all n stages). For n=32 bits, this is 64 gate delays! This motivates the Carry Lookahead Adder.
+  </div>
+
+  <h2 class="topic">Carry Lookahead Adder (CLA)</h2>
+  <div class="def-box">
+    In a <strong>CLA</strong>, all carry bits are computed simultaneously (in parallel) using Generate (G) and Propagate (P) signals, eliminating the ripple delay. Carry for any bit position is calculated directly from the original inputs.
+  </div>
+  <div class="rule-box">
+    <strong>CLA formulas:</strong><br>
+    Gᵢ = AᵢBᵢ (Generate), Pᵢ = Aᵢ⊕Bᵢ (Propagate)<br>
+    <span class="formula">C₁ = G₀ + P₀·C₀</span><br>
+    <span class="formula">C₂ = G₁ + P₁·G₀ + P₁·P₀·C₀</span><br>
+    <span class="formula">C₃ = G₂ + P₂·G₁ + P₂·P₁·G₀ + P₂·P₁·P₀·C₀</span><br>
+    All carries computed with only 2 logic gate delays!
+  </div>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital Electronics — Unit 3</span>
+    <span class="unit-badge">SECTION 10</span>
+  </div>
+
+  <h2 class="topic">Serial Adder</h2>
+  <div class="def-box">
+    A <strong>Serial Adder</strong> adds two n-bit numbers <em>one bit at a time</em> over n clock cycles, using a <strong>single Full Adder</strong> and shift registers to supply the bits sequentially. The carry is stored in a D flip-flop between cycles.
+  </div>
+
+  <div class="orange-box">
+    <strong>Serial Adder components:</strong>
+    <div class="step-card">
+      <div class="step-head">1. Shift Registers</div>
+      <div class="step-body">Two shift registers hold operands A and B. They shift right one bit per clock, feeding the LSB first to the Full Adder.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-head">2. Full Adder</div>
+      <div class="step-body">Single FA receives one bit from each register and the carry from the D flip-flop.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-head">3. D Flip-Flop (Carry Register)</div>
+      <div class="step-body">Stores the carry output, feeds it as carry-in for the next clock cycle.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-head">4. Sum Register</div>
+      <div class="step-body">Collects sum bits serially, shifting in the sum output each clock cycle.</div>
+    </div>
+  </div>
+
+  <div class="vs-box">
+    <div class="vs-left">
+      <h4>Serial Adder</h4>
+      <ul class="plain">
+        <li>1 Full Adder only</li>
+        <li>n clock cycles for n-bit add</li>
+        <li>Low hardware, slow speed</li>
+        <li>Needs shift registers + D FF</li>
+      </ul>
+    </div>
+    <div class="vs-right">
+      <h4>Parallel Adder</h4>
+      <ul class="plain">
+        <li>n Full Adders required</li>
+        <li>Result in 1 clock cycle</li>
+        <li>High hardware, fast speed</li>
+        <li>No shift registers needed</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="note-box">
+    <strong>Trade-off:</strong> Serial adder trades speed for hardware savings. Parallel adder trades hardware for speed. In modern CPUs, parallel (CLA) adders are used. Serial adders appear in low-power embedded systems and communication protocols.
+  </div>
+
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══════════════════ §11 BCD ADDER ══════════════════════════════════ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital Electronics — Unit 3</span>
+    <span class="unit-badge">SECTION 11</span>
+  </div>
+  <h1 class="section-title"><span class="sn">§11</span> BCD Adder</h1>
+  <hr class="divider">
+
+  <div class="def-box">
+    A <strong>BCD Adder</strong> adds two BCD (Binary Coded Decimal) digits. Each BCD digit is a 4-bit binary number (0–9). When two BCD digits are added, the result must remain a valid BCD digit — if it exceeds 9 (or generates a carry), a <strong>correction of +6 (0110)</strong> must be added.
+  </div>
+
+  <h2 class="topic">Why Add 6 as Correction?</h2>
+  <div class="purple-box">
+    BCD uses only 0000–1001 (0–9). Standard 4-bit binary addition gives 0000–1111 (0–15). The "gap" between valid BCD (max = 9) and binary (max = 15) has 6 invalid states (1010–1111). Adding 6 (0110) "skips over" this invalid zone:<br>
+    <strong>If result > 9:</strong> it's in the invalid zone → add 0110 to correct<br>
+    <strong>If carry generated:</strong> result exceeded 15 → also add 0110
+  </div>
+
+  <h2 class="topic">BCD Addition Algorithm</h2>
+  <div class="orange-box">
+    <div class="step-card">
+      <div class="step-head">STEP 1 — Binary Addition</div>
+      <div class="step-body">Add the two 4-bit BCD digits using a standard 4-bit binary adder. Get a 5-bit result (4 sum bits + carry C₄).</div>
+    </div>
+    <div class="step-card">
+      <div class="step-head">STEP 2 — Check for Correction Need</div>
+      <div class="step-body">
+        Correction needed if: C₄ = 1 (carry out), OR if result S₃S₂S₁S₀ > 1001 (i.e., sum > 9)<br>
+        Detection: <span class="formula">K = C₄ + S₃·S₂ + S₃·S₁</span>
+      </div>
+    </div>
+    <div class="step-card">
+      <div class="step-head">STEP 3 — Add Correction</div>
+      <div class="step-body">If K=1, add 0110 to the sum using a second 4-bit adder. K also becomes the carry out to the next BCD digit position.</div>
+    </div>
+  </div>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital Electronics — Unit 3</span>
+    <span class="unit-badge">SECTION 11</span>
+  </div>
+
+  <h2 class="topic">BCD Adder — Correction Logic</h2>
+  <div class="rule-box">
+    <strong>Correction factor detection:</strong><br>
+    <span class="formula">K = C₄ + S₃·S₂ + S₃·S₁</span><br><br>
+    This is because result > 9 when:<br>
+    — C₄=1 (exceeded 4-bit range), OR<br>
+    — S₃=1 and S₂=1 (result ≥ 12), OR<br>
+    — S₃=1 and S₁=1 (result = 10 or 11)<br><br>
+    If K=1: add 0110 to S₃S₂S₁S₀ using second adder<br>
+    <strong>K = carry out of the BCD digit</strong>
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">🧪 SOLVED EXAMPLE — BCD Addition: 6 + 7</div>
+    <div class="q-step"><strong>BCD representation:</strong> 6 = 0110, 7 = 0111</div>
+    <div class="q-step"><strong>Step 1 — Binary add:</strong> 0110 + 0111 = 1101 (= 13, no carry C₄=0 but result > 9)</div>
+    <div class="q-step"><strong>Step 2 — Check K:</strong> S₃=1, S₂=1 → K = S₃·S₂ = 1 → Correction needed!</div>
+    <div class="q-step"><strong>Step 3 — Add 0110:</strong> 1101 + 0110 = 10011</div>
+    <div class="q-step">Lower nibble: 0011 = 3; Upper carry: 1 → means next digit gets carry 1</div>
+    <div class="q-ans">BCD result: 1 | 0011 = 13 ✓ (6+7=13, tens digit=1, units digit=3)</div>
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">🧪 SOLVED EXAMPLE — BCD Addition: 9 + 8</div>
+    <div class="q-step"><strong>BCD:</strong> 9 = 1001, 8 = 1000</div>
+    <div class="q-step"><strong>Step 1:</strong> 1001 + 1000 = 10001 → C₄=1, S=0001</div>
+    <div class="q-step"><strong>Step 2:</strong> C₄=1 → K=1, correction needed</div>
+    <div class="q-step"><strong>Step 3:</strong> 0001 + 0110 = 0111</div>
+    <div class="q-ans">BCD result: 1 | 0111 = 17 ✓ (9+8=17)</div>
+  </div>
+
+  <div class="note-box">
+    K detection formula is the most asked part. Derive it by listing all cases where binary sum > 9 and using K-map. The formula <strong>K = C₄ + S₃S₂ + S₃S₁</strong> covers all cases!
+  </div>
+
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══════════════════ §12 QUICK REVISION ══════════════════════════════ -->
+<div class="page rev-page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header" style="border-bottom-color:#7c3aed;">
+    <span class="date-tag" style="color:#94a3b8;">Digital Electronics — Unit 3</span>
+    <span class="unit-badge" style="background:#7c3aed;">REVISION</span>
+  </div>
+  <h1 class="section-title" style="color:#e2e8f0;"><span class="sn">§12</span> ⚡ Quick Revision — All Key Formulas</h1>
+  <hr class="divider" style="border-top-color:#444;">
+
+  <h2 class="topic" style="color:#a78bfa;border-bottom-color:#4c2889;">MSI Devices Summary</h2>
+
+  <div class="rev-card">
+    <div class="rev-row"><span class="rev-label">Magnitude Comparator (1-bit)</span><span class="rev-val">G=AB' L=A'B E=XNOR(A,B)</span></div>
+    <div class="rev-row"><span class="rev-label">n-bit equality</span><span class="rev-val">E = XNOR(Aₙ₋₁,Bₙ₋₁)·...·XNOR(A₀,B₀)</span></div>
+    <div class="rev-row"><span class="rev-label">Cascade inputs (lower 7485)</span><span class="rev-val">I(A>B)=0, I(A&lt;B)=0, I(A=B)=1</span></div>
+    <div class="rev-row"><span class="rev-label">4:1 MUX output</span><span class="rev-val">Y = S₁'S₀'I₀ + S₁'S₀I₁ + S₁S₀'I₂ + S₁S₀I₃</span></div>
+    <div class="rev-row"><span class="rev-label">MUX function gen (n-var)</span><span class="rev-val">Use 2ⁿ:1 MUX, connect minterms to Iᵢ=0/1</span></div>
+    <div class="rev-row"><span class="rev-label">DEMUX with D=1</span><span class="rev-val">Acts as decoder — output = minterm of select</span></div>
+  </div>
+
+  <h2 class="topic" style="color:#a78bfa;border-bottom-color:#4c2889;">Decoders & Encoders</h2>
+  <div class="rev-card">
+    <div class="rev-row"><span class="rev-label">2:4 Decoder outputs</span><span class="rev-val">Dᵢ = minterm mᵢ of inputs</span></div>
+    <div class="rev-row"><span class="rev-label">74138 type</span><span class="rev-val">Active-LOW outputs (use NAND for active-HIGH)</span></div>
+    <div class="rev-row"><span class="rev-label">Decoder + OR = Function</span><span class="rev-val">OR the minterm outputs where f=1</span></div>
+    <div class="rev-row"><span class="rev-label">4:2 Encoder</span><span class="rev-val">A₁=I₂+I₃, A₀=I₁+I₃</span></div>
+    <div class="rev-row"><span class="rev-label">Priority Encoder (4:2) V</span><span class="rev-val">V = I₀+I₁+I₂+I₃</span></div>
+    <div class="rev-row"><span class="rev-label">Decimal→BCD (B₀)</span><span class="rev-val">B₀=I₁+I₃+I₅+I₇+I₉</span></div>
+  </div>
+
+  <div class="page-num" style="color:#aaa;">1 / 2</div>
+</div>
+
+<div class="page rev-page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header" style="border-bottom-color:#7c3aed;">
+    <span class="date-tag" style="color:#94a3b8;">Digital Electronics — Unit 3</span>
+    <span class="unit-badge" style="background:#7c3aed;">REVISION</span>
+  </div>
+
+  <h2 class="topic" style="color:#a78bfa;border-bottom-color:#4c2889;">Adders & Subtractors</h2>
+  <div class="rev-card">
+    <div class="rev-row"><span class="rev-label">Half Adder</span><span class="rev-val">S=A⊕B, C=AB</span></div>
+    <div class="rev-row"><span class="rev-label">Full Adder Sum</span><span class="rev-val">S=A⊕B⊕Cin</span></div>
+    <div class="rev-row"><span class="rev-label">Full Adder Carry</span><span class="rev-val">Cout=AB+BCin+ACin = AB+Cin(A⊕B)</span></div>
+    <div class="rev-row"><span class="rev-label">G (generate)</span><span class="rev-val">G=AB (carry generated regardless of Cin)</span></div>
+    <div class="rev-row"><span class="rev-label">P (propagate)</span><span class="rev-val">P=A⊕B (carry propagated from Cin)</span></div>
+    <div class="rev-row"><span class="rev-label">FA from 2 HAs</span><span class="rev-val">FA = HA + HA + OR</span></div>
+    <div class="rev-row"><span class="rev-label">Half Subtractor</span><span class="rev-val">D=A⊕B, Bo=A'B</span></div>
+    <div class="rev-row"><span class="rev-label">Full Subtractor</span><span class="rev-val">D=A⊕B⊕Bin, Bout=A'B+A'Bin+BBin</span></div>
+    <div class="rev-row"><span class="rev-label">Adder-Subtractor</span><span class="rev-val">Bᵢ⊕M, Cin=M (M=0:add, M=1:subtract)</span></div>
+    <div class="rev-row"><span class="rev-label">RCA delay</span><span class="rev-val">2n gate delays for n-bit addition</span></div>
+    <div class="rev-row"><span class="rev-label">CLA carry gen</span><span class="rev-val">Cᵢ₊₁=Gᵢ+PᵢCᵢ, all computed simultaneously</span></div>
+  </div>
+
+  <h2 class="topic" style="color:#a78bfa;border-bottom-color:#4c2889;">BCD Adder</h2>
+  <div class="rev-card">
+    <div class="rev-row"><span class="rev-label">Correction factor</span><span class="rev-val">+6 (0110) when result > 9 or carry=1</span></div>
+    <div class="rev-row"><span class="rev-label">K (correction detect)</span><span class="rev-val">K=C₄+S₃S₂+S₃S₁</span></div>
+    <div class="rev-row"><span class="rev-label">Why +6?</span><span class="rev-val">Skip 6 invalid states (1010–1111)</span></div>
+    <div class="rev-row"><span class="rev-label">K also serves as</span><span class="rev-val">carry out to next BCD digit</span></div>
+  </div>
+
+  <h2 class="topic" style="color:#a78bfa;border-bottom-color:#4c2889;">IC Numbers Cheat Sheet</h2>
+  <div class="rev-card">
+    <div class="rev-row"><span class="rev-label">74153</span><span class="rev-val">Dual 4:1 MUX</span></div>
+    <div class="rev-row"><span class="rev-label">74151</span><span class="rev-val">8:1 MUX</span></div>
+    <div class="rev-row"><span class="rev-label">7485</span><span class="rev-val">4-bit Magnitude Comparator</span></div>
+    <div class="rev-row"><span class="rev-label">74138</span><span class="rev-val">3:8 Decoder (active LOW, 3 enables)</span></div>
+    <div class="rev-row"><span class="rev-label">74148</span><span class="rev-val">8:3 Priority Encoder</span></div>
+    <div class="rev-row"><span class="rev-label">7447</span><span class="rev-val">BCD-to-7seg (Common Anode, active LOW)</span></div>
+    <div class="rev-row"><span class="rev-label">7448</span><span class="rev-val">BCD-to-7seg (Common Cathode, active HIGH)</span></div>
+    <div class="rev-row"><span class="rev-label">7483/74283</span><span class="rev-val">4-bit Full Adder (Parallel)</span></div>
+  </div>
+
+  <div class="page-num" style="color:#aaa;">2 / 2</div>
+</div>
+
+<!-- ════════════════════ PRACTICE QUESTIONS ════════════════════════════ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header">
+    <span class="date-tag">Digital Electronics — Unit 3</span>
+    <span class="unit-badge">PRACTICE</span>
+  </div>
+  <h1 class="section-title">🎯 Practice Questions — Part 3</h1>
+  <hr class="divider">
+
+  <div class="pq-section">
+    <h4>§8 — Half Adder & Full Adder</h4>
+    <div class="pq-item"><span class="pq-num">Q1.</span> Design a Full Adder using basic logic gates. Draw the truth table, derive K-maps for Sum and Carry, write minimal SOP expressions, and draw the gate-level circuit. How many gates are needed minimum? <em>(8 marks)</em></div>
+    <div class="pq-item"><span class="pq-num">Q2.</span> Show how a Full Adder can be constructed using two Half Adders and one OR gate. Draw the complete circuit. Then verify the Full Adder by computing 1 + 1 + 1 (A=1, B=1, Cin=1) step by step through the circuit. <em>(6 marks)</em></div>
+  </div>
+
+  <div class="pq-section">
+    <h4>§9 — Subtractors</h4>
+    <div class="pq-item"><span class="pq-num">Q3.</span> Design a 4-bit Adder-Subtractor circuit using a 4-bit Ripple Carry Adder and XOR gates. Explain how the mode control M switches between addition and subtraction. Show the circuit for computing 1010 − 0110. <em>(8 marks)</em></div>
+    <div class="pq-item"><span class="pq-num">Q4.</span> Compare Half Subtractor and Full Subtractor completely: truth tables, Boolean expressions, gate implementations. Why is the Full Subtractor more practical for multi-bit subtraction? <em>(6 marks)</em></div>
+  </div>
+
+  <div class="pq-section">
+    <h4>§10 — Serial & Parallel Adders</h4>
+    <div class="pq-item"><span class="pq-num">Q5.</span> Draw the block diagram of a 4-bit serial adder showing all components (shift registers, FA, D flip-flop, sum register). Trace through the operation of adding 1011 + 0110 over 4 clock cycles, showing the state after each cycle. <em>(8 marks)</em></div>
+    <div class="pq-item"><span class="pq-num">Q6.</span> Derive the Carry Lookahead expressions C₁, C₂, and C₃ for a 4-bit CLA adder. How many gate delays are needed to compute all carries in CLA vs Ripple Carry Adder? What is the speed improvement for a 16-bit adder? <em>(7 marks)</em></div>
+  </div>
+
+  <div class="pq-section">
+    <h4>§11 — BCD Adder</h4>
+    <div class="pq-item"><span class="pq-num">Q7.</span> Perform BCD addition for: (a) 7 + 5, (b) 9 + 9, (c) 4 + 3. Show all steps including binary addition, correction check, and final BCD result. Draw the circuit of a 1-digit BCD adder. <em>(8 marks)</em></div>
+    <div class="pq-item"><span class="pq-num">Q8.</span> Derive the correction detection logic expression K = C₄ + S₃S₂ + S₃S₁ for the BCD adder using a K-map. List all input combinations that need correction and explain why 0110 (and not some other value) is added as the correction factor. <em>(7 marks)</em></div>
+  </div>
+
+  <div class="page-num">1 / 1</div>
+</div>
+
+</div>
 
 <script>
-(function(){
-  var pages = document.querySelectorAll('.page');
-  var secPages = [];
-  pages.forEach(function(p){ if(p.querySelector('h1.section-title')) secPages.push(p); });
-  secPages.forEach(function(p,i){ p.id = 'sec-'+(i+1); });
-  var tocItems = document.querySelectorAll('.cover-toc-item');
-  tocItems.forEach(function(item, i){
-    if(i >= secPages.length) return;
-    item.style.cursor = 'pointer';
-    item.style.borderRadius = '4px';
-    item.style.transition = 'background 0.18s';
-    item.setAttribute('title', 'Click to jump to this section');
-    item.addEventListener('mouseenter', function(){ item.style.background='rgba(255,255,255,0.18)'; });
-    item.addEventListener('mouseleave', function(){ item.style.background=''; });
-    item.addEventListener('click', function(){ secPages[i].scrollIntoView({behavior:'smooth'}); });
+  document.querySelectorAll('.part-nav a').forEach(a => {
+    if(a.href === window.location.href) a.classList.add('active');
   });
-})();
 </script>
 </body>
 </html>

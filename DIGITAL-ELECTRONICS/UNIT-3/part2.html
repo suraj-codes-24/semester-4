@@ -2,139 +2,477 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DIGITAL-ELECTRONICS Unit 3 — Part 2</title>
-<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>DSD — Unit 3 | Combinational Logic | Part 2</title>
 <style>
-:root{--ink:#1a1a2e;--ink2:#2c2c54;--blue:#1565C0;--red:#b71c1c;--green:#1b5e20;--purple:#4a148c;--teal:#006064;--orange:#e65100;--line:#c5cae9;--page:#fafaf7;--highlight:#fff9c4;--box-blue:#e8f4fd;--box-green:#e8f5e9;--box-purple:#f3e5f5;--box-orange:#fff3e0;--box-red:#fce4ec;--box-teal:#e0f7fa;}
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Patrick+Hand&family=Special+Elite&display=swap');
+:root{
+  --ink:#1a1a2e;--blue:#1565c0;--red:#c62828;--green:#2e7d32;
+  --purple:#6a1b9a;--orange:#e65100;--teal:#00695c;--amber:#f57f17;
+  --def-bg:#e3f2fd;--def-bd:#1565c0;--rule-bg:#e8f5e9;--rule-bd:#2e7d32;
+  --note-bg:#fff8e1;--note-bd:#f57f17;--purp-bg:#f3e5f5;--purp-bd:#6a1b9a;
+  --org-bg:#fff3e0;--org-bd:#e65100;--line:#e0ddd0;--hole:#d0cdc0;
+}
 *{margin:0;padding:0;box-sizing:border-box;}
-body{background:#e0e0e0;font-family:'Kalam',cursive;color:var(--ink);padding:30px 20px;}
-.page{background:var(--page);max-width:820px;margin:0 auto 40px;border-radius:4px;box-shadow:0 2px 16px rgba(0,0,0,0.18),0 0 0 1px rgba(0,0,0,0.08);padding:60px 70px 70px 90px;position:relative;min-height:1060px;background-image:repeating-linear-gradient(transparent,transparent 31px,var(--line) 31px,var(--line) 32px);background-position:0 56px;}
-.page::before{content:'';position:absolute;left:72px;top:0;bottom:0;width:1.5px;background:#ef9a9a;opacity:0.7;}
-.holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-around;padding:40px 0;}
-.hole{width:22px;height:22px;border-radius:50%;background:#e0e0e0;border:1.5px solid #bdbdbd;box-shadow:inset 0 1px 3px rgba(0,0,0,0.2);}
-.page-num{position:absolute;bottom:28px;right:50px;font-size:13px;color:#9e9e9e;}
-.page-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
-.date-tag{font-size:13px;color:#9e9e9e;}
-.unit-badge{color:#fff;font-size:13px;padding:2px 14px;border-radius:20px;font-weight:700;}
-h1.section-title{font-size:24px;font-weight:700;color:var(--ink2);text-align:center;margin:8px 0 4px;text-decoration:underline;text-underline-offset:5px;}
-h2.topic{font-size:18px;font-weight:700;color:var(--blue);margin:18px 0 6px;border-bottom:1.5px solid var(--blue);padding-bottom:2px;display:inline-block;}
-h3.sub{font-size:15px;font-weight:700;color:var(--purple);margin:12px 0 4px;}
-p,li{font-size:15px;line-height:32px;}
-.def-box{background:var(--box-blue);border-left:4px solid var(--blue);border-radius:0 6px 6px 0;padding:10px 16px;margin:10px 0 12px;font-size:15px;line-height:30px;}
-.note-box{background:var(--highlight);border-left:4px solid #f9a825;border-radius:0 6px 6px 0;padding:8px 14px;margin:8px 0 10px;font-size:14px;line-height:26px;}
-.rule-box{background:var(--box-green);border:1.5px solid #81c784;border-radius:6px;padding:10px 16px;margin:10px 0;font-size:14.5px;line-height:28px;}
-.purple-box{background:var(--box-purple);border-left:4px solid var(--purple);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
-.orange-box{background:var(--box-orange);border-left:4px solid var(--orange);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
-.teal-box{background:var(--box-teal);border-left:4px solid var(--teal);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
-.formula{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--blue);}
-.divider{border:none;border-top:1px dashed #b0bec5;margin:14px 0 10px;}
-ul.plain{list-style:none;padding-left:4px;}
-ul.plain li::before{content:'→ ';color:var(--blue);font-weight:700;}
-ul.plain li{font-size:15px;line-height:32px;}
-.qbox{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:12px 16px;margin:10px 0;}
-.q-label{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:2px;}
-.q-step{font-size:14px;color:var(--green);margin-top:4px;line-height:26px;}
-.q-ans{font-size:15px;color:var(--red);font-family:'Patrick Hand',cursive;margin-top:4px;}
-table.tt{width:100%;border-collapse:collapse;margin:8px 0;font-size:14px;}
-table.tt th{color:#fff;padding:7px 10px;text-align:center;}
-table.tt td{padding:6px 10px;border-bottom:1px solid #e0e0e0;text-align:center;font-family:'Patrick Hand',cursive;font-size:14px;}
+body{font-family:'Patrick Hand',cursive;background:#cec5af;min-height:100vh;padding-bottom:60px;}
+.part-nav{position:sticky;top:0;z-index:100;background:#2c2c2c;display:flex;align-items:center;padding:0 20px;height:44px;box-shadow:0 2px 8px rgba(0,0,0,.4);font-family:'Special Elite',serif;font-size:13px;letter-spacing:.5px;}
+.part-nav .brand{color:#f0e6d0;margin-right:20px;opacity:.7;font-size:11px;}
+.part-nav a{color:#aaa;text-decoration:none;padding:0 16px;height:44px;display:flex;align-items:center;border-bottom:3px solid transparent;transition:all .2s;}
+.part-nav a:hover{color:#fff;background:rgba(255,255,255,.07);}
+.part-nav a.active{color:#ffd54f;border-bottom-color:#ffd54f;}
+.part-nav .sep{color:#555;margin:0 2px;}
+.notebook{max-width:840px;margin:28px auto;display:flex;flex-direction:column;}
+.cover-page{background:linear-gradient(135deg,#1b5e20,#2e7d32 40%,#388e3c);padding:60px 60px 50px 90px;position:relative;overflow:hidden;min-height:500px;box-shadow:4px 4px 20px rgba(0,0,0,.25);}
+.cover-page::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(transparent,transparent 38px,rgba(255,255,255,.05) 38px,rgba(255,255,255,.05) 39px);}
+.cover-spine{position:absolute;left:0;top:0;bottom:0;width:50px;background:linear-gradient(to right,#0a3d0a,#1b5e20);border-right:2px solid rgba(255,255,255,.1);}
+.cover-holes{position:absolute;left:14px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-evenly;align-items:center;padding:40px 0;}
+.cover-holes .hole{width:20px;height:20px;background:#cec5af;border-radius:50%;box-shadow:inset 0 2px 4px rgba(0,0,0,.4);}
+.cover-tag{font-family:'Special Elite',serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#a5d6a7;margin-bottom:10px;}
+.cover-subject{font-family:'Caveat',cursive;font-size:52px;font-weight:700;color:#fff;line-height:1;margin-bottom:4px;}
+.cover-unit{font-family:'Caveat',cursive;font-size:26px;color:#c8e6c9;margin-bottom:4px;}
+.cover-subtitle{font-family:'Patrick Hand',cursive;font-size:15px;color:#a5d6a7;margin-bottom:28px;}
+.cover-badge{display:inline-block;background:#f9a825;color:#1b5e20;font-family:'Special Elite',serif;font-size:13px;font-weight:700;letter-spacing:2px;padding:5px 18px;margin-bottom:26px;}
+.cover-hr{border:none;border-top:1px solid rgba(255,255,255,.2);margin:16px 0;}
+.cover-toc h3{font-family:'Special Elite',serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#a5d6a7;margin-bottom:12px;}
+.cover-toc table{width:100%;border-collapse:collapse;}
+.cover-toc td{padding:5px 0;font-size:14px;color:#e8f5e9;}
+.cover-toc td:first-child{width:36px;color:#f9a825;font-weight:700;}
+.cover-toc td:last-child{text-align:right;color:#a5d6a7;font-size:12px;}
+.cover-toc tr{border-bottom:1px solid rgba(255,255,255,.06);}
+.page{background:#fffef7;position:relative;padding:26px 36px 36px 80px;min-height:680px;box-shadow:2px 2px 8px rgba(0,0,0,.1);border-bottom:1px solid #e0ddd0;background-image:repeating-linear-gradient(transparent,transparent 30px,var(--line) 30px,var(--line) 31px);}
+.page::before{content:'';position:absolute;left:66px;top:0;bottom:0;width:1px;background:#ffcdd2;}
+.page:last-child{border-radius:0 0 3px 3px;}
+.holes{position:absolute;left:0;top:0;bottom:0;width:66px;display:flex;flex-direction:column;justify-content:space-evenly;align-items:center;padding:50px 0;background:#f5f0e8;border-right:1px solid #e0ddd0;}
+.hole{width:18px;height:18px;background:var(--hole);border-radius:50%;box-shadow:inset 0 1px 3px rgba(0,0,0,.25),0 0 0 2px #c8c5b8;}
+.page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;padding-bottom:7px;border-bottom:2px solid var(--green);font-family:'Special Elite',serif;}
+.date-tag{font-size:11px;color:#666;letter-spacing:.8px;}
+.unit-badge{background:var(--green);color:#fff;font-size:10px;letter-spacing:2px;padding:3px 10px;}
+h1.section-title{font-family:'Caveat',cursive;font-size:32px;font-weight:700;color:#16213e;margin-bottom:4px;}
+h1.section-title .sn{color:var(--green);margin-right:8px;}
+.divider{border:none;border-top:1.5px dashed #b0aaa0;margin:8px 0 16px;}
+h2.topic{font-family:'Caveat',cursive;font-size:22px;font-weight:700;color:var(--green);margin:18px 0 7px;border-bottom:1px solid #c8e6c9;padding-bottom:3px;}
+h3.sub{font-family:'Caveat',cursive;font-size:18px;color:var(--teal);margin:12px 0 5px;}
+ul.plain{list-style:none;padding-left:4px;margin:7px 0;}
+ul.plain li{position:relative;padding-left:20px;font-size:14.5px;line-height:1.7;margin-bottom:2px;}
+ul.plain li::before{content:'→';position:absolute;left:0;color:var(--green);font-weight:700;}
+p.body{font-size:14.5px;line-height:1.75;margin:7px 0;}
+.def-box,.rule-box,.note-box,.purple-box,.orange-box{border-radius:3px;padding:12px 15px;margin:14px 0;font-size:14px;line-height:1.7;position:relative;}
+.def-box{background:var(--def-bg);border-left:4px solid var(--def-bd);}
+.def-box::before{content:'DEF';position:absolute;top:-10px;left:10px;background:var(--def-bd);color:#fff;font-family:'Special Elite',serif;font-size:9px;letter-spacing:2px;padding:1px 7px;}
+.rule-box{background:var(--rule-bg);border-left:4px solid var(--rule-bd);}
+.rule-box::before{content:'KEY';position:absolute;top:-10px;left:10px;background:var(--rule-bd);color:#fff;font-family:'Special Elite',serif;font-size:9px;letter-spacing:2px;padding:1px 7px;}
+.note-box{background:var(--note-bg);border-left:4px solid var(--note-bd);}
+.note-box::before{content:'⚠ TIP';position:absolute;top:-10px;left:10px;background:var(--note-bd);color:#fff;font-family:'Special Elite',serif;font-size:9px;letter-spacing:2px;padding:1px 7px;}
+.purple-box{background:var(--purp-bg);border-left:4px solid var(--purp-bd);}
+.purple-box::before{content:'★ NOTE';position:absolute;top:-10px;left:10px;background:var(--purp-bd);color:#fff;font-family:'Special Elite',serif;font-size:9px;letter-spacing:2px;padding:1px 7px;}
+.orange-box{background:var(--org-bg);border-left:4px solid var(--org-bd);}
+.orange-box::before{content:'ALGO';position:absolute;top:-10px;left:10px;background:var(--org-bd);color:#fff;font-family:'Special Elite',serif;font-size:9px;letter-spacing:2px;padding:1px 7px;}
+span.formula{font-family:'Special Elite',serif;background:#f0fff0;border:1px solid #a5d6a7;padding:1px 6px;color:var(--green);font-size:13.5px;display:inline-block;margin:1px 2px;}
+p.fline{font-family:'Special Elite',serif;text-align:center;font-size:15px;color:#16213e;padding:8px 0;letter-spacing:.5px;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:10px 0;}
+.vs-box{display:grid;grid-template-columns:1fr 1fr;margin:12px 0;border:1.5px solid #a5d6a7;overflow:hidden;}
+.vs-left{background:#e8f5e9;padding:12px 14px;font-size:13.5px;line-height:1.65;}
+.vs-right{background:#fff8e1;padding:12px 14px;font-size:13.5px;line-height:1.65;border-left:2px solid #a5d6a7;}
+.vs-head{font-family:'Special Elite',serif;font-size:10px;letter-spacing:2px;color:#555;margin-bottom:7px;text-transform:uppercase;}
+.step-card{margin:10px 0;border:1px solid #e0e0e0;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+.step-head{background:#37474f;color:#fff;font-family:'Special Elite',serif;font-size:11px;letter-spacing:2px;padding:6px 14px;}
+.step-body{padding:11px 15px;font-size:14px;line-height:1.7;background:#fafafa;}
+.step-body ol{padding-left:18px;}
+.step-body ol li{margin-bottom:5px;}
+table.tt{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0;font-family:'Special Elite',serif;}
+table.tt th{background:#2e7d32;color:#fff;padding:7px 9px;text-align:center;font-size:11px;letter-spacing:1px;}
+table.tt td{padding:5px 9px;text-align:center;border:1px solid #e0e0e0;background:#fff;}
 table.tt tr:nth-child(even) td{background:#f5f5f5;}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0;}
-.vs-box{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:12px 0;border-radius:8px;overflow:hidden;border:1.5px solid #90caf9;}
-.vs-left{background:#e8f4fd;padding:12px 14px;}
-.vs-right{background:var(--box-purple);padding:12px 14px;border-left:1px solid #90caf9;}
-.vs-head{font-size:15px;font-weight:700;margin-bottom:8px;}
-.vs-item{font-size:14px;line-height:26px;}
-.step-card{background:var(--box-purple);border-left:4px solid var(--purple);padding:8px 14px;margin:5px 0;border-radius:0 6px 6px 0;}
-.step-head{font-size:14px;font-weight:700;color:var(--purple);}
-.step-body{font-size:13.5px;line-height:24px;color:var(--ink2);}
-.cover-page{max-width:820px;margin:0 auto 40px;border-radius:8px;padding:80px 60px;text-align:center;color:#fff;box-shadow:0 4px 24px rgba(0,0,0,0.3);position:relative;overflow:hidden;}
-.cover-subject{font-size:14px;letter-spacing:3px;opacity:0.7;margin-bottom:16px;}
-.cover-title{font-size:40px;font-weight:700;line-height:1.2;margin-bottom:12px;}
-.cover-unit{font-size:20px;opacity:0.85;margin-bottom:30px;}
-.cover-divider{width:80px;height:3px;background:rgba(255,255,255,0.4);margin:0 auto 24px;border-radius:2px;}
-.cover-toc{text-align:left;background:rgba(255,255,255,0.1);border-radius:8px;padding:20px 28px;display:inline-block;min-width:420px;}
-.cover-toc-item{font-size:15px;line-height:32px;display:flex;justify-content:space-between;gap:20px;}
-.part-nav{max-width:820px;margin:0 auto 20px;display:flex;gap:10px;justify-content:center;align-items:center;font-family:'Kalam',cursive;flex-wrap:wrap;}
-.part-nav a{padding:6px 20px;border-radius:20px;background:#fff;border:1.5px solid #90caf9;color:var(--blue);text-decoration:none;font-size:14px;font-weight:700;}
-.part-nav a:hover:not(.active){background:#e3f2fd;}
-.part-nav .back{background:#f5f5f5;border-color:#ccc;color:#555;font-size:13px;}
-.unit-badge{background:#e65100;}
-h1.section-title{text-decoration-color:#e65100;}
-h1.section-title .sn{color:#e65100;}
-.part-nav a.active{background:#e65100;border-color:#e65100;color:#fff;}
-@media(max-width:600px){
-body{padding:10px 0 30px;}
-.page{padding:20px 16px 30px 16px;min-height:unset;}
-.page::before{display:none;}
-.holes{display:none;}
-.cover-page{padding:40px 20px;margin:0 10px 20px;}
-.cover-toc{min-width:unset;width:100%;padding:14px 16px;}
-.part-nav{padding:0 10px;gap:6px;}
-.part-nav a{padding:5px 12px;font-size:13px;}
-.two-col{grid-template-columns:1fr;}
-.vs-box{grid-template-columns:1fr;}
-.vs-right{border-left:none;border-top:1px solid #90caf9;}
-nav.part-nav{padding:0 10px;gap:6px;}
-.cover-title{font-size:28px;}
-}</style>
+.seg-display{display:flex;gap:14px;justify-content:center;margin:14px 0;flex-wrap:wrap;}
+.digit-cell{text-align:center;font-family:'Special Elite',serif;font-size:12px;}
+.seg-box{width:50px;height:80px;position:relative;margin:0 auto 4px;}
+.seg-box .seg{position:absolute;background:#ddd;}
+.seg-box .seg.on{background:#ff1a1a;}
+.seg-h{width:28px;height:5px;left:11px;}
+.seg-h.top{top:4px;}
+.seg-h.mid{top:37px;}
+.seg-h.bot{top:70px;}
+.seg-v{width:5px;height:28px;}
+.seg-v.tl{top:8px;left:6px;}
+.seg-v.tr{top:8px;right:6px;}
+.seg-v.bl{top:42px;left:6px;}
+.seg-v.br{top:42px;right:6px;}
+.qbox{background:#fff;border:1.5px solid #a5d6a7;margin:12px 0;overflow:hidden;box-shadow:0 2px 5px rgba(0,0,0,.07);}
+.q-label{background:#2e7d32;color:#fff;font-family:'Special Elite',serif;font-size:10px;letter-spacing:2px;padding:5px 12px;}
+.q-step{background:#f8fff8;padding:11px 14px;font-size:14px;line-height:1.7;border-bottom:1px dashed #e0e0e0;}
+.q-ans{background:#e8f5e9;padding:11px 14px;font-size:13.5px;line-height:1.7;color:var(--green);}
+.q-ans::before{content:'✔ Solution: ';font-family:'Special Elite',serif;font-size:10px;letter-spacing:1px;display:block;margin-bottom:5px;color:var(--green);}
+.questions-block{margin-top:22px;padding:15px 18px;background:#fff9f0;border:1.5px solid var(--amber);}
+.questions-block .q-title{font-family:'Special Elite',serif;font-size:10px;letter-spacing:3px;color:var(--amber);margin-bottom:10px;text-transform:uppercase;}
+.questions-block ol{padding-left:18px;font-size:14px;line-height:1.8;}
+.questions-block ol li{margin-bottom:5px;}
+.page-num{position:absolute;bottom:12px;right:18px;font-family:'Special Elite',serif;font-size:11px;color:#888;letter-spacing:2px;}
+</style>
 </head>
 <body>
-
-<div class="part-nav">
+<nav class="part-nav">
   <a href="../index.html" class="back">↩ Units</a>
-  <a href="part1.html">Part 1</a>
-  <a href="part2.html" class="active">Part 2</a>
-  <a href="part3.html">Part 3</a>
-</div>
+  <span class="brand">DSD / Unit 3</span>
+  <a href="part1.html">Part 1 — MSI Devices I</a>
+  <span class="sep">|</span>
+  <a href="part2.html" class="active">Part 2 — Decoders, Encoders &amp; Display</a>
+  <span class="sep">|</span>
+  <a href="part3.html">Part 3 — Adders &amp; Revision</a>
+</nav>
+<div class="notebook">
 
-<div class="cover-page" style="background:linear-gradient(135deg,#e65100 0%,#bf360c 100%);">
-  <div class="cover-subject">DIGITAL ELECTRONICS</div>
-  <div class="cover-title">Unit 3 — Part 2</div>
-  <div class="cover-unit">[ Awaiting Content ]</div>
-  <div class="cover-divider"></div>
+<!-- COVER -->
+<div class="cover-page">
+  <div class="cover-spine"></div>
+  <div class="cover-holes">
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+  </div>
+  <div class="cover-tag">Digital System Design &nbsp;·&nbsp; BEC 302 / BOE 310 / BOE 410</div>
+  <div class="cover-subject">Unit 3</div>
+  <div class="cover-unit">Combinational Logic</div>
+  <div class="cover-subtitle">Decoders · Encoders · Multiplexed Display</div>
+  <div class="cover-badge">PART 2 OF 3</div>
+  <hr class="cover-hr">
   <div class="cover-toc">
-    <div class="cover-toc-item" style="opacity:0.6;font-style:italic;justify-content:center;"><span>Content to be added</span></div>
+    <h3>Contents — Part 2</h3>
+    <table>
+      <tr><td>§4</td><td>Decoders</td><td>3 pages</td></tr>
+      <tr><td>§5</td><td>Encoders &amp; Priority Encoders</td><td>2 pages</td></tr>
+      <tr><td>§6</td><td>Multiplexed Display (7-Segment)</td><td>2 pages</td></tr>
+    </table>
   </div>
 </div>
 
-<!-- ================================================
-     ADD CONTENT SECTIONS BELOW THIS LINE
+<!-- §4 PAGE 1 -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DSD — Unit 3 · Combinational Logic</span><span class="unit-badge">SECTION 4</span></div>
+  <h1 class="section-title"><span class="sn">§4</span> Decoders</h1>
+  <hr class="divider">
+  <div class="def-box">
+    A <strong>Decoder</strong> is a combinational circuit that converts an n-bit binary code into a unique output for each valid input combination. It has <span class="formula">n</span> input lines and up to <span class="formula">2ⁿ</span> output lines (one for each minterm). It performs a <strong>code-to-output mapping</strong> — each output represents a specific minterm.
+  </div>
+  <h2 class="topic">2:4 Decoder (2-to-4 Line Decoder)</h2>
+  <p class="body">2 inputs A₁, A₀; 4 outputs D₀–D₃. Enable input E (active HIGH).</p>
+  <div class="two-col">
+    <div>
+      <table class="tt">
+        <tr><th>E</th><th>A₁</th><th>A₀</th><th>D₀</th><th>D₁</th><th>D₂</th><th>D₃</th></tr>
+        <tr><td>0</td><td>X</td><td>X</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+        <tr><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+        <tr><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td></tr>
+      </table>
+    </div>
+    <div class="rule-box" style="margin:0;font-size:13px;">
+      <strong>Logic equations (E=1):</strong><br>
+      D₀ = A₁'·A₀' = m₀<br>
+      D₁ = A₁'·A₀ = m₁<br>
+      D₂ = A₁·A₀' = m₂<br>
+      D₃ = A₁·A₀ = m₃<br><br>
+      <em>Each output = one minterm!</em>
+    </div>
+  </div>
+  <h2 class="topic">3:8 Decoder (IC 74138)</h2>
+  <ul class="plain">
+    <li>3 inputs A₂A₁A₀ → 8 outputs Y₀–Y₇</li>
+    <li>Has 3 enable inputs: G1 (active HIGH), G̅2A, G̅2B (both active LOW)</li>
+    <li>Active only when: G1=1, G̅2A=0, G̅2B=0</li>
+    <li>Outputs are <strong>active LOW</strong>: selected output goes LOW, others HIGH</li>
+    <li><span class="formula">Yᵢ = (active condition) · mᵢ(A₂,A₁,A₀)</span> — inverted minterm</li>
+  </ul>
+  <div class="note-box">
+    <strong>Exam Tip:</strong> IC 74138 outputs are active-LOW (inverted). So if A₂A₁A₀ = 101 (= 5), output Y₅ goes LOW while all others stay HIGH. This is the opposite of a textbook decoder where selected output goes HIGH. Don't mix up the two!
+  </div>
+  <div class="page-num">1 / 3</div>
+</div>
 
-     Each section pattern:
+<!-- §4 PAGE 2 -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DSD — Unit 3 · Combinational Logic</span><span class="unit-badge">SECTION 4</span></div>
+  <h2 class="topic">Decoder as Universal Logic Element</h2>
+  <p class="body">An n:2ⁿ decoder generates ALL minterms of n variables. Any Boolean function = sum of selected minterms → connect appropriate decoder outputs to an OR gate.</p>
+  <div class="orange-box">
+    <strong>Procedure — Implement f(A,B,C) using 3:8 Decoder + OR gate:</strong>
+    <ol style="padding-left:18px;font-size:13.5px;line-height:1.85;margin-top:7px;">
+      <li>Express function as sum of minterms: f = Σm(i₁, i₂, ...)</li>
+      <li>Connect A→A₂, B→A₁, C→A₀ (or any consistent assignment)</li>
+      <li>Connect outputs Yᵢ₁, Yᵢ₂, ... to an OR gate (outputs of active-HIGH decoder)</li>
+      <li>OR gate output = f(A,B,C)</li>
+      <li><strong>For active-LOW decoder (74138):</strong> use NAND gate instead of OR gate (De Morgan)</li>
+    </ol>
+  </div>
+  <div class="qbox">
+    <div class="q-label">EXAMPLE — Implement f(A,B,C) = Σ(1,3,5,7) using 3:8 Decoder</div>
+    <div class="q-step">f = m₁ + m₃ + m₅ + m₇ = B (all odd minterms — C is always 1 here).</div>
+    <div class="q-ans">
+      Connect Y₁, Y₃, Y₅, Y₇ to a 4-input OR gate.<br>
+      OR gate output = f(A,B,C) = Σ(1,3,5,7) ✔<br>
+      Observation: This equals variable C (the LSB) — so f = C. The decoder reveals this automatically.
+    </div>
+  </div>
+  <h2 class="topic">Cascading Decoders — Building 4:16 from 3:8</h2>
+  <div class="step-card">
+    <div class="step-head">4:16 DECODER FROM TWO 3:8 DECODERS (74138)</div>
+    <div class="step-body">
+      <ol>
+        <li>MSB input bit A₃ → enables one of the two 74138 ICs (via G1/enable).</li>
+        <li>When A₃=0: first 74138 enabled → produces outputs D₀–D₇.</li>
+        <li>When A₃=1: second 74138 enabled → produces outputs D₈–D₁₅.</li>
+        <li>Lower 3 bits A₂A₁A₀ fed to both ICs (both receive same address lines).</li>
+        <li>Result: 16 mutually exclusive outputs — full 4:16 decoding.</li>
+      </ol>
+    </div>
+  </div>
+  <h3 class="sub">Common Decoder ICs</h3>
+  <div class="purple-box">
+    <table class="tt" style="margin:0;">
+      <tr><th>IC</th><th>Type</th><th>Inputs</th><th>Outputs</th><th>Enable</th></tr>
+      <tr><td>7442</td><td>BCD-to-Decimal</td><td>4 (BCD)</td><td>10</td><td>None</td></tr>
+      <tr><td>74139</td><td>Dual 2:4</td><td>2 each</td><td>4 each</td><td>Active LOW</td></tr>
+      <tr><td>74138</td><td>3:8</td><td>3</td><td>8</td><td>G1,G̅2A,G̅2B</td></tr>
+      <tr><td>74154</td><td>4:16</td><td>4</td><td>16</td><td>2 active LOW</td></tr>
+    </table>
+  </div>
+  <div class="page-num">2 / 3</div>
+</div>
 
-     <div class="page">
-       <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
-       <div class="page-header">
-         <span class="date-tag">DIGITAL-ELECTRONICS — Unit 3</span>
-         <span class="unit-badge">SECTION X</span>
-       </div>
-       <h1 class="section-title"><span class="sn">§X</span> Title Here</h1>
-       <hr class="divider">
-       ... content ...
-       <div class="page-num">1 / 1</div>
-     </div>
-     ================================================ -->
+<!-- §4 PAGE 3 -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DSD — Unit 3 · Combinational Logic</span><span class="unit-badge">SECTION 4</span></div>
+  <h2 class="topic">BCD-to-7-Segment Decoder</h2>
+  <div class="def-box">
+    The <strong>BCD-to-7-Segment Decoder</strong> converts a 4-bit BCD input (0–9) to the 7 segment control signals (a–g) needed to drive a 7-segment LED display. IC 7447 (active-LOW outputs for common-anode) and IC 7448 (active-HIGH outputs for common-cathode) are the standard ICs.
+  </div>
+  <p class="body">A 7-segment display has segments labeled a (top) through g (middle), plus dp (decimal point).</p>
+  <table class="tt">
+    <tr><th>Digit</th><th>a</th><th>b</th><th>c</th><th>d</th><th>e</th><th>f</th><th>g</th></tr>
+    <tr><td>0</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>0</td></tr>
+    <tr><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+    <tr><td>2</td><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td></tr>
+    <tr><td>3</td><td>1</td><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+    <tr><td>4</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td></tr>
+    <tr><td>5</td><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td></tr>
+    <tr><td>8</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+  </table>
+  <div class="questions-block">
+    <div class="q-title">📝 Practice Questions — Decoders</div>
+    <ol>
+      <li>Using a 3:8 decoder (active-HIGH outputs), implement F(A,B,C) = Σ(0,2,4,6). Also implement F'(complement) using the same decoder. Draw the connection diagram clearly showing all OR gate connections.</li>
+      <li>Design a 4:16 line decoder using two 3:8 decoder ICs (74138). Draw the complete circuit showing how the MSB input selects between the two ICs. What are the enable signal connections for each IC?</li>
+    </ol>
+  </div>
+  <div class="page-num">3 / 3</div>
+</div>
 
+<!-- §5 PAGE 1 -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DSD — Unit 3 · Combinational Logic</span><span class="unit-badge">SECTION 5</span></div>
+  <h1 class="section-title"><span class="sn">§5</span> Encoders &amp; Priority Encoders</h1>
+  <hr class="divider">
+  <div class="def-box">
+    An <strong>Encoder</strong> is a combinational circuit that converts <span class="formula">2ⁿ</span> input lines (only one active at a time) into an n-bit binary code. It performs the <strong>inverse of a decoder</strong> — many-to-binary conversion. The input is the "name" and the output is the "binary address."
+  </div>
+  <h2 class="topic">4:2 Encoder (4-to-2 Line)</h2>
+  <div class="two-col">
+    <div>
+      <table class="tt">
+        <tr><th>D₃</th><th>D₂</th><th>D₁</th><th>D₀</th><th>A₁</th><th>A₀</th></tr>
+        <tr><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+        <tr><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+        <tr><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+        <tr><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td></tr>
+      </table>
+    </div>
+    <div class="rule-box" style="margin:0;font-size:13px;">
+      <strong>Boolean Equations:</strong><br><br>
+      A₁ = D₃ + D₂<br>
+      A₀ = D₃ + D₁<br><br>
+      <em>Implemented with just 2 OR gates!</em><br><br>
+      <strong>Limitation:</strong> Only one input can be active at a time — no two inputs HIGH simultaneously.
+    </div>
+  </div>
+  <h2 class="topic">8:3 Encoder (Octal-to-Binary, IC 74148)</h2>
+  <ul class="plain">
+    <li>8 inputs I₀–I₇ (active LOW), 3 outputs A₂A₁A₀ (active LOW)</li>
+    <li>Enable Input EI (active LOW) + Enable Output EO + Group Signal GS</li>
+    <li>Standard encoder equations: A₂ = I₄'+I₅'+I₆'+I₇' (inverted active-LOW logic)</li>
+  </ul>
+  <div class="rule-box">
+    <strong>Problem with basic encoder:</strong> If two inputs are active simultaneously (e.g., D₃=1 and D₁=1), the output is incorrect (A₁A₀ = 11 which represents D₃, but D₁ is also active). This is solved by a <strong>Priority Encoder</strong>.
+  </div>
+  <div class="page-num">1 / 2</div>
+</div>
+
+<!-- §5 PAGE 2 -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DSD — Unit 3 · Combinational Logic</span><span class="unit-badge">SECTION 5</span></div>
+  <h2 class="topic">Priority Encoder</h2>
+  <div class="def-box">
+    A <strong>Priority Encoder</strong> resolves the problem of simultaneous active inputs by assigning a <strong>priority level</strong> to each input. If multiple inputs are active simultaneously, the output corresponds to the <strong>highest-priority (highest-numbered) input</strong> that is active.
+  </div>
+  <p class="body">4:2 Priority Encoder truth table (D₃ has highest priority, D₀ lowest):</p>
+  <table class="tt">
+    <tr><th>D₃</th><th>D₂</th><th>D₁</th><th>D₀</th><th>A₁</th><th>A₀</th><th>V (valid)</th></tr>
+    <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>X</td><td>X</td><td>0</td></tr>
+    <tr><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+    <tr><td>0</td><td>0</td><td>1</td><td>X</td><td>0</td><td>1</td><td>1</td></tr>
+    <tr><td>0</td><td>1</td><td>X</td><td>X</td><td>1</td><td>0</td><td>1</td></tr>
+    <tr><td>1</td><td>X</td><td>X</td><td>X</td><td>1</td><td>1</td><td>1</td></tr>
+  </table>
+  <div class="rule-box">
+    <strong>Boolean equations for 4:2 Priority Encoder:</strong><br>
+    <span class="formula">A₁ = D₃ + D₂</span> &nbsp;&nbsp;
+    <span class="formula">A₀ = D₃ + D₁·D₂'</span> &nbsp;&nbsp;
+    <span class="formula">V = D₃+D₂+D₁+D₀</span> (valid output indicator)
+  </div>
+  <div class="vs-box" style="margin-top:14px;">
+    <div class="vs-left">
+      <div class="vs-head">Basic Encoder</div>
+      <ul class="plain">
+        <li>Only one input active at a time</li>
+        <li>Simple OR logic</li>
+        <li>No priority handling</li>
+        <li>Ambiguous when multiple inputs active</li>
+      </ul>
+    </div>
+    <div class="vs-right">
+      <div class="vs-head">Priority Encoder</div>
+      <ul class="plain">
+        <li>Multiple inputs can be active</li>
+        <li>More complex logic</li>
+        <li>Highest input wins</li>
+        <li>Valid (V) output indicates any input active</li>
+      </ul>
+    </div>
+  </div>
+  <div class="questions-block">
+    <div class="q-title">📝 Practice Questions — Encoders</div>
+    <ol>
+      <li>Design a 4:2 priority encoder. Write the simplified Boolean expressions for outputs A₁, A₀, and V using K-maps. Draw the logic circuit using AND, OR, NOT gates.</li>
+      <li>An 8:3 priority encoder has inputs I₇=0, I₆=1, I₅=1, I₄=0, I₃=0, I₂=0, I₁=0, I₀=0. What is the output code A₂A₁A₀? Explain the priority mechanism. Also design a decimal-to-BCD encoder.</li>
+    </ol>
+  </div>
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- §6 PAGE 1 -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DSD — Unit 3 · Combinational Logic</span><span class="unit-badge">SECTION 6</span></div>
+  <h1 class="section-title"><span class="sn">§6</span> Multiplexed Display</h1>
+  <hr class="divider">
+  <h2 class="topic">7-Segment LED Display</h2>
+  <div class="def-box">
+    A <strong>7-Segment Display</strong> consists of 7 LED segments (labeled a–g) arranged to form digits 0–9 and some letters. Two types: <strong>Common Anode</strong> (all anodes tied together to Vcc — segments lit by active-LOW signals) and <strong>Common Cathode</strong> (all cathodes tied to GND — segments lit by active-HIGH signals).
+  </div>
+  <div class="two-col">
+    <div class="rule-box" style="margin:0;font-size:13.5px;">
+      <strong>Segment Layout:</strong><br>
+      <pre style="font-family:'Special Elite',serif;font-size:14px;line-height:1.4;margin-top:6px;">
+  _a_
+f|   |b
+ |_g_|
+e|   |c
+ |_d_|  dp
+      </pre>
+    </div>
+    <div class="note-box" style="margin:0;font-size:13px;">
+      <strong>Common Anode (CA):</strong><br>
+      Segment ON when output = LOW (0)<br>
+      Use IC 7447<br><br>
+      <strong>Common Cathode (CC):</strong><br>
+      Segment ON when output = HIGH (1)<br>
+      Use IC 7448
+    </div>
+  </div>
+  <h2 class="topic">Multiplexed Display Concept</h2>
+  <div class="def-box">
+    <strong>Multiplexed Display</strong>: When multiple 7-segment displays are used, instead of using a separate decoder for each display (expensive), they share a single decoder. Each display is <em>turned ON briefly</em> in sequence (time-division), so fast that the human eye perceives all digits lit simultaneously. This exploits the <strong>persistence of vision</strong> (~50Hz refresh minimum).
+  </div>
+  <div class="orange-box">
+    <strong>How Multiplexed Display Works:</strong>
+    <ol style="padding-left:18px;font-size:13.5px;line-height:1.85;margin-top:7px;">
+      <li>A counter/multiplexer selects one digit at a time (digit scanning).</li>
+      <li>The correct BCD data for that digit is sent to the shared BCD-to-7-segment decoder.</li>
+      <li>Only the selected digit's common anode/cathode is enabled (via transistor switch).</li>
+      <li>After a brief ON time (~2ms per digit), move to the next digit.</li>
+      <li>Full cycle repeats at &gt;50 Hz — all digits appear ON simultaneously to the eye.</li>
+    </ol>
+  </div>
+  <div class="page-num">1 / 2</div>
+</div>
+
+<!-- §6 PAGE 2 -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DSD — Unit 3 · Combinational Logic</span><span class="unit-badge">SECTION 6</span></div>
+  <h2 class="topic">Advantages of Multiplexed Display</h2>
+  <div class="vs-box">
+    <div class="vs-left">
+      <div class="vs-head">Non-Multiplexed (Static)</div>
+      <ul class="plain">
+        <li>One decoder per digit</li>
+        <li>High component count</li>
+        <li>High power consumption</li>
+        <li>PCB space intensive</li>
+        <li>Simple wiring logic</li>
+      </ul>
+    </div>
+    <div class="vs-right">
+      <div class="vs-head">Multiplexed (Dynamic)</div>
+      <ul class="plain">
+        <li>Single shared decoder</li>
+        <li>Fewer ICs needed</li>
+        <li>Lower average power</li>
+        <li>Compact design</li>
+        <li>Requires timing/scan logic</li>
+      </ul>
+    </div>
+  </div>
+  <h2 class="topic">System Block Diagram</h2>
+  <div class="step-card">
+    <div class="step-head">4-DIGIT MULTIPLEXED DISPLAY SYSTEM</div>
+    <div class="step-body">
+      <ol>
+        <li><strong>Display Data Register</strong>: Stores BCD values for all 4 digits (D₃D₂D₁D₀)</li>
+        <li><strong>2-bit Counter</strong>: Cycles through 00→01→10→11 at scan rate (~2kHz)</li>
+        <li><strong>4:1 MUX</strong>: Selects correct BCD data for current digit based on counter output</li>
+        <li><strong>BCD-to-7-Segment Decoder</strong> (IC 7447/7448): Converts selected BCD to a–g signals</li>
+        <li><strong>1:4 DEMUX</strong> (or transistor array): Enables only the currently selected digit's common terminal</li>
+        <li>Result: Each digit lit for 25% of time but appears continuously ON</li>
+      </ol>
+    </div>
+  </div>
+  <div class="purple-box">
+    <strong>Duty Cycle:</strong> Each digit is ON for 1/N of the total time (N = number of digits). For 4 digits, duty cycle = 25%. Peak brightness must be 4× static brightness to appear equally bright — achieved by driving LEDs with higher peak current during their ON period.
+  </div>
+  <div class="note-box">
+    <strong>Exam Tip:</strong> The key components in a multiplexed display system are MUX (data selection) + DEMUX (digit enable) + BCD-7-seg decoder + Counter (scan generator). You may be asked to draw the block diagram — memorize this chain. Refresh rate &lt;50Hz causes flickering (human eye can detect it).
+  </div>
+  <div class="questions-block">
+    <div class="q-title">📝 Practice Questions — Multiplexed Display</div>
+    <ol>
+      <li>Draw the complete block diagram of a 4-digit multiplexed LED display system. Identify all ICs needed (counter, MUX, decoder), explain the scan sequence, and calculate the minimum refresh rate to avoid flickering.</li>
+      <li>A common-anode 7-segment display is driven by IC 7447. What are the segment signals (a–g) needed to display the digit '5'? Also explain the difference between common-anode and common-cathode displays and why different ICs (7447 vs 7448) are used for each.</li>
+    </ol>
+  </div>
+  <div class="page-num">2 / 2</div>
+</div>
+
+</div>
 <script>
-(function(){
-  var pages = document.querySelectorAll('.page');
-  var secPages = [];
-  pages.forEach(function(p){ if(p.querySelector('h1.section-title')) secPages.push(p); });
-  secPages.forEach(function(p,i){ p.id = 'sec-'+(i+1); });
-  var tocItems = document.querySelectorAll('.cover-toc-item');
-  tocItems.forEach(function(item, i){
-    if(i >= secPages.length) return;
-    item.style.cursor = 'pointer';
-    item.style.borderRadius = '4px';
-    item.style.transition = 'background 0.18s';
-    item.setAttribute('title', 'Click to jump to this section');
-    item.addEventListener('mouseenter', function(){ item.style.background='rgba(255,255,255,0.18)'; });
-    item.addEventListener('mouseleave', function(){ item.style.background=''; });
-    item.addEventListener('click', function(){ secPages[i].scrollIntoView({behavior:'smooth'}); });
-  });
-})();
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowDown') window.scrollBy({top:window.innerHeight*.85,behavior:'smooth'});
+  if(e.key==='ArrowUp') window.scrollBy({top:-window.innerHeight*.85,behavior:'smooth'});
+});
 </script>
 </body>
 </html>

@@ -2,139 +2,481 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DIGITAL-ELECTRONICS Unit 3 — Part 1</title>
-<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>DSD — Unit 3 | Combinational Logic | Part 1</title>
 <style>
-:root{--ink:#1a1a2e;--ink2:#2c2c54;--blue:#1565C0;--red:#b71c1c;--green:#1b5e20;--purple:#4a148c;--teal:#006064;--orange:#e65100;--line:#c5cae9;--page:#fafaf7;--highlight:#fff9c4;--box-blue:#e8f4fd;--box-green:#e8f5e9;--box-purple:#f3e5f5;--box-orange:#fff3e0;--box-red:#fce4ec;--box-teal:#e0f7fa;}
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Patrick+Hand&family=Special+Elite&display=swap');
+:root{
+  --ink:#1a1a2e;--blue:#1565c0;--red:#c62828;--green:#2e7d32;
+  --purple:#6a1b9a;--orange:#e65100;--teal:#00695c;--amber:#f57f17;
+  --def-bg:#e3f2fd;--def-bd:#1565c0;--rule-bg:#e8f5e9;--rule-bd:#2e7d32;
+  --note-bg:#fff8e1;--note-bd:#f57f17;--purp-bg:#f3e5f5;--purp-bd:#6a1b9a;
+  --org-bg:#fff3e0;--org-bd:#e65100;--line:#e0ddd0;--hole:#d0cdc0;
+}
 *{margin:0;padding:0;box-sizing:border-box;}
-body{background:#e0e0e0;font-family:'Kalam',cursive;color:var(--ink);padding:30px 20px;}
-.page{background:var(--page);max-width:820px;margin:0 auto 40px;border-radius:4px;box-shadow:0 2px 16px rgba(0,0,0,0.18),0 0 0 1px rgba(0,0,0,0.08);padding:60px 70px 70px 90px;position:relative;min-height:1060px;background-image:repeating-linear-gradient(transparent,transparent 31px,var(--line) 31px,var(--line) 32px);background-position:0 56px;}
-.page::before{content:'';position:absolute;left:72px;top:0;bottom:0;width:1.5px;background:#ef9a9a;opacity:0.7;}
-.holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-around;padding:40px 0;}
-.hole{width:22px;height:22px;border-radius:50%;background:#e0e0e0;border:1.5px solid #bdbdbd;box-shadow:inset 0 1px 3px rgba(0,0,0,0.2);}
-.page-num{position:absolute;bottom:28px;right:50px;font-size:13px;color:#9e9e9e;}
-.page-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
-.date-tag{font-size:13px;color:#9e9e9e;}
-.unit-badge{color:#fff;font-size:13px;padding:2px 14px;border-radius:20px;font-weight:700;}
-h1.section-title{font-size:24px;font-weight:700;color:var(--ink2);text-align:center;margin:8px 0 4px;text-decoration:underline;text-underline-offset:5px;}
-h2.topic{font-size:18px;font-weight:700;color:var(--blue);margin:18px 0 6px;border-bottom:1.5px solid var(--blue);padding-bottom:2px;display:inline-block;}
-h3.sub{font-size:15px;font-weight:700;color:var(--purple);margin:12px 0 4px;}
-p,li{font-size:15px;line-height:32px;}
-.def-box{background:var(--box-blue);border-left:4px solid var(--blue);border-radius:0 6px 6px 0;padding:10px 16px;margin:10px 0 12px;font-size:15px;line-height:30px;}
-.note-box{background:var(--highlight);border-left:4px solid #f9a825;border-radius:0 6px 6px 0;padding:8px 14px;margin:8px 0 10px;font-size:14px;line-height:26px;}
-.rule-box{background:var(--box-green);border:1.5px solid #81c784;border-radius:6px;padding:10px 16px;margin:10px 0;font-size:14.5px;line-height:28px;}
-.purple-box{background:var(--box-purple);border-left:4px solid var(--purple);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
-.orange-box{background:var(--box-orange);border-left:4px solid var(--orange);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
-.teal-box{background:var(--box-teal);border-left:4px solid var(--teal);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
-.formula{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--blue);}
-.divider{border:none;border-top:1px dashed #b0bec5;margin:14px 0 10px;}
-ul.plain{list-style:none;padding-left:4px;}
-ul.plain li::before{content:'→ ';color:var(--blue);font-weight:700;}
-ul.plain li{font-size:15px;line-height:32px;}
-.qbox{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:12px 16px;margin:10px 0;}
-.q-label{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:2px;}
-.q-step{font-size:14px;color:var(--green);margin-top:4px;line-height:26px;}
-.q-ans{font-size:15px;color:var(--red);font-family:'Patrick Hand',cursive;margin-top:4px;}
-table.tt{width:100%;border-collapse:collapse;margin:8px 0;font-size:14px;}
-table.tt th{color:#fff;padding:7px 10px;text-align:center;}
-table.tt td{padding:6px 10px;border-bottom:1px solid #e0e0e0;text-align:center;font-family:'Patrick Hand',cursive;font-size:14px;}
+body{font-family:'Patrick Hand',cursive;background:#cec5af;min-height:100vh;padding-bottom:60px;}
+.part-nav{position:sticky;top:0;z-index:100;background:#2c2c2c;display:flex;align-items:center;padding:0 20px;height:44px;box-shadow:0 2px 8px rgba(0,0,0,.4);font-family:'Special Elite',serif;font-size:13px;letter-spacing:.5px;}
+.part-nav .brand{color:#f0e6d0;margin-right:20px;opacity:.7;font-size:11px;}
+.part-nav a{color:#aaa;text-decoration:none;padding:0 16px;height:44px;display:flex;align-items:center;border-bottom:3px solid transparent;transition:all .2s;}
+.part-nav a:hover{color:#fff;background:rgba(255,255,255,.07);}
+.part-nav a.active{color:#ffd54f;border-bottom-color:#ffd54f;}
+.part-nav .sep{color:#555;margin:0 2px;}
+.notebook{max-width:840px;margin:28px auto;display:flex;flex-direction:column;}
+/* COVER */
+.cover-page{background:linear-gradient(135deg,#1a237e,#1565c0);padding:60px 60px 50px 90px;position:relative;overflow:hidden;min-height:500px;box-shadow:4px 4px 20px rgba(0,0,0,.25);}
+.cover-page::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(transparent,transparent 38px,rgba(255,255,255,.05) 38px,rgba(255,255,255,.05) 39px);}
+.cover-spine{position:absolute;left:0;top:0;bottom:0;width:50px;background:linear-gradient(to right,#0d1b6b,#1a237e);border-right:2px solid rgba(255,255,255,.1);}
+.cover-holes{position:absolute;left:14px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-evenly;align-items:center;padding:40px 0;}
+.cover-holes .hole{width:20px;height:20px;background:#cec5af;border-radius:50%;box-shadow:inset 0 2px 4px rgba(0,0,0,.4);}
+.cover-tag{font-family:'Special Elite',serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#90caf9;margin-bottom:10px;}
+.cover-subject{font-family:'Caveat',cursive;font-size:52px;font-weight:700;color:#fff;line-height:1;margin-bottom:4px;}
+.cover-unit{font-family:'Caveat',cursive;font-size:26px;color:#bbdefb;margin-bottom:4px;}
+.cover-subtitle{font-family:'Patrick Hand',cursive;font-size:15px;color:#90caf9;margin-bottom:28px;}
+.cover-badge{display:inline-block;background:#ffd54f;color:#1a237e;font-family:'Special Elite',serif;font-size:13px;font-weight:700;letter-spacing:2px;padding:5px 18px;margin-bottom:26px;}
+.cover-hr{border:none;border-top:1px solid rgba(255,255,255,.2);margin:16px 0;}
+.cover-toc h3{font-family:'Special Elite',serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#90caf9;margin-bottom:12px;}
+.cover-toc table{width:100%;border-collapse:collapse;}
+.cover-toc td{padding:5px 0;font-size:14px;color:#e3f2fd;}
+.cover-toc td:first-child{width:36px;color:#ffd54f;font-weight:700;}
+.cover-toc td:last-child{text-align:right;color:#90caf9;font-size:12px;}
+.cover-toc tr{border-bottom:1px solid rgba(255,255,255,.06);}
+/* PAGES */
+.page{background:#fffef7;position:relative;padding:26px 36px 36px 80px;min-height:680px;box-shadow:2px 2px 8px rgba(0,0,0,.1);border-bottom:1px solid #e0ddd0;background-image:repeating-linear-gradient(transparent,transparent 30px,var(--line) 30px,var(--line) 31px);}
+.page::before{content:'';position:absolute;left:66px;top:0;bottom:0;width:1px;background:#ffcdd2;}
+.page:last-child{border-radius:0 0 3px 3px;}
+.holes{position:absolute;left:0;top:0;bottom:0;width:66px;display:flex;flex-direction:column;justify-content:space-evenly;align-items:center;padding:50px 0;background:#f5f0e8;border-right:1px solid #e0ddd0;}
+.hole{width:18px;height:18px;background:var(--hole);border-radius:50%;box-shadow:inset 0 1px 3px rgba(0,0,0,.25),0 0 0 2px #c8c5b8;}
+.page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;padding-bottom:7px;border-bottom:2px solid var(--blue);font-family:'Special Elite',serif;}
+.date-tag{font-size:11px;color:#666;letter-spacing:.8px;}
+.unit-badge{background:var(--blue);color:#fff;font-size:10px;letter-spacing:2px;padding:3px 10px;}
+h1.section-title{font-family:'Caveat',cursive;font-size:32px;font-weight:700;color:#16213e;margin-bottom:4px;}
+h1.section-title .sn{color:var(--blue);margin-right:8px;}
+.divider{border:none;border-top:1.5px dashed #b0aaa0;margin:8px 0 16px;}
+h2.topic{font-family:'Caveat',cursive;font-size:22px;font-weight:700;color:var(--blue);margin:18px 0 7px;border-bottom:1px solid #bbdefb;padding-bottom:3px;}
+h3.sub{font-family:'Caveat',cursive;font-size:18px;color:var(--teal);margin:12px 0 5px;}
+ul.plain{list-style:none;padding-left:4px;margin:7px 0;}
+ul.plain li{position:relative;padding-left:20px;font-size:14.5px;line-height:1.7;margin-bottom:2px;}
+ul.plain li::before{content:'→';position:absolute;left:0;color:var(--blue);font-weight:700;}
+p.body{font-size:14.5px;line-height:1.75;margin:7px 0;}
+.def-box,.rule-box,.note-box,.purple-box,.orange-box{border-radius:3px;padding:12px 15px;margin:14px 0;font-size:14px;line-height:1.7;position:relative;}
+.def-box{background:var(--def-bg);border-left:4px solid var(--def-bd);}
+.def-box::before{content:'DEF';position:absolute;top:-10px;left:10px;background:var(--def-bd);color:#fff;font-family:'Special Elite',serif;font-size:9px;letter-spacing:2px;padding:1px 7px;}
+.rule-box{background:var(--rule-bg);border-left:4px solid var(--rule-bd);}
+.rule-box::before{content:'KEY';position:absolute;top:-10px;left:10px;background:var(--rule-bd);color:#fff;font-family:'Special Elite',serif;font-size:9px;letter-spacing:2px;padding:1px 7px;}
+.note-box{background:var(--note-bg);border-left:4px solid var(--note-bd);}
+.note-box::before{content:'⚠ TIP';position:absolute;top:-10px;left:10px;background:var(--note-bd);color:#fff;font-family:'Special Elite',serif;font-size:9px;letter-spacing:2px;padding:1px 7px;}
+.purple-box{background:var(--purp-bg);border-left:4px solid var(--purp-bd);}
+.purple-box::before{content:'★ NOTE';position:absolute;top:-10px;left:10px;background:var(--purp-bd);color:#fff;font-family:'Special Elite',serif;font-size:9px;letter-spacing:2px;padding:1px 7px;}
+.orange-box{background:var(--org-bg);border-left:4px solid var(--org-bd);}
+.orange-box::before{content:'PROCEDURE';position:absolute;top:-10px;left:10px;background:var(--org-bd);color:#fff;font-family:'Special Elite',serif;font-size:9px;letter-spacing:2px;padding:1px 7px;}
+span.formula{font-family:'Special Elite',serif;background:#f0f4ff;border:1px solid #90caf9;padding:1px 6px;color:var(--blue);font-size:13.5px;display:inline-block;margin:1px 2px;}
+p.fline{font-family:'Special Elite',serif;text-align:center;font-size:15px;color:#16213e;padding:8px 0;letter-spacing:.5px;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:10px 0;}
+.vs-box{display:grid;grid-template-columns:1fr 1fr;margin:12px 0;border:1.5px solid #90caf9;overflow:hidden;}
+.vs-left{background:#e3f2fd;padding:12px 14px;font-size:13.5px;line-height:1.65;}
+.vs-right{background:#fce4ec;padding:12px 14px;font-size:13.5px;line-height:1.65;border-left:2px solid #90caf9;}
+.vs-head{font-family:'Special Elite',serif;font-size:10px;letter-spacing:2px;color:#555;margin-bottom:7px;text-transform:uppercase;}
+.step-card{margin:10px 0;border:1px solid #e0e0e0;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+.step-head{background:#37474f;color:#fff;font-family:'Special Elite',serif;font-size:11px;letter-spacing:2px;padding:6px 14px;}
+.step-body{padding:11px 15px;font-size:14px;line-height:1.7;background:#fafafa;}
+.step-body ol{padding-left:18px;}
+.step-body ol li{margin-bottom:5px;}
+table.tt{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0;font-family:'Special Elite',serif;}
+table.tt th{background:#1565c0;color:#fff;padding:7px 9px;text-align:center;font-size:11px;letter-spacing:1px;}
+table.tt td{padding:5px 9px;text-align:center;border:1px solid #e0e0e0;background:#fff;}
 table.tt tr:nth-child(even) td{background:#f5f5f5;}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0;}
-.vs-box{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:12px 0;border-radius:8px;overflow:hidden;border:1.5px solid #90caf9;}
-.vs-left{background:#e8f4fd;padding:12px 14px;}
-.vs-right{background:var(--box-purple);padding:12px 14px;border-left:1px solid #90caf9;}
-.vs-head{font-size:15px;font-weight:700;margin-bottom:8px;}
-.vs-item{font-size:14px;line-height:26px;}
-.step-card{background:var(--box-purple);border-left:4px solid var(--purple);padding:8px 14px;margin:5px 0;border-radius:0 6px 6px 0;}
-.step-head{font-size:14px;font-weight:700;color:var(--purple);}
-.step-body{font-size:13.5px;line-height:24px;color:var(--ink2);}
-.cover-page{max-width:820px;margin:0 auto 40px;border-radius:8px;padding:80px 60px;text-align:center;color:#fff;box-shadow:0 4px 24px rgba(0,0,0,0.3);position:relative;overflow:hidden;}
-.cover-subject{font-size:14px;letter-spacing:3px;opacity:0.7;margin-bottom:16px;}
-.cover-title{font-size:40px;font-weight:700;line-height:1.2;margin-bottom:12px;}
-.cover-unit{font-size:20px;opacity:0.85;margin-bottom:30px;}
-.cover-divider{width:80px;height:3px;background:rgba(255,255,255,0.4);margin:0 auto 24px;border-radius:2px;}
-.cover-toc{text-align:left;background:rgba(255,255,255,0.1);border-radius:8px;padding:20px 28px;display:inline-block;min-width:420px;}
-.cover-toc-item{font-size:15px;line-height:32px;display:flex;justify-content:space-between;gap:20px;}
-.part-nav{max-width:820px;margin:0 auto 20px;display:flex;gap:10px;justify-content:center;align-items:center;font-family:'Kalam',cursive;flex-wrap:wrap;}
-.part-nav a{padding:6px 20px;border-radius:20px;background:#fff;border:1.5px solid #90caf9;color:var(--blue);text-decoration:none;font-size:14px;font-weight:700;}
-.part-nav a:hover:not(.active){background:#e3f2fd;}
-.part-nav .back{background:#f5f5f5;border-color:#ccc;color:#555;font-size:13px;}
-.unit-badge{background:#e65100;}
-h1.section-title{text-decoration-color:#e65100;}
-h1.section-title .sn{color:#e65100;}
-.part-nav a.active{background:#e65100;border-color:#e65100;color:#fff;}
-@media(max-width:600px){
-body{padding:10px 0 30px;}
-.page{padding:20px 16px 30px 16px;min-height:unset;}
-.page::before{display:none;}
-.holes{display:none;}
-.cover-page{padding:40px 20px;margin:0 10px 20px;}
-.cover-toc{min-width:unset;width:100%;padding:14px 16px;}
-.part-nav{padding:0 10px;gap:6px;}
-.part-nav a{padding:5px 12px;font-size:13px;}
-.two-col{grid-template-columns:1fr;}
-.vs-box{grid-template-columns:1fr;}
-.vs-right{border-left:none;border-top:1px solid #90caf9;}
-nav.part-nav{padding:0 10px;gap:6px;}
-.cover-title{font-size:28px;}
-}</style>
+.qbox{background:#fff;border:1.5px solid #90caf9;margin:12px 0;overflow:hidden;box-shadow:0 2px 5px rgba(0,0,0,.07);}
+.q-label{background:#1565c0;color:#fff;font-family:'Special Elite',serif;font-size:10px;letter-spacing:2px;padding:5px 12px;}
+.q-step{background:#f8f9ff;padding:11px 14px;font-size:14px;line-height:1.7;border-bottom:1px dashed #e0e0e0;}
+.q-ans{background:#e8f5e9;padding:11px 14px;font-size:13.5px;line-height:1.7;color:var(--green);}
+.q-ans::before{content:'✔ Solution: ';font-family:'Special Elite',serif;font-size:10px;letter-spacing:1px;display:block;margin-bottom:5px;color:var(--green);}
+.questions-block{margin-top:22px;padding:15px 18px;background:#fff9f0;border:1.5px solid var(--amber);}
+.questions-block .q-title{font-family:'Special Elite',serif;font-size:10px;letter-spacing:3px;color:var(--amber);margin-bottom:10px;text-transform:uppercase;}
+.questions-block ol{padding-left:18px;font-size:14px;line-height:1.8;}
+.questions-block ol li{margin-bottom:5px;}
+.page-num{position:absolute;bottom:12px;right:18px;font-family:'Special Elite',serif;font-size:11px;color:#888;letter-spacing:2px;}
+</style>
 </head>
 <body>
-
-<div class="part-nav">
+<nav class="part-nav">
   <a href="../index.html" class="back">↩ Units</a>
-  <a href="part1.html" class="active">Part 1</a>
-  <a href="part2.html">Part 2</a>
-  <a href="part3.html">Part 3</a>
-</div>
+  <span class="brand">DSD / Unit 3</span>
+  <a href="part1.html" class="active">Part 1 — MSI Devices I</a>
+  <span class="sep">|</span>
+  <a href="part2.html">Part 2 — Decoders, Encoders &amp; Display</a>
+  <span class="sep">|</span>
+  <a href="part3.html">Part 3 — Adders &amp; Revision</a>
+</nav>
+<div class="notebook">
 
-<div class="cover-page" style="background:linear-gradient(135deg,#e65100 0%,#bf360c 100%);">
-  <div class="cover-subject">DIGITAL ELECTRONICS</div>
-  <div class="cover-title">Unit 3 — Part 1</div>
-  <div class="cover-unit">[ Awaiting Content ]</div>
-  <div class="cover-divider"></div>
+<!-- COVER -->
+<div class="cover-page">
+  <div class="cover-spine"></div>
+  <div class="cover-holes">
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+  </div>
+  <div class="cover-tag">Digital System Design &nbsp;·&nbsp; BEC 302 / BOE 310 / BOE 410</div>
+  <div class="cover-subject">Unit 3</div>
+  <div class="cover-unit">Combinational Logic</div>
+  <div class="cover-subtitle">MSI Devices — Comparator · Multiplexers · Demultiplexers</div>
+  <div class="cover-badge">PART 1 OF 3</div>
+  <hr class="cover-hr">
   <div class="cover-toc">
-    <div class="cover-toc-item" style="opacity:0.6;font-style:italic;justify-content:center;"><span>Content to be added</span></div>
+    <h3>Contents — Part 1</h3>
+    <table>
+      <tr><td>§1</td><td>Magnitude Comparator</td><td>3 pages</td></tr>
+      <tr><td>§2</td><td>Multiplexers (MUX)</td><td>3 pages</td></tr>
+      <tr><td>§3</td><td>Demultiplexers (DEMUX)</td><td>2 pages</td></tr>
+    </table>
   </div>
 </div>
 
-<!-- ================================================
-     ADD CONTENT SECTIONS BELOW THIS LINE
+<!-- §1 PAGE 1 -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DSD — Unit 3 · Combinational Logic</span><span class="unit-badge">SECTION 1</span></div>
+  <h1 class="section-title"><span class="sn">§1</span> Magnitude Comparator</h1>
+  <hr class="divider">
+  <div class="def-box">
+    A <strong>Magnitude Comparator</strong> is a combinational circuit that compares two binary numbers <strong>A</strong> and <strong>B</strong> and produces three outputs indicating whether <span class="formula">A &gt; B</span>, <span class="formula">A = B</span>, or <span class="formula">A &lt; B</span>. It is an MSI device widely used in arithmetic and control circuits.
+  </div>
+  <h2 class="topic">1-Bit Comparator — Truth Table &amp; Equations</h2>
+  <div class="two-col">
+    <div>
+      <table class="tt">
+        <tr><th>A</th><th>B</th><th>A&gt;B</th><th>A=B</th><th>A&lt;B</th></tr>
+        <tr><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+        <tr><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+        <tr><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+        <tr><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+      </table>
+    </div>
+    <div class="rule-box" style="margin:0;">
+      <strong>Boolean Expressions:</strong><br><br>
+      <span class="formula">A &gt; B = A·B'</span><br>
+      <span class="formula">A = B = (A⊕B)' = A'B'+AB</span><br>
+      <span class="formula">A &lt; B = A'·B</span><br><br>
+      <em style="font-size:12px;">Note: (A&gt;B) + (A=B) + (A&lt;B) = 1 always</em>
+    </div>
+  </div>
+  <h2 class="topic">2-Bit Comparator Logic</h2>
+  <p class="body">Let <span class="formula">A = A₁A₀</span>, <span class="formula">B = B₁B₀</span> where A₁, B₁ are MSBs.</p>
+  <p class="body">Define equality bits: <span class="formula">x₁ = (A₁⊕B₁)'</span> and <span class="formula">x₀ = (A₀⊕B₀)'</span></p>
+  <div class="rule-box">
+    <p class="fline" style="text-align:left;padding:0;font-size:14px;">
+    (A = B) &nbsp;= x₁ · x₀ &nbsp; (both bits equal)<br>
+    (A &gt; B) = A₁·B₁' + x₁·A₀·B₀' &nbsp; (MSB decides, or if equal then LSB)<br>
+    (A &lt; B) = A₁'·B₁ + x₁·A₀'·B₀ &nbsp; (symmetric to A &gt; B)
+    </p>
+  </div>
+  <div class="note-box">
+    <strong>Exam Tip:</strong> Comparison always starts from the <strong>MSB</strong>. If A₁ ≠ B₁, result is decided immediately. Only when A₁ = B₁ do we look at A₀ vs B₀. This cascading logic extends to any number of bits.
+  </div>
+  <div class="page-num">1 / 3</div>
+</div>
 
-     Each section pattern:
+<!-- §1 PAGE 2 -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DSD — Unit 3 · Combinational Logic</span><span class="unit-badge">SECTION 1</span></div>
+  <h2 class="topic">4-Bit Magnitude Comparator — IC 7485</h2>
+  <p class="body">IC 7485 is the standard MSI 4-bit comparator. Inputs: A₃–A₀, B₃–B₀ (data), plus 3 cascade inputs (I<sub>A&gt;B</sub>, I<sub>A=B</sub>, I<sub>A&lt;B</sub>). Outputs: O<sub>A&gt;B</sub>, O<sub>A=B</sub>, O<sub>A&lt;B</sub>.</p>
+  <h3 class="sub">Logic Equations (4-bit)</h3>
+  <p class="body">Define: <span class="formula">pᵢ = Aᵢ·Bᵢ + Aᵢ'·Bᵢ'</span> (pᵢ = 1 when Aᵢ = Bᵢ)</p>
+  <p class="fline">(A=B) = p₃·p₂·p₁·p₀·I<sub>A=B</sub></p>
+  <p class="fline">(A&gt;B) = A₃B₃' + p₃A₂B₂' + p₃p₂A₁B₁' + p₃p₂p₁A₀B₀' + p₃p₂p₁p₀·I<sub>A&gt;B</sub></p>
+  <p class="fline">(A&lt;B) = A₃'B₃ + p₃A₂'B₂ + p₃p₂A₁'B₁ + p₃p₂p₁A₀'B₀ + p₃p₂p₁p₀·I<sub>A&lt;B</sub></p>
+  <div class="purple-box">
+    <strong>Cascade Inputs (for single-chip use):</strong> Set I<sub>A=B</sub>=1, I<sub>A&gt;B</sub>=0, I<sub>A&lt;B</sub>=0 — these are the "neutral" starting conditions meaning "assume equal so far."
+  </div>
+  <div class="orange-box">
+    <strong>Cascading two 7485s for 8-bit comparison:</strong>
+    <ol style="padding-left:18px;font-size:13.5px;line-height:1.8;margin-top:6px;">
+      <li><strong>Lower nibble IC</strong> (bits 3–0): Set cascade inputs I<sub>A=B</sub>=1, I<sub>A&gt;B</sub>=0, I<sub>A&lt;B</sub>=0</li>
+      <li>Connect O<sub>A&gt;B</sub>, O<sub>A=B</sub>, O<sub>A&lt;B</sub> of lower IC → I<sub>A&gt;B</sub>, I<sub>A=B</sub>, I<sub>A&lt;B</sub> of upper IC</li>
+      <li><strong>Upper nibble IC</strong> (bits 7–4): Produces final comparison result</li>
+      <li>Final outputs O<sub>A&gt;B</sub>, O<sub>A=B</sub>, O<sub>A&lt;B</sub> of upper IC = result for full 8-bit numbers</li>
+    </ol>
+  </div>
+  <h3 class="sub">Applications</h3>
+  <ul class="plain">
+    <li>Sorting and ranking digital data</li>
+    <li>Digital alarm/threshold detection (compare sensor value vs setpoint)</li>
+    <li>Address range checking in memory decoders</li>
+    <li>Priority arbitration circuits</li>
+    <li>Overflow detection in ALUs</li>
+  </ul>
+  <div class="page-num">2 / 3</div>
+</div>
 
-     <div class="page">
-       <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
-       <div class="page-header">
-         <span class="date-tag">DIGITAL-ELECTRONICS — Unit 3</span>
-         <span class="unit-badge">SECTION X</span>
-       </div>
-       <h1 class="section-title"><span class="sn">§X</span> Title Here</h1>
-       <hr class="divider">
-       ... content ...
-       <div class="page-num">1 / 1</div>
-     </div>
-     ================================================ -->
+<!-- §1 PAGE 3 -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DSD — Unit 3 · Combinational Logic</span><span class="unit-badge">SECTION 1</span></div>
+  <h2 class="topic">Solved Examples</h2>
+  <div class="qbox">
+    <div class="q-label">EXAMPLE 1 — 1-Bit Comparator Design</div>
+    <div class="q-step">Design a 1-bit magnitude comparator. List all Boolean expressions and the gates needed.</div>
+    <div class="q-ans">
+      From truth table:<br>
+      <span class="formula">A &gt; B = A·B'</span> → 1 AND gate + 1 NOT gate<br>
+      <span class="formula">A = B = (A⊕B)'</span> → 1 XOR + 1 NOT = 1 XNOR gate<br>
+      <span class="formula">A &lt; B = A'·B</span> → 1 NOT gate + 1 AND gate<br>
+      Total: 2 NOT gates, 2 AND gates, 1 XNOR gate = 5 gates minimum.
+    </div>
+  </div>
+  <div class="qbox" style="margin-top:14px;">
+    <div class="q-label">EXAMPLE 2 — Cascaded 7485 (8-bit)</div>
+    <div class="q-step">Compare A = 10110111₂ and B = 10110100₂ using two IC 7485s. Find result.</div>
+    <div class="q-ans">
+      Lower nibble: A₃₋₀ = 0111 (7), B₃₋₀ = 0100 (4) → A &gt; B → O<sub>A&gt;B</sub>=1, rest 0.<br>
+      Upper nibble: A₇₋₄ = 1011, B₇₋₄ = 1011 → Equal at upper nibble, so cascade inputs decide.<br>
+      Cascade input from lower stage: I<sub>A&gt;B</sub>=1 → Final result: <strong>A &gt; B</strong> ✔
+    </div>
+  </div>
+  <div class="questions-block">
+    <div class="q-title">📝 Practice Questions — Magnitude Comparator</div>
+    <ol>
+      <li>Design a 2-bit magnitude comparator using basic logic gates (AND, OR, NOT, XOR). Write Boolean expressions for (A&gt;B), (A=B), (A&lt;B) and draw the complete logic circuit diagram.</li>
+      <li>Two IC 7485s are cascaded to compare 8-bit numbers. If A = 11001010₂ and B = 11000111₂, trace through both ICs step by step and determine the final outputs. What should the cascade inputs of the lower IC be set to?</li>
+    </ol>
+  </div>
+  <div class="page-num">3 / 3</div>
+</div>
 
+<!-- §2 PAGE 1 -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DSD — Unit 3 · Combinational Logic</span><span class="unit-badge">SECTION 2</span></div>
+  <h1 class="section-title"><span class="sn">§2</span> Multiplexers (MUX)</h1>
+  <hr class="divider">
+  <div class="def-box">
+    A <strong>Multiplexer (MUX)</strong> is a combinational circuit that selects one of <span class="formula">2ⁿ</span> data input lines and transmits it to a single output, controlled by <span class="formula">n</span> selection lines. It acts as a <em>many-to-one switch</em> or <em>data selector</em>.
+  </div>
+  <h2 class="topic">2:1 MUX</h2>
+  <div class="two-col">
+    <div>
+      <table class="tt">
+        <tr><th>S</th><th>Output Y</th></tr>
+        <tr><td>0</td><td>I₀</td></tr>
+        <tr><td>1</td><td>I₁</td></tr>
+      </table>
+      <p class="fline" style="font-size:14px;margin-top:6px;">Y = S'·I₀ + S·I₁</p>
+    </div>
+    <div class="def-box" style="margin:0;font-size:13px;">
+      <strong>Analogy:</strong><br>Like a 2-way junction: you press selector S=0 to route I₀ to output, S=1 to route I₁. Think of it as a digital traffic policeman.
+    </div>
+  </div>
+  <h2 class="topic">4:1 MUX</h2>
+  <p class="body">4 inputs (I₀–I₃), 2 select lines (S₁, S₀), 1 output Y.</p>
+  <table class="tt">
+    <tr><th>S₁</th><th>S₀</th><th>Y</th><th>Selected</th></tr>
+    <tr><td>0</td><td>0</td><td>I₀</td><td>Minterm m₀</td></tr>
+    <tr><td>0</td><td>1</td><td>I₁</td><td>Minterm m₁</td></tr>
+    <tr><td>1</td><td>0</td><td>I₂</td><td>Minterm m₂</td></tr>
+    <tr><td>1</td><td>1</td><td>I₃</td><td>Minterm m₃</td></tr>
+  </table>
+  <p class="fline">Y = S₁'S₀'·I₀ + S₁'S₀·I₁ + S₁S₀'·I₂ + S₁S₀·I₃</p>
+  <h2 class="topic">8:1 MUX (IC 74151)</h2>
+  <ul class="plain">
+    <li>8 data inputs I₀–I₇, 3 select lines S₂S₁S₀, outputs Y and Y'</li>
+    <li>Has active-LOW enable G̅ — when G̅=0 circuit operates, G̅=1 disables output</li>
+    <li><span class="formula">Y = Σᵢ (mᵢ(S₂,S₁,S₀) · Iᵢ)</span> for i = 0 to 7</li>
+  </ul>
+  <div class="note-box">
+    <strong>Key Insight:</strong> Selection lines act like a binary address. S₁S₀ = 10 selects I₂ (binary 10 = decimal 2). Always decode the select lines as a binary number to find which input is chosen.
+  </div>
+  <div class="page-num">1 / 3</div>
+</div>
+
+<!-- §2 PAGE 2 -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DSD — Unit 3 · Combinational Logic</span><span class="unit-badge">SECTION 2</span></div>
+  <h2 class="topic">MUX as Universal Logic Element</h2>
+  <p class="body">A <span class="formula">2ⁿ:1</span> MUX can implement <strong>any Boolean function of n+1 variables</strong>. Use n variables as select lines, and connect 0/1/variable/complement to data inputs.</p>
+  <div class="orange-box">
+    <strong>Procedure — Implement f(A,B,C) using 4:1 MUX:</strong>
+    <ol style="padding-left:18px;font-size:13.5px;line-height:1.85;margin-top:7px;">
+      <li>Assign S₁ = A, S₀ = B (two MSBs as select lines). C will appear on data inputs.</li>
+      <li>For each combination of A,B (=00,01,10,11), look at what f equals for C=0 and C=1.</li>
+      <li>Determine data input: If f=0,0 → Iᵢ=0 | f=1,1 → Iᵢ=1 | f=0,1 → Iᵢ=C | f=1,0 → Iᵢ=C'</li>
+      <li>Connect the appropriate signal to each data input Iᵢ.</li>
+    </ol>
+  </div>
+  <div class="qbox">
+    <div class="q-label">WORKED EXAMPLE — f(A,B,C) = Σ(1,2,6,7) using 4:1 MUX</div>
+    <div class="q-step">
+      Map S₁=A, S₀=B. For each AB pair, check f at C=0 and C=1 using minterm list:<br>
+      AB=00: minterms 0,1 → f(C=0)=0, f(C=1)=1 → <strong>I₀ = C</strong><br>
+      AB=01: minterms 2,3 → f(C=0)=1, f(C=1)=0 → <strong>I₁ = C'</strong><br>
+      AB=10: minterms 4,5 → f(C=0)=0, f(C=1)=0 → <strong>I₂ = 0</strong><br>
+      AB=11: minterms 6,7 → f(C=0)=1, f(C=1)=1 → <strong>I₃ = 1</strong>
+    </div>
+    <div class="q-ans">
+      Connections: I₀=C, I₁=C', I₂=0, I₃=1; S₁=A, S₀=B<br>
+      Output Y = f(A,B,C) = Σ(1,2,6,7) ✔ — verified by substitution.
+    </div>
+  </div>
+  <h2 class="topic">Cascading MUX — Building Larger from Smaller</h2>
+  <div class="step-card">
+    <div class="step-head">BUILD 16:1 MUX USING 4:1 MUX ICs</div>
+    <div class="step-body">
+      <ol>
+        <li>Take 4 units of 4:1 MUX — each handles 4 of the 16 inputs. Select with S₁S₀.</li>
+        <li>Take 1 more 4:1 MUX as "output selector" — select with S₃S₂.</li>
+        <li>Outputs of first four MUXes → data inputs I₀–I₃ of the final MUX.</li>
+        <li>Total = <strong>5 units</strong> of 4:1 MUX. Final output = selected 1 of 16.</li>
+      </ol>
+    </div>
+  </div>
+  <div class="page-num">2 / 3</div>
+</div>
+
+<!-- §2 PAGE 3 -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DSD — Unit 3 · Combinational Logic</span><span class="unit-badge">SECTION 2</span></div>
+  <h2 class="topic">Applications of MUX</h2>
+  <ul class="plain">
+    <li><strong>Data selection &amp; routing</strong> — route one of many buses to a single output</li>
+    <li><strong>Boolean function implementation</strong> — any logic function without K-map minimization</li>
+    <li><strong>Parallel-to-serial conversion</strong> — shift register alternative</li>
+    <li><strong>Time-division multiplexing (TDM)</strong> — share a single wire between multiple signals</li>
+    <li><strong>Address decoding</strong> in microprocessor systems</li>
+    <li><strong>Data compression</strong> and <strong>waveform generation</strong></li>
+  </ul>
+  <div class="vs-box" style="margin-top:16px;">
+    <div class="vs-left">
+      <div class="vs-head">MUX</div>
+      <ul class="plain">
+        <li>2ⁿ inputs → 1 output</li>
+        <li>n selection lines</li>
+        <li>Data <em>selector</em></li>
+        <li>Sender side in TDM</li>
+        <li>IC: 74151 (8:1), 74150 (16:1)</li>
+      </ul>
+    </div>
+    <div class="vs-right">
+      <div class="vs-head">DEMUX</div>
+      <ul class="plain">
+        <li>1 input → 2ⁿ outputs</li>
+        <li>n selection lines</li>
+        <li>Data <em>distributor</em></li>
+        <li>Receiver side in TDM</li>
+        <li>IC: 74138 (1:8), 74154 (1:16)</li>
+      </ul>
+    </div>
+  </div>
+  <div class="note-box" style="margin-top:16px;">
+    <strong>Common Exam Error:</strong> When using 4:1 MUX for a 3-variable function, students often try to put all 3 variables on select lines. Remember: a 4:1 MUX has only 2 select lines! The third variable must go on data inputs. Use 8:1 MUX if you want all 3 variables as select lines (with constant 0 or 1 on data inputs).
+  </div>
+  <div class="questions-block">
+    <div class="q-title">📝 Practice Questions — Multiplexers</div>
+    <ol>
+      <li>Implement F(A,B,C) = Σ(0,3,5,6) using a 4:1 MUX. Show the grouping table for AB=00,01,10,11 and identify what signal (0,1,C,C') connects to each data input I₀ through I₃.</li>
+      <li>Using an 8:1 MUX (IC 74151), implement F(A,B,C) = Σ(0,1,3,5,7). Draw the connection diagram. Also explain how you would build a 32:1 MUX by cascading 8:1 MUX ICs — how many ICs are needed and what is the interconnection scheme?</li>
+    </ol>
+  </div>
+  <div class="page-num">3 / 3</div>
+</div>
+
+<!-- §3 PAGE 1 -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DSD — Unit 3 · Combinational Logic</span><span class="unit-badge">SECTION 3</span></div>
+  <h1 class="section-title"><span class="sn">§3</span> Demultiplexers (DEMUX)</h1>
+  <hr class="divider">
+  <div class="def-box">
+    A <strong>Demultiplexer (DEMUX)</strong> receives a single input and routes it to one of <span class="formula">2ⁿ</span> output lines based on <span class="formula">n</span> select lines. It is the <strong>inverse of a MUX</strong> — performs one-to-many distribution. Also called a <em>data distributor</em>.
+  </div>
+  <h2 class="topic">1:2 DEMUX</h2>
+  <div class="two-col">
+    <div>
+      <table class="tt">
+        <tr><th>S</th><th>D₀</th><th>D₁</th></tr>
+        <tr><td>0</td><td>I (data)</td><td>0</td></tr>
+        <tr><td>1</td><td>0</td><td>I (data)</td></tr>
+      </table>
+      <p class="fline" style="font-size:14px;margin-top:5px;">D₀ = I·S' &nbsp;&nbsp; D₁ = I·S</p>
+    </div>
+    <div class="def-box" style="margin:0;font-size:13px;">
+      <strong>Real-world analogy:</strong><br>A railway switch point — the single incoming train (data) is directed to one of two tracks (output lines) depending on switch position (select line S).
+    </div>
+  </div>
+  <h2 class="topic">1:4 DEMUX</h2>
+  <p class="body">1 input I, 2 select lines S₁S₀, 4 outputs D₀–D₃.</p>
+  <table class="tt">
+    <tr><th>S₁</th><th>S₀</th><th>Active</th><th>Expression</th></tr>
+    <tr><td>0</td><td>0</td><td>D₀</td><td>D₀ = I·S₁'·S₀'</td></tr>
+    <tr><td>0</td><td>1</td><td>D₁</td><td>D₁ = I·S₁'·S₀</td></tr>
+    <tr><td>1</td><td>0</td><td>D₂</td><td>D₂ = I·S₁·S₀'</td></tr>
+    <tr><td>1</td><td>1</td><td>D₃</td><td>D₃ = I·S₁·S₀</td></tr>
+  </table>
+  <div class="rule-box">
+    <strong>Key Observation:</strong> When input I = 1 (logic HIGH), DEMUX acts exactly like a <strong>Decoder</strong>. Each output Dᵢ = mᵢ(S₁,S₀) — the corresponding minterm. This is why Decoders and DEMUXes share the same hardware structure.
+  </div>
+  <div class="page-num">1 / 2</div>
+</div>
+
+<!-- §3 PAGE 2 -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">DSD — Unit 3 · Combinational Logic</span><span class="unit-badge">SECTION 3</span></div>
+  <h2 class="topic">1:8 DEMUX and Standard ICs</h2>
+  <ul class="plain">
+    <li>1 input, 3 select lines, 8 outputs</li>
+    <li><span class="formula">Dᵢ = I · mᵢ(S₂, S₁, S₀)</span> — each output is input ANDed with a 3-variable minterm</li>
+    <li>Example: D₅ = I·S₂·S₁'·S₀ (since 101₂ = 5)</li>
+  </ul>
+  <div class="purple-box">
+    <table class="tt" style="margin-top:0;">
+      <tr><th>DEMUX Type</th><th>Inputs</th><th>Select Lines</th><th>Outputs</th><th>IC No.</th></tr>
+      <tr><td>1:2</td><td>1</td><td>1</td><td>2</td><td>½ of 74139</td></tr>
+      <tr><td>1:4</td><td>1</td><td>2</td><td>4</td><td>74139 (dual 1:4)</td></tr>
+      <tr><td>1:8</td><td>1</td><td>3</td><td>8</td><td>74138</td></tr>
+      <tr><td>1:16</td><td>1</td><td>4</td><td>16</td><td>74154</td></tr>
+    </table>
+  </div>
+  <div class="step-card">
+    <div class="step-head">CASCADING: BUILD 1:16 DEMUX FROM 1:4 DEMUX ICs</div>
+    <div class="step-body">
+      <ol>
+        <li>First stage: 1 unit of 1:4 DEMUX — uses MSB select bits S₃,S₂. Input I feeds this stage.</li>
+        <li>Four outputs of first stage → each becomes the input of a second-stage 1:4 DEMUX.</li>
+        <li>Second stage: 4 units of 1:4 DEMUX — each uses LSB select bits S₁,S₀.</li>
+        <li>Total = 1 + 4 = <strong>5 units</strong> of 1:4 DEMUX → 16 outputs.</li>
+      </ol>
+    </div>
+  </div>
+  <h2 class="topic">DEMUX for Boolean Function Implementation</h2>
+  <div class="qbox">
+    <div class="q-label">EXAMPLE — Implement F(A,B,C) = Σ(0,2,5,7) using 1:8 DEMUX</div>
+    <div class="q-step">Set input I = 1. Connect A→S₂, B→S₁, C→S₀. Each output Dᵢ = mᵢ.</div>
+    <div class="q-ans">
+      Outputs D₀, D₂, D₅, D₇ will be HIGH for minterms 0,2,5,7.<br>
+      Connect these 4 outputs to an OR gate → F = D₀ + D₂ + D₅ + D₇ ✔<br>
+      <em>This is exactly how decoders implement sum-of-minterms functions!</em>
+    </div>
+  </div>
+  <div class="questions-block">
+    <div class="q-title">📝 Practice Questions — Demultiplexers</div>
+    <ol>
+      <li>Design a 1:4 DEMUX using AND and NOT gates. Write all Boolean expressions (D₀–D₃), draw the complete logic diagram, and calculate the minimum gate count required.</li>
+      <li>Using a 1:8 DEMUX (with I=1), implement F(X,Y,Z) = Σ(1,3,4,6). Identify which outputs to OR together. Also show how to cascade two 1:4 DEMUX ICs to build a 1:8 DEMUX, with a clear diagram of select line connections.</li>
+    </ol>
+  </div>
+  <div class="page-num">2 / 2</div>
+</div>
+
+</div>
 <script>
-(function(){
-  var pages = document.querySelectorAll('.page');
-  var secPages = [];
-  pages.forEach(function(p){ if(p.querySelector('h1.section-title')) secPages.push(p); });
-  secPages.forEach(function(p,i){ p.id = 'sec-'+(i+1); });
-  var tocItems = document.querySelectorAll('.cover-toc-item');
-  tocItems.forEach(function(item, i){
-    if(i >= secPages.length) return;
-    item.style.cursor = 'pointer';
-    item.style.borderRadius = '4px';
-    item.style.transition = 'background 0.18s';
-    item.setAttribute('title', 'Click to jump to this section');
-    item.addEventListener('mouseenter', function(){ item.style.background='rgba(255,255,255,0.18)'; });
-    item.addEventListener('mouseleave', function(){ item.style.background=''; });
-    item.addEventListener('click', function(){ secPages[i].scrollIntoView({behavior:'smooth'}); });
-  });
-})();
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowDown') window.scrollBy({top:window.innerHeight*.85,behavior:'smooth'});
+  if(e.key==='ArrowUp') window.scrollBy({top:-window.innerHeight*.85,behavior:'smooth'});
+});
 </script>
 </body>
 </html>
