@@ -3,138 +3,715 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OOP-JAVA Unit 3 — Part 2</title>
-<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+<title>OOP in Java — Unit 3 | Part 2</title>
 <style>
-:root{--ink:#1a1a2e;--ink2:#2c2c54;--blue:#1565C0;--red:#b71c1c;--green:#1b5e20;--purple:#4a148c;--teal:#006064;--orange:#e65100;--line:#c5cae9;--page:#fafaf7;--highlight:#fff9c4;--box-blue:#e8f4fd;--box-green:#e8f5e9;--box-purple:#f3e5f5;--box-orange:#fff3e0;--box-red:#fce4ec;--box-teal:#e0f7fa;}
-*{margin:0;padding:0;box-sizing:border-box;}
-body{background:#e0e0e0;font-family:'Kalam',cursive;color:var(--ink);padding:30px 20px;}
-.page{background:var(--page);max-width:820px;margin:0 auto 40px;border-radius:4px;box-shadow:0 2px 16px rgba(0,0,0,0.18),0 0 0 1px rgba(0,0,0,0.08);padding:60px 70px 70px 90px;position:relative;min-height:1060px;background-image:repeating-linear-gradient(transparent,transparent 31px,var(--line) 31px,var(--line) 32px);background-position:0 56px;}
-.page::before{content:'';position:absolute;left:72px;top:0;bottom:0;width:1.5px;background:#ef9a9a;opacity:0.7;}
-.holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-around;padding:40px 0;}
-.hole{width:22px;height:22px;border-radius:50%;background:#e0e0e0;border:1.5px solid #bdbdbd;box-shadow:inset 0 1px 3px rgba(0,0,0,0.2);}
-.page-num{position:absolute;bottom:28px;right:50px;font-size:13px;color:#9e9e9e;}
-.page-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
-.date-tag{font-size:13px;color:#9e9e9e;}
-.unit-badge{color:#fff;font-size:13px;padding:2px 14px;border-radius:20px;font-weight:700;}
-h1.section-title{font-size:24px;font-weight:700;color:var(--ink2);text-align:center;margin:8px 0 4px;text-decoration:underline;text-underline-offset:5px;}
-h2.topic{font-size:18px;font-weight:700;color:var(--blue);margin:18px 0 6px;border-bottom:1.5px solid var(--blue);padding-bottom:2px;display:inline-block;}
-h3.sub{font-size:15px;font-weight:700;color:var(--purple);margin:12px 0 4px;}
-p,li{font-size:15px;line-height:32px;}
-.def-box{background:var(--box-blue);border-left:4px solid var(--blue);border-radius:0 6px 6px 0;padding:10px 16px;margin:10px 0 12px;font-size:15px;line-height:30px;}
-.note-box{background:var(--highlight);border-left:4px solid #f9a825;border-radius:0 6px 6px 0;padding:8px 14px;margin:8px 0 10px;font-size:14px;line-height:26px;}
-.rule-box{background:var(--box-green);border:1.5px solid #81c784;border-radius:6px;padding:10px 16px;margin:10px 0;font-size:14.5px;line-height:28px;}
-.purple-box{background:var(--box-purple);border-left:4px solid var(--purple);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
-.orange-box{background:var(--box-orange);border-left:4px solid var(--orange);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
-.teal-box{background:var(--box-teal);border-left:4px solid var(--teal);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
-.formula{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--blue);}
-.divider{border:none;border-top:1px dashed #b0bec5;margin:14px 0 10px;}
-ul.plain{list-style:none;padding-left:4px;}
-ul.plain li::before{content:'→ ';color:var(--blue);font-weight:700;}
-ul.plain li{font-size:15px;line-height:32px;}
-.qbox{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:12px 16px;margin:10px 0;}
-.q-label{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:2px;}
-.q-step{font-size:14px;color:var(--green);margin-top:4px;line-height:26px;}
-.q-ans{font-size:15px;color:var(--red);font-family:'Patrick Hand',cursive;margin-top:4px;}
-table.tt{width:100%;border-collapse:collapse;margin:8px 0;font-size:14px;}
-table.tt th{color:#fff;padding:7px 10px;text-align:center;}
-table.tt td{padding:6px 10px;border-bottom:1px solid #e0e0e0;text-align:center;font-family:'Patrick Hand',cursive;font-size:14px;}
-table.tt tr:nth-child(even) td{background:#f5f5f5;}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0;}
-.vs-box{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:12px 0;border-radius:8px;overflow:hidden;border:1.5px solid #90caf9;}
-.vs-left{background:#e8f4fd;padding:12px 14px;}
-.vs-right{background:var(--box-purple);padding:12px 14px;border-left:1px solid #90caf9;}
-.vs-head{font-size:15px;font-weight:700;margin-bottom:8px;}
-.vs-item{font-size:14px;line-height:26px;}
-.step-card{background:var(--box-purple);border-left:4px solid var(--purple);padding:8px 14px;margin:5px 0;border-radius:0 6px 6px 0;}
-.step-head{font-size:14px;font-weight:700;color:var(--purple);}
-.step-body{font-size:13.5px;line-height:24px;color:var(--ink2);}
-.cover-page{max-width:820px;margin:0 auto 40px;border-radius:8px;padding:80px 60px;text-align:center;color:#fff;box-shadow:0 4px 24px rgba(0,0,0,0.3);position:relative;overflow:hidden;}
-.cover-subject{font-size:14px;letter-spacing:3px;opacity:0.7;margin-bottom:16px;}
-.cover-title{font-size:40px;font-weight:700;line-height:1.2;margin-bottom:12px;}
-.cover-unit{font-size:20px;opacity:0.85;margin-bottom:30px;}
-.cover-divider{width:80px;height:3px;background:rgba(255,255,255,0.4);margin:0 auto 24px;border-radius:2px;}
-.cover-toc{text-align:left;background:rgba(255,255,255,0.1);border-radius:8px;padding:20px 28px;display:inline-block;min-width:420px;}
-.cover-toc-item{font-size:15px;line-height:32px;display:flex;justify-content:space-between;gap:20px;}
-.part-nav{max-width:820px;margin:0 auto 20px;display:flex;gap:10px;justify-content:center;align-items:center;font-family:'Kalam',cursive;flex-wrap:wrap;}
-.part-nav a{padding:6px 20px;border-radius:20px;background:#fff;border:1.5px solid #90caf9;color:var(--blue);text-decoration:none;font-size:14px;font-weight:700;}
-.part-nav a:hover:not(.active){background:#e3f2fd;}
-.part-nav .back{background:#f5f5f5;border-color:#ccc;color:#555;font-size:13px;}
-.unit-badge{background:#1b5e20;}
-h1.section-title{text-decoration-color:#1b5e20;}
-h1.section-title .sn{color:#1b5e20;}
-.part-nav a.active{background:#1b5e20;border-color:#1b5e20;color:#fff;}
-@media(max-width:600px){
-body{padding:10px 0 30px;}
-.page{padding:20px 16px 30px 16px;min-height:unset;}
-.page::before{display:none;}
-.holes{display:none;}
-.cover-page{padding:40px 20px;margin:0 10px 20px;}
-.cover-toc{min-width:unset;width:100%;padding:14px 16px;}
-.part-nav{padding:0 10px;gap:6px;}
-.part-nav a{padding:5px 12px;font-size:13px;}
-.two-col{grid-template-columns:1fr;}
-.vs-box{grid-template-columns:1fr;}
-.vs-right{border-left:none;border-top:1px solid #90caf9;}
-nav.part-nav{padding:0 10px;gap:6px;}
-.cover-title{font-size:28px;}
-}</style>
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Kalam:wght@300;400;700&family=Special+Elite&display=swap');
+  :root{
+    --paper:#fdf9f0;--ink:#1a1a2e;--ink-light:#2d2d4e;
+    --blue:#1a56db;--blue-light:#dbeafe;
+    --green:#0d6b3f;--green-light:#d1fae5;
+    --orange:#c05621;--orange-light:#fef3c7;
+    --purple:#5b21b6;--purple-light:#ede9fe;
+    --red:#b91c1c;--red-light:#fee2e2;
+    --teal:#0e7490;--teal-light:#cffafe;
+    --rule-line:#c8d8e8;--margin-line:#f4a0a0;
+    --hole-bg:#e8e0d0;--shadow:rgba(0,0,0,0.08);
+    --accent:#c05621;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:#2a1500;
+    background-image:radial-gradient(circle at 25% 50%,rgba(192,86,33,.18) 0%,transparent 55%),
+                     radial-gradient(circle at 75% 20%,rgba(91,33,182,.1) 0%,transparent 50%);
+    font-family:'Kalam',cursive;color:var(--ink);padding:20px 0 40px;min-height:100vh;
+  }
+  .part-nav{display:flex;justify-content:center;gap:10px;margin-bottom:28px;flex-wrap:wrap;padding:0 16px;}
+  .part-nav a{font-family:'Caveat',cursive;font-size:1rem;font-weight:600;padding:7px 20px;border-radius:20px;
+    text-decoration:none;background:rgba(255,255,255,.5);color:#555;border:2px solid rgba(255,255,255,.7);transition:all .2s;}
+  .part-nav a.active{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 4px 12px rgba(192,86,33,.45);}
+  .part-nav a:hover:not(.active){background:rgba(255,255,255,.8);color:#333;}
+  .page{width:760px;max-width:98vw;margin:0 auto 28px;background:var(--paper);border-radius:3px;
+    box-shadow:4px 4px 14px var(--shadow),0 1px 3px rgba(0,0,0,.12);position:relative;
+    padding:36px 44px 44px 80px;min-height:600px;
+    background-image:repeating-linear-gradient(transparent,transparent 31px,var(--rule-line) 31px,var(--rule-line) 32px);
+    background-position:0 64px;}
+  .page::before{content:'';position:absolute;left:68px;top:0;bottom:0;width:2px;background:var(--margin-line);opacity:.7;}
+  .holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;
+    justify-content:space-evenly;align-items:center;width:32px;}
+  .hole{width:18px;height:18px;border-radius:50%;background:var(--hole-bg);border:1.5px solid #b8a898;box-shadow:inset 0 1px 3px rgba(0,0,0,.2);}
+  .page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+  .date-tag{font-family:'Special Elite',cursive;font-size:.72rem;color:var(--teal);letter-spacing:.05em;text-transform:uppercase;}
+  .unit-badge{font-family:'Caveat',cursive;font-size:.85rem;font-weight:700;background:var(--accent);color:white;padding:2px 12px;border-radius:10px;letter-spacing:.08em;}
+  .section-title{font-family:'Caveat',cursive;font-size:2rem;font-weight:700;color:var(--ink);margin:8px 0 4px;line-height:1.2;}
+  .sn{font-family:'Special Elite',cursive;color:var(--accent);margin-right:6px;font-size:1.7rem;}
+  .divider{border:none;border-top:2.5px solid var(--accent);margin:6px 0 18px;border-radius:2px;}
+  h2.topic{font-family:'Caveat',cursive;font-size:1.45rem;font-weight:700;color:var(--accent);margin:20px 0 8px;padding-bottom:3px;border-bottom:1.5px dashed var(--rule-line);}
+  h3.sub{font-family:'Kalam',cursive;font-size:1.1rem;font-weight:700;color:var(--blue);margin:14px 0 6px;}
+  .def-box,.rule-box,.note-box,.purple-box,.orange-box{border-radius:8px;padding:13px 16px;margin:14px 0;font-size:.97rem;line-height:1.65;}
+  .def-box{background:var(--blue-light);border-left:4px solid var(--blue);}
+  .def-box::before{content:'📘 Definition';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--blue);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .rule-box{background:var(--green-light);border-left:4px solid var(--green);}
+  .rule-box::before{content:'📗 Key Result';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--green);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .note-box{background:var(--red-light);border-left:4px solid var(--red);}
+  .note-box::before{content:'⚠️ Exam Tip';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--red);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .purple-box{background:var(--purple-light);border-left:4px solid var(--purple);}
+  .purple-box::before{content:'💡 Important';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--purple);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .orange-box{background:var(--orange-light);border-left:4px solid var(--orange);}
+  .orange-box::before{content:'🔧 How it works';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--orange);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .version-tag{display:inline-block;font-family:'Special Elite',cursive;font-size:.72rem;background:var(--accent);color:white;padding:1px 8px;border-radius:10px;margin-left:6px;vertical-align:middle;}
+  .qbox{background:#fffbf0;border:1.5px solid #e4cc88;border-radius:8px;padding:14px 16px;margin:14px 0;font-size:.96rem;}
+  .q-label{font-family:'Caveat',cursive;font-weight:700;font-size:1.05rem;color:var(--orange);margin-bottom:6px;}
+  .q-step{margin:5px 0;padding-left:16px;position:relative;line-height:1.6;color:var(--ink-light);}
+  .q-step::before{content:'→';position:absolute;left:0;color:var(--accent);font-weight:700;}
+  .q-ans{font-family:'Caveat',cursive;font-weight:700;font-size:1.05rem;color:var(--green);margin-top:8px;padding-top:6px;border-top:1px dashed #e4cc88;}
+  ul.plain{list-style:none;padding-left:0;margin:8px 0;}
+  ul.plain li{padding:4px 0 4px 22px;position:relative;line-height:1.6;font-size:.97rem;}
+  ul.plain li::before{content:'→';position:absolute;left:2px;color:var(--accent);font-weight:700;}
+  .formula{font-family:'Special Elite',cursive;background:rgba(192,86,33,.1);color:var(--orange);padding:2px 8px;border-radius:4px;font-size:.95em;display:inline-block;}
+  pre.code-block{background:#1e1e2e;color:#cdd6f4;border-radius:8px;padding:14px 16px;font-family:'Courier New',monospace;
+    font-size:.82rem;line-height:1.7;margin:12px 0;overflow-x:auto;border-left:4px solid var(--accent);}
+  .kw{color:#89b4fa;font-weight:bold;} .cm{color:#6c7086;font-style:italic;}
+  .st{color:#a6e3a1;} .nm{color:#fab387;} .tp{color:#f38ba8;} .fn{color:#cba6f7;} .an{color:#f9e2af;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:12px 0;}
+  @media(max-width:600px){.two-col{grid-template-columns:1fr;}}
+  .vs-box{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:12px 0;border-radius:8px;overflow:hidden;border:1.5px solid #d0d0d0;font-size:.93rem;}
+  .vs-left{background:var(--orange-light);padding:12px 14px;border-right:1.5px solid #d0d0d0;}
+  .vs-right{background:var(--green-light);padding:12px 14px;}
+  .vs-left strong,.vs-right strong{font-family:'Caveat',cursive;font-size:1.05rem;display:block;margin-bottom:6px;}
+  .vs-left strong{color:var(--orange);} .vs-right strong{color:var(--green);}
+  table.tt{width:100%;border-collapse:collapse;font-size:.9rem;margin:12px 0;}
+  table.tt th{background:var(--accent);color:white;padding:8px 12px;text-align:left;font-family:'Caveat',cursive;font-size:1rem;}
+  table.tt td{padding:7px 12px;border-bottom:1px solid var(--rule-line);}
+  table.tt tr:nth-child(even) td{background:rgba(192,86,33,.04);}
+  .page-num{position:absolute;bottom:14px;right:22px;font-family:'Caveat',cursive;font-size:.85rem;color:#999;}
+  /* cover */
+  .cover-page{width:760px;max-width:98vw;margin:0 auto 28px;
+    background:linear-gradient(135deg,#431407 0%,#7c2d12 50%,#c2410c 100%);
+    border-radius:6px;box-shadow:6px 6px 20px rgba(0,0,0,.45);
+    padding:50px 60px 50px 80px;position:relative;overflow:hidden;color:white;min-height:440px;}
+  .cover-page::before{content:'';position:absolute;top:-60px;right:-60px;width:280px;height:280px;background:radial-gradient(circle,rgba(253,186,116,.3) 0%,transparent 70%);border-radius:50%;}
+  .cover-page::after{content:'';position:absolute;bottom:-40px;left:40px;width:200px;height:200px;background:radial-gradient(circle,rgba(196,181,253,.15) 0%,transparent 70%);border-radius:50%;}
+  .cover-holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-evenly;align-items:center;width:32px;}
+  .cover-subject{font-family:'Special Elite',cursive;font-size:.78rem;letter-spacing:.25em;text-transform:uppercase;color:#fed7aa;margin-bottom:8px;position:relative;z-index:1;}
+  .cover-title{font-family:'Caveat',cursive;font-size:3rem;font-weight:700;line-height:1.1;margin-bottom:6px;position:relative;z-index:1;}
+  .cover-unit{font-family:'Kalam',cursive;font-size:1.15rem;color:#bbf7d0;margin-bottom:4px;position:relative;z-index:1;}
+  .cover-subtitle{font-family:'Kalam',cursive;font-size:.95rem;color:#fde68a;margin-bottom:22px;position:relative;z-index:1;}
+  .cover-part-badge{display:inline-block;background:var(--accent);color:white;font-family:'Caveat',cursive;font-weight:700;font-size:1.1rem;padding:6px 20px;border-radius:20px;margin-bottom:22px;position:relative;z-index:1;letter-spacing:.06em;}
+  .cover-toc{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.2);padding-top:18px;}
+  .cover-toc h3{font-family:'Special Elite',cursive;font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:#fed7aa;margin-bottom:10px;}
+  .toc-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px dotted rgba(255,255,255,.12);}
+  .toc-sec{font-family:'Caveat',cursive;font-size:.98rem;font-weight:600;color:#f5f5f5;}
+  .toc-sec span.toc-num{color:#fed7aa;margin-right:8px;font-family:'Special Elite',cursive;}
+  .toc-pages{font-family:'Special Elite',cursive;font-size:.75rem;color:#a6adc8;background:rgba(255,255,255,.07);padding:2px 8px;border-radius:8px;}
+  p{line-height:1.7;margin:8px 0;font-size:.97rem;}
+  strong{color:var(--ink);}
+  code{font-family:'Courier New',monospace;font-size:.9em;background:rgba(0,0,0,.07);padding:1px 5px;border-radius:3px;}
+</style>
 </head>
 <body>
 
-<div class="part-nav">
+<nav class="part-nav">
   <a href="../index.html" class="back">↩ Units</a>
-  <a href="part1.html">Part 1</a>
-  <a href="part2.html" class="active">Part 2</a>
-  <a href="part3.html">Part 3</a>
-</div>
+  <a href="part1.html">◆ Part 1 — Lambdas &amp; Streams</a>
+  <a href="part2.html" class="active">◆ Part 2 — Default/Static/Base64/forEach/Try/Annotations</a>
+  <a href="part3.html">◆ Part 3 — Modules, Records, Sealed &amp; Revision</a>
+</nav>
 
-<div class="cover-page" style="background:linear-gradient(135deg,#1b5e20 0%,#00695c 100%);">
-  <div class="cover-subject">OBJECT-ORIENTED PROGRAMMING IN JAVA</div>
-  <div class="cover-title">Unit 3 — Part 2</div>
-  <div class="cover-unit">[ Awaiting Content ]</div>
-  <div class="cover-divider"></div>
+<div class="cover-page">
+  <div class="cover-holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="cover-subject">Object-Oriented Programming in Java</div>
+  <div class="cover-title">Unit 3 Notes</div>
+  <div class="cover-unit">Unit 3 — Java New Features (Part 2)</div>
+  <div class="cover-subtitle">Default Methods · Static Methods in Interfaces · Base64 · forEach · Try-with-Resources · Type Annotations · Repeating Annotations</div>
+  <div class="cover-part-badge">📒 Part 2 of 3</div>
   <div class="cover-toc">
-    <div class="cover-toc-item" style="opacity:0.6;font-style:italic;justify-content:center;"><span>Content to be added</span></div>
+    <h3>Contents — Part 2</h3>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§5</span> Default Methods in Interfaces</div><div class="toc-pages">2 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§6</span> Static Methods in Interfaces</div><div class="toc-pages">1 page</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§7</span> Base64 Encode and Decode</div><div class="toc-pages">2 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§8</span> forEach Method</div><div class="toc-pages">2 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§9</span> Try-with-Resources</div><div class="toc-pages">2 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§10</span> Type Annotations &amp; Repeating Annotations</div><div class="toc-pages">2 pages</div></div>
   </div>
 </div>
 
-<!-- ================================================
-     ADD CONTENT SECTIONS BELOW THIS LINE
+<!-- ══ §5 — DEFAULT METHODS (2 pages) ══ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 3</span><span class="unit-badge">SECTION 5</span></div>
+  <h1 class="section-title"><span class="sn">§5</span> Default Methods in Interfaces <span class="version-tag">Java 8</span></h1>
+  <hr class="divider">
 
-     Each section pattern:
+  <h2 class="topic">The Problem Default Methods Solve</h2>
+  <div class="purple-box">
+    Before Java 8, adding a new method to an interface broke <em>all</em> existing implementing classes — they had to implement the new method or fail to compile. With millions of classes implementing core interfaces like <code>Collection</code>, this was a disaster. <strong>Default methods</strong> were the solution.
+  </div>
 
-     <div class="page">
-       <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
-       <div class="page-header">
-         <span class="date-tag">OOP-JAVA — Unit 3</span>
-         <span class="unit-badge">SECTION X</span>
-       </div>
-       <h1 class="section-title"><span class="sn">§X</span> Title Here</h1>
-       <hr class="divider">
-       ... content ...
-       <div class="page-num">1 / 1</div>
-     </div>
-     ================================================ -->
+  <div class="def-box">
+    A <strong>default method</strong> is a method in an interface that has a concrete implementation (body). Implementing classes inherit it automatically and may override it if they wish.
+    <br>Keyword: <span class="formula">default</span>
+  </div>
+
+  <pre class="code-block"><span class="kw">interface</span> <span class="tp">Vehicle</span> {
+    <span class="kw">void</span> <span class="fn">start</span>();                        <span class="cm">// abstract — must implement</span>
+    <span class="kw">void</span> <span class="fn">stop</span>();                         <span class="cm">// abstract — must implement</span>
+
+    <span class="cm">// default method — provides a default behaviour</span>
+    <span class="kw">default void</span> <span class="fn">honk</span>() {
+        System.out.println(<span class="st">"Beep beep!"</span>);
+    }
+
+    <span class="kw">default</span> String <span class="fn">getType</span>() {
+        <span class="kw">return</span> <span class="st">"Generic Vehicle"</span>;
+    }
+}
+
+<span class="kw">class</span> <span class="tp">Car</span> <span class="kw">implements</span> <span class="tp">Vehicle</span> {
+    <span class="kw">public void</span> <span class="fn">start</span>() { System.out.println(<span class="st">"Car started"</span>); }
+    <span class="kw">public void</span> <span class="fn">stop</span>()  { System.out.println(<span class="st">"Car stopped"</span>); }
+    <span class="cm">// honk() and getType() are inherited from Vehicle interface</span>
+}
+
+<span class="kw">class</span> <span class="tp">Truck</span> <span class="kw">implements</span> <span class="tp">Vehicle</span> {
+    <span class="kw">public void</span> <span class="fn">start</span>() { System.out.println(<span class="st">"Truck started"</span>); }
+    <span class="kw">public void</span> <span class="fn">stop</span>()  { System.out.println(<span class="st">"Truck stopped"</span>); }
+
+    <span class="an">@Override</span>
+    <span class="kw">public void</span> <span class="fn">honk</span>() { System.out.println(<span class="st">"HOOOONK!"</span>); }  <span class="cm">// override default</span>
+}
+
+Car c = <span class="kw">new</span> Car();
+c.<span class="fn">honk</span>();       <span class="cm">// Beep beep! (inherited default)</span>
+<span class="kw">new</span> Truck().<span class="fn">honk</span>(); <span class="cm">// HOOOONK! (overridden)</span></pre>
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 3</span><span class="unit-badge">SECTION 5</span></div>
+
+  <h2 class="topic">Default Method Conflict Resolution</h2>
+  <div class="orange-box">
+    If a class implements two interfaces that both define the same default method, the class MUST override it — otherwise the compiler throws an error ("inherits unrelated defaults").
+  </div>
+  <pre class="code-block"><span class="kw">interface</span> <span class="tp">A</span> { <span class="kw">default void</span> <span class="fn">show</span>() { System.out.println(<span class="st">"A"</span>); } }
+<span class="kw">interface</span> <span class="tp">B</span> { <span class="kw">default void</span> <span class="fn">show</span>() { System.out.println(<span class="st">"B"</span>); } }
+
+<span class="kw">class</span> <span class="tp">C</span> <span class="kw">implements</span> <span class="tp">A</span>, <span class="tp">B</span> {
+    <span class="an">@Override</span>
+    <span class="kw">public void</span> <span class="fn">show</span>() {
+        A.<span class="kw">super</span>.<span class="fn">show</span>();     <span class="cm">// explicitly call A's default</span>
+        <span class="cm">// or B.super.show(); or your own implementation</span>
+    }
+}
+
+<span class="cm">// Class method wins over interface default (another rule):</span>
+<span class="kw">class</span> <span class="tp">Base</span> { <span class="kw">public void</span> <span class="fn">show</span>() { System.out.println(<span class="st">"Base class"</span>); } }
+<span class="kw">class</span> <span class="tp">D</span> <span class="kw">extends</span> <span class="tp">Base</span> <span class="kw">implements</span> <span class="tp">A</span> {
+    <span class="cm">// Base.show() wins — class method always wins over interface default</span>
+}</pre>
+
+  <div class="rule-box">
+    <strong>Priority rules for default method resolution:</strong>
+    <ul class="plain" style="margin-top:6px">
+      <li><strong>1st priority: Class / superclass methods</strong> — always win over interface defaults.</li>
+      <li><strong>2nd priority: More specific interface</strong> — if interface B extends A and both have the same default, B's wins.</li>
+      <li><strong>3rd priority: Explicitly override</strong> — if still ambiguous, you MUST override and resolve manually using <code>InterfaceName.super.method()</code>.</li>
+    </ul>
+  </div>
+
+  <h2 class="topic">Real-world Default Methods in Java API</h2>
+  <table class="tt">
+    <tr><th>Interface</th><th>Default method added (Java 8)</th></tr>
+    <tr><td><code>Iterable</code></td><td><code>forEach(Consumer)</code></td></tr>
+    <tr><td><code>Collection</code></td><td><code>removeIf(Predicate)</code>, <code>stream()</code>, <code>spliterator()</code></td></tr>
+    <tr><td><code>List</code></td><td><code>sort(Comparator)</code>, <code>replaceAll(UnaryOperator)</code></td></tr>
+    <tr><td><code>Map</code></td><td><code>getOrDefault()</code>, <code>putIfAbsent()</code>, <code>forEach()</code>, <code>merge()</code>, <code>compute()</code></td></tr>
+    <tr><td><code>Comparator</code></td><td><code>thenComparing()</code>, <code>reversed()</code></td></tr>
+    <tr><td><code>Predicate</code></td><td><code>and()</code>, <code>or()</code>, <code>negate()</code></td></tr>
+  </table>
+
+  <div class="note-box">
+    Default methods = "virtual extension methods." They let Java evolve existing interfaces without breaking backward compatibility. This is how the entire Collections API was upgraded for streams in Java 8.
+  </div>
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══ §6 — STATIC METHODS IN INTERFACES (1 page) ══ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 3</span><span class="unit-badge">SECTION 6</span></div>
+  <h1 class="section-title"><span class="sn">§6</span> Static Methods in Interfaces <span class="version-tag">Java 8</span></h1>
+  <hr class="divider">
+
+  <h2 class="topic">Static Interface Methods</h2>
+  <div class="def-box">
+    Java 8 allows <strong>static methods</strong> in interfaces. Unlike default methods, static methods are NOT inherited by implementing classes — they belong to the interface itself and are called via the interface name.
+  </div>
+
+  <pre class="code-block"><span class="kw">interface</span> <span class="tp">MathOperations</span> {
+    <span class="kw">int</span> <span class="fn">operate</span>(<span class="kw">int</span> a, <span class="kw">int</span> b);    <span class="cm">// abstract</span>
+
+    <span class="cm">// static method — utility, not inherited</span>
+    <span class="kw">static int</span> <span class="fn">add</span>(<span class="kw">int</span> a, <span class="kw">int</span> b)      { <span class="kw">return</span> a + b; }
+    <span class="kw">static int</span> <span class="fn">multiply</span>(<span class="kw">int</span> a, <span class="kw">int</span> b) { <span class="kw">return</span> a * b; }
+    <span class="kw">static boolean</span> <span class="fn">isPositive</span>(<span class="kw">int</span> n)  { <span class="kw">return</span> n > <span class="nm">0</span>; }
+}
+
+<span class="cm">// Call static methods via INTERFACE NAME, not via object/class</span>
+System.out.println(MathOperations.<span class="fn">add</span>(<span class="nm">3</span>, <span class="nm">4</span>));       <span class="cm">// 7</span>
+System.out.println(MathOperations.<span class="fn">multiply</span>(<span class="nm">3</span>, <span class="nm">4</span>)); <span class="cm">// 12</span>
+
+<span class="kw">class</span> <span class="tp">Addition</span> <span class="kw">implements</span> <span class="tp">MathOperations</span> {
+    <span class="kw">public int</span> <span class="fn">operate</span>(<span class="kw">int</span> a, <span class="kw">int</span> b) { <span class="kw">return</span> a + b; }
+    <span class="cm">// Cannot call MathOperations.add() as add() here — static not inherited!</span>
+}</pre>
+
+  <div class="vs-box">
+    <div class="vs-left">
+      <strong>default method</strong>
+      Has body. Inherited by implementing classes.<br>
+      Can be overridden.<br>
+      Called via object: <code>obj.method()</code><br>
+      For behaviour with fallback.
+    </div>
+    <div class="vs-right">
+      <strong>static method</strong>
+      Has body. NOT inherited.<br>
+      Cannot be overridden.<br>
+      Called via interface: <code>Interface.method()</code><br>
+      For utility/factory methods.
+    </div>
+  </div>
+
+  <div class="rule-box">
+    <strong>Use static interface methods for:</strong>
+    <ul class="plain" style="margin-top:6px">
+      <li>Factory methods: <code>Comparator.comparing()</code>, <code>Predicate.not()</code></li>
+      <li>Utility methods that don't need instance context</li>
+      <li>Grouping helper methods with the interface they serve (instead of a separate Util class)</li>
+    </ul>
+    Java API examples: <code>Comparator.comparing()</code>, <code>Function.identity()</code>, <code>Predicate.not()</code>
+  </div>
+  <div class="page-num">1 / 1</div>
+</div>
+
+<!-- ══ §7 — BASE64 (2 pages) ══ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 3</span><span class="unit-badge">SECTION 7</span></div>
+  <h1 class="section-title"><span class="sn">§7</span> Base64 Encode &amp; Decode <span class="version-tag">Java 8</span></h1>
+  <hr class="divider">
+
+  <h2 class="topic">What is Base64?</h2>
+  <div class="def-box">
+    <strong>Base64</strong> is a binary-to-text encoding scheme that represents binary data using 64 printable ASCII characters (A–Z, a–z, 0–9, +, /). It is used to safely transmit binary data over text-based protocols (HTTP, email, JSON, XML).
+  </div>
+
+  <div class="orange-box">
+    <strong>Why encode?</strong> Binary data can contain control characters that break protocols. Base64 converts any binary data to safe printable text — at the cost of ~33% size increase (3 bytes → 4 characters).
+  </div>
+
+  <h2 class="topic">Three Flavours in java.util.Base64</h2>
+  <table class="tt">
+    <tr><th>Type</th><th>Method</th><th>Use case</th></tr>
+    <tr><td><strong>Basic</strong></td><td><code>Base64.getEncoder()</code></td><td>Standard Base64, uses + and /. No line breaks.</td></tr>
+    <tr><td><strong>URL-safe</strong></td><td><code>Base64.getUrlEncoder()</code></td><td>Uses - and _ instead of + and /. Safe in URLs.</td></tr>
+    <tr><td><strong>MIME</strong></td><td><code>Base64.getMimeEncoder()</code></td><td>Adds line breaks at 76 chars. Used in email.</td></tr>
+  </table>
+
+  <pre class="code-block"><span class="kw">import</span> java.util.Base64;
+
+<span class="cm">// ── Basic Encoding ──</span>
+String original = <span class="st">"Hello, Java 8!"</span>;
+String encoded = Base64.getEncoder()
+                       .encodeToString(original.getBytes());
+System.out.println(<span class="st">"Encoded: "</span> + encoded);
+<span class="cm">// Encoded: SGVsbG8sIEphdmEgOCE=</span>
+
+<span class="cm">// ── Basic Decoding ──</span>
+<span class="kw">byte</span>[] decodedBytes = Base64.getDecoder().decode(encoded);
+String decoded = <span class="kw">new</span> String(decodedBytes);
+System.out.println(<span class="st">"Decoded: "</span> + decoded);
+<span class="cm">// Decoded: Hello, Java 8!</span>
+
+<span class="cm">// ── URL-safe encoding (no +, /) ──</span>
+String urlEncoded = Base64.getUrlEncoder()
+                          .encodeToString(original.getBytes());
+System.out.println(<span class="st">"URL Encoded: "</span> + urlEncoded);
+
+String urlDecoded = <span class="kw">new</span> String(Base64.getUrlDecoder().decode(urlEncoded));
+System.out.println(<span class="st">"URL Decoded: "</span> + urlDecoded);</pre>
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 3</span><span class="unit-badge">SECTION 7</span></div>
+
+  <h2 class="topic">MIME Encoding &amp; Encoding without Padding</h2>
+  <pre class="code-block"><span class="cm">// ── MIME encoding — adds line breaks every 76 chars ──</span>
+String mimeEncoded = Base64.getMimeEncoder()
+                           .encodeToString(<span class="st">"LongDataString..."</span>.getBytes());
+
+<span class="cm">// ── Encoding byte array directly ──</span>
+<span class="kw">byte</span>[] imageBytes = {<span class="nm">71</span>, <span class="nm">73</span>, <span class="nm">70</span>};   <span class="cm">// "GIF" in bytes</span>
+<span class="kw">byte</span>[] encodedBytes = Base64.getEncoder().encode(imageBytes);
+System.out.println(<span class="kw">new</span> String(encodedBytes));  <span class="cm">// R0lG</span>
+
+<span class="cm">// ── Without padding (removes trailing =) ──</span>
+String noPadding = Base64.getEncoder()
+                         .withoutPadding()
+                         .encodeToString(<span class="st">"test"</span>.getBytes());
+System.out.println(noPadding);  <span class="cm">// dGVzdA  (no trailing =)</span>
+
+<span class="cm">// ── Encode file to Base64 (e.g. to embed in JSON/HTML) ──</span>
+<span class="kw">byte</span>[] fileBytes = Files.readAllBytes(Paths.get(<span class="st">"image.png"</span>));
+String base64Image = Base64.getEncoder().encodeToString(fileBytes);
+<span class="cm">// Now you can embed this in: "data:image/png;base64," + base64Image</span></pre>
+
+  <div class="rule-box">
+    <strong>Base64 Cheatsheet:</strong>
+    <ul class="plain" style="margin-top:6px">
+      <li><code>getEncoder()</code> → Encoder / <code>getDecoder()</code> → Decoder</li>
+      <li><code>encodeToString(byte[])</code> → returns String</li>
+      <li><code>encode(byte[])</code> → returns byte[]</li>
+      <li><code>decode(String)</code> → returns byte[]</li>
+      <li><code>decode(byte[])</code> → returns byte[]</li>
+      <li>Padding character: <code>=</code> (Base64 output is always a multiple of 4 chars)</li>
+    </ul>
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">🧪 Encode and decode "Java"</div>
+    <div class="q-step">Encode: <code>Base64.getEncoder().encodeToString("Java".getBytes())</code> → <strong>"SmF2YQ=="</strong></div>
+    <div class="q-step">Decode: <code>new String(Base64.getDecoder().decode("SmF2YQ=="))</code> → <strong>"Java"</strong></div>
+    <div class="q-ans">✓ The trailing == is padding. 4 bytes → 6 Base64 chars padded to 8.</div>
+  </div>
+
+  <div class="note-box">
+    <strong>Base64 is NOT encryption!</strong> It is just encoding — the data can be decoded by anyone. Do not use Base64 for security. Use it only for safe transmission of binary data in text protocols.
+  </div>
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══ §8 — FOREACH METHOD (2 pages) ══ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 3</span><span class="unit-badge">SECTION 8</span></div>
+  <h1 class="section-title"><span class="sn">§8</span> forEach Method <span class="version-tag">Java 8</span></h1>
+  <hr class="divider">
+
+  <h2 class="topic">What is forEach?</h2>
+  <div class="def-box">
+    <code>forEach</code> is a default method added to <code>Iterable</code> (and hence all Collections) in Java 8. It accepts a <code>Consumer</code> and performs the given action for each element. Replaces the traditional for-each loop with a more functional style.
+    <br>Signature: <span class="formula">void forEach(Consumer&lt;? super T&gt; action)</span>
+  </div>
+
+  <h2 class="topic">forEach on Collections</h2>
+  <pre class="code-block">List&lt;String&gt; fruits = List.of(<span class="st">"Apple"</span>, <span class="st">"Banana"</span>, <span class="st">"Cherry"</span>);
+
+<span class="cm">// Old style</span>
+<span class="kw">for</span> (String f : fruits) { System.out.println(f); }
+
+<span class="cm">// forEach with lambda</span>
+fruits.forEach(f -> System.out.println(f));
+
+<span class="cm">// forEach with method reference (cleanest)</span>
+fruits.forEach(System.out::println);
+
+<span class="cm">// forEach with block lambda (multiple statements)</span>
+fruits.forEach(f -> {
+    String upper = f.toUpperCase();
+    System.out.println(upper + <span class="st">" has "</span> + f.length() + <span class="st">" chars"</span>);
+});
+
+<span class="cm">// Map.forEach — takes BiConsumer(key, value)</span>
+Map&lt;String, Integer&gt; scores = Map.of(<span class="st">"Alice"</span>, <span class="nm">92</span>, <span class="st">"Bob"</span>, <span class="nm">85</span>);
+scores.forEach((name, score) ->
+    System.out.println(name + <span class="st">" scored "</span> + score));</pre>
+
+  <h2 class="topic">forEach on Streams</h2>
+  <pre class="code-block"><span class="cm">// Stream.forEach — terminal operation</span>
+List.of(<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>, <span class="nm">4</span>, <span class="nm">5</span>).stream()
+    .filter(n -> n % <span class="nm">2</span> == <span class="nm">0</span>)
+    .forEach(System.out::println);    <span class="cm">// 2, 4</span>
+
+<span class="cm">// forEachOrdered — maintains encounter order even in parallel streams</span>
+List.of(<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>, <span class="nm">4</span>, <span class="nm">5</span>).parallelStream()
+    .forEachOrdered(System.out::println);  <span class="cm">// always 1,2,3,4,5 in order</span>
+
+<span class="cm">// IntStream.forEach</span>
+IntStream.range(<span class="nm">1</span>, <span class="nm">6</span>).forEach(i -> System.out.print(i + <span class="st">" "</span>)); <span class="cm">// 1 2 3 4 5</span></pre>
+
+  <div class="note-box">
+    <strong>forEach vs for-loop:</strong> <code>forEach</code> cannot use <code>break</code> or <code>continue</code> — those keywords don't work inside lambdas. If you need to stop iteration early, use a traditional for-loop or <code>stream().findFirst()</code>.
+  </div>
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 3</span><span class="unit-badge">SECTION 8</span></div>
+
+  <h2 class="topic">Map.forEach, Map.getOrDefault &amp; Map.putIfAbsent</h2>
+  <pre class="code-block">Map&lt;String, Integer&gt; wordCount = <span class="kw">new</span> HashMap&lt;&gt;();
+wordCount.put(<span class="st">"hello"</span>, <span class="nm">1</span>);
+wordCount.put(<span class="st">"world"</span>, <span class="nm">2</span>);
+
+<span class="cm">// getOrDefault — safe get without null check</span>
+<span class="kw">int</span> count = wordCount.getOrDefault(<span class="st">"java"</span>, <span class="nm">0</span>);  <span class="cm">// 0 — "java" not present</span>
+
+<span class="cm">// putIfAbsent — only inserts if key not present</span>
+wordCount.putIfAbsent(<span class="st">"hello"</span>, <span class="nm">99</span>);  <span class="cm">// no change — "hello" already exists</span>
+wordCount.putIfAbsent(<span class="st">"java"</span>, <span class="nm">3</span>);   <span class="cm">// inserted — "java" was absent</span>
+
+<span class="cm">// compute — update value based on existing value</span>
+wordCount.compute(<span class="st">"hello"</span>, (k, v) -> v == <span class="kw">null</span> ? <span class="nm">1</span> : v + <span class="nm">1</span>); <span class="cm">// hello=2</span>
+
+<span class="cm">// merge — combine existing with new value</span>
+wordCount.merge(<span class="st">"hello"</span>, <span class="nm">1</span>, Integer::sum);  <span class="cm">// hello = existing + 1</span>
+
+<span class="cm">// forEach on Map</span>
+wordCount.forEach((k, v) -> System.out.println(k + <span class="st">" → "</span> + v));</pre>
+
+  <h2 class="topic">replaceAll on List</h2>
+  <pre class="code-block">List&lt;String&gt; names = <span class="kw">new</span> ArrayList&lt;&gt;(List.of(<span class="st">"alice"</span>, <span class="st">"bob"</span>, <span class="st">"charlie"</span>));
+
+<span class="cm">// replaceAll — transforms every element in-place</span>
+names.replaceAll(String::toUpperCase);
+System.out.println(names);  <span class="cm">// [ALICE, BOB, CHARLIE]</span>
+
+<span class="cm">// removeIf — removes elements matching predicate</span>
+names.removeIf(n -> n.length() < <span class="nm">4</span>);
+System.out.println(names);  <span class="cm">// [ALICE, CHARLIE] — BOB removed</span></pre>
+
+  <div class="rule-box">
+    <strong>Summary: New iterable methods (Java 8+):</strong>
+    <ul class="plain" style="margin-top:6px">
+      <li><code>forEach(Consumer)</code> — on Iterable, Stream, Map</li>
+      <li><code>removeIf(Predicate)</code> — on Collection</li>
+      <li><code>replaceAll(UnaryOperator)</code> — on List</li>
+      <li><code>sort(Comparator)</code> — on List</li>
+      <li><code>getOrDefault(key, default)</code> — on Map</li>
+      <li><code>putIfAbsent(key, value)</code> — on Map</li>
+      <li><code>merge(key, value, BiFunction)</code> — on Map</li>
+      <li><code>compute(key, BiFunction)</code> — on Map</li>
+    </ul>
+  </div>
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══ §9 — TRY-WITH-RESOURCES (2 pages) ══ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 3</span><span class="unit-badge">SECTION 9</span></div>
+  <h1 class="section-title"><span class="sn">§9</span> Try-with-Resources <span class="version-tag">Java 7</span></h1>
+  <hr class="divider">
+
+  <h2 class="topic">The Problem — Resource Leaks</h2>
+  <div class="purple-box">
+    Before Java 7, developers had to explicitly close resources (files, DB connections, sockets) in a <code>finally</code> block. This was error-prone — forgetting to close caused resource leaks, and the finally block could itself throw an exception hiding the original one.
+  </div>
+
+  <pre class="code-block"><span class="cm">// ❌ Old, verbose, error-prone way</span>
+BufferedReader br = <span class="kw">null</span>;
+<span class="kw">try</span> {
+    br = <span class="kw">new</span> BufferedReader(<span class="kw">new</span> FileReader(<span class="st">"file.txt"</span>));
+    System.out.println(br.readLine());
+} <span class="kw">catch</span> (IOException e) {
+    e.printStackTrace();
+} <span class="kw">finally</span> {
+    <span class="kw">if</span> (br != <span class="kw">null</span>) {
+        <span class="kw">try</span> { br.close(); } <span class="kw">catch</span> (IOException e) { e.printStackTrace(); }
+    }
+}
+
+<span class="cm">// ✅ Java 7+ try-with-resources — clean and safe</span>
+<span class="kw">try</span> (BufferedReader br = <span class="kw">new</span> BufferedReader(<span class="kw">new</span> FileReader(<span class="st">"file.txt"</span>))) {
+    System.out.println(br.readLine());
+} <span class="kw">catch</span> (IOException e) {
+    e.printStackTrace();
+}
+<span class="cm">// br.close() called automatically — even if exception occurs</span></pre>
+
+  <h2 class="topic">AutoCloseable Interface</h2>
+  <div class="def-box">
+    Any class that implements <code>java.lang.AutoCloseable</code> (or its subinterface <code>Closeable</code>) can be used in try-with-resources. Its <code>close()</code> method is called automatically at the end of the try block.
+  </div>
+  <pre class="code-block"><span class="cm">// Custom AutoCloseable resource</span>
+<span class="kw">class</span> <span class="tp">DatabaseConnection</span> <span class="kw">implements</span> AutoCloseable {
+    <span class="tp">DatabaseConnection</span>() { System.out.println(<span class="st">"DB connected"</span>); }
+
+    <span class="kw">public void</span> <span class="fn">query</span>(String sql) { System.out.println(<span class="st">"Query: "</span> + sql); }
+
+    <span class="an">@Override</span>
+    <span class="kw">public void</span> <span class="fn">close</span>() { System.out.println(<span class="st">"DB connection closed"</span>); }
+}
+
+<span class="kw">try</span> (<span class="tp">DatabaseConnection</span> db = <span class="kw">new</span> <span class="tp">DatabaseConnection</span>()) {
+    db.<span class="fn">query</span>(<span class="st">"SELECT * FROM users"</span>);
+}   <span class="cm">// db.close() called automatically here</span>
+<span class="cm">// Output: DB connected → Query: SELECT * FROM users → DB connection closed</span></pre>
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 3</span><span class="unit-badge">SECTION 9</span></div>
+
+  <h2 class="topic">Multiple Resources &amp; Java 9 Enhancement</h2>
+  <pre class="code-block"><span class="cm">// Multiple resources — closed in REVERSE order of declaration</span>
+<span class="kw">try</span> (FileInputStream fis = <span class="kw">new</span> FileInputStream(<span class="st">"in.txt"</span>);
+     FileOutputStream fos = <span class="kw">new</span> FileOutputStream(<span class="st">"out.txt"</span>);
+     BufferedInputStream bis = <span class="kw">new</span> BufferedInputStream(fis)) {
+    <span class="cm">// use streams...</span>
+}
+<span class="cm">// Close order: bis → fos → fis (reverse of declaration)</span>
+
+<span class="cm">// Java 9 enhancement — use effectively-final variables declared outside</span>
+BufferedReader br = <span class="kw">new</span> BufferedReader(<span class="kw">new</span> FileReader(<span class="st">"file.txt"</span>));
+<span class="kw">try</span> (br) {             <span class="cm">// Java 9+ — no need to redeclare</span>
+    System.out.println(br.readLine());
+}</pre>
+
+  <h2 class="topic">Suppressed Exceptions</h2>
+  <div class="def-box">
+    If both the try block AND the close() method throw exceptions, the exception from close() is <em>suppressed</em> (added to the primary exception via <code>addSuppressed()</code>). The primary exception propagates; suppressed ones can be retrieved via <code>getSuppressed()</code>.
+  </div>
+  <pre class="code-block"><span class="kw">try</span> {
+    <span class="kw">try</span> (<span class="tp">DatabaseConnection</span> db = <span class="kw">new</span> <span class="tp">DatabaseConnection</span>()) {
+        <span class="kw">throw new</span> RuntimeException(<span class="st">"Primary exception"</span>);
+        <span class="cm">// If close() also throws, it becomes a suppressed exception</span>
+    }
+} <span class="kw">catch</span> (RuntimeException e) {
+    System.out.println(<span class="st">"Primary: "</span> + e.getMessage());
+    <span class="kw">for</span> (Throwable s : e.getSuppressed()) {
+        System.out.println(<span class="st">"Suppressed: "</span> + s.getMessage());
+    }
+}</pre>
+
+  <div class="rule-box">
+    <strong>Try-with-resources rules:</strong>
+    <ul class="plain" style="margin-top:6px">
+      <li>Resource must implement <code>AutoCloseable</code> or <code>Closeable</code>.</li>
+      <li>Resources are closed in reverse order of declaration.</li>
+      <li><code>close()</code> is called even if an exception occurs in the try block.</li>
+      <li>If <code>close()</code> throws, it is suppressed (added to primary exception).</li>
+      <li>Java 9: pre-declared effectively-final variables can be used directly.</li>
+      <li>A catch and finally block can still be used alongside try-with-resources.</li>
+    </ul>
+  </div>
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══ §10 — TYPE & REPEATING ANNOTATIONS (2 pages) ══ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 3</span><span class="unit-badge">SECTION 10</span></div>
+  <h1 class="section-title"><span class="sn">§10</span> Type &amp; Repeating Annotations <span class="version-tag">Java 8</span></h1>
+  <hr class="divider">
+
+  <h2 class="topic">Annotations — Quick Recap</h2>
+  <div class="def-box">
+    An <strong>annotation</strong> is metadata attached to code elements (class, method, field, parameter, etc.). Annotations don't directly change program behaviour — they provide information to the compiler, tools, or runtime frameworks.
+  </div>
+
+  <h2 class="topic">Type Annotations (Java 8)</h2>
+  <div class="def-box">
+    Before Java 8, annotations could only be applied to declarations (class, method, field). Java 8 introduced <strong>type annotations</strong> — annotations can now be applied anywhere a <em>type</em> is used.
+    <br>Meta-annotation: <span class="formula">@Target(ElementType.TYPE_USE)</span>
+  </div>
+
+  <pre class="code-block"><span class="kw">import</span> java.lang.annotation.*;
+
+<span class="cm">// Define a type annotation</span>
+<span class="an">@Target</span>(ElementType.TYPE_USE)
+<span class="an">@Retention</span>(RetentionPolicy.RUNTIME)
+<span class="kw">@interface</span> <span class="tp">NonNull</span> {}
+
+<span class="an">@Target</span>(ElementType.TYPE_USE)
+<span class="an">@Retention</span>(RetentionPolicy.RUNTIME)
+<span class="kw">@interface</span> <span class="tp">Readonly</span> {}
+
+<span class="cm">// Using type annotations — anywhere a type appears</span>
+<span class="an">@NonNull</span> String name;                        <span class="cm">// field declaration</span>
+List&lt;<span class="an">@NonNull</span> String&gt; items;                <span class="cm">// generic type argument</span>
+Map&lt;<span class="an">@NonNull</span> String, <span class="an">@Readonly</span> Object&gt; map; <span class="cm">// multiple in generics</span>
+<span class="an">@NonNull</span> String getName() { <span class="kw">return</span> name; }   <span class="cm">// method return type</span>
+
+<span class="cm">// On casts</span>
+String s = (<span class="an">@NonNull</span> String) obj;
+
+<span class="cm">// On throws clause</span>
+<span class="kw">void</span> process() <span class="kw">throws</span> <span class="an">@Readonly</span> Exception {}
+
+<span class="cm">// On new expressions</span>
+Object o = <span class="kw">new</span> <span class="an">@NonNull</span> Object();
+
+<span class="cm">// On array creation</span>
+String <span class="an">@NonNull</span> [] arr = <span class="kw">new</span> String[<span class="nm">5</span>];</pre>
+
+  <div class="note-box">
+    Type annotations themselves don't enforce anything at runtime by default. Their power comes from pluggable type-checkers like the <strong>Checker Framework</strong>, which uses them to catch null pointer bugs, type safety violations, etc. at compile time.
+  </div>
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 3</span><span class="unit-badge">SECTION 10</span></div>
+
+  <h2 class="topic">Repeating Annotations (Java 8)</h2>
+  <div class="def-box">
+    Before Java 8, you couldn't apply the same annotation multiple times to the same element. Java 8 introduced <strong>repeating annotations</strong> using the <span class="formula">@Repeatable</span> meta-annotation.
+  </div>
+
+  <pre class="code-block"><span class="cm">// Step 1: Define the repeatable annotation</span>
+<span class="an">@Repeatable</span>(Schedules.<span class="kw">class</span>)     <span class="cm">// points to container annotation</span>
+<span class="an">@Retention</span>(RetentionPolicy.RUNTIME)
+<span class="kw">@interface</span> <span class="tp">Schedule</span> {
+    String day();
+    String time() <span class="kw">default</span> <span class="st">"09:00"</span>;
+}
+
+<span class="cm">// Step 2: Define the container annotation</span>
+<span class="an">@Retention</span>(RetentionPolicy.RUNTIME)
+<span class="kw">@interface</span> <span class="tp">Schedules</span> {
+    Schedule[] value();    <span class="cm">// must have value() returning array of @Schedule</span>
+}
+
+<span class="cm">// Step 3: Use multiple annotations on same element</span>
+<span class="an">@Schedule</span>(day = <span class="st">"Monday"</span>,    time = <span class="st">"10:00"</span>)
+<span class="an">@Schedule</span>(day = <span class="st">"Wednesday"</span>, time = <span class="st">"14:00"</span>)
+<span class="an">@Schedule</span>(day = <span class="st">"Friday"</span>)                        <span class="cm">// default time 09:00</span>
+<span class="kw">class</span> <span class="tp">WeeklyMeeting</span> { }
+
+<span class="cm">// Step 4: Read annotations at runtime</span>
+Schedule[] schedules = WeeklyMeeting.<span class="kw">class</span>
+                          .getAnnotationsByType(Schedule.<span class="kw">class</span>);
+<span class="kw">for</span> (Schedule s : schedules) {
+    System.out.println(s.day() + <span class="st">" at "</span> + s.time());
+}</pre>
+
+  <table class="tt">
+    <tr><th>Annotation Target</th><th>ElementType constant</th></tr>
+    <tr><td>Class, interface, enum</td><td><code>TYPE</code></td></tr>
+    <tr><td>Field (incl. enum constants)</td><td><code>FIELD</code></td></tr>
+    <tr><td>Method</td><td><code>METHOD</code></td></tr>
+    <tr><td>Constructor</td><td><code>CONSTRUCTOR</code></td></tr>
+    <tr><td>Method parameter</td><td><code>PARAMETER</code></td></tr>
+    <tr><td>Local variable</td><td><code>LOCAL_VARIABLE</code></td></tr>
+    <tr><td>Annotation type</td><td><code>ANNOTATION_TYPE</code></td></tr>
+    <tr><td>Package</td><td><code>PACKAGE</code></td></tr>
+    <tr><td>Any type use (Java 8+)</td><td><code>TYPE_USE</code></td></tr>
+    <tr><td>Type parameter (Java 8+)</td><td><code>TYPE_PARAMETER</code></td></tr>
+  </table>
+  <div class="page-num">2 / 2</div>
+</div>
 
 <script>
-(function(){
-  var pages = document.querySelectorAll('.page');
-  var secPages = [];
-  pages.forEach(function(p){ if(p.querySelector('h1.section-title')) secPages.push(p); });
-  secPages.forEach(function(p,i){ p.id = 'sec-'+(i+1); });
-  var tocItems = document.querySelectorAll('.cover-toc-item');
-  tocItems.forEach(function(item, i){
-    if(i >= secPages.length) return;
-    item.style.cursor = 'pointer';
-    item.style.borderRadius = '4px';
-    item.style.transition = 'background 0.18s';
-    item.setAttribute('title', 'Click to jump to this section');
-    item.addEventListener('mouseenter', function(){ item.style.background='rgba(255,255,255,0.18)'; });
-    item.addEventListener('mouseleave', function(){ item.style.background=''; });
-    item.addEventListener('click', function(){ secPages[i].scrollIntoView({behavior:'smooth'}); });
-  });
-})();
+  document.querySelectorAll('.part-nav a').forEach(a=>{if(a.href===window.location.href)a.classList.add('active');});
 </script>
 </body>
 </html>

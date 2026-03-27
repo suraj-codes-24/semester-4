@@ -3,138 +3,716 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OOP-JAVA Unit 3 — Part 1</title>
-<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+<title>OOP in Java — Unit 3 | Part 1</title>
 <style>
-:root{--ink:#1a1a2e;--ink2:#2c2c54;--blue:#1565C0;--red:#b71c1c;--green:#1b5e20;--purple:#4a148c;--teal:#006064;--orange:#e65100;--line:#c5cae9;--page:#fafaf7;--highlight:#fff9c4;--box-blue:#e8f4fd;--box-green:#e8f5e9;--box-purple:#f3e5f5;--box-orange:#fff3e0;--box-red:#fce4ec;--box-teal:#e0f7fa;}
-*{margin:0;padding:0;box-sizing:border-box;}
-body{background:#e0e0e0;font-family:'Kalam',cursive;color:var(--ink);padding:30px 20px;}
-.page{background:var(--page);max-width:820px;margin:0 auto 40px;border-radius:4px;box-shadow:0 2px 16px rgba(0,0,0,0.18),0 0 0 1px rgba(0,0,0,0.08);padding:60px 70px 70px 90px;position:relative;min-height:1060px;background-image:repeating-linear-gradient(transparent,transparent 31px,var(--line) 31px,var(--line) 32px);background-position:0 56px;}
-.page::before{content:'';position:absolute;left:72px;top:0;bottom:0;width:1.5px;background:#ef9a9a;opacity:0.7;}
-.holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-around;padding:40px 0;}
-.hole{width:22px;height:22px;border-radius:50%;background:#e0e0e0;border:1.5px solid #bdbdbd;box-shadow:inset 0 1px 3px rgba(0,0,0,0.2);}
-.page-num{position:absolute;bottom:28px;right:50px;font-size:13px;color:#9e9e9e;}
-.page-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
-.date-tag{font-size:13px;color:#9e9e9e;}
-.unit-badge{color:#fff;font-size:13px;padding:2px 14px;border-radius:20px;font-weight:700;}
-h1.section-title{font-size:24px;font-weight:700;color:var(--ink2);text-align:center;margin:8px 0 4px;text-decoration:underline;text-underline-offset:5px;}
-h2.topic{font-size:18px;font-weight:700;color:var(--blue);margin:18px 0 6px;border-bottom:1.5px solid var(--blue);padding-bottom:2px;display:inline-block;}
-h3.sub{font-size:15px;font-weight:700;color:var(--purple);margin:12px 0 4px;}
-p,li{font-size:15px;line-height:32px;}
-.def-box{background:var(--box-blue);border-left:4px solid var(--blue);border-radius:0 6px 6px 0;padding:10px 16px;margin:10px 0 12px;font-size:15px;line-height:30px;}
-.note-box{background:var(--highlight);border-left:4px solid #f9a825;border-radius:0 6px 6px 0;padding:8px 14px;margin:8px 0 10px;font-size:14px;line-height:26px;}
-.rule-box{background:var(--box-green);border:1.5px solid #81c784;border-radius:6px;padding:10px 16px;margin:10px 0;font-size:14.5px;line-height:28px;}
-.purple-box{background:var(--box-purple);border-left:4px solid var(--purple);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
-.orange-box{background:var(--box-orange);border-left:4px solid var(--orange);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
-.teal-box{background:var(--box-teal);border-left:4px solid var(--teal);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
-.formula{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--blue);}
-.divider{border:none;border-top:1px dashed #b0bec5;margin:14px 0 10px;}
-ul.plain{list-style:none;padding-left:4px;}
-ul.plain li::before{content:'→ ';color:var(--blue);font-weight:700;}
-ul.plain li{font-size:15px;line-height:32px;}
-.qbox{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:12px 16px;margin:10px 0;}
-.q-label{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:2px;}
-.q-step{font-size:14px;color:var(--green);margin-top:4px;line-height:26px;}
-.q-ans{font-size:15px;color:var(--red);font-family:'Patrick Hand',cursive;margin-top:4px;}
-table.tt{width:100%;border-collapse:collapse;margin:8px 0;font-size:14px;}
-table.tt th{color:#fff;padding:7px 10px;text-align:center;}
-table.tt td{padding:6px 10px;border-bottom:1px solid #e0e0e0;text-align:center;font-family:'Patrick Hand',cursive;font-size:14px;}
-table.tt tr:nth-child(even) td{background:#f5f5f5;}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0;}
-.vs-box{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:12px 0;border-radius:8px;overflow:hidden;border:1.5px solid #90caf9;}
-.vs-left{background:#e8f4fd;padding:12px 14px;}
-.vs-right{background:var(--box-purple);padding:12px 14px;border-left:1px solid #90caf9;}
-.vs-head{font-size:15px;font-weight:700;margin-bottom:8px;}
-.vs-item{font-size:14px;line-height:26px;}
-.step-card{background:var(--box-purple);border-left:4px solid var(--purple);padding:8px 14px;margin:5px 0;border-radius:0 6px 6px 0;}
-.step-head{font-size:14px;font-weight:700;color:var(--purple);}
-.step-body{font-size:13.5px;line-height:24px;color:var(--ink2);}
-.cover-page{max-width:820px;margin:0 auto 40px;border-radius:8px;padding:80px 60px;text-align:center;color:#fff;box-shadow:0 4px 24px rgba(0,0,0,0.3);position:relative;overflow:hidden;}
-.cover-subject{font-size:14px;letter-spacing:3px;opacity:0.7;margin-bottom:16px;}
-.cover-title{font-size:40px;font-weight:700;line-height:1.2;margin-bottom:12px;}
-.cover-unit{font-size:20px;opacity:0.85;margin-bottom:30px;}
-.cover-divider{width:80px;height:3px;background:rgba(255,255,255,0.4);margin:0 auto 24px;border-radius:2px;}
-.cover-toc{text-align:left;background:rgba(255,255,255,0.1);border-radius:8px;padding:20px 28px;display:inline-block;min-width:420px;}
-.cover-toc-item{font-size:15px;line-height:32px;display:flex;justify-content:space-between;gap:20px;}
-.part-nav{max-width:820px;margin:0 auto 20px;display:flex;gap:10px;justify-content:center;align-items:center;font-family:'Kalam',cursive;flex-wrap:wrap;}
-.part-nav a{padding:6px 20px;border-radius:20px;background:#fff;border:1.5px solid #90caf9;color:var(--blue);text-decoration:none;font-size:14px;font-weight:700;}
-.part-nav a:hover:not(.active){background:#e3f2fd;}
-.part-nav .back{background:#f5f5f5;border-color:#ccc;color:#555;font-size:13px;}
-.unit-badge{background:#1b5e20;}
-h1.section-title{text-decoration-color:#1b5e20;}
-h1.section-title .sn{color:#1b5e20;}
-.part-nav a.active{background:#1b5e20;border-color:#1b5e20;color:#fff;}
-@media(max-width:600px){
-body{padding:10px 0 30px;}
-.page{padding:20px 16px 30px 16px;min-height:unset;}
-.page::before{display:none;}
-.holes{display:none;}
-.cover-page{padding:40px 20px;margin:0 10px 20px;}
-.cover-toc{min-width:unset;width:100%;padding:14px 16px;}
-.part-nav{padding:0 10px;gap:6px;}
-.part-nav a{padding:5px 12px;font-size:13px;}
-.two-col{grid-template-columns:1fr;}
-.vs-box{grid-template-columns:1fr;}
-.vs-right{border-left:none;border-top:1px solid #90caf9;}
-nav.part-nav{padding:0 10px;gap:6px;}
-.cover-title{font-size:28px;}
-}</style>
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Kalam:wght@300;400;700&family=Special+Elite&display=swap');
+  :root{
+    --paper:#fdf9f0;--ink:#1a1a2e;--ink-light:#2d2d4e;
+    --blue:#1a56db;--blue-light:#dbeafe;
+    --green:#0d6b3f;--green-light:#d1fae5;
+    --orange:#c05621;--orange-light:#fef3c7;
+    --purple:#5b21b6;--purple-light:#ede9fe;
+    --red:#b91c1c;--red-light:#fee2e2;
+    --teal:#0e7490;--teal-light:#cffafe;
+    --rule-line:#c8d8e8;--margin-line:#f4a0a0;
+    --hole-bg:#e8e0d0;--shadow:rgba(0,0,0,0.08);
+    --accent:#0e7490;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:#082030;
+    background-image:radial-gradient(circle at 20% 50%,rgba(14,116,144,.2) 0%,transparent 55%),
+                     radial-gradient(circle at 80% 20%,rgba(13,107,63,.15) 0%,transparent 50%);
+    font-family:'Kalam',cursive;color:var(--ink);padding:20px 0 40px;min-height:100vh;
+  }
+  .part-nav{display:flex;justify-content:center;gap:10px;margin-bottom:28px;flex-wrap:wrap;padding:0 16px;}
+  .part-nav a{font-family:'Caveat',cursive;font-size:1rem;font-weight:600;padding:7px 20px;border-radius:20px;
+    text-decoration:none;background:rgba(255,255,255,.5);color:#555;border:2px solid rgba(255,255,255,.7);transition:all .2s;}
+  .part-nav a.active{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 4px 12px rgba(14,116,144,.45);}
+  .part-nav a:hover:not(.active){background:rgba(255,255,255,.8);color:#333;}
+  /* PAGE */
+  .page{width:760px;max-width:98vw;margin:0 auto 28px;background:var(--paper);border-radius:3px;
+    box-shadow:4px 4px 14px var(--shadow),0 1px 3px rgba(0,0,0,.12);position:relative;
+    padding:36px 44px 44px 80px;min-height:600px;
+    background-image:repeating-linear-gradient(transparent,transparent 31px,var(--rule-line) 31px,var(--rule-line) 32px);
+    background-position:0 64px;}
+  .page::before{content:'';position:absolute;left:68px;top:0;bottom:0;width:2px;background:var(--margin-line);opacity:.7;}
+  .holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;
+    justify-content:space-evenly;align-items:center;width:32px;}
+  .hole{width:18px;height:18px;border-radius:50%;background:var(--hole-bg);
+    border:1.5px solid #b8a898;box-shadow:inset 0 1px 3px rgba(0,0,0,.2);}
+  .page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+  .date-tag{font-family:'Special Elite',cursive;font-size:.72rem;color:var(--teal);letter-spacing:.05em;text-transform:uppercase;}
+  .unit-badge{font-family:'Caveat',cursive;font-size:.85rem;font-weight:700;background:var(--accent);
+    color:white;padding:2px 12px;border-radius:10px;letter-spacing:.08em;}
+  .section-title{font-family:'Caveat',cursive;font-size:2rem;font-weight:700;color:var(--ink);margin:8px 0 4px;line-height:1.2;}
+  .sn{font-family:'Special Elite',cursive;color:var(--accent);margin-right:6px;font-size:1.7rem;}
+  .divider{border:none;border-top:2.5px solid var(--accent);margin:6px 0 18px;border-radius:2px;}
+  h2.topic{font-family:'Caveat',cursive;font-size:1.45rem;font-weight:700;color:var(--accent);
+    margin:20px 0 8px;padding-bottom:3px;border-bottom:1.5px dashed var(--rule-line);}
+  h3.sub{font-family:'Kalam',cursive;font-size:1.1rem;font-weight:700;color:var(--purple);margin:14px 0 6px;}
+  /* BOXES */
+  .def-box,.rule-box,.note-box,.purple-box,.orange-box{border-radius:8px;padding:13px 16px;margin:14px 0;font-size:.97rem;line-height:1.65;}
+  .def-box{background:var(--blue-light);border-left:4px solid var(--blue);}
+  .def-box::before{content:'📘 Definition';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--blue);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .rule-box{background:var(--green-light);border-left:4px solid var(--green);}
+  .rule-box::before{content:'📗 Key Result';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--green);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .note-box{background:var(--red-light);border-left:4px solid var(--red);}
+  .note-box::before{content:'⚠️ Exam Tip';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--red);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .purple-box{background:var(--purple-light);border-left:4px solid var(--purple);}
+  .purple-box::before{content:'💡 Important';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--purple);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .orange-box{background:var(--orange-light);border-left:4px solid var(--orange);}
+  .orange-box::before{content:'🔧 How it works';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--orange);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .teal-box{background:var(--teal-light);border-left:4px solid var(--teal);border-radius:8px;padding:13px 16px;margin:14px 0;font-size:.97rem;line-height:1.65;}
+  .teal-box::before{content:'✨ Java 8+ Feature';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--teal);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .qbox{background:#fffbf0;border:1.5px solid #e4cc88;border-radius:8px;padding:14px 16px;margin:14px 0;font-size:.96rem;}
+  .q-label{font-family:'Caveat',cursive;font-weight:700;font-size:1.05rem;color:var(--orange);margin-bottom:6px;}
+  .q-step{margin:5px 0;padding-left:16px;position:relative;line-height:1.6;color:var(--ink-light);}
+  .q-step::before{content:'→';position:absolute;left:0;color:var(--accent);font-weight:700;}
+  .q-ans{font-family:'Caveat',cursive;font-weight:700;font-size:1.05rem;color:var(--green);margin-top:8px;padding-top:6px;border-top:1px dashed #e4cc88;}
+  ul.plain{list-style:none;padding-left:0;margin:8px 0;}
+  ul.plain li{padding:4px 0 4px 22px;position:relative;line-height:1.6;font-size:.97rem;}
+  ul.plain li::before{content:'→';position:absolute;left:2px;color:var(--accent);font-weight:700;}
+  .formula{font-family:'Special Elite',cursive;background:rgba(14,116,144,.1);color:var(--teal);padding:2px 8px;border-radius:4px;font-size:.95em;display:inline-block;}
+  pre.code-block{background:#1e1e2e;color:#cdd6f4;border-radius:8px;padding:14px 16px;font-family:'Courier New',monospace;
+    font-size:.82rem;line-height:1.7;margin:12px 0;overflow-x:auto;border-left:4px solid var(--accent);}
+  .kw{color:#89b4fa;font-weight:bold;} .cm{color:#6c7086;font-style:italic;}
+  .st{color:#a6e3a1;} .nm{color:#fab387;} .tp{color:#f38ba8;} .fn{color:#cba6f7;} .an{color:#f9e2af;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:12px 0;}
+  @media(max-width:600px){.two-col{grid-template-columns:1fr;}}
+  .vs-box{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:12px 0;border-radius:8px;overflow:hidden;border:1.5px solid #d0d0d0;font-size:.93rem;}
+  .vs-left{background:#e0f2fe;padding:12px 14px;border-right:1.5px solid #d0d0d0;}
+  .vs-right{background:#d1fae5;padding:12px 14px;}
+  .vs-left strong,.vs-right strong{font-family:'Caveat',cursive;font-size:1.05rem;display:block;margin-bottom:6px;}
+  .vs-left strong{color:var(--blue);} .vs-right strong{color:var(--green);}
+  table.tt{width:100%;border-collapse:collapse;font-size:.9rem;margin:12px 0;}
+  table.tt th{background:var(--accent);color:white;padding:8px 12px;text-align:left;font-family:'Caveat',cursive;font-size:1rem;}
+  table.tt td{padding:7px 12px;border-bottom:1px solid var(--rule-line);}
+  table.tt tr:nth-child(even) td{background:rgba(14,116,144,.04);}
+  .step-card{display:flex;gap:12px;margin:10px 0;align-items:flex-start;}
+  .step-head{background:var(--accent);color:white;border-radius:50%;width:32px;height:32px;
+    display:flex;align-items:center;justify-content:center;font-family:'Caveat',cursive;font-weight:700;font-size:1rem;flex-shrink:0;margin-top:2px;}
+  .step-body{flex:1;line-height:1.65;font-size:.97rem;}
+  .page-num{position:absolute;bottom:14px;right:22px;font-family:'Caveat',cursive;font-size:.85rem;color:#999;}
+  /* evolution strip */
+  .evo{display:flex;gap:0;margin:12px 0;border-radius:8px;overflow:hidden;font-size:.88rem;}
+  .evo-block{flex:1;padding:10px 12px;text-align:center;}
+  .evo-block .ev-label{font-family:'Caveat',cursive;font-weight:700;font-size:.9rem;display:block;margin-bottom:4px;}
+  .eb1{background:#fee2e2;} .eb1 .ev-label{color:var(--red);}
+  .eb2{background:#fef3c7;} .eb2 .ev-label{color:var(--orange);}
+  .eb3{background:#d1fae5;} .eb3 .ev-label{color:var(--green);}
+  /* cover */
+  .cover-page{width:760px;max-width:98vw;margin:0 auto 28px;
+    background:linear-gradient(135deg,#042f2e 0%,#134e4a 50%,#0d9488 100%);
+    border-radius:6px;box-shadow:6px 6px 20px rgba(0,0,0,.45);
+    padding:50px 60px 50px 80px;position:relative;overflow:hidden;color:white;min-height:460px;}
+  .cover-page::before{content:'';position:absolute;top:-60px;right:-60px;width:300px;height:300px;
+    background:radial-gradient(circle,rgba(94,234,212,.25) 0%,transparent 70%);border-radius:50%;}
+  .cover-page::after{content:'';position:absolute;bottom:-40px;left:40px;width:220px;height:220px;
+    background:radial-gradient(circle,rgba(251,191,36,.15) 0%,transparent 70%);border-radius:50%;}
+  .cover-holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-evenly;align-items:center;width:32px;}
+  .cover-subject{font-family:'Special Elite',cursive;font-size:.78rem;letter-spacing:.25em;text-transform:uppercase;color:#5eead4;margin-bottom:8px;position:relative;z-index:1;}
+  .cover-title{font-family:'Caveat',cursive;font-size:3rem;font-weight:700;line-height:1.1;margin-bottom:6px;position:relative;z-index:1;}
+  .cover-unit{font-family:'Kalam',cursive;font-size:1.15rem;color:#bbf7d0;margin-bottom:4px;position:relative;z-index:1;}
+  .cover-subtitle{font-family:'Kalam',cursive;font-size:.95rem;color:#fde68a;margin-bottom:22px;position:relative;z-index:1;}
+  .cover-part-badge{display:inline-block;background:var(--accent);color:white;font-family:'Caveat',cursive;
+    font-weight:700;font-size:1.1rem;padding:6px 20px;border-radius:20px;margin-bottom:22px;position:relative;z-index:1;letter-spacing:.06em;}
+  .cover-toc{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.2);padding-top:18px;}
+  .cover-toc h3{font-family:'Special Elite',cursive;font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:#5eead4;margin-bottom:10px;}
+  .toc-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px dotted rgba(255,255,255,.12);}
+  .toc-sec{font-family:'Caveat',cursive;font-size:.98rem;font-weight:600;color:#f5f5f5;}
+  .toc-sec span.toc-num{color:#5eead4;margin-right:8px;font-family:'Special Elite',cursive;}
+  .toc-pages{font-family:'Special Elite',cursive;font-size:.75rem;color:#a6adc8;background:rgba(255,255,255,.07);padding:2px 8px;border-radius:8px;}
+  .hl-yellow{background:#fff176;border-radius:3px;padding:0 3px;}
+  .hl-teal{background:#ccfbf1;border-radius:3px;padding:0 3px;}
+  p{line-height:1.7;margin:8px 0;font-size:.97rem;}
+  strong{color:var(--ink);}
+  code{font-family:'Courier New',monospace;font-size:.9em;background:rgba(0,0,0,.07);padding:1px 5px;border-radius:3px;}
+</style>
 </head>
 <body>
 
-<div class="part-nav">
+<nav class="part-nav">
   <a href="../index.html" class="back">↩ Units</a>
-  <a href="part1.html" class="active">Part 1</a>
-  <a href="part2.html">Part 2</a>
-  <a href="part3.html">Part 3</a>
-</div>
+  <a href="part1.html" class="active">◆ Part 1 — Lambdas &amp; Streams</a>
+  <a href="part2.html">◆ Part 2 — Default/Static/Base64/forEach/Try-Resources/Annotations</a>
+  <a href="part3.html">◆ Part 3 — Modules, Records, Sealed &amp; Revision</a>
+</nav>
 
-<div class="cover-page" style="background:linear-gradient(135deg,#1b5e20 0%,#00695c 100%);">
-  <div class="cover-subject">OBJECT-ORIENTED PROGRAMMING IN JAVA</div>
-  <div class="cover-title">Unit 3 — Part 1</div>
-  <div class="cover-unit">[ Awaiting Content ]</div>
-  <div class="cover-divider"></div>
+<!-- COVER -->
+<div class="cover-page">
+  <div class="cover-holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="cover-subject">Object-Oriented Programming in Java</div>
+  <div class="cover-title">Unit 3 Notes</div>
+  <div class="cover-unit">Unit 3 — Java New Features (Java 8 → Java 21)</div>
+  <div class="cover-subtitle">Functional Interfaces · Lambda · Method Refs · Stream API · Default Methods · Static Methods · Base64 · forEach · Try-with-Resources · Annotations · Modules · var · Switch Expr · Yield · Text Blocks · Records · Sealed Classes</div>
+  <div class="cover-part-badge">📒 Part 1 of 3 — Lambdas &amp; Streams</div>
   <div class="cover-toc">
-    <div class="cover-toc-item" style="opacity:0.6;font-style:italic;justify-content:center;"><span>Content to be added</span></div>
+    <h3>Contents — Part 1</h3>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§1</span> Functional Interfaces</div><div class="toc-pages">2 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§2</span> Lambda Expressions</div><div class="toc-pages">3 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§3</span> Method References</div><div class="toc-pages">2 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§4</span> Stream API</div><div class="toc-pages">4 pages</div></div>
   </div>
 </div>
 
-<!-- ================================================
-     ADD CONTENT SECTIONS BELOW THIS LINE
+<!-- ══ §1 — FUNCTIONAL INTERFACES (2 pages) ══ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 3</span><span class="unit-badge">SECTION 1</span></div>
+  <h1 class="section-title"><span class="sn">§1</span> Functional Interfaces</h1>
+  <hr class="divider">
 
-     Each section pattern:
+  <h2 class="topic">What is a Functional Interface?</h2>
+  <div class="def-box">
+    A <strong>functional interface</strong> is an interface that contains <em>exactly one abstract method</em> (SAM — Single Abstract Method). It can have any number of default and static methods. Introduced in Java 8 as the foundation for lambda expressions.
+    <br><br>Annotated (optionally) with <span class="formula">@FunctionalInterface</span> to enforce the SAM rule at compile time.
+  </div>
 
-     <div class="page">
-       <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
-       <div class="page-header">
-         <span class="date-tag">OOP-JAVA — Unit 3</span>
-         <span class="unit-badge">SECTION X</span>
-       </div>
-       <h1 class="section-title"><span class="sn">§X</span> Title Here</h1>
-       <hr class="divider">
-       ... content ...
-       <div class="page-num">1 / 1</div>
-     </div>
-     ================================================ -->
+  <pre class="code-block"><span class="an">@FunctionalInterface</span>
+<span class="kw">interface</span> <span class="tp">Greeting</span> {
+    <span class="kw">void</span> <span class="fn">greet</span>(String name);        <span class="cm">// ONE abstract method = functional</span>
+
+    <span class="cm">// default and static methods are allowed</span>
+    <span class="kw">default void</span> <span class="fn">greetFormal</span>(String name) {
+        System.out.println(<span class="st">"Dear "</span> + name);
+    }
+    <span class="kw">static void</span> <span class="fn">info</span>() { System.out.println(<span class="st">"Greeting interface"</span>); }
+}
+
+<span class="cm">// Old way — anonymous class</span>
+Greeting g1 = <span class="kw">new</span> Greeting() {
+    <span class="kw">public void</span> greet(String name) { System.out.println(<span class="st">"Hello, "</span> + name); }
+};
+
+<span class="cm">// New way — lambda expression (Java 8+)</span>
+Greeting g2 = name -> System.out.println(<span class="st">"Hello, "</span> + name);
+
+g2.greet(<span class="st">"Alice"</span>);   <span class="cm">// Hello, Alice</span></pre>
+
+  <h2 class="topic">Built-in Functional Interfaces (java.util.function)</h2>
+  <table class="tt">
+    <tr><th>Interface</th><th>Method</th><th>Input → Output</th><th>Use case</th></tr>
+    <tr><td><code>Predicate&lt;T&gt;</code></td><td><code>boolean test(T t)</code></td><td>T → boolean</td><td>Filter, check conditions</td></tr>
+    <tr><td><code>Function&lt;T,R&gt;</code></td><td><code>R apply(T t)</code></td><td>T → R</td><td>Transform/map a value</td></tr>
+    <tr><td><code>Consumer&lt;T&gt;</code></td><td><code>void accept(T t)</code></td><td>T → void</td><td>Perform action, no return</td></tr>
+    <tr><td><code>Supplier&lt;T&gt;</code></td><td><code>T get()</code></td><td>() → T</td><td>Provide a value</td></tr>
+    <tr><td><code>BiFunction&lt;T,U,R&gt;</code></td><td><code>R apply(T t, U u)</code></td><td>T,U → R</td><td>Two-input transformation</td></tr>
+    <tr><td><code>UnaryOperator&lt;T&gt;</code></td><td><code>T apply(T t)</code></td><td>T → T</td><td>Transform same type</td></tr>
+    <tr><td><code>BinaryOperator&lt;T&gt;</code></td><td><code>T apply(T t1, T t2)</code></td><td>T,T → T</td><td>Reduce two values to one</td></tr>
+    <tr><td><code>Runnable</code></td><td><code>void run()</code></td><td>() → void</td><td>Executable task</td></tr>
+    <tr><td><code>Comparator&lt;T&gt;</code></td><td><code>int compare(T o1, T o2)</code></td><td>T,T → int</td><td>Sorting, ordering</td></tr>
+  </table>
+
+  <div class="note-box">
+    <code>@FunctionalInterface</code> is <em>optional</em> but strongly recommended. It makes the compiler enforce the one-abstract-method rule, so if you accidentally add a second abstract method, you get a compile error immediately.
+  </div>
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 3</span><span class="unit-badge">SECTION 1</span></div>
+
+  <h2 class="topic">Using Built-in Functional Interfaces</h2>
+  <pre class="code-block"><span class="kw">import</span> java.util.function.*;
+
+<span class="cm">// Predicate — test a condition</span>
+Predicate&lt;Integer&gt; isEven = n -> n % <span class="nm">2</span> == <span class="nm">0</span>;
+System.out.println(isEven.test(<span class="nm">4</span>));    <span class="cm">// true</span>
+System.out.println(isEven.test(<span class="nm">7</span>));    <span class="cm">// false</span>
+
+<span class="cm">// Predicate composition</span>
+Predicate&lt;Integer&gt; isPositive = n -> n > <span class="nm">0</span>;
+Predicate&lt;Integer&gt; isEvenAndPositive = isEven.and(isPositive);  <span class="cm">// &&</span>
+Predicate&lt;Integer&gt; isEvenOrPositive  = isEven.or(isPositive);   <span class="cm">// ||</span>
+Predicate&lt;Integer&gt; isOdd             = isEven.negate();          <span class="cm">// !</span>
+
+<span class="cm">// Function — transform a value</span>
+Function&lt;String, Integer&gt; strLen = s -> s.length();
+System.out.println(strLen.apply(<span class="st">"Hello"</span>));  <span class="cm">// 5</span>
+
+<span class="cm">// Function chaining with andThen / compose</span>
+Function&lt;Integer, Integer&gt; doubleIt = x -> x * <span class="nm">2</span>;
+Function&lt;Integer, Integer&gt; addTen   = x -> x + <span class="nm">10</span>;
+Function&lt;Integer, Integer&gt; doubleThenAdd = doubleIt.andThen(addTen);
+System.out.println(doubleThenAdd.apply(<span class="nm">5</span>));  <span class="cm">// (5*2)+10 = 20</span>
+
+<span class="cm">// Consumer — action, no return</span>
+Consumer&lt;String&gt; print = s -> System.out.println(s);
+print.accept(<span class="st">"Java 8 rocks!"</span>);
+
+<span class="cm">// Supplier — provide a value</span>
+Supplier&lt;Double&gt; random = () -> Math.random();
+System.out.println(random.get());  <span class="cm">// some random double</span>
+
+<span class="cm">// BiFunction</span>
+BiFunction&lt;String, Integer, String&gt; repeat = (s, n) -> s.repeat(n);
+System.out.println(repeat.apply(<span class="st">"Ha"</span>, <span class="nm">3</span>));  <span class="cm">// HaHaHa</span></pre>
+
+  <div class="rule-box">
+    <strong>Key insight:</strong> Functional interfaces are the <em>target types</em> for lambda expressions and method references. The compiler infers which functional interface is needed from context (variable type, method parameter type, etc.).
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">🧪 Which functional interface to use?</div>
+    <div class="q-step">Need to check if a String is empty → <strong>Predicate&lt;String&gt;</strong> — returns boolean.</div>
+    <div class="q-step">Need to convert int to String → <strong>Function&lt;Integer, String&gt;</strong> — takes T, returns R.</div>
+    <div class="q-step">Need to print each element → <strong>Consumer&lt;T&gt;</strong> — takes T, returns nothing.</div>
+    <div class="q-step">Need to generate a random number → <strong>Supplier&lt;Double&gt;</strong> — no input, returns T.</div>
+    <div class="q-ans">✓ Match the shape of your operation (inputs/outputs) to the right interface.</div>
+  </div>
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══ §2 — LAMBDA EXPRESSIONS (3 pages) ══ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 3</span><span class="unit-badge">SECTION 2</span></div>
+  <h1 class="section-title"><span class="sn">§2</span> Lambda Expressions</h1>
+  <hr class="divider">
+
+  <h2 class="topic">What is a Lambda?</h2>
+  <div class="def-box">
+    A <strong>lambda expression</strong> is a concise, anonymous function — it has no name, no class, no access modifier. It represents an instance of a functional interface. Introduced in <strong>Java 8</strong>.
+    <br><br>Syntax: <span class="formula">(parameters) -> expression</span> &nbsp; or &nbsp; <span class="formula">(parameters) -> { statements; }</span>
+  </div>
+
+  <div class="teal-box">
+    Lambda = anonymous function that can be passed around like a value. This brings <em>functional programming</em> style to Java — functions as first-class citizens.
+  </div>
+
+  <h2 class="topic">Lambda Syntax — All Variations</h2>
+  <pre class="code-block"><span class="cm">// 1. No parameters, expression body</span>
+Runnable r = () -> System.out.println(<span class="st">"Hello!"</span>);
+
+<span class="cm">// 2. One parameter — parentheses optional</span>
+Predicate&lt;String&gt; isEmpty = s -> s.isEmpty();
+Predicate&lt;String&gt; isEmpty2 = (s) -> s.isEmpty();   <span class="cm">// same thing</span>
+Predicate&lt;String&gt; isEmpty3 = (String s) -> s.isEmpty();  <span class="cm">// explicit type</span>
+
+<span class="cm">// 3. Multiple parameters</span>
+Comparator&lt;Integer&gt; cmp = (a, b) -> a - b;
+
+<span class="cm">// 4. Block body (multiple statements)</span>
+Function&lt;Integer, String&gt; classify = (n) -> {
+    <span class="kw">if</span> (n > <span class="nm">0</span>) <span class="kw">return</span> <span class="st">"positive"</span>;
+    <span class="kw">else if</span> (n < <span class="nm">0</span>) <span class="kw">return</span> <span class="st">"negative"</span>;
+    <span class="kw">else return</span> <span class="st">"zero"</span>;
+};
+
+<span class="cm">// 5. No return needed for expression body (implicitly returned)</span>
+Function&lt;Integer, Integer&gt; square = x -> x * x;
+System.out.println(square.apply(<span class="nm">5</span>));  <span class="cm">// 25</span></pre>
+
+  <h2 class="topic">The Evolution — Before and After Lambda</h2>
+  <div class="evo">
+    <div class="evo-block eb1">
+      <span class="ev-label">❌ Before Java 8</span>
+      Anonymous inner class.<br>Very verbose.<br>5+ lines for simple logic.
+    </div>
+    <div class="evo-block eb2">
+      <span class="ev-label">→ Anonymous Class</span>
+      <code>new Comparator() {<br>public int compare(a,b){<br>return a-b; } }</code>
+    </div>
+    <div class="evo-block eb3">
+      <span class="ev-label">✅ Lambda (Java 8)</span>
+      <code>(a, b) -> a - b</code><br>One line!<br>Same result.
+    </div>
+  </div>
+  <div class="page-num">1 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 3</span><span class="unit-badge">SECTION 2</span></div>
+
+  <h2 class="topic">Variable Capture in Lambdas</h2>
+  <div class="def-box">
+    Lambdas can capture (access) variables from the enclosing scope. However, they can only capture variables that are <strong>effectively final</strong> — variables that are never reassigned after initialisation.
+  </div>
+  <pre class="code-block"><span class="kw">int</span> factor = <span class="nm">3</span>;             <span class="cm">// effectively final (never reassigned)</span>
+Function&lt;Integer, Integer&gt; multiply = x -> x * factor;   <span class="cm">// ✅ OK</span>
+System.out.println(multiply.apply(<span class="nm">5</span>));  <span class="cm">// 15</span>
+
+factor = <span class="nm">5</span>;                 <span class="cm">// ❌ now factor is reassigned</span>
+<span class="cm">// Function&lt;Integer, Integer&gt; bad = x -> x * factor;  ← compile error!</span>
+<span class="cm">// "Variable used in lambda expression should be final or effectively final"</span>
+
+<span class="cm">// Instance variables and static variables — no restriction</span>
+<span class="kw">class</span> <span class="tp">MyClass</span> {
+    <span class="kw">int</span> multiplier = <span class="nm">10</span>;
+    <span class="kw">void</span> test() {
+        Function&lt;Integer, Integer&gt; f = x -> x * multiplier;  <span class="cm">// ✅ instance var — OK</span>
+        multiplier = <span class="nm">20</span>;   <span class="cm">// ✅ can change instance var after lambda creation</span>
+    }
+}</pre>
+
+  <h2 class="topic">Lambda vs Anonymous Class</h2>
+  <div class="vs-box">
+    <div class="vs-left">
+      <strong>Anonymous Class</strong>
+      Creates a new class + object<br>
+      Has its own <code>this</code> (refers to anon class instance)<br>
+      Can have state (fields)<br>
+      Works with any interface (not just SAM)<br>
+      Verbose
+    </div>
+    <div class="vs-right">
+      <strong>Lambda Expression</strong>
+      Just a function, no separate class<br>
+      <code>this</code> refers to enclosing class<br>
+      No state (variables must be effectively final)<br>
+      Only for functional interfaces (SAM)<br>
+      Concise
+    </div>
+  </div>
+
+  <h2 class="topic">Practical Lambda Examples</h2>
+  <pre class="code-block"><span class="kw">import</span> java.util.*;
+
+List&lt;String&gt; names = Arrays.asList(<span class="st">"Charlie"</span>, <span class="st">"Alice"</span>, <span class="st">"Bob"</span>);
+
+<span class="cm">// Sort with lambda</span>
+names.sort((a, b) -> a.compareTo(b));     <span class="cm">// alphabetical</span>
+names.sort((a, b) -> b.compareTo(a));     <span class="cm">// reverse alphabetical</span>
+names.sort((a, b) -> a.length() - b.length()); <span class="cm">// by length</span>
+
+<span class="cm">// forEach with lambda</span>
+names.forEach(name -> System.out.println(name));
+
+<span class="cm">// removeIf with lambda</span>
+names.removeIf(name -> name.length() < <span class="nm">4</span>);  <span class="cm">// removes "Bob"</span>
+
+<span class="cm">// replaceAll with lambda</span>
+names.replaceAll(name -> name.toUpperCase());  <span class="cm">// CHARLIE, ALICE</span></pre>
+  <div class="page-num">2 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 3</span><span class="unit-badge">SECTION 2</span></div>
+
+  <h2 class="topic">Returning Lambdas from Methods</h2>
+  <pre class="code-block"><span class="cm">// A method that RETURNS a lambda (higher-order function)</span>
+<span class="kw">static</span> Predicate&lt;Integer&gt; <span class="fn">greaterThan</span>(<span class="kw">int</span> threshold) {
+    <span class="kw">return</span> n -> n > threshold;    <span class="cm">// captures threshold (effectively final)</span>
+}
+
+Predicate&lt;Integer&gt; gt10 = greaterThan(<span class="nm">10</span>);
+Predicate&lt;Integer&gt; gt50 = greaterThan(<span class="nm">50</span>);
+System.out.println(gt10.test(<span class="nm">15</span>));  <span class="cm">// true</span>
+System.out.println(gt50.test(<span class="nm">30</span>));  <span class="cm">// false</span>
+
+<span class="cm">// Passing lambdas as method arguments (higher-order function)</span>
+<span class="kw">static void</span> <span class="fn">processNames</span>(List&lt;String&gt; names, Predicate&lt;String&gt; filter,
+                            Consumer&lt;String&gt; action) {
+    names.stream()
+         .filter(filter)
+         .forEach(action);
+}
+
+processNames(names, s -> s.startsWith(<span class="st">"A"</span>), System.out::println);
+<span class="cm">// prints all names starting with A</span></pre>
+
+  <div class="rule-box">
+    <strong>Lambda rules summary:</strong>
+    <ul class="plain" style="margin-top:6px">
+      <li>Target type must be a functional interface (exactly 1 abstract method).</li>
+      <li>Parameter types can be inferred — no need to write them explicitly.</li>
+      <li>Single-expression body: return is implicit, no braces needed.</li>
+      <li>Block body: must have explicit return (if non-void) and braces.</li>
+      <li>Captured local variables must be effectively final.</li>
+      <li><code>this</code> inside lambda refers to the enclosing class, NOT the lambda itself.</li>
+    </ul>
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">🧪 Is this lambda valid?</div>
+    <div class="q-step"><code>int x = 10; Runnable r = () -> { x = 20; System.out.println(x); };</code></div>
+    <div class="q-step">❌ Compile error — x is modified inside lambda (not effectively final).</div>
+    <div class="q-step">Fix: <code>final int x = 10;</code> and remove the assignment inside lambda.</div>
+    <div class="q-ans">✓ Lambdas can READ effectively-final local vars but cannot MODIFY them.</div>
+  </div>
+  <div class="page-num">3 / 3</div>
+</div>
+
+<!-- ══ §3 — METHOD REFERENCES (2 pages) ══ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 3</span><span class="unit-badge">SECTION 3</span></div>
+  <h1 class="section-title"><span class="sn">§3</span> Method References</h1>
+  <hr class="divider">
+
+  <h2 class="topic">What is a Method Reference?</h2>
+  <div class="def-box">
+    A <strong>method reference</strong> is a shorthand for a lambda that calls an existing method. Instead of writing <code>x -> obj.method(x)</code>, you write <code>obj::method</code>. Uses the <span class="formula">::</span> operator (double colon).
+  </div>
+
+  <h2 class="topic">Four Types of Method References</h2>
+  <table class="tt">
+    <tr><th>Type</th><th>Syntax</th><th>Lambda equivalent</th><th>Example</th></tr>
+    <tr><td><strong>Static method</strong></td><td><code>ClassName::staticMethod</code></td><td><code>x -> ClassName.staticMethod(x)</code></td><td><code>Integer::parseInt</code></td></tr>
+    <tr><td><strong>Instance method of a particular object</strong></td><td><code>instance::method</code></td><td><code>x -> instance.method(x)</code></td><td><code>System.out::println</code></td></tr>
+    <tr><td><strong>Instance method of arbitrary object of a type</strong></td><td><code>ClassName::instanceMethod</code></td><td><code>(obj, x) -> obj.method(x)</code></td><td><code>String::toUpperCase</code></td></tr>
+    <tr><td><strong>Constructor reference</strong></td><td><code>ClassName::new</code></td><td><code>x -> new ClassName(x)</code></td><td><code>ArrayList::new</code></td></tr>
+  </table>
+
+  <pre class="code-block"><span class="cm">// 1. Static method reference</span>
+Function&lt;String, Integer&gt; parse = Integer::parseInt;    <span class="cm">// s -> Integer.parseInt(s)</span>
+System.out.println(parse.apply(<span class="st">"42"</span>));  <span class="cm">// 42</span>
+
+<span class="cm">// 2. Specific instance method reference</span>
+Consumer&lt;String&gt; printer = System.out::println;         <span class="cm">// s -> System.out.println(s)</span>
+printer.accept(<span class="st">"Hello from method ref!"</span>);
+
+<span class="cm">// 3. Arbitrary instance method reference (first arg becomes the receiver)</span>
+Function&lt;String, String&gt; toUpper = String::toUpperCase; <span class="cm">// s -> s.toUpperCase()</span>
+Predicate&lt;String&gt; startA = s -> s.startsWith(<span class="st">"A"</span>);     <span class="cm">// with arg</span>
+BiPredicate&lt;String, String&gt; startsWith = String::startsWith; <span class="cm">// (s, prefix) -> s.startsWith(prefix)</span>
+
+<span class="cm">// 4. Constructor reference</span>
+Supplier&lt;ArrayList&lt;String&gt;&gt; listFactory = ArrayList::new;  <span class="cm">// () -> new ArrayList()</span>
+ArrayList&lt;String&gt; myList = listFactory.get();</pre>
+
+  <div class="note-box">
+    Method references are ONLY valid when the lambda does nothing except call an existing method — no extra logic. If you need to transform arguments or do additional work, use a full lambda instead.
+  </div>
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 3</span><span class="unit-badge">SECTION 3</span></div>
+
+  <h2 class="topic">Method References in Action</h2>
+  <pre class="code-block">List&lt;String&gt; names = Arrays.asList(<span class="st">"Alice"</span>, <span class="st">"Bob"</span>, <span class="st">"Charlie"</span>, <span class="st">"Anna"</span>);
+
+<span class="cm">// Using method references instead of lambdas</span>
+names.forEach(System.out::println);         <span class="cm">// prints each name</span>
+names.sort(String::compareToIgnoreCase);    <span class="cm">// sorts alphabetically</span>
+names.removeIf(String::isEmpty);            <span class="cm">// removes empty strings</span>
+
+<span class="cm">// Stream with method references</span>
+names.stream()
+     .filter(s -> s.startsWith(<span class="st">"A"</span>))
+     .map(String::toUpperCase)              <span class="cm">// method ref instead of s->s.toUpperCase()</span>
+     .forEach(System.out::println);         <span class="cm">// ALICE, ANNA</span>
+
+<span class="cm">// Constructor reference for object creation</span>
+List&lt;Integer&gt; numbers = Arrays.asList(<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>);
+numbers.stream()
+       .map(n -> n * n)
+       .collect(Collectors.toCollection(ArrayList::new));  <span class="cm">// ArrayList constructor ref</span>
+
+<span class="cm">// Custom class method reference</span>
+<span class="kw">class</span> <span class="tp">MathUtils</span> {
+    <span class="kw">static int</span> <span class="fn">doubleIt</span>(<span class="kw">int</span> x) { <span class="kw">return</span> x * <span class="nm">2</span>; }
+}
+Function&lt;Integer, Integer&gt; doubler = MathUtils::doubleIt;
+System.out.println(doubler.apply(<span class="nm">5</span>));  <span class="cm">// 10</span></pre>
+
+  <h2 class="topic">Lambda vs Method Reference — Side by Side</h2>
+  <table class="tt">
+    <tr><th>Lambda</th><th>Method Reference (equivalent)</th></tr>
+    <tr><td><code>x -> System.out.println(x)</code></td><td><code>System.out::println</code></td></tr>
+    <tr><td><code>s -> s.toUpperCase()</code></td><td><code>String::toUpperCase</code></td></tr>
+    <tr><td><code>s -> Integer.parseInt(s)</code></td><td><code>Integer::parseInt</code></td></tr>
+    <tr><td><code>() -> new ArrayList()</code></td><td><code>ArrayList::new</code></td></tr>
+    <tr><td><code>(a, b) -> a.compareTo(b)</code></td><td><code>String::compareTo</code></td></tr>
+    <tr><td><code>x -> Math.sqrt(x)</code></td><td><code>Math::sqrt</code></td></tr>
+  </table>
+
+  <div class="purple-box">
+    <strong>When to prefer method reference over lambda:</strong> When the lambda body is <em>just a method call</em> with the same parameters. Method references are more readable and concise — they communicate "call this method" without ceremony. Let the IDE suggest them automatically!
+  </div>
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══ §4 — STREAM API (4 pages) ══ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 3</span><span class="unit-badge">SECTION 4</span></div>
+  <h1 class="section-title"><span class="sn">§4</span> Stream API</h1>
+  <hr class="divider">
+
+  <h2 class="topic">What is a Stream?</h2>
+  <div class="def-box">
+    A <strong>Stream</strong> (<code>java.util.stream.Stream</code>) represents a sequence of elements supporting sequential and parallel aggregate operations. It is <em>not a data structure</em> — it doesn't store elements; it processes them from a source (collection, array, I/O channel).
+  </div>
+
+  <div class="teal-box">
+    <strong>Stream pipeline = Source + Intermediate operations + Terminal operation</strong><br>
+    Think of it as an assembly line: raw materials (source) → processing steps (intermediate) → finished product (terminal).
+  </div>
+
+  <h2 class="topic">Creating Streams</h2>
+  <pre class="code-block"><span class="kw">import</span> java.util.stream.*;
+
+<span class="cm">// From Collection</span>
+List&lt;String&gt; list = List.of(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>);
+Stream&lt;String&gt; s1 = list.stream();
+Stream&lt;String&gt; s2 = list.parallelStream();   <span class="cm">// parallel processing</span>
+
+<span class="cm">// From Array</span>
+Stream&lt;String&gt; s3 = Arrays.stream(<span class="kw">new</span> String[]{<span class="st">"X"</span>, <span class="st">"Y"</span>});
+
+<span class="cm">// From Stream.of()</span>
+Stream&lt;Integer&gt; s4 = Stream.of(<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>, <span class="nm">4</span>, <span class="nm">5</span>);
+
+<span class="cm">// Infinite streams</span>
+Stream&lt;Integer&gt; naturals = Stream.iterate(<span class="nm">1</span>, n -> n + <span class="nm">1</span>);     <span class="cm">// 1,2,3,4,...</span>
+Stream&lt;Double&gt; randoms  = Stream.generate(Math::random);       <span class="cm">// random doubles</span>
+
+<span class="cm">// Primitive streams (avoid boxing overhead)</span>
+IntStream.range(<span class="nm">1</span>, <span class="nm">6</span>);       <span class="cm">// 1,2,3,4,5 (exclusive end)</span>
+IntStream.rangeClosed(<span class="nm">1</span>, <span class="nm">5</span>); <span class="cm">// 1,2,3,4,5 (inclusive end)</span>
+LongStream.of(<span class="nm">1L</span>, <span class="nm">2L</span>, <span class="nm">3L</span>);
+DoubleStream.of(<span class="nm">1.1</span>, <span class="nm">2.2</span>);</pre>
+
+  <div class="rule-box">
+    <strong>Streams are lazy!</strong> Intermediate operations are not executed until a terminal operation is called. This enables optimisations — e.g., <code>findFirst()</code> after a <code>filter()</code> stops processing once the first match is found.
+  </div>
+  <div class="page-num">1 / 4</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 3</span><span class="unit-badge">SECTION 4</span></div>
+
+  <h2 class="topic">Intermediate Operations (return Stream — chainable)</h2>
+  <table class="tt">
+    <tr><th>Operation</th><th>What it does</th><th>Example</th></tr>
+    <tr><td><code>filter(Predicate)</code></td><td>Keeps elements matching condition</td><td><code>.filter(n -> n > 5)</code></td></tr>
+    <tr><td><code>map(Function)</code></td><td>Transforms each element</td><td><code>.map(String::toUpperCase)</code></td></tr>
+    <tr><td><code>mapToInt/Long/Double</code></td><td>Converts to primitive stream</td><td><code>.mapToInt(String::length)</code></td></tr>
+    <tr><td><code>flatMap(Function)</code></td><td>Flattens stream of streams into one stream</td><td><code>.flatMap(Collection::stream)</code></td></tr>
+    <tr><td><code>distinct()</code></td><td>Removes duplicates (uses equals/hashCode)</td><td><code>.distinct()</code></td></tr>
+    <tr><td><code>sorted()</code></td><td>Sorts in natural order</td><td><code>.sorted()</code></td></tr>
+    <tr><td><code>sorted(Comparator)</code></td><td>Sorts by custom comparator</td><td><code>.sorted(Comparator.reverseOrder())</code></td></tr>
+    <tr><td><code>limit(n)</code></td><td>Truncates to first n elements</td><td><code>.limit(10)</code></td></tr>
+    <tr><td><code>skip(n)</code></td><td>Skips first n elements</td><td><code>.skip(5)</code></td></tr>
+    <tr><td><code>peek(Consumer)</code></td><td>Debug — inspect elements without consuming</td><td><code>.peek(System.out::println)</code></td></tr>
+  </table>
+
+  <h2 class="topic">Terminal Operations (trigger the pipeline)</h2>
+  <table class="tt">
+    <tr><th>Operation</th><th>Returns</th><th>Description</th></tr>
+    <tr><td><code>forEach(Consumer)</code></td><td>void</td><td>Perform action on each element</td></tr>
+    <tr><td><code>collect(Collector)</code></td><td>Collection</td><td>Gather results into List, Set, Map…</td></tr>
+    <tr><td><code>count()</code></td><td>long</td><td>Count elements</td></tr>
+    <tr><td><code>reduce(identity, BinaryOp)</code></td><td>T</td><td>Fold elements into single value</td></tr>
+    <tr><td><code>min(Comparator)</code></td><td>Optional&lt;T&gt;</td><td>Minimum element</td></tr>
+    <tr><td><code>max(Comparator)</code></td><td>Optional&lt;T&gt;</td><td>Maximum element</td></tr>
+    <tr><td><code>findFirst()</code></td><td>Optional&lt;T&gt;</td><td>First element (may be empty)</td></tr>
+    <tr><td><code>findAny()</code></td><td>Optional&lt;T&gt;</td><td>Any element (good for parallel)</td></tr>
+    <tr><td><code>anyMatch(Predicate)</code></td><td>boolean</td><td>Any element matches condition</td></tr>
+    <tr><td><code>allMatch(Predicate)</code></td><td>boolean</td><td>All elements match condition</td></tr>
+    <tr><td><code>noneMatch(Predicate)</code></td><td>boolean</td><td>No elements match condition</td></tr>
+    <tr><td><code>toArray()</code></td><td>Object[]</td><td>Convert to array</td></tr>
+    <tr><td><code>sum() / average()</code></td><td>int / OptDouble</td><td>IntStream/DoubleStream only</td></tr>
+  </table>
+  <div class="page-num">2 / 4</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 3</span><span class="unit-badge">SECTION 4</span></div>
+
+  <h2 class="topic">Stream Examples — Real Pipelines</h2>
+  <pre class="code-block">List&lt;String&gt; words = List.of(<span class="st">"apple"</span>, <span class="st">"banana"</span>, <span class="st">"avocado"</span>, <span class="st">"cherry"</span>, <span class="st">"apricot"</span>, <span class="st">"blueberry"</span>);
+
+<span class="cm">// 1. Filter + map + collect</span>
+List&lt;String&gt; aWords = words.stream()
+    .filter(w -> w.startsWith(<span class="st">"a"</span>))          <span class="cm">// apple, avocado, apricot</span>
+    .map(String::toUpperCase)                   <span class="cm">// APPLE, AVOCADO, APRICOT</span>
+    .sorted()                                   <span class="cm">// alphabetical</span>
+    .collect(Collectors.toList());              <span class="cm">// [APPLE, APRICOT, AVOCADO]</span>
+
+<span class="cm">// 2. Count</span>
+<span class="kw">long</span> count = words.stream()
+    .filter(w -> w.length() > <span class="nm">5</span>)
+    .count();                                   <span class="cm">// 4 (banana, avocado, cherry, blueberry)</span>
+
+<span class="cm">// 3. reduce — sum of lengths</span>
+<span class="kw">int</span> totalLen = words.stream()
+    .mapToInt(String::length)
+    .sum();                                     <span class="cm">// sum all word lengths</span>
+
+<span class="cm">// 4. reduce — product of numbers</span>
+<span class="kw">int</span> product = IntStream.rangeClosed(<span class="nm">1</span>, <span class="nm">5</span>)
+    .reduce(<span class="nm">1</span>, (a, b) -> a * b);             <span class="cm">// 1*2*3*4*5 = 120 (factorial 5)</span>
+
+<span class="cm">// 5. findFirst with Optional</span>
+Optional&lt;String&gt; first = words.stream()
+    .filter(w -> w.startsWith(<span class="st">"b"</span>))
+    .findFirst();
+first.ifPresent(System.out::println);           <span class="cm">// banana</span>
+
+<span class="cm">// 6. Collect to Map (word → its length)</span>
+Map&lt;String, Integer&gt; wordLengths = words.stream()
+    .collect(Collectors.toMap(w -> w, String::length));
+
+<span class="cm">// 7. Grouping</span>
+Map&lt;Character, List&lt;String&gt;&gt; grouped = words.stream()
+    .collect(Collectors.groupingBy(w -> w.charAt(<span class="nm">0</span>)));
+<span class="cm">// {a=[apple, avocado, apricot], b=[banana, blueberry], c=[cherry]}</span>
+
+<span class="cm">// 8. Joining</span>
+String joined = words.stream()
+    .collect(Collectors.joining(<span class="st">", "</span>, <span class="st">"["</span>, <span class="st">"]"</span>));
+<span class="cm">// [apple, banana, avocado, cherry, apricot, blueberry]</span></pre>
+  <div class="page-num">3 / 4</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 3</span><span class="unit-badge">SECTION 4</span></div>
+
+  <h2 class="topic">Optional — Null-Safe Container</h2>
+  <div class="def-box">
+    <code>Optional&lt;T&gt;</code> is a container that may or may not contain a non-null value. It replaces returning <code>null</code> from methods — forces callers to handle the "no value" case explicitly.
+  </div>
+  <pre class="code-block"><span class="cm">// Creating Optional</span>
+Optional&lt;String&gt; present = Optional.of(<span class="st">"Hello"</span>);      <span class="cm">// must be non-null</span>
+Optional&lt;String&gt; empty   = Optional.empty();
+Optional&lt;String&gt; maybe   = Optional.ofNullable(getValue()); <span class="cm">// null → empty</span>
+
+<span class="cm">// Consuming Optional</span>
+present.isPresent();                    <span class="cm">// true</span>
+present.get();                          <span class="cm">// "Hello" (throws if empty!)</span>
+present.ifPresent(System.out::println); <span class="cm">// prints if present</span>
+present.orElse(<span class="st">"default"</span>);           <span class="cm">// value or default</span>
+present.orElseGet(() -> compute());    <span class="cm">// value or compute lazily</span>
+present.orElseThrow(NoSuchElementException::new); <span class="cm">// value or throw</span>
+
+<span class="cm">// Chaining with Optional</span>
+Optional&lt;String&gt; upper = present
+    .filter(s -> s.length() > <span class="nm">3</span>)
+    .map(String::toUpperCase);         <span class="cm">// Optional["HELLO"]</span></pre>
+
+  <h2 class="topic">Stream — Key Rules to Remember</h2>
+  <div class="rule-box">
+    <ul class="plain" style="margin-top:4px">
+      <li><strong>Streams are single-use.</strong> Once a terminal operation is called, the stream is consumed — cannot be reused.</li>
+      <li><strong>Lazy evaluation.</strong> Intermediate ops don't run until a terminal op is invoked.</li>
+      <li><strong>Non-interfering.</strong> Don't modify the source while the stream is processing.</li>
+      <li><strong>Stateless operations</strong> (<code>filter</code>, <code>map</code>) are safe for parallel. <strong>Stateful</strong> (<code>sorted</code>, <code>distinct</code>) need more care.</li>
+      <li><strong>flatMap</strong> = maps each element to a stream, then flattens all streams into one. Used for one-to-many transformations.</li>
+    </ul>
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">🧪 Stream pipeline — what is the output?</div>
+    <div class="q-step"><code>List.of(3,1,4,1,5,9,2,6).stream().filter(n -> n%2==0).sorted().limit(3).forEach(System.out::println);</code></div>
+    <div class="q-step">filter even: [4,2,6] → sorted: [2,4,6] → limit 3: [2,4,6]</div>
+    <div class="q-ans">✓ Output: 2, 4, 6 (each on a new line)</div>
+  </div>
+  <div class="page-num">4 / 4</div>
+</div>
 
 <script>
-(function(){
-  var pages = document.querySelectorAll('.page');
-  var secPages = [];
-  pages.forEach(function(p){ if(p.querySelector('h1.section-title')) secPages.push(p); });
-  secPages.forEach(function(p,i){ p.id = 'sec-'+(i+1); });
-  var tocItems = document.querySelectorAll('.cover-toc-item');
-  tocItems.forEach(function(item, i){
-    if(i >= secPages.length) return;
-    item.style.cursor = 'pointer';
-    item.style.borderRadius = '4px';
-    item.style.transition = 'background 0.18s';
-    item.setAttribute('title', 'Click to jump to this section');
-    item.addEventListener('mouseenter', function(){ item.style.background='rgba(255,255,255,0.18)'; });
-    item.addEventListener('mouseleave', function(){ item.style.background=''; });
-    item.addEventListener('click', function(){ secPages[i].scrollIntoView({behavior:'smooth'}); });
-  });
-})();
+  document.querySelectorAll('.part-nav a').forEach(a=>{if(a.href===window.location.href)a.classList.add('active');});
 </script>
 </body>
 </html>

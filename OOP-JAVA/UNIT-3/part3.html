@@ -3,138 +3,791 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OOP-JAVA Unit 3 — Part 3</title>
-<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+<title>OOP in Java — Unit 3 | Part 3</title>
 <style>
-:root{--ink:#1a1a2e;--ink2:#2c2c54;--blue:#1565C0;--red:#b71c1c;--green:#1b5e20;--purple:#4a148c;--teal:#006064;--orange:#e65100;--line:#c5cae9;--page:#fafaf7;--highlight:#fff9c4;--box-blue:#e8f4fd;--box-green:#e8f5e9;--box-purple:#f3e5f5;--box-orange:#fff3e0;--box-red:#fce4ec;--box-teal:#e0f7fa;}
-*{margin:0;padding:0;box-sizing:border-box;}
-body{background:#e0e0e0;font-family:'Kalam',cursive;color:var(--ink);padding:30px 20px;}
-.page{background:var(--page);max-width:820px;margin:0 auto 40px;border-radius:4px;box-shadow:0 2px 16px rgba(0,0,0,0.18),0 0 0 1px rgba(0,0,0,0.08);padding:60px 70px 70px 90px;position:relative;min-height:1060px;background-image:repeating-linear-gradient(transparent,transparent 31px,var(--line) 31px,var(--line) 32px);background-position:0 56px;}
-.page::before{content:'';position:absolute;left:72px;top:0;bottom:0;width:1.5px;background:#ef9a9a;opacity:0.7;}
-.holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-around;padding:40px 0;}
-.hole{width:22px;height:22px;border-radius:50%;background:#e0e0e0;border:1.5px solid #bdbdbd;box-shadow:inset 0 1px 3px rgba(0,0,0,0.2);}
-.page-num{position:absolute;bottom:28px;right:50px;font-size:13px;color:#9e9e9e;}
-.page-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
-.date-tag{font-size:13px;color:#9e9e9e;}
-.unit-badge{color:#fff;font-size:13px;padding:2px 14px;border-radius:20px;font-weight:700;}
-h1.section-title{font-size:24px;font-weight:700;color:var(--ink2);text-align:center;margin:8px 0 4px;text-decoration:underline;text-underline-offset:5px;}
-h2.topic{font-size:18px;font-weight:700;color:var(--blue);margin:18px 0 6px;border-bottom:1.5px solid var(--blue);padding-bottom:2px;display:inline-block;}
-h3.sub{font-size:15px;font-weight:700;color:var(--purple);margin:12px 0 4px;}
-p,li{font-size:15px;line-height:32px;}
-.def-box{background:var(--box-blue);border-left:4px solid var(--blue);border-radius:0 6px 6px 0;padding:10px 16px;margin:10px 0 12px;font-size:15px;line-height:30px;}
-.note-box{background:var(--highlight);border-left:4px solid #f9a825;border-radius:0 6px 6px 0;padding:8px 14px;margin:8px 0 10px;font-size:14px;line-height:26px;}
-.rule-box{background:var(--box-green);border:1.5px solid #81c784;border-radius:6px;padding:10px 16px;margin:10px 0;font-size:14.5px;line-height:28px;}
-.purple-box{background:var(--box-purple);border-left:4px solid var(--purple);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
-.orange-box{background:var(--box-orange);border-left:4px solid var(--orange);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
-.teal-box{background:var(--box-teal);border-left:4px solid var(--teal);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
-.formula{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--blue);}
-.divider{border:none;border-top:1px dashed #b0bec5;margin:14px 0 10px;}
-ul.plain{list-style:none;padding-left:4px;}
-ul.plain li::before{content:'→ ';color:var(--blue);font-weight:700;}
-ul.plain li{font-size:15px;line-height:32px;}
-.qbox{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:12px 16px;margin:10px 0;}
-.q-label{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:2px;}
-.q-step{font-size:14px;color:var(--green);margin-top:4px;line-height:26px;}
-.q-ans{font-size:15px;color:var(--red);font-family:'Patrick Hand',cursive;margin-top:4px;}
-table.tt{width:100%;border-collapse:collapse;margin:8px 0;font-size:14px;}
-table.tt th{color:#fff;padding:7px 10px;text-align:center;}
-table.tt td{padding:6px 10px;border-bottom:1px solid #e0e0e0;text-align:center;font-family:'Patrick Hand',cursive;font-size:14px;}
-table.tt tr:nth-child(even) td{background:#f5f5f5;}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0;}
-.vs-box{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:12px 0;border-radius:8px;overflow:hidden;border:1.5px solid #90caf9;}
-.vs-left{background:#e8f4fd;padding:12px 14px;}
-.vs-right{background:var(--box-purple);padding:12px 14px;border-left:1px solid #90caf9;}
-.vs-head{font-size:15px;font-weight:700;margin-bottom:8px;}
-.vs-item{font-size:14px;line-height:26px;}
-.step-card{background:var(--box-purple);border-left:4px solid var(--purple);padding:8px 14px;margin:5px 0;border-radius:0 6px 6px 0;}
-.step-head{font-size:14px;font-weight:700;color:var(--purple);}
-.step-body{font-size:13.5px;line-height:24px;color:var(--ink2);}
-.cover-page{max-width:820px;margin:0 auto 40px;border-radius:8px;padding:80px 60px;text-align:center;color:#fff;box-shadow:0 4px 24px rgba(0,0,0,0.3);position:relative;overflow:hidden;}
-.cover-subject{font-size:14px;letter-spacing:3px;opacity:0.7;margin-bottom:16px;}
-.cover-title{font-size:40px;font-weight:700;line-height:1.2;margin-bottom:12px;}
-.cover-unit{font-size:20px;opacity:0.85;margin-bottom:30px;}
-.cover-divider{width:80px;height:3px;background:rgba(255,255,255,0.4);margin:0 auto 24px;border-radius:2px;}
-.cover-toc{text-align:left;background:rgba(255,255,255,0.1);border-radius:8px;padding:20px 28px;display:inline-block;min-width:420px;}
-.cover-toc-item{font-size:15px;line-height:32px;display:flex;justify-content:space-between;gap:20px;}
-.part-nav{max-width:820px;margin:0 auto 20px;display:flex;gap:10px;justify-content:center;align-items:center;font-family:'Kalam',cursive;flex-wrap:wrap;}
-.part-nav a{padding:6px 20px;border-radius:20px;background:#fff;border:1.5px solid #90caf9;color:var(--blue);text-decoration:none;font-size:14px;font-weight:700;}
-.part-nav a:hover:not(.active){background:#e3f2fd;}
-.part-nav .back{background:#f5f5f5;border-color:#ccc;color:#555;font-size:13px;}
-.unit-badge{background:#1b5e20;}
-h1.section-title{text-decoration-color:#1b5e20;}
-h1.section-title .sn{color:#1b5e20;}
-.part-nav a.active{background:#1b5e20;border-color:#1b5e20;color:#fff;}
-@media(max-width:600px){
-body{padding:10px 0 30px;}
-.page{padding:20px 16px 30px 16px;min-height:unset;}
-.page::before{display:none;}
-.holes{display:none;}
-.cover-page{padding:40px 20px;margin:0 10px 20px;}
-.cover-toc{min-width:unset;width:100%;padding:14px 16px;}
-.part-nav{padding:0 10px;gap:6px;}
-.part-nav a{padding:5px 12px;font-size:13px;}
-.two-col{grid-template-columns:1fr;}
-.vs-box{grid-template-columns:1fr;}
-.vs-right{border-left:none;border-top:1px solid #90caf9;}
-nav.part-nav{padding:0 10px;gap:6px;}
-.cover-title{font-size:28px;}
-}</style>
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Kalam:wght@300;400;700&family=Special+Elite&display=swap');
+  :root{
+    --paper:#fdf9f0;--ink:#1a1a2e;--ink-light:#2d2d4e;
+    --blue:#1a56db;--blue-light:#dbeafe;
+    --green:#0d6b3f;--green-light:#d1fae5;
+    --orange:#c05621;--orange-light:#fef3c7;
+    --purple:#5b21b6;--purple-light:#ede9fe;
+    --red:#b91c1c;--red-light:#fee2e2;
+    --teal:#0e7490;--teal-light:#cffafe;
+    --rule-line:#c8d8e8;--margin-line:#f0d0ff;
+    --hole-bg:#e8e0d0;--shadow:rgba(0,0,0,0.08);
+    --accent:#5b21b6;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:#1a0a2e;
+    background-image:radial-gradient(circle at 25% 50%,rgba(91,33,182,.2) 0%,transparent 55%),
+                     radial-gradient(circle at 75% 25%,rgba(13,107,63,.1) 0%,transparent 50%);
+    font-family:'Kalam',cursive;color:var(--ink);padding:20px 0 40px;min-height:100vh;
+  }
+  .part-nav{display:flex;justify-content:center;gap:10px;margin-bottom:28px;flex-wrap:wrap;padding:0 16px;}
+  .part-nav a{font-family:'Caveat',cursive;font-size:1rem;font-weight:600;padding:7px 20px;border-radius:20px;
+    text-decoration:none;background:rgba(255,255,255,.5);color:#555;border:2px solid rgba(255,255,255,.7);transition:all .2s;}
+  .part-nav a.active{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 4px 12px rgba(91,33,182,.45);}
+  .part-nav a:hover:not(.active){background:rgba(255,255,255,.8);color:#333;}
+  .page{width:760px;max-width:98vw;margin:0 auto 28px;background:var(--paper);border-radius:3px;
+    box-shadow:4px 4px 14px var(--shadow),0 1px 3px rgba(0,0,0,.12);position:relative;
+    padding:36px 44px 44px 80px;min-height:600px;
+    background-image:repeating-linear-gradient(transparent,transparent 31px,var(--rule-line) 31px,var(--rule-line) 32px);
+    background-position:0 64px;}
+  .page::before{content:'';position:absolute;left:68px;top:0;bottom:0;width:2px;background:var(--margin-line);opacity:.7;}
+  .page.rev-page{background-color:#fffff8;}
+  .holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;
+    justify-content:space-evenly;align-items:center;width:32px;}
+  .hole{width:18px;height:18px;border-radius:50%;background:var(--hole-bg);border:1.5px solid #b8a898;box-shadow:inset 0 1px 3px rgba(0,0,0,.2);}
+  .page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+  .date-tag{font-family:'Special Elite',cursive;font-size:.72rem;color:var(--teal);letter-spacing:.05em;text-transform:uppercase;}
+  .unit-badge{font-family:'Caveat',cursive;font-size:.85rem;font-weight:700;background:var(--accent);color:white;padding:2px 12px;border-radius:10px;letter-spacing:.08em;}
+  .unit-badge.rev{background:var(--orange);}
+  .section-title{font-family:'Caveat',cursive;font-size:2rem;font-weight:700;color:var(--ink);margin:8px 0 4px;line-height:1.2;}
+  .sn{font-family:'Special Elite',cursive;color:var(--accent);margin-right:6px;font-size:1.7rem;}
+  .sn-rev{font-family:'Special Elite',cursive;color:var(--orange);margin-right:6px;font-size:1.7rem;}
+  .divider{border:none;border-top:2.5px solid var(--accent);margin:6px 0 18px;border-radius:2px;}
+  .divider-rev{border:none;border-top:2.5px solid var(--orange);margin:6px 0 18px;border-radius:2px;}
+  h2.topic{font-family:'Caveat',cursive;font-size:1.45rem;font-weight:700;color:var(--accent);margin:20px 0 8px;padding-bottom:3px;border-bottom:1.5px dashed var(--rule-line);}
+  h2.topic-rev{font-family:'Caveat',cursive;font-size:1.35rem;font-weight:700;color:var(--orange);margin:18px 0 8px;padding-bottom:3px;border-bottom:1.5px dashed #e4cc88;}
+  h3.sub{font-family:'Kalam',cursive;font-size:1.1rem;font-weight:700;color:var(--blue);margin:14px 0 6px;}
+  .def-box,.rule-box,.note-box,.purple-box,.orange-box{border-radius:8px;padding:13px 16px;margin:14px 0;font-size:.97rem;line-height:1.65;}
+  .def-box{background:var(--blue-light);border-left:4px solid var(--blue);}
+  .def-box::before{content:'📘 Definition';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--blue);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .rule-box{background:var(--green-light);border-left:4px solid var(--green);}
+  .rule-box::before{content:'📗 Key Result';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--green);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .note-box{background:var(--red-light);border-left:4px solid var(--red);}
+  .note-box::before{content:'⚠️ Exam Tip';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--red);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .purple-box{background:var(--purple-light);border-left:4px solid var(--purple);}
+  .purple-box::before{content:'💡 Important';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--purple);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .orange-box{background:var(--orange-light);border-left:4px solid var(--orange);}
+  .orange-box::before{content:'🔧 How it works';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--orange);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .version-tag{display:inline-block;font-family:'Special Elite',cursive;font-size:.72rem;background:var(--accent);color:white;padding:1px 8px;border-radius:10px;margin-left:6px;vertical-align:middle;}
+  .qbox{background:#fffbf0;border:1.5px solid #e4cc88;border-radius:8px;padding:14px 16px;margin:14px 0;font-size:.96rem;}
+  .q-label{font-family:'Caveat',cursive;font-weight:700;font-size:1.05rem;color:var(--orange);margin-bottom:6px;}
+  .q-step{margin:5px 0;padding-left:16px;position:relative;line-height:1.6;color:var(--ink-light);}
+  .q-step::before{content:'→';position:absolute;left:0;color:var(--accent);font-weight:700;}
+  .q-ans{font-family:'Caveat',cursive;font-weight:700;font-size:1.05rem;color:var(--green);margin-top:8px;padding-top:6px;border-top:1px dashed #e4cc88;}
+  ul.plain{list-style:none;padding-left:0;margin:8px 0;}
+  ul.plain li{padding:4px 0 4px 22px;position:relative;line-height:1.6;font-size:.97rem;}
+  ul.plain li::before{content:'→';position:absolute;left:2px;color:var(--accent);font-weight:700;}
+  .formula{font-family:'Special Elite',cursive;background:rgba(91,33,182,.1);color:var(--purple);padding:2px 8px;border-radius:4px;font-size:.95em;display:inline-block;}
+  pre.code-block{background:#1e1e2e;color:#cdd6f4;border-radius:8px;padding:14px 16px;font-family:'Courier New',monospace;
+    font-size:.82rem;line-height:1.7;margin:12px 0;overflow-x:auto;border-left:4px solid var(--accent);}
+  .kw{color:#89b4fa;font-weight:bold;} .cm{color:#6c7086;font-style:italic;}
+  .st{color:#a6e3a1;} .nm{color:#fab387;} .tp{color:#f38ba8;} .fn{color:#cba6f7;} .an{color:#f9e2af;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:12px 0;}
+  @media(max-width:600px){.two-col{grid-template-columns:1fr;}}
+  table.tt{width:100%;border-collapse:collapse;font-size:.9rem;margin:12px 0;}
+  table.tt th{background:var(--accent);color:white;padding:8px 12px;text-align:left;font-family:'Caveat',cursive;font-size:1rem;}
+  table.tt th.rev{background:var(--orange);}
+  table.tt td{padding:7px 12px;border-bottom:1px solid var(--rule-line);}
+  table.tt tr:nth-child(even) td{background:rgba(91,33,182,.04);}
+  .page-num{position:absolute;bottom:14px;right:22px;font-family:'Caveat',cursive;font-size:.85rem;color:#999;}
+  /* flash grid */
+  .flash-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0;}
+  .flash{border-radius:8px;padding:11px 14px;font-size:.91rem;line-height:1.6;}
+  .flash .flash-head{font-family:'Caveat',cursive;font-weight:700;font-size:1.05rem;margin-bottom:4px;}
+  .f-blue{background:#dbeafe;border-top:3px solid var(--blue);} .f-blue .flash-head{color:var(--blue);}
+  .f-green{background:#d1fae5;border-top:3px solid var(--green);} .f-green .flash-head{color:var(--green);}
+  .f-purp{background:#ede9fe;border-top:3px solid var(--purple);} .f-purp .flash-head{color:var(--purple);}
+  .f-red{background:#fee2e2;border-top:3px solid var(--red);} .f-red .flash-head{color:var(--red);}
+  .f-ora{background:#fef3c7;border-top:3px solid var(--orange);} .f-ora .flash-head{color:var(--orange);}
+  .f-teal{background:#cffafe;border-top:3px solid var(--teal);} .f-teal .flash-head{color:var(--teal);}
+  /* cheat */
+  .cheat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0;}
+  .cheat-item{background:#fff;border:1.5px solid var(--rule-line);border-radius:7px;padding:8px 12px;font-size:.87rem;line-height:1.55;}
+  .cheat-item .cheat-label{font-family:'Caveat',cursive;font-weight:700;font-size:.95rem;color:var(--accent);display:block;margin-bottom:3px;}
+  /* cover */
+  .cover-page{width:760px;max-width:98vw;margin:0 auto 28px;
+    background:linear-gradient(135deg,#1e0a4e 0%,#3b0764 50%,#6d28d9 100%);
+    border-radius:6px;box-shadow:6px 6px 20px rgba(0,0,0,.45);
+    padding:50px 60px 50px 80px;position:relative;overflow:hidden;color:white;min-height:460px;}
+  .cover-page::before{content:'';position:absolute;top:-60px;right:-60px;width:280px;height:280px;background:radial-gradient(circle,rgba(196,181,253,.3) 0%,transparent 70%);border-radius:50%;}
+  .cover-page::after{content:'';position:absolute;bottom:-40px;left:40px;width:200px;height:200px;background:radial-gradient(circle,rgba(167,243,208,.15) 0%,transparent 70%);border-radius:50%;}
+  .cover-holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-evenly;align-items:center;width:32px;}
+  .cover-subject{font-family:'Special Elite',cursive;font-size:.78rem;letter-spacing:.25em;text-transform:uppercase;color:#c4b5fd;margin-bottom:8px;position:relative;z-index:1;}
+  .cover-title{font-family:'Caveat',cursive;font-size:3rem;font-weight:700;line-height:1.1;margin-bottom:6px;position:relative;z-index:1;}
+  .cover-unit{font-family:'Kalam',cursive;font-size:1.15rem;color:#bbf7d0;margin-bottom:4px;position:relative;z-index:1;}
+  .cover-subtitle{font-family:'Kalam',cursive;font-size:.95rem;color:#fde68a;margin-bottom:22px;position:relative;z-index:1;}
+  .cover-part-badge{display:inline-block;background:var(--accent);color:white;font-family:'Caveat',cursive;font-weight:700;font-size:1.1rem;padding:6px 20px;border-radius:20px;margin-bottom:22px;position:relative;z-index:1;letter-spacing:.06em;}
+  .cover-toc{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.2);padding-top:18px;}
+  .cover-toc h3{font-family:'Special Elite',cursive;font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:#c4b5fd;margin-bottom:10px;}
+  .toc-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px dotted rgba(255,255,255,.12);}
+  .toc-sec{font-family:'Caveat',cursive;font-size:.98rem;font-weight:600;color:#f5f5f5;}
+  .toc-sec span.toc-num{color:#c4b5fd;margin-right:8px;font-family:'Special Elite',cursive;}
+  .toc-pages{font-family:'Special Elite',cursive;font-size:.75rem;color:#a6adc8;background:rgba(255,255,255,.07);padding:2px 8px;border-radius:8px;}
+  p{line-height:1.7;margin:8px 0;font-size:.97rem;}
+  strong{color:var(--ink);}
+  code{font-family:'Courier New',monospace;font-size:.9em;background:rgba(0,0,0,.07);padding:1px 5px;border-radius:3px;}
+  .hl-yellow{background:#fff176;border-radius:3px;padding:0 3px;}
+</style>
 </head>
 <body>
 
-<div class="part-nav">
+<nav class="part-nav">
   <a href="../index.html" class="back">↩ Units</a>
-  <a href="part1.html">Part 1</a>
-  <a href="part2.html">Part 2</a>
-  <a href="part3.html" class="active">Part 3</a>
-</div>
+  <a href="part1.html">◆ Part 1 — Lambdas &amp; Streams</a>
+  <a href="part2.html">◆ Part 2 — Default/Static/Base64/forEach/Try/Annotations</a>
+  <a href="part3.html" class="active">◆ Part 3 — Modules, Records, Sealed &amp; Revision</a>
+</nav>
 
-<div class="cover-page" style="background:linear-gradient(135deg,#1b5e20 0%,#00695c 100%);">
-  <div class="cover-subject">OBJECT-ORIENTED PROGRAMMING IN JAVA</div>
-  <div class="cover-title">Unit 3 — Part 3</div>
-  <div class="cover-unit">[ Awaiting Content ]</div>
-  <div class="cover-divider"></div>
+<div class="cover-page">
+  <div class="cover-holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="cover-subject">Object-Oriented Programming in Java</div>
+  <div class="cover-title">Unit 3 Notes</div>
+  <div class="cover-unit">Unit 3 — Java New Features (Part 3 — Final)</div>
+  <div class="cover-subtitle">Module System · var · Switch Expressions · Yield · Text Blocks · Records · Sealed Classes · Quick Revision</div>
+  <div class="cover-part-badge">📒 Part 3 of 3 — Final</div>
   <div class="cover-toc">
-    <div class="cover-toc-item" style="opacity:0.6;font-style:italic;justify-content:center;"><span>Content to be added</span></div>
+    <h3>Contents — Part 3</h3>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§11</span> Java Module System (JPMS)</div><div class="toc-pages">2 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§12</span> Diamond Syntax with Anonymous Inner Class</div><div class="toc-pages">1 page</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§13</span> Local Variable Type Inference (var)</div><div class="toc-pages">1 page</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§14</span> Switch Expressions &amp; Yield Keyword</div><div class="toc-pages">2 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§15</span> Text Blocks</div><div class="toc-pages">1 page</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§16</span> Records</div><div class="toc-pages">2 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§17</span> Sealed Classes</div><div class="toc-pages">2 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§18</span> ⚡ Quick Revision — All Unit 3 Topics</div><div class="toc-pages">3 pages</div></div>
   </div>
 </div>
 
-<!-- ================================================
-     ADD CONTENT SECTIONS BELOW THIS LINE
+<!-- ══ §11 — MODULE SYSTEM (2 pages) ══ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 3</span><span class="unit-badge">SECTION 11</span></div>
+  <h1 class="section-title"><span class="sn">§11</span> Java Module System (JPMS) <span class="version-tag">Java 9</span></h1>
+  <hr class="divider">
 
-     Each section pattern:
+  <h2 class="topic">What is JPMS?</h2>
+  <div class="def-box">
+    The <strong>Java Platform Module System</strong> (JPMS, Project Jigsaw) introduced in Java 9 provides a higher level of abstraction above packages. A <strong>module</strong> is a named, self-describing collection of packages, resources, and a module descriptor (<code>module-info.java</code>).
+  </div>
 
-     <div class="page">
-       <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
-       <div class="page-header">
-         <span class="date-tag">OOP-JAVA — Unit 3</span>
-         <span class="unit-badge">SECTION X</span>
-       </div>
-       <h1 class="section-title"><span class="sn">§X</span> Title Here</h1>
-       <hr class="divider">
-       ... content ...
-       <div class="page-num">1 / 1</div>
-     </div>
-     ================================================ -->
+  <h2 class="topic">Problems JPMS Solves</h2>
+  <ul class="plain">
+    <li><strong>Classpath hell:</strong> Before Java 9, any class could access any other public class — no enforcement of package boundaries across JARs.</li>
+    <li><strong>JDK monolith:</strong> All JDK classes were available even if you only needed a fraction. JPMS splits JDK into ~98 modules.</li>
+    <li><strong>Reliable configuration:</strong> Modules declare dependencies explicitly — missing dependencies detected at startup, not runtime.</li>
+    <li><strong>Strong encapsulation:</strong> Internal packages not explicitly exported are invisible to other modules.</li>
+  </ul>
+
+  <h2 class="topic">module-info.java</h2>
+  <pre class="code-block"><span class="cm">// File: src/com.myapp/module-info.java</span>
+<span class="kw">module</span> com.myapp {
+
+    <span class="cm">// Declare what this module NEEDS</span>
+    <span class="kw">requires</span> java.sql;           <span class="cm">// needs java.sql module</span>
+    <span class="kw">requires</span> java.logging;       <span class="cm">// needs java.logging</span>
+    <span class="kw">requires transitive</span> java.xml;<span class="cm">// transitive: modules requiring com.myapp also get java.xml</span>
+
+    <span class="cm">// Declare what this module EXPOSES</span>
+    <span class="kw">exports</span> com.myapp.api;       <span class="cm">// everyone can use this package</span>
+    <span class="kw">exports</span> com.myapp.model <span class="kw">to</span> com.myapp.ui, com.myapp.service; <span class="cm">// qualified export</span>
+
+    <span class="cm">// For reflection (e.g., frameworks like Spring, JPA)</span>
+    <span class="kw">opens</span> com.myapp.entities;    <span class="cm">// allows deep reflection at runtime</span>
+    <span class="kw">opens</span> com.myapp.impl <span class="kw">to</span> spring.core; <span class="cm">// qualified open</span>
+
+    <span class="cm">// Service provider/consumer (ServiceLoader pattern)</span>
+    <span class="kw">uses</span> com.myapp.spi.Plugin;   <span class="cm">// this module consumes Plugin service</span>
+    <span class="kw">provides</span> com.myapp.spi.Plugin
+        <span class="kw">with</span> com.myapp.impl.DefaultPlugin;  <span class="cm">// this module provides an implementation</span>
+}</pre>
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 3</span><span class="unit-badge">SECTION 11</span></div>
+
+  <h2 class="topic">Module Directives Summary</h2>
+  <table class="tt">
+    <tr><th>Directive</th><th>Meaning</th></tr>
+    <tr><td><code>requires M</code></td><td>This module depends on module M (compile + runtime)</td></tr>
+    <tr><td><code>requires transitive M</code></td><td>Dependents of this module also get M transitively</td></tr>
+    <tr><td><code>requires static M</code></td><td>M needed at compile time only (optional at runtime)</td></tr>
+    <tr><td><code>exports pkg</code></td><td>Makes package pkg visible to all modules</td></tr>
+    <tr><td><code>exports pkg to M1, M2</code></td><td>Qualified export — visible only to M1 and M2</td></tr>
+    <tr><td><code>opens pkg</code></td><td>Allows runtime reflection (e.g., for frameworks)</td></tr>
+    <tr><td><code>opens pkg to M</code></td><td>Qualified open — reflection allowed only by M</td></tr>
+    <tr><td><code>uses I</code></td><td>This module uses a service defined by interface I</td></tr>
+    <tr><td><code>provides I with C</code></td><td>This module provides implementation C for service I</td></tr>
+  </table>
+
+  <h2 class="topic">Compiling &amp; Running Modules</h2>
+  <pre class="code-block"><span class="cm"># Project structure:</span>
+<span class="cm"># src/com.myapp/module-info.java</span>
+<span class="cm"># src/com.myapp/com/myapp/Main.java</span>
+
+<span class="cm"># Compile</span>
+javac --module-source-path src -d mods -m com.myapp
+
+<span class="cm"># Run</span>
+java --module-path mods -m com.myapp/com.myapp.Main
+
+<span class="cm"># List all JDK modules</span>
+java --list-modules
+
+<span class="cm"># Show module dependencies</span>
+java --describe-module java.sql</pre>
+
+  <div class="rule-box">
+    <strong>Key JPMS benefits:</strong>
+    <ul class="plain" style="margin-top:6px">
+      <li>Strong encapsulation — unexported packages truly private.</li>
+      <li>Reliable configuration — missing modules detected at app startup.</li>
+      <li>Smaller deployments — jlink tool creates custom JRE with only needed modules.</li>
+      <li>Better security — reduces attack surface by hiding internal APIs.</li>
+    </ul>
+  </div>
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══ §12 — DIAMOND WITH ANONYMOUS CLASS (1 page) ══ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 3</span><span class="unit-badge">SECTION 12</span></div>
+  <h1 class="section-title"><span class="sn">§12</span> Diamond Syntax with Anonymous Inner Class <span class="version-tag">Java 9</span></h1>
+  <hr class="divider">
+
+  <h2 class="topic">The Evolution of Diamond Operator &lt;&gt;</h2>
+  <div class="def-box">
+    The <strong>diamond operator</strong> <code>&lt;&gt;</code> allows the compiler to infer generic type arguments. Java 7 introduced it for regular class instantiation. Java 9 extended it to work with <strong>anonymous inner classes</strong>.
+  </div>
+
+  <pre class="code-block"><span class="cm">// Java 5-6 — must repeat type parameter</span>
+List&lt;String&gt; list = <span class="kw">new</span> ArrayList&lt;String&gt;();   <span class="cm">// verbose</span>
+
+<span class="cm">// Java 7 — diamond for regular classes</span>
+List&lt;String&gt; list = <span class="kw">new</span> ArrayList&lt;&gt;();           <span class="cm">// ✅ type inferred</span>
+Map&lt;String, List&lt;Integer&gt;&gt; map = <span class="kw">new</span> HashMap&lt;&gt;(); <span class="cm">// infers complex generic</span>
+
+<span class="cm">// Java 7 — anonymous class with diamond — ❌ NOT allowed</span>
+Comparator&lt;String&gt; cmp = <span class="kw">new</span> Comparator&lt;&gt;() {    <span class="cm">// ❌ Java 7 error!</span>
+    <span class="kw">public int</span> compare(String a, String b) { <span class="kw">return</span> a.compareTo(b); }
+};
+
+<span class="cm">// Java 9+ — anonymous class WITH diamond ✅</span>
+Comparator&lt;String&gt; cmp = <span class="kw">new</span> Comparator&lt;&gt;() {    <span class="cm">// ✅ works in Java 9+</span>
+    <span class="kw">public int</span> compare(String a, String b) { <span class="kw">return</span> a.compareTo(b); }
+};
+
+<span class="cm">// Generic abstract class with anonymous class + diamond</span>
+<span class="kw">abstract class</span> <span class="tp">Container</span>&lt;T&gt; {
+    <span class="kw">abstract</span> T <span class="fn">get</span>();
+}
+Container&lt;String&gt; c = <span class="kw">new</span> Container&lt;&gt;() {        <span class="cm">// ✅ Java 9</span>
+    <span class="kw">public</span> String <span class="fn">get</span>() { <span class="kw">return</span> <span class="st">"Hello"</span>; }
+};</pre>
+
+  <div class="note-box">
+    In practice, anonymous classes are rarely needed now — lambdas serve the same purpose for functional interfaces more concisely. The diamond operator for anonymous classes mainly helps when using generic abstract classes where lambdas don't apply.
+  </div>
+
+  <div class="rule-box">
+    <strong>Quick summary — Diamond &lt;&gt; history:</strong><br>
+    Java 5: Generics introduced, must write full type. &nbsp;|&nbsp; Java 7: <code>&lt;&gt;</code> for regular classes. &nbsp;|&nbsp; Java 9: <code>&lt;&gt;</code> also for anonymous inner classes.
+  </div>
+  <div class="page-num">1 / 1</div>
+</div>
+
+<!-- ══ §13 — VAR (1 page) ══ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 3</span><span class="unit-badge">SECTION 13</span></div>
+  <h1 class="section-title"><span class="sn">§13</span> Local Variable Type Inference — var <span class="version-tag">Java 10</span></h1>
+  <hr class="divider">
+
+  <h2 class="topic">What is var?</h2>
+  <div class="def-box">
+    <code>var</code> is a reserved type name (NOT a keyword) that tells the compiler to infer the type of a local variable from its initialiser. The variable still has a static type — it's just written implicitly.
+  </div>
+
+  <pre class="code-block"><span class="cm">// Without var</span>
+ArrayList&lt;String&gt; names = <span class="kw">new</span> ArrayList&lt;String&gt;();
+Map&lt;String, List&lt;Integer&gt;&gt; map = <span class="kw">new</span> HashMap&lt;&gt;();
+
+<span class="cm">// With var — cleaner, DRY (Don't Repeat Yourself)</span>
+<span class="kw">var</span> names = <span class="kw">new</span> ArrayList&lt;String&gt;();       <span class="cm">// inferred: ArrayList&lt;String&gt;</span>
+<span class="kw">var</span> map   = <span class="kw">new</span> HashMap&lt;String, List&lt;Integer&gt;&gt;();
+<span class="kw">var</span> score = <span class="nm">42</span>;                             <span class="cm">// inferred: int</span>
+<span class="kw">var</span> pi    = <span class="nm">3.14</span>;                           <span class="cm">// inferred: double</span>
+<span class="kw">var</span> msg   = <span class="st">"Hello"</span>;                        <span class="cm">// inferred: String</span>
+
+<span class="cm">// var in for-each and traditional loops</span>
+<span class="kw">for</span> (<span class="kw">var</span> name : names) System.out.println(name);
+<span class="kw">for</span> (<span class="kw">var</span> i = <span class="nm">0</span>; i < <span class="nm">10</span>; i++) System.out.print(i);
+
+<span class="cm">// var with try-with-resources (Java 11+)</span>
+<span class="kw">try</span> (<span class="kw">var</span> br = <span class="kw">new</span> BufferedReader(<span class="kw">new</span> FileReader(<span class="st">"file.txt"</span>))) {
+    <span class="kw">var</span> line = br.readLine();
+}
+
+<span class="cm">// ❌ var CANNOT be used for:</span>
+<span class="kw">var</span> x;                        <span class="cm">// no initialiser</span>
+<span class="kw">var</span> y = <span class="kw">null</span>;                 <span class="cm">// can't infer from null</span>
+<span class="kw">var</span> arr = {<span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>};         <span class="cm">// array initialiser without type</span>
+<span class="cm">// var cannot be used for fields, parameters, or return types</span></pre>
+
+  <div class="rule-box">
+    <strong>var restrictions — only allowed for:</strong> local variables with an initialiser, for-loop index variable, enhanced for-loop element variable, try-with-resources resource variable, and lambda parameter (Java 11+: <code>(var x) -> x.length()</code>).
+    <br><strong>NOT allowed for:</strong> fields, method parameters, return types, catch variable types.
+  </div>
+
+  <div class="note-box">
+    <code>var</code> is statically typed — the inferred type is fixed at compile time. It is NOT dynamic typing like JavaScript. After declaration, the variable cannot hold a different type.
+  </div>
+  <div class="page-num">1 / 1</div>
+</div>
+
+<!-- ══ §14 — SWITCH EXPRESSIONS & YIELD (2 pages) ══ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 3</span><span class="unit-badge">SECTION 14</span></div>
+  <h1 class="section-title"><span class="sn">§14</span> Switch Expressions &amp; Yield <span class="version-tag">Java 14</span></h1>
+  <hr class="divider">
+
+  <h2 class="topic">Switch Statement (Traditional) vs Switch Expression</h2>
+  <pre class="code-block"><span class="cm">// ── Old switch STATEMENT (Java 1+) ──</span>
+<span class="kw">int</span> day = <span class="nm">3</span>;
+String name;
+<span class="kw">switch</span> (day) {
+    <span class="kw">case</span> <span class="nm">1</span>: name = <span class="st">"Monday"</span>; <span class="kw">break</span>;
+    <span class="kw">case</span> <span class="nm">2</span>: name = <span class="st">"Tuesday"</span>; <span class="kw">break</span>;
+    <span class="kw">case</span> <span class="nm">3</span>: name = <span class="st">"Wednesday"</span>; <span class="kw">break</span>;
+    <span class="kw">default</span>: name = <span class="st">"Unknown"</span>;
+}
+
+<span class="cm">// ── New switch EXPRESSION (Java 14+, preview Java 12/13) ──</span>
+String name = <span class="kw">switch</span> (day) {
+    <span class="kw">case</span> <span class="nm">1</span> -> <span class="st">"Monday"</span>;       <span class="cm">// arrow syntax — no break needed, no fall-through</span>
+    <span class="kw">case</span> <span class="nm">2</span> -> <span class="st">"Tuesday"</span>;
+    <span class="kw">case</span> <span class="nm">3</span> -> <span class="st">"Wednesday"</span>;
+    <span class="kw">case</span> <span class="nm">4</span>, <span class="nm">5</span> -> <span class="st">"Thu/Fri"</span>;   <span class="cm">// multiple labels per case</span>
+    <span class="kw">default</span> -> <span class="st">"Weekend"</span>;
+};                              <span class="cm">// note: switch expression ends with semicolon</span>
+
+<span class="cm">// ── Switch expression with blocks and yield ──</span>
+<span class="kw">int</span> numLetters = <span class="kw">switch</span> (day) {
+    <span class="kw">case</span> <span class="nm">1</span>, <span class="nm">2</span>, <span class="nm">3</span>, <span class="nm">4</span>, <span class="nm">6</span>, <span class="nm">7</span> -> <span class="nm">6</span>;    <span class="cm">// expression — returned directly</span>
+    <span class="kw">case</span> <span class="nm">5</span> -> {
+        System.out.println(<span class="st">"Friday!"</span>);
+        <span class="kw">yield</span> <span class="nm">6</span>;                       <span class="cm">// yield — return value from block</span>
+    }
+    <span class="kw">default</span> -> {
+        System.out.println(<span class="st">"Unknown day: "</span> + day);
+        <span class="kw">yield</span> -<span class="nm">1</span>;
+    }
+};</pre>
+
+  <h2 class="topic">The yield Keyword</h2>
+  <div class="def-box">
+    <code>yield</code> (Java 13+) is used inside a switch expression block to return a value from that block. It's like <code>return</code> but for switch expression cases that need multiple statements before producing a value. <em>Not usable outside switch expressions.</em>
+  </div>
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 3</span><span class="unit-badge">SECTION 14</span></div>
+
+  <h2 class="topic">Switch Expressions with Enums &amp; Pattern Matching</h2>
+  <pre class="code-block"><span class="kw">enum</span> <span class="tp">Season</span> { SPRING, SUMMER, AUTUMN, WINTER }
+
+String activity = <span class="kw">switch</span> (season) {
+    <span class="kw">case</span> SPRING -> <span class="st">"Gardening"</span>;
+    <span class="kw">case</span> SUMMER -> <span class="st">"Swimming"</span>;
+    <span class="kw">case</span> AUTUMN -> <span class="st">"Hiking"</span>;
+    <span class="kw">case</span> WINTER -> <span class="st">"Skiing"</span>;
+};  <span class="cm">// no default needed — enum is exhaustive</span>
+
+<span class="cm">// Pattern matching in switch (Java 21 — standard)</span>
+Object obj = <span class="st">"Hello"</span>;
+String result = <span class="kw">switch</span> (obj) {
+    <span class="kw">case</span> Integer i -> <span class="st">"Integer: "</span> + i;
+    <span class="kw">case</span> String s  -> <span class="st">"String: "</span> + s.toUpperCase();
+    <span class="kw">case</span> <span class="kw">null</span>      -> <span class="st">"null value"</span>;
+    <span class="kw">default</span>        -> <span class="st">"Other: "</span> + obj;
+};</pre>
+
+  <div class="rule-box">
+    <strong>Old vs New switch — comparison:</strong>
+    <table class="tt" style="margin-top:8px;">
+      <tr><th>Aspect</th><th>switch statement</th><th>switch expression</th></tr>
+      <tr><td>Returns value?</td><td>❌ No</td><td>✅ Yes</td></tr>
+      <tr><td>Fall-through?</td><td>✅ Yes (use break to avoid)</td><td>❌ No (arrow cases)</td></tr>
+      <tr><td>Multiple labels?</td><td>Stack cases (no comma)</td><td><code>case 1, 2, 3 -></code></td></tr>
+      <tr><td>Return value in block</td><td>N/A</td><td><code>yield value;</code></td></tr>
+      <tr><td>Exhaustiveness</td><td>Optional</td><td>Required (all cases must be covered)</td></tr>
+    </table>
+  </div>
+
+  <div class="note-box">
+    <strong>Exhaustiveness:</strong> Switch expressions MUST cover all possible values (either with explicit cases or a <code>default</code>). For enums with all values covered, no default needed. Missing a case → compile error.
+  </div>
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══ §15 — TEXT BLOCKS (1 page) ══ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 3</span><span class="unit-badge">SECTION 15</span></div>
+  <h1 class="section-title"><span class="sn">§15</span> Text Blocks <span class="version-tag">Java 15</span></h1>
+  <hr class="divider">
+
+  <h2 class="topic">What are Text Blocks?</h2>
+  <div class="def-box">
+    A <strong>text block</strong> is a multi-line string literal that eliminates the need for most escape sequences and string concatenation. It starts with <code>"""</code> (triple double-quote) on its own line and ends with <code>"""</code>.
+  </div>
+
+  <pre class="code-block"><span class="cm">// ── Old way — ugly, escape-heavy ──</span>
+String html = <span class="st">"&lt;html&gt;\n"</span> +
+              <span class="st">"  &lt;body&gt;\n"</span> +
+              <span class="st">"    &lt;p&gt;Hello&lt;/p&gt;\n"</span> +
+              <span class="st">"  &lt;/body&gt;\n"</span> +
+              <span class="st">"&lt;/html&gt;"</span>;
+
+<span class="cm">// ── Text block — clean and readable ──</span>
+String html = <span class="st">"""
+              &lt;html&gt;
+                &lt;body&gt;
+                  &lt;p&gt;Hello&lt;/p&gt;
+                &lt;/body&gt;
+              &lt;/html&gt;
+              """</span>;
+
+<span class="cm">// JSON text block</span>
+String json = <span class="st">"""
+        {
+            "name": "Alice",
+            "age": 30,
+            "city": "Mumbai"
+        }
+        """</span>;
+
+<span class="cm">// SQL text block</span>
+String query = <span class="st">"""
+        SELECT name, age
+        FROM students
+        WHERE score > 90
+        ORDER BY name
+        """</span>;
+
+<span class="cm">// Trailing """ position controls indentation stripping</span>
+<span class="cm">// Incidental whitespace = whitespace common to all lines is removed</span>
+
+<span class="cm">// String methods on text blocks</span>
+String noTrailingNewline = <span class="st">"""
+        Hello!"""</span>;       <span class="cm">// closing """ on same line = no trailing newline</span>
+
+<span class="cm">// Escape sequences in text blocks</span>
+String withBackslash = <span class="st">"""
+        First line \
+        continues here"""</span>;  <span class="cm">// \  = line continuation (no newline inserted)</span>
+
+String withNewlines = <span class="st">"""
+        A\nB\nC"""</span>;      <span class="cm">// explicit \n = newline (can mix)</span></pre>
+
+  <div class="rule-box">
+    <strong>Text block rules:</strong>
+    <ul class="plain" style="margin-top:6px">
+      <li>Opening <code>"""</code> must be followed by a newline (no content on same line).</li>
+      <li>Indentation is stripped based on the minimum common leading whitespace.</li>
+      <li>Trailing whitespace on each line is also stripped.</li>
+      <li><code>\</code> at end of line = line continuation (no newline in output).</li>
+      <li><code>\s</code> = explicit single space (prevents trimming of trailing spaces).</li>
+    </ul>
+  </div>
+  <div class="page-num">1 / 1</div>
+</div>
+
+<!-- ══ §16 — RECORDS (2 pages) ══ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 3</span><span class="unit-badge">SECTION 16</span></div>
+  <h1 class="section-title"><span class="sn">§16</span> Records <span class="version-tag">Java 16</span></h1>
+  <hr class="divider">
+
+  <h2 class="topic">What are Records?</h2>
+  <div class="def-box">
+    A <strong>record</strong> is a special class designed to be a transparent, immutable data carrier. The compiler automatically generates: constructor, getters (accessor methods), <code>equals()</code>, <code>hashCode()</code>, and <code>toString()</code> — eliminating the boilerplate of a typical POJO/DTO.
+    <br>Keyword: <span class="formula">record</span>
+  </div>
+
+  <pre class="code-block"><span class="cm">// ── Old POJO — 50+ lines of boilerplate ──</span>
+<span class="kw">class</span> <span class="tp">PointOld</span> {
+    <span class="kw">private final double</span> x, y;
+    <span class="kw">public</span> PointOld(<span class="kw">double</span> x, <span class="kw">double</span> y) { <span class="kw">this</span>.x=x; <span class="kw">this</span>.y=y; }
+    <span class="kw">public double</span> getX() { <span class="kw">return</span> x; }
+    <span class="kw">public double</span> getY() { <span class="kw">return</span> y; }
+    <span class="kw">public boolean</span> equals(Object o) { <span class="cm">/* ... */</span> }
+    <span class="kw">public int</span> hashCode() { <span class="cm">/* ... */</span> }
+    <span class="kw">public</span> String toString() { <span class="kw">return</span> <span class="st">"Point["</span>+x+<span class="st">","</span>+y+<span class="st">"]"</span>; }
+}
+
+<span class="cm">// ── Record — same thing, ONE line ──</span>
+<span class="kw">record</span> <span class="tp">Point</span>(<span class="kw">double</span> x, <span class="kw">double</span> y) {}
+
+<span class="cm">// Using the record</span>
+Point p = <span class="kw">new</span> Point(<span class="nm">3.0</span>, <span class="nm">4.0</span>);
+System.out.println(p.x());          <span class="cm">// 3.0 — accessor (not getX()!)</span>
+System.out.println(p.y());          <span class="cm">// 4.0</span>
+System.out.println(p);              <span class="cm">// Point[x=3.0, y=4.0]</span>
+System.out.println(p.equals(<span class="kw">new</span> Point(<span class="nm">3.0</span>, <span class="nm">4.0</span>)));  <span class="cm">// true</span></pre>
+
+  <h2 class="topic">Records with Custom Behaviour</h2>
+  <pre class="code-block"><span class="kw">record</span> <span class="tp">Person</span>(String name, <span class="kw">int</span> age) {
+
+    <span class="cm">// Compact constructor — add validation (no params needed)</span>
+    <span class="tp">Person</span> {
+        <span class="kw">if</span> (name == <span class="kw">null</span> || name.isBlank()) <span class="kw">throw new</span> IllegalArgumentException(<span class="st">"Name required"</span>);
+        <span class="kw">if</span> (age < <span class="nm">0</span>) <span class="kw">throw new</span> IllegalArgumentException(<span class="st">"Age cannot be negative"</span>);
+        name = name.trim();   <span class="cm">// can transform components before assignment</span>
+    }
+
+    <span class="cm">// Additional instance methods</span>
+    boolean <span class="fn">isAdult</span>() { <span class="kw">return</span> age >= <span class="nm">18</span>; }
+    String <span class="fn">greeting</span>() { <span class="kw">return</span> <span class="st">"Hi, I'm "</span> + name + <span class="st">", age "</span> + age; }
+
+    <span class="cm">// Static factory method</span>
+    <span class="kw">static</span> Person <span class="fn">anonymous</span>() { <span class="kw">return new</span> Person(<span class="st">"Anonymous"</span>, <span class="nm">0</span>); }
+}</pre>
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 3</span><span class="unit-badge">SECTION 16</span></div>
+
+  <h2 class="topic">Record Characteristics</h2>
+  <table class="tt">
+    <tr><th>Characteristic</th><th>Detail</th></tr>
+    <tr><td><strong>Immutable</strong></td><td>All components are <code>private final</code> — no setters.</td></tr>
+    <tr><td><strong>Accessor naming</strong></td><td><code>x()</code> not <code>getX()</code> — just the component name.</td></tr>
+    <tr><td><strong>Cannot extend</strong></td><td>Records implicitly extend <code>java.lang.Record</code>. Cannot extend another class.</td></tr>
+    <tr><td><strong>Can implement interfaces</strong></td><td>Records CAN implement interfaces.</td></tr>
+    <tr><td><strong>Auto-generated</strong></td><td>Constructor, accessors, equals(), hashCode(), toString() are auto-generated.</td></tr>
+    <tr><td><strong>Cannot be abstract</strong></td><td>Records are implicitly <code>final</code> — cannot be subclassed or abstract.</td></tr>
+    <tr><td><strong>Compact constructor</strong></td><td>Constructor with no params in header — components are assigned after body.</td></tr>
+    <tr><td><strong>Static members allowed</strong></td><td>Can have static fields, static methods, static nested classes.</td></tr>
+  </table>
+
+  <div class="purple-box">
+    <strong>Records as DTOs:</strong> Records are perfect for Data Transfer Objects (DTOs), value objects, API responses, and immutable data carriers. They work great with <code>Optional</code>, <code>Stream</code>, and JSON serialisation frameworks like Jackson (with config).
+  </div>
+
+  <pre class="code-block"><span class="cm">// Record implementing interface</span>
+<span class="kw">interface</span> <span class="tp">Describable</span> { String <span class="fn">describe</span>(); }
+
+<span class="kw">record</span> <span class="tp">Car</span>(String brand, <span class="kw">int</span> year) <span class="kw">implements</span> Describable {
+    <span class="kw">public</span> String <span class="fn">describe</span>() { <span class="kw">return</span> brand + <span class="st">" ("</span> + year + <span class="st">")"</span>; }
+}
+
+<span class="cm">// Records in streams</span>
+List&lt;Person&gt; people = List.of(<span class="kw">new</span> Person(<span class="st">"Alice"</span>, <span class="nm">30</span>), <span class="kw">new</span> Person(<span class="st">"Bob"</span>, <span class="nm">17</span>));
+people.stream()
+      .filter(Person::isAdult)
+      .map(Person::greeting)
+      .forEach(System.out::println);</pre>
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══ §17 — SEALED CLASSES (2 pages) ══ -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 3</span><span class="unit-badge">SECTION 17</span></div>
+  <h1 class="section-title"><span class="sn">§17</span> Sealed Classes <span class="version-tag">Java 17</span></h1>
+  <hr class="divider">
+
+  <h2 class="topic">What are Sealed Classes?</h2>
+  <div class="def-box">
+    A <strong>sealed class</strong> restricts which other classes may extend (or implement) it. The permitted subclasses are listed explicitly in the <code>permits</code> clause. This creates a closed, controlled class hierarchy.
+    <br>Keywords: <span class="formula">sealed</span>, <span class="formula">permits</span>, <span class="formula">non-sealed</span>
+  </div>
+
+  <div class="orange-box">
+    <strong>Why sealed?</strong> Previously you could either allow ALL classes to extend (open), or allow NONE (final). Sealed gives a middle ground — only specific, listed classes can extend.
+  </div>
+
+  <pre class="code-block"><span class="cm">// ── Sealed class hierarchy ──</span>
+<span class="kw">sealed class</span> <span class="tp">Shape</span> <span class="kw">permits</span> Circle, Rectangle, Triangle {}
+
+<span class="cm">// Permitted subclass options:</span>
+
+<span class="cm">// 1. final — no further subclassing</span>
+<span class="kw">final class</span> <span class="tp">Circle</span> <span class="kw">extends</span> <span class="tp">Shape</span> {
+    <span class="kw">double</span> radius;
+    Circle(<span class="kw">double</span> r) { radius = r; }
+}
+
+<span class="cm">// 2. sealed — further restricted subclassing</span>
+<span class="kw">sealed class</span> <span class="tp">Rectangle</span> <span class="kw">extends</span> <span class="tp">Shape</span> <span class="kw">permits</span> Square {
+    <span class="kw">double</span> width, height;
+}
+<span class="kw">final class</span> <span class="tp">Square</span> <span class="kw">extends</span> <span class="tp">Rectangle</span> {}
+
+<span class="cm">// 3. non-sealed — reopens for any subclassing</span>
+<span class="kw">non-sealed class</span> <span class="tp">Triangle</span> <span class="kw">extends</span> <span class="tp">Shape</span> {}
+<span class="kw">class</span> <span class="tp">EquilateralTriangle</span> <span class="kw">extends</span> <span class="tp">Triangle</span> {}  <span class="cm">// ✅ allowed — Triangle is non-sealed</span>
+<span class="cm">// class Hexagon extends Shape {} ❌ NOT permitted — not in Shape's permits list</span></pre>
+
+  <div class="rule-box">
+    Every permitted subclass MUST be: <code>final</code>, <code>sealed</code>, or <code>non-sealed</code>.
+    The subclass must be in the same package (or same module) as the sealed class.
+  </div>
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 3</span><span class="unit-badge">SECTION 17</span></div>
+
+  <h2 class="topic">Sealed Interfaces</h2>
+  <pre class="code-block"><span class="cm">// Sealed interface — works the same way</span>
+<span class="kw">sealed interface</span> <span class="tp">Expr</span> <span class="kw">permits</span> Num, Add, Mul {}
+
+<span class="kw">record</span> <span class="tp">Num</span>(<span class="kw">int</span> value) <span class="kw">implements</span> Expr {}
+<span class="kw">record</span> <span class="tp">Add</span>(<span class="tp">Expr</span> left, <span class="tp">Expr</span> right) <span class="kw">implements</span> Expr {}
+<span class="kw">record</span> <span class="tp">Mul</span>(<span class="tp">Expr</span> left, <span class="tp">Expr</span> right) <span class="kw">implements</span> Expr {}
+
+<span class="cm">// Pattern matching switch with sealed types — exhaustive, no default needed!</span>
+<span class="kw">int</span> <span class="fn">eval</span>(Expr e) {
+    <span class="kw">return switch</span> (e) {
+        <span class="kw">case</span> Num n  -> n.value();
+        <span class="kw">case</span> Add a  -> <span class="fn">eval</span>(a.left()) + <span class="fn">eval</span>(a.right());
+        <span class="kw">case</span> Mul m  -> <span class="fn">eval</span>(m.left()) * <span class="fn">eval</span>(m.right());
+    };  <span class="cm">// no default needed — sealed interface, compiler knows all subtypes</span>
+}</pre>
+
+  <h2 class="topic">Sealed Classes + Pattern Matching — Power Combo</h2>
+  <div class="purple-box">
+    Sealed classes work beautifully with <strong>pattern matching in switch</strong> — when all permitted subtypes are covered in a switch expression, no <code>default</code> is needed. The compiler can verify exhaustiveness at compile time. This is the main motivator for sealed classes.
+  </div>
+
+  <table class="tt">
+    <tr><th>Modifier on subclass</th><th>Meaning</th></tr>
+    <tr><td><code>final</code></td><td>No further subclassing allowed from this class</td></tr>
+    <tr><td><code>sealed</code></td><td>Further subclassing allowed but restricted to permits list</td></tr>
+    <tr><td><code>non-sealed</code></td><td>Reopens the class for unrestricted subclassing</td></tr>
+  </table>
+
+  <div class="note-box">
+    <strong>Sealed = controlled OOP hierarchy.</strong> Together with records and pattern matching, sealed classes complete Java's support for Algebraic Data Types (ADT) — a concept common in functional languages like Haskell and Scala.
+  </div>
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- ══ §18 — QUICK REVISION (3 pages) ══ -->
+<div class="page rev-page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 3</span><span class="unit-badge rev">⚡ QUICK REVISION</span></div>
+  <h1 class="section-title"><span class="sn-rev">§18</span> ⚡ Quick Revision — Java 8 Features</h1>
+  <hr class="divider-rev">
+
+  <h2 class="topic-rev">Feature Timeline</h2>
+  <table class="tt">
+    <tr><th class="rev">Java Version</th><th class="rev">Key New Features</th></tr>
+    <tr><td><strong>Java 8</strong></td><td>Lambda, Functional Interfaces, Stream API, Method References, Default/Static methods in interfaces, Optional, Base64, forEach, Date/Time API</td></tr>
+    <tr><td><strong>Java 9</strong></td><td>Module System (JPMS), Diamond with anonymous class, Stream.takeWhile/dropWhile, Optional.ifPresentOrElse</td></tr>
+    <tr><td><strong>Java 10</strong></td><td><code>var</code> for local variables</td></tr>
+    <tr><td><strong>Java 11</strong></td><td>var in lambda params, String methods (isBlank, lines, strip, repeat)</td></tr>
+    <tr><td><strong>Java 14</strong></td><td>Switch Expressions (standard)</td></tr>
+    <tr><td><strong>Java 15</strong></td><td>Text Blocks (standard)</td></tr>
+    <tr><td><strong>Java 16</strong></td><td>Records (standard), Pattern matching instanceof</td></tr>
+    <tr><td><strong>Java 17</strong></td><td>Sealed Classes (standard)</td></tr>
+    <tr><td><strong>Java 21</strong></td><td>Pattern matching in switch (standard), Virtual Threads, Sequenced Collections</td></tr>
+  </table>
+
+  <h2 class="topic-rev">Lambda & Functional Interface Cheatsheet</h2>
+  <div class="flash-grid">
+    <div class="flash f-blue"><div class="flash-head">Functional Interface</div>Interface with ONE abstract method (SAM). Annotate with @FunctionalInterface.</div>
+    <div class="flash f-green"><div class="flash-head">Lambda Syntax</div><code>(params) -> expr</code> or <code>(params) -> { stmts; }</code></div>
+    <div class="flash f-purp"><div class="flash-head">Predicate&lt;T&gt;</div><code>boolean test(T t)</code> — check condition. Compose with and/or/negate.</div>
+    <div class="flash f-ora"><div class="flash-head">Function&lt;T,R&gt;</div><code>R apply(T t)</code> — transform. Compose with andThen/compose.</div>
+    <div class="flash f-teal"><div class="flash-head">Consumer&lt;T&gt;</div><code>void accept(T t)</code> — action, no return. Used in forEach.</div>
+    <div class="flash f-red"><div class="flash-head">Supplier&lt;T&gt;</div><code>T get()</code> — no input, provides value. Used in orElseGet.</div>
+  </div>
+  <div class="page-num">1 / 3</div>
+</div>
+
+<div class="page rev-page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 3</span><span class="unit-badge rev">⚡ QUICK REVISION</span></div>
+
+  <h2 class="topic-rev">Stream API Cheatsheet</h2>
+  <div class="cheat-grid">
+    <div class="cheat-item"><span class="cheat-label">Stream pipeline</span>Source → Intermediate ops (lazy) → Terminal op (triggers execution)</div>
+    <div class="cheat-item"><span class="cheat-label">filter(Predicate)</span>Keep elements matching condition. Intermediate.</div>
+    <div class="cheat-item"><span class="cheat-label">map(Function)</span>Transform each element. Intermediate.</div>
+    <div class="cheat-item"><span class="cheat-label">flatMap(Function)</span>Map + flatten — one-to-many. Intermediate.</div>
+    <div class="cheat-item"><span class="cheat-label">sorted/distinct/limit</span>Sort, deduplicate, truncate. Intermediate (stateful).</div>
+    <div class="cheat-item"><span class="cheat-label">forEach(Consumer)</span>Action per element. Terminal — no return.</div>
+    <div class="cheat-item"><span class="cheat-label">collect(Collector)</span>Gather to List/Set/Map. Terminal. Collectors.toList(), joining(), groupingBy().</div>
+    <div class="cheat-item"><span class="cheat-label">reduce(id, BinaryOp)</span>Fold to single value. Terminal.</div>
+    <div class="cheat-item"><span class="cheat-label">count/min/max</span>Count, smallest, largest. Terminal. Returns long / Optional.</div>
+    <div class="cheat-item"><span class="cheat-label">anyMatch/allMatch</span>Boolean checks. Terminal. Short-circuits.</div>
+    <div class="cheat-item"><span class="cheat-label">findFirst/findAny</span>Returns Optional. Terminal. Lazy.</div>
+    <div class="cheat-item"><span class="cheat-label">Streams single-use</span>Terminal op consumed the stream. Cannot reuse — create new.</div>
+  </div>
+
+  <h2 class="topic-rev">Method References — 4 Types</h2>
+  <table class="tt">
+    <tr><th class="rev">Type</th><th class="rev">Syntax</th><th class="rev">Example</th></tr>
+    <tr><td>Static method</td><td><code>Class::staticMethod</code></td><td><code>Integer::parseInt</code></td></tr>
+    <tr><td>Specific instance</td><td><code>instance::method</code></td><td><code>System.out::println</code></td></tr>
+    <tr><td>Arbitrary instance</td><td><code>Class::instanceMethod</code></td><td><code>String::toUpperCase</code></td></tr>
+    <tr><td>Constructor</td><td><code>Class::new</code></td><td><code>ArrayList::new</code></td></tr>
+  </table>
+
+  <h2 class="topic-rev">Interface Features Summary</h2>
+  <table class="tt">
+    <tr><th class="rev">Feature</th><th class="rev">Java Ver</th><th class="rev">Key Point</th></tr>
+    <tr><td><code>default</code> method</td><td>Java 8</td><td>Has body, inherited, can override. Conflict → must override.</td></tr>
+    <tr><td><code>static</code> method</td><td>Java 8</td><td>Has body, NOT inherited. Call via InterfaceName.method().</td></tr>
+    <tr><td><code>private</code> method</td><td>Java 9</td><td>Helper for default/static methods. Not exposed outside interface.</td></tr>
+  </table>
+  <div class="page-num">2 / 3</div>
+</div>
+
+<div class="page rev-page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">OOP in Java — Unit 3</span><span class="unit-badge rev">⚡ QUICK REVISION</span></div>
+
+  <h2 class="topic-rev">Modern Java Features — Flash Cards</h2>
+  <div class="flash-grid">
+    <div class="flash f-blue"><div class="flash-head">var (Java 10)</div>Local variable type inference. Not dynamic. Cannot be null/uninitialised. Only for locals, for-loops, TWR.</div>
+    <div class="flash f-green"><div class="flash-head">Text Blocks (Java 15)</div>"""...""" Multi-line strings. Strips incidental indent. \ = line continuation. \s = explicit space.</div>
+    <div class="flash f-purp"><div class="flash-head">Records (Java 16)</div>Immutable data carrier. Auto: constructor, accessors (x() not getX()), equals, hashCode, toString. Implicitly final.</div>
+    <div class="flash f-ora"><div class="flash-head">Sealed Classes (Java 17)</div>Controls inheritance. permits lists allowed subclasses. Subclass must be final/sealed/non-sealed.</div>
+    <div class="flash f-red"><div class="flash-head">Switch Expressions (Java 14)</div>Returns value. -> syntax, no fall-through. yield for block body. Must be exhaustive.</div>
+    <div class="flash f-teal"><div class="flash-head">Module System (Java 9)</div>module-info.java. requires, exports, opens, uses, provides. Strong encapsulation. jlink for custom JRE.</div>
+  </div>
+
+  <h2 class="topic-rev">Top Exam Questions — Unit 3</h2>
+  <table class="tt">
+    <tr><th class="rev">#</th><th class="rev">Question</th><th class="rev">Answer</th></tr>
+    <tr><td>1</td><td>Can a functional interface have default methods?</td><td>YES — only ONE abstract method restriction. Any number of default/static allowed.</td></tr>
+    <tr><td>2</td><td>Can lambdas modify captured local variables?</td><td>NO — must be effectively final (read-only). Instance/static vars can be modified.</td></tr>
+    <tr><td>3</td><td>Difference: forEach on Collection vs Stream?</td><td>Collection.forEach = default method on Iterable. Stream.forEach = terminal op. Both accept Consumer.</td></tr>
+    <tr><td>4</td><td>What does yield do?</td><td>Returns a value from a switch expression block case. Not a general return — only in switch expr.</td></tr>
+    <tr><td>5</td><td>Record accessor method naming?</td><td><code>point.x()</code> not <code>point.getX()</code>. Component name is the accessor name.</td></tr>
+    <tr><td>6</td><td>Can a record extend a class?</td><td>NO — records implicitly extend java.lang.Record. Cannot extend another class. Can implement interfaces.</td></tr>
+    <tr><td>7</td><td>What must each permitted subclass of a sealed class be?</td><td>Either final, sealed, or non-sealed. Cannot be a regular (non-restricted) class.</td></tr>
+    <tr><td>8</td><td>Base64 vs encryption?</td><td>Base64 is encoding, NOT encryption. Anyone can decode it. Use for safe transmission, not security.</td></tr>
+    <tr><td>9</td><td>Can var be used for fields?</td><td>NO — only local variables, for-loop vars, and TWR variables.</td></tr>
+    <tr><td>10</td><td>What is a terminal vs intermediate stream operation?</td><td>Intermediate returns Stream (lazy, chainable). Terminal triggers execution, returns non-Stream result.</td></tr>
+  </table>
+
+  <div class="orange-box" style="margin-top:14px;">
+    <strong>🏁 Unit 3 — Complete!</strong> You've covered all major Java new features from Java 8 through Java 21. These are the modern Java skills most valued in industry and exams. Well done! 🚀
+  </div>
+  <div class="page-num">3 / 3</div>
+</div>
 
 <script>
-(function(){
-  var pages = document.querySelectorAll('.page');
-  var secPages = [];
-  pages.forEach(function(p){ if(p.querySelector('h1.section-title')) secPages.push(p); });
-  secPages.forEach(function(p,i){ p.id = 'sec-'+(i+1); });
-  var tocItems = document.querySelectorAll('.cover-toc-item');
-  tocItems.forEach(function(item, i){
-    if(i >= secPages.length) return;
-    item.style.cursor = 'pointer';
-    item.style.borderRadius = '4px';
-    item.style.transition = 'background 0.18s';
-    item.setAttribute('title', 'Click to jump to this section');
-    item.addEventListener('mouseenter', function(){ item.style.background='rgba(255,255,255,0.18)'; });
-    item.addEventListener('mouseleave', function(){ item.style.background=''; });
-    item.addEventListener('click', function(){ secPages[i].scrollIntoView({behavior:'smooth'}); });
-  });
-})();
+  document.querySelectorAll('.part-nav a').forEach(a=>{if(a.href===window.location.href)a.classList.add('active');});
 </script>
 </body>
 </html>
