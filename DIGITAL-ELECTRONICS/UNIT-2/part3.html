@@ -87,7 +87,21 @@ table.tt tr:nth-child(even) td{background:#e3f2fd}
 .formula-card{background:#f5f5f5;border:2px solid #0d1b6e;border-radius:8px;padding:12px;text-align:center}
 .formula-card .fc-title{font-family:'Caveat',cursive;font-size:1rem;color:#0d1b6e;margin-bottom:6px;font-weight:700}
 .formula-card .fc-expr{font-family:'Courier New',monospace;color:#c62828;font-size:.88rem;line-height:1.6}
-</style>
+@media(max-width:600px){
+body{padding:10px 0 30px;}
+.page{padding:20px 16px 30px 16px;min-height:unset;}
+.page::before{display:none;}
+.holes{display:none;}
+.cover-page{padding:40px 20px;margin:0 10px 20px;}
+.cover-toc{min-width:unset;width:100%;padding:14px 16px;}
+.part-nav{padding:0 10px;gap:6px;}
+.part-nav a{padding:5px 12px;font-size:13px;}
+.two-col{grid-template-columns:1fr;}
+.vs-box{grid-template-columns:1fr;}
+.vs-right{border-left:none;border-top:1px solid #90caf9;}
+nav.part-nav{padding:0 10px;gap:6px;}
+.cover-title{font-size:28px;}
+}</style>
 </head>
 <body>
 

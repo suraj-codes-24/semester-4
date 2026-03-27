@@ -109,7 +109,21 @@ table.tt tr:nth-child(even) td{background:#f5f5f5;}
 .prod-table th{background:var(--purple);color:#fff;padding:6px 10px;text-align:left;font-size:13px;}
 .prod-table td{padding:6px 10px;border-bottom:1px solid #e0e0e0;line-height:28px;font-family:'Patrick Hand',cursive;font-size:15px;}
 .prod-table tr:nth-child(even) td{background:#f5f5f5;}
-</style>
+@media(max-width:600px){
+body{padding:10px 0 30px;}
+.page{padding:20px 16px 30px 16px;min-height:unset;}
+.page::before{display:none;}
+.holes{display:none;}
+.cover-page{padding:40px 20px;margin:0 10px 20px;}
+.cover-toc{min-width:unset;width:100%;padding:14px 16px;}
+.part-nav{padding:0 10px;gap:6px;}
+.part-nav a{padding:5px 12px;font-size:13px;}
+.two-col{grid-template-columns:1fr;}
+.vs-box{grid-template-columns:1fr;}
+.vs-right{border-left:none;border-top:1px solid #90caf9;}
+nav.part-nav{padding:0 10px;gap:6px;}
+.cover-title{font-size:28px;}
+}</style>
 </head>
 <body>
 
