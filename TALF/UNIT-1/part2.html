@@ -6,64 +6,309 @@
 <title>TALF Unit 1 — Part 2</title>
 <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Patrick+Hand&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#1a1a2e;--ink2:#2c2c54;--blue:#1565C0;--red:#b71c1c;--green:#1b5e20;--purple:#4a148c;--teal:#006064;--orange:#e65100;--line:#c5cae9;--page:#fafaf7;--highlight:#fff9c4;--box-blue:#e8f4fd;--box-green:#e8f5e9;--box-purple:#f3e5f5;--box-orange:#fff3e0;--box-red:#fce4ec;--box-teal:#e0f7fa;}
-*{margin:0;padding:0;box-sizing:border-box;}
-body{background:#e0e0e0;font-family:'Kalam',cursive;color:var(--ink);padding:30px 20px;}
-.page{background:var(--page);max-width:820px;margin:0 auto 40px;border-radius:4px;box-shadow:0 2px 16px rgba(0,0,0,0.18),0 0 0 1px rgba(0,0,0,0.08);padding:60px 70px 70px 90px;position:relative;min-height:1060px;background-image:repeating-linear-gradient(transparent,transparent 31px,var(--line) 31px,var(--line) 32px);background-position:0 56px;}
-.page::before{content:'';position:absolute;left:72px;top:0;bottom:0;width:1.5px;background:#ef9a9a;opacity:0.7;}
-.holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-around;padding:40px 0;}
-.hole{width:22px;height:22px;border-radius:50%;background:#e0e0e0;border:1.5px solid #bdbdbd;box-shadow:inset 0 1px 3px rgba(0,0,0,0.2);}
-.page-num{position:absolute;bottom:28px;right:50px;font-size:13px;color:#9e9e9e;}
-.page-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
-.date-tag{font-size:13px;color:#9e9e9e;}
-.unit-badge{color:#fff;font-size:13px;padding:2px 14px;border-radius:20px;font-weight:700;}
-h1.section-title{font-size:24px;font-weight:700;color:var(--ink2);text-align:center;margin:8px 0 4px;text-decoration:underline;text-underline-offset:5px;}
-h2.topic{font-size:18px;font-weight:700;color:var(--blue);margin:18px 0 6px;border-bottom:1.5px solid var(--blue);padding-bottom:2px;display:inline-block;}
-h3.sub{font-size:15px;font-weight:700;color:var(--purple);margin:12px 0 4px;}
-p,li{font-size:15px;line-height:32px;}
-.def-box{background:var(--box-blue);border-left:4px solid var(--blue);border-radius:0 6px 6px 0;padding:10px 16px;margin:10px 0 12px;font-size:15px;line-height:30px;}
-.note-box{background:var(--highlight);border-left:4px solid #f9a825;border-radius:0 6px 6px 0;padding:8px 14px;margin:8px 0 10px;font-size:14px;line-height:26px;}
-.rule-box{background:var(--box-green);border:1.5px solid #81c784;border-radius:6px;padding:10px 16px;margin:10px 0;font-size:14.5px;line-height:28px;}
-.purple-box{background:var(--box-purple);border-left:4px solid var(--purple);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
-.orange-box{background:var(--box-orange);border-left:4px solid var(--orange);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
-.teal-box{background:var(--box-teal);border-left:4px solid var(--teal);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
-.formula{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--blue);}
-.divider{border:none;border-top:1px dashed #b0bec5;margin:14px 0 10px;}
-ul.plain{list-style:none;padding-left:4px;}
-ul.plain li::before{content:'→ ';color:var(--blue);font-weight:700;}
-ul.plain li{font-size:15px;line-height:32px;}
-.qbox{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:12px 16px;margin:10px 0;}
-.q-label{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:2px;}
-.q-step{font-size:14px;color:var(--green);margin-top:4px;line-height:26px;}
-.q-ans{font-size:15px;color:var(--red);font-family:'Patrick Hand',cursive;margin-top:4px;}
-table.tt{width:100%;border-collapse:collapse;margin:8px 0;font-size:14px;}
-table.tt th{color:#fff;padding:7px 10px;text-align:center;}
-table.tt td{padding:6px 10px;border-bottom:1px solid #e0e0e0;text-align:center;font-family:'Patrick Hand',cursive;font-size:14px;}
-table.tt tr:nth-child(even) td{background:#f5f5f5;}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0;}
-.vs-box{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:12px 0;border-radius:8px;overflow:hidden;border:1.5px solid #90caf9;}
-.vs-left{background:#e8f4fd;padding:12px 14px;}
-.vs-right{background:var(--box-purple);padding:12px 14px;border-left:1px solid #90caf9;}
-.vs-head{font-size:15px;font-weight:700;margin-bottom:8px;}
-.vs-item{font-size:14px;line-height:26px;}
-.step-card{background:var(--box-purple);border-left:4px solid var(--purple);padding:8px 14px;margin:5px 0;border-radius:0 6px 6px 0;}
-.step-head{font-size:14px;font-weight:700;color:var(--purple);}
-.step-body{font-size:13.5px;line-height:24px;color:var(--ink2);}
-.cover-page{max-width:820px;margin:0 auto 40px;border-radius:8px;padding:80px 60px;text-align:center;color:#fff;box-shadow:0 4px 24px rgba(0,0,0,0.3);position:relative;overflow:hidden;}
-.cover-subject{font-size:14px;letter-spacing:3px;opacity:0.7;margin-bottom:16px;}
-.cover-title{font-size:40px;font-weight:700;line-height:1.2;margin-bottom:12px;}
-.cover-unit{font-size:20px;opacity:0.85;margin-bottom:30px;}
-.cover-divider{width:80px;height:3px;background:rgba(255,255,255,0.4);margin:0 auto 24px;border-radius:2px;}
-.cover-toc{text-align:left;background:rgba(255,255,255,0.1);border-radius:8px;padding:20px 28px;display:inline-block;min-width:420px;}
-.cover-toc-item{font-size:15px;line-height:32px;display:flex;justify-content:space-between;gap:20px;}
-.part-nav{max-width:820px;margin:0 auto 20px;display:flex;gap:10px;justify-content:center;align-items:center;font-family:'Kalam',cursive;flex-wrap:wrap;}
-.part-nav a{padding:6px 20px;border-radius:20px;background:#fff;border:1.5px solid #90caf9;color:var(--blue);text-decoration:none;font-size:14px;font-weight:700;}
-.part-nav a:hover:not(.active){background:#e3f2fd;}
-.part-nav .back{background:#f5f5f5;border-color:#ccc;color:#555;font-size:13px;}
-.unit-badge{background:#006064;}
-h1.section-title{text-decoration-color:#006064;}
-h1.section-title .sn{color:#006064;}
-.part-nav a.active{background:#006064;border-color:#006064;color:#fff;}
+
+  :root{--ink:#1a1a2e;--ink2:#2c2c54;--blue:#1565C0;--red:#b71c1c;--green:#1b5e20;--purple:#4a148c;--teal:#006064;--line:#c5cae9;--page:#fafaf7;--highlight:#fff9c4;--box-blue:#e8f4fd;--box-green:#e8f5e9;--box-purple:#f3e5f5;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:#e0e0e0;font-family:'Kalam',cursive;color:var(--ink);padding:30px 20px;}
+  .page{background:var(--page);max-width:820px;margin:0 auto 40px;border-radius:4px;box-shadow:0 2px 16px rgba(0,0,0,0.18),0 0 0 1px rgba(0,0,0,0.08);padding:60px 70px 70px 90px;position:relative;min-height:1060px;background-image:repeating-linear-gradient(transparent,transparent 31px,var(--line) 31px,var(--line) 32px);background-position:0 56px;}
+  .page::before{content:'';position:absolute;left:72px;top:0;bottom:0;width:1.5px;background:#ef9a9a;opacity:0.7;}
+  .holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-around;padding:40px 0;}
+  .hole{width:22px;height:22px;border-radius:50%;background:#e0e0e0;border:1.5px solid #bdbdbd;box-shadow:inset 0 1px 3px rgba(0,0,0,0.2);}
+  .page-num{position:absolute;bottom:28px;right:50px;font-size:13px;color:#9e9e9e;}
+  .page-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
+  .date-tag{font-size:13px;color:#9e9e9e;}
+  .unit-badge{background:var(--purple);color:#fff;font-size:13px;padding:2px 14px;border-radius:20px;font-weight:700;}
+  h1.section-title{font-size:24px;font-weight:700;color:var(--ink2);text-align:center;margin:8px 0 4px;text-decoration:underline;text-underline-offset:5px;text-decoration-color:var(--purple);}
+  h1.section-title .sn{color:var(--purple);}
+  h2.topic{font-size:18px;font-weight:700;color:var(--blue);margin:18px 0 6px;border-bottom:1.5px solid var(--blue);padding-bottom:2px;display:inline-block;}
+  h3.sub{font-size:15px;font-weight:700;color:var(--purple);margin:12px 0 4px;}
+  p,li{font-size:15px;line-height:30px;}
+  .def-box{background:var(--box-blue);border-left:4px solid var(--blue);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
+  .note-box{background:var(--highlight);border-left:4px solid #f9a825;border-radius:0 6px 6px 0;padding:8px 14px;margin:8px 0 10px;font-size:14px;line-height:26px;}
+  .rule-box{background:var(--box-green);border:1.5px solid #81c784;border-radius:6px;padding:10px 16px;margin:10px 0;font-size:14.5px;line-height:28px;}
+  .purple-box{background:var(--box-purple);border-left:4px solid var(--purple);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
+  .formula{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--blue);}
+  .divider{border:none;border-top:1px dashed #b0bec5;margin:14px 0 8px;}
+  ul.plain{list-style:none;padding-left:4px;}
+  ul.plain li::before{content:'→ ';color:var(--blue);font-weight:700;}
+  ul.plain li{font-size:15px;line-height:30px;}
+  .nfa-wrap{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:12px 14px;margin:10px 0;text-align:center;}
+  .nfa-title{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:6px;}
+  .nfa-svg{width:100%;max-width:680px;}
+  .qbox{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:12px 16px;margin:10px 0;}
+  .q-label{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:2px;}
+  .q-step{font-size:14px;color:var(--green);margin-top:4px;line-height:26px;}
+  .q-ans{font-size:15px;color:var(--red);font-family:'Patrick Hand',cursive;margin-top:4px;}
+  table.tt{width:100%;border-collapse:collapse;margin:8px 0;font-size:14px;}
+  table.tt th{background:var(--blue);color:#fff;padding:7px 10px;text-align:center;}
+  table.tt td{padding:6px 10px;border-bottom:1px solid #e0e0e0;text-align:center;font-family:'Patrick Hand',cursive;font-size:14px;}
+  table.tt tr:nth-child(even) td{background:#f5f5f5;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0;}
+  .vs-box{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:12px 0;border-radius:8px;overflow:hidden;border:1.5px solid #90caf9;}
+  .vs-left{background:#e8f4fd;padding:12px 14px;}
+  .vs-right{background:var(--box-purple);padding:12px 14px;border-left:1px solid #90caf9;}
+  .vs-head{font-size:15px;font-weight:700;margin-bottom:8px;}
+  .vs-item{font-size:14px;line-height:26px;}
+  .step-card{background:var(--box-purple);border-left:4px solid var(--purple);padding:8px 14px;margin:5px 0;border-radius:0 6px 6px 0;}
+  .step-head{font-size:14px;font-weight:700;color:var(--purple);}
+  .step-body{font-size:13.5px;line-height:24px;color:var(--ink2);}
+
+
+  :root{--ink:#1a1a2e;--ink2:#2c2c54;--blue:#1565C0;--red:#b71c1c;--green:#1b5e20;--purple:#4a148c;--teal:#006064;--line:#c5cae9;--page:#fafaf7;--highlight:#fff9c4;--box-blue:#e8f4fd;--box-green:#e8f5e9;--box-red:#fce4ec;--box-purple:#f3e5f5;--box-teal:#e0f7fa;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:#e0e0e0;font-family:'Kalam',cursive;color:var(--ink);padding:30px 20px;}
+  .page{background:var(--page);max-width:820px;margin:0 auto 40px;border-radius:4px;box-shadow:0 2px 16px rgba(0,0,0,0.18),0 0 0 1px rgba(0,0,0,0.08);padding:60px 70px 70px 90px;position:relative;min-height:1060px;background-image:repeating-linear-gradient(transparent,transparent 31px,var(--line) 31px,var(--line) 32px);background-position:0 56px;}
+  .page::before{content:'';position:absolute;left:72px;top:0;bottom:0;width:1.5px;background:#ef9a9a;opacity:0.7;}
+  .holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-around;padding:40px 0;}
+  .hole{width:22px;height:22px;border-radius:50%;background:#e0e0e0;border:1.5px solid #bdbdbd;box-shadow:inset 0 1px 3px rgba(0,0,0,0.2);}
+  .page-num{position:absolute;bottom:28px;right:50px;font-size:13px;color:#9e9e9e;}
+  .page-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
+  .date-tag{font-size:13px;color:#9e9e9e;}
+  .unit-badge{background:var(--teal);color:#fff;font-size:13px;padding:2px 14px;border-radius:20px;font-weight:700;}
+  h1.section-title{font-size:24px;font-weight:700;color:var(--ink2);text-align:center;margin:8px 0 4px;text-decoration:underline;text-underline-offset:5px;text-decoration-color:var(--teal);}
+  h1.section-title .sn{color:var(--teal);}
+  h2.topic{font-size:18px;font-weight:700;color:var(--blue);margin:20px 0 6px;border-bottom:1.5px solid var(--blue);padding-bottom:2px;display:inline-block;}
+  h3.sub{font-size:15px;font-weight:700;color:var(--purple);margin:12px 0 4px;}
+  p,li{font-size:15px;line-height:32px;}
+  .def-box{background:var(--box-blue);border-left:4px solid var(--blue);border-radius:0 6px 6px 0;padding:10px 16px;margin:10px 0 12px;font-size:15px;line-height:30px;}
+  .note-box{background:var(--highlight);border-left:4px solid #f9a825;border-radius:0 6px 6px 0;padding:8px 14px;margin:8px 0 10px;font-size:14px;line-height:26px;}
+  .teal-box{background:var(--box-teal);border-left:4px solid var(--teal);border-radius:0 6px 6px 0;padding:10px 16px;margin:10px 0 12px;font-size:15px;line-height:30px;}
+  .formula{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--blue);}
+  .divider{border:none;border-top:1px dashed #b0bec5;margin:14px 0 10px;}
+  ul.plain{list-style:none;padding-left:4px;}
+  ul.plain li::before{content:'→ ';color:var(--blue);font-weight:700;}
+  ul.plain li{font-size:15px;line-height:30px;}
+  .three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:12px 0;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0;}
+  .topic-card{border-radius:8px;padding:12px 14px;text-align:center;}
+  .tc-auto{background:#e3f2fd;border:1.5px solid #1565C0;}
+  .tc-comp{background:#f3e5f5;border:1.5px solid #7b1fa2;}
+  .tc-complex{background:#e8f5e9;border:1.5px solid #2e7d32;}
+  .tc-head{font-size:15px;font-weight:700;margin-bottom:6px;}
+  .tc-body{font-size:13px;line-height:22px;color:#444;}
+  .example-row{display:flex;align-items:center;gap:8px;margin:4px 0;font-size:14.5px;}
+  .ex-label{min-width:100px;font-weight:700;color:var(--purple);}
+  .ex-val{font-family:'Patrick Hand',cursive;font-size:15px;color:var(--blue);}
+  table.lang-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:14px;}
+  table.lang-table th{background:var(--teal);color:#fff;padding:7px 10px;font-size:13px;}
+  table.lang-table td{padding:6px 10px;border-bottom:1px solid #e0e0e0;line-height:26px;}
+  table.lang-table tr:nth-child(even) td{background:#f5f5f5;}
+  .hierarchy-box{background:#fff;border:1.5px solid #b0bec5;border-radius:8px;padding:16px;margin:12px 0;text-align:center;}
+  .hier-level{margin:6px auto;border-radius:6px;padding:8px 16px;font-size:14px;font-weight:700;display:inline-block;min-width:260px;}
+  .hl1{background:#e3f2fd;border:1.5px solid #1565C0;color:#1565C0;}
+  .hl2{background:#e8f5e9;border:1.5px solid #1b5e20;color:#1b5e20;}
+  .hl3{background:#f3e5f5;border:1.5px solid #7b1fa2;color:#7b1fa2;}
+  .hl4{background:#fff3e0;border:1.5px solid #e65100;color:#e65100;}
+  .hier-arrow{font-size:18px;color:#9e9e9e;display:block;line-height:20px;}
+
+
+  :root{--ink:#1a1a2e;--ink2:#2c2c54;--blue:#1565C0;--red:#b71c1c;--green:#1b5e20;--purple:#4a148c;--teal:#006064;--orange:#e65100;--line:#c5cae9;--page:#fafaf7;--highlight:#fff9c4;--box-blue:#e8f4fd;--box-green:#e8f5e9;--box-purple:#f3e5f5;--box-orange:#fff3e0;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:#e0e0e0;font-family:'Kalam',cursive;color:var(--ink);padding:30px 20px;}
+  .page{background:var(--page);max-width:820px;margin:0 auto 40px;border-radius:4px;box-shadow:0 2px 16px rgba(0,0,0,0.18),0 0 0 1px rgba(0,0,0,0.08);padding:60px 70px 70px 90px;position:relative;min-height:1060px;background-image:repeating-linear-gradient(transparent,transparent 31px,var(--line) 31px,var(--line) 32px);background-position:0 56px;}
+  .page::before{content:'';position:absolute;left:72px;top:0;bottom:0;width:1.5px;background:#ef9a9a;opacity:0.7;}
+  .holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-around;padding:40px 0;}
+  .hole{width:22px;height:22px;border-radius:50%;background:#e0e0e0;border:1.5px solid #bdbdbd;box-shadow:inset 0 1px 3px rgba(0,0,0,0.2);}
+  .page-num{position:absolute;bottom:28px;right:50px;font-size:13px;color:#9e9e9e;}
+  .page-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
+  .date-tag{font-size:13px;color:#9e9e9e;}
+  .unit-badge{background:var(--orange);color:#fff;font-size:13px;padding:2px 14px;border-radius:20px;font-weight:700;}
+  h1.section-title{font-size:24px;font-weight:700;color:var(--ink2);text-align:center;margin:8px 0 4px;text-decoration:underline;text-underline-offset:5px;text-decoration-color:var(--orange);}
+  h1.section-title .sn{color:var(--orange);}
+  h2.topic{font-size:18px;font-weight:700;color:var(--blue);margin:18px 0 6px;border-bottom:1.5px solid var(--blue);padding-bottom:2px;display:inline-block;}
+  h3.sub{font-size:15px;font-weight:700;color:var(--purple);margin:12px 0 4px;}
+  p,li{font-size:15px;line-height:30px;}
+  .def-box{background:var(--box-blue);border-left:4px solid var(--blue);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
+  .note-box{background:var(--highlight);border-left:4px solid #f9a825;border-radius:0 6px 6px 0;padding:8px 14px;margin:8px 0 10px;font-size:14px;line-height:26px;}
+  .rule-box{background:var(--box-green);border:1.5px solid #81c784;border-radius:6px;padding:10px 16px;margin:10px 0;font-size:14.5px;line-height:28px;}
+  .orange-box{background:var(--box-orange);border-left:4px solid var(--orange);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
+  .formula{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--blue);}
+  .divider{border:none;border-top:1px dashed #b0bec5;margin:14px 0 8px;}
+  ul.plain{list-style:none;padding-left:4px;}
+  ul.plain li::before{content:'→ ';color:var(--blue);font-weight:700;}
+  ul.plain li{font-size:15px;line-height:30px;}
+  .nfa-wrap{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:12px 14px;margin:10px 0;text-align:center;}
+  .nfa-title{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:6px;}
+  .nfa-svg{width:100%;max-width:680px;}
+  .qbox{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:12px 16px;margin:10px 0;}
+  .q-label{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:2px;}
+  .q-step{font-size:14px;color:var(--green);margin-top:4px;line-height:26px;}
+  table.tt{width:100%;border-collapse:collapse;margin:8px 0;font-size:14px;}
+  table.tt th{background:var(--blue);color:#fff;padding:7px 10px;text-align:center;}
+  table.tt td{padding:6px 10px;border-bottom:1px solid #e0e0e0;text-align:center;font-family:'Patrick Hand',cursive;font-size:14.5px;}
+  table.tt tr:nth-child(even) td{background:#f5f5f5;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0;}
+  .vs-box{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:12px 0;border-radius:8px;overflow:hidden;border:1.5px solid #90caf9;}
+  .vs-left{background:#e8f4fd;padding:12px 14px;}
+  .vs-right{background:var(--box-orange);padding:12px 14px;border-left:1px solid #90caf9;}
+  .vs-head{font-size:15px;font-weight:700;margin-bottom:8px;}
+  .vs-item{font-size:14px;line-height:26px;}
+  .output-trace{background:#f5f5f5;border-radius:6px;padding:10px 14px;margin:6px 0;font-family:'Patrick Hand',cursive;font-size:15px;line-height:28px;}
+
+
+  :root{--ink:#1a1a2e;--ink2:#2c2c54;--blue:#1565C0;--red:#b71c1c;--green:#1b5e20;--purple:#4a148c;--teal:#006064;--line:#c5cae9;--page:#fafaf7;--highlight:#fff9c4;--box-blue:#e8f4fd;--box-green:#e8f5e9;--box-purple:#f3e5f5;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:#e0e0e0;font-family:'Kalam',cursive;color:var(--ink);padding:30px 20px;}
+  .page{background:var(--page);max-width:820px;margin:0 auto 40px;border-radius:4px;box-shadow:0 2px 16px rgba(0,0,0,0.18),0 0 0 1px rgba(0,0,0,0.08);padding:60px 70px 70px 90px;position:relative;min-height:1060px;background-image:repeating-linear-gradient(transparent,transparent 31px,var(--line) 31px,var(--line) 32px);background-position:0 56px;}
+  .page::before{content:'';position:absolute;left:72px;top:0;bottom:0;width:1.5px;background:#ef9a9a;opacity:0.7;}
+  .holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-around;padding:40px 0;}
+  .hole{width:22px;height:22px;border-radius:50%;background:#e0e0e0;border:1.5px solid #bdbdbd;box-shadow:inset 0 1px 3px rgba(0,0,0,0.2);}
+  .page-num{position:absolute;bottom:28px;right:50px;font-size:13px;color:#9e9e9e;}
+  .page-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
+  .date-tag{font-size:13px;color:#9e9e9e;}
+  .unit-badge{background:var(--green);color:#fff;font-size:13px;padding:2px 14px;border-radius:20px;font-weight:700;}
+  h1.section-title{font-size:24px;font-weight:700;color:var(--ink2);text-align:center;margin:8px 0 4px;text-decoration:underline;text-underline-offset:5px;text-decoration-color:var(--green);}
+  h1.section-title .sn{color:var(--green);}
+  h2.topic{font-size:18px;font-weight:700;color:var(--blue);margin:18px 0 6px;border-bottom:1.5px solid var(--blue);padding-bottom:2px;display:inline-block;}
+  h3.sub{font-size:15px;font-weight:700;color:var(--purple);margin:12px 0 4px;}
+  p,li{font-size:15px;line-height:30px;}
+  .def-box{background:var(--box-blue);border-left:4px solid var(--blue);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
+  .note-box{background:var(--highlight);border-left:4px solid #f9a825;border-radius:0 6px 6px 0;padding:8px 14px;margin:8px 0 10px;font-size:14px;line-height:26px;}
+  .rule-box{background:var(--box-green);border:1.5px solid #81c784;border-radius:6px;padding:10px 16px;margin:10px 0;font-size:14.5px;line-height:28px;}
+  .formula{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--blue);}
+  .divider{border:none;border-top:1px dashed #b0bec5;margin:14px 0 8px;}
+  ul.plain{list-style:none;padding-left:4px;}
+  ul.plain li::before{content:'→ ';color:var(--blue);font-weight:700;}
+  ul.plain li{font-size:15px;line-height:30px;}
+  .nfa-wrap{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:12px 14px;margin:10px 0;text-align:center;}
+  .nfa-title{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:6px;}
+  .nfa-svg{width:100%;max-width:680px;}
+  .qbox{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:12px 16px;margin:10px 0;}
+  .q-label{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:2px;}
+  .q-step{font-size:14px;color:var(--green);margin-top:4px;line-height:26px;}
+  table.tt{width:100%;border-collapse:collapse;margin:8px 0;font-size:14px;}
+  table.tt th{background:var(--blue);color:#fff;padding:7px 10px;text-align:center;}
+  table.tt td{padding:6px 10px;border-bottom:1px solid #e0e0e0;text-align:center;font-family:'Patrick Hand',cursive;font-size:14.5px;}
+  table.tt tr:nth-child(even) td{background:#f5f5f5;}
+  .step-card{background:var(--box-purple);border-left:4px solid var(--purple);padding:8px 14px;margin:5px 0;border-radius:0 6px 6px 0;}
+  .step-head{font-size:14px;font-weight:700;color:var(--purple);}
+  .step-body{font-size:13.5px;line-height:24px;color:var(--ink2);}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0;}
+  .table-pair{background:#f5f5f5;border-radius:8px;padding:12px;margin:8px 0;}
+  .tp-head{font-size:13px;font-weight:700;color:var(--purple);margin-bottom:6px;}
+  .mark-table{width:100%;border-collapse:collapse;font-size:13.5px;}
+  .mark-table th,.mark-table td{padding:5px 8px;border:1px solid #ccc;text-align:center;font-family:'Patrick Hand',cursive;font-size:14px;}
+  .mark-table th{background:#7b1fa2;color:#fff;}
+  .marked{background:#fce4ec;color:#b71c1c;font-weight:700;}
+  .unmarked{background:#e8f5e9;color:#1b5e20;}
+
+
+  :root{--ink:#1a1a2e;--ink2:#2c2c54;--blue:#1565C0;--red:#b71c1c;--green:#1b5e20;--purple:#4a148c;--teal:#006064;--line:#c5cae9;--page:#fafaf7;--highlight:#fff9c4;--box-blue:#e8f4fd;--box-green:#e8f5e9;--box-purple:#f3e5f5;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:#e0e0e0;font-family:'Kalam',cursive;color:var(--ink);padding:30px 20px;}
+  .page{background:var(--page);max-width:820px;margin:0 auto 40px;border-radius:4px;box-shadow:0 2px 16px rgba(0,0,0,0.18),0 0 0 1px rgba(0,0,0,0.08);padding:60px 70px 70px 90px;position:relative;min-height:1060px;background-image:repeating-linear-gradient(transparent,transparent 31px,var(--line) 31px,var(--line) 32px);background-position:0 56px;}
+  .page::before{content:'';position:absolute;left:72px;top:0;bottom:0;width:1.5px;background:#ef9a9a;opacity:0.7;}
+  .holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-around;padding:40px 0;}
+  .hole{width:22px;height:22px;border-radius:50%;background:#e0e0e0;border:1.5px solid #bdbdbd;box-shadow:inset 0 1px 3px rgba(0,0,0,0.2);}
+  .page-num{position:absolute;bottom:28px;right:50px;font-size:13px;color:#9e9e9e;}
+  .page-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
+  .date-tag{font-size:13px;color:#9e9e9e;}
+  .unit-badge{background:var(--teal);color:#fff;font-size:13px;padding:2px 14px;border-radius:20px;font-weight:700;}
+  h1.section-title{font-size:24px;font-weight:700;color:var(--ink2);text-align:center;margin:8px 0 4px;text-decoration:underline;text-underline-offset:5px;text-decoration-color:var(--teal);}
+  h1.section-title .sn{color:var(--teal);}
+  h2.topic{font-size:18px;font-weight:700;color:var(--blue);margin:18px 0 6px;border-bottom:1.5px solid var(--blue);padding-bottom:2px;display:inline-block;}
+  h3.sub{font-size:15px;font-weight:700;color:var(--purple);margin:12px 0 4px;}
+  p,li{font-size:15px;line-height:30px;}
+  .def-box{background:var(--box-blue);border-left:4px solid var(--blue);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
+  .note-box{background:var(--highlight);border-left:4px solid #f9a825;border-radius:0 6px 6px 0;padding:8px 14px;margin:8px 0 10px;font-size:14px;line-height:26px;}
+  .rule-box{background:var(--box-green);border:1.5px solid #81c784;border-radius:6px;padding:10px 16px;margin:10px 0;font-size:14.5px;line-height:28px;}
+  .teal-box{background:#e0f7fa;border-left:4px solid var(--teal);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
+  .formula{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--blue);}
+  .divider{border:none;border-top:1px dashed #b0bec5;margin:14px 0 8px;}
+  ul.plain{list-style:none;padding-left:4px;}
+  ul.plain li::before{content:'→ ';color:var(--blue);font-weight:700;}
+  ul.plain li{font-size:15px;line-height:30px;}
+  .nfa-wrap{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:12px 14px;margin:10px 0;text-align:center;}
+  .nfa-title{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:6px;}
+  .nfa-svg{width:100%;max-width:680px;}
+  .qbox{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:12px 16px;margin:10px 0;}
+  .q-label{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:2px;}
+  .q-step{font-size:14px;color:var(--green);margin-top:4px;line-height:26px;}
+  table.tt{width:100%;border-collapse:collapse;margin:8px 0;font-size:14px;}
+  table.tt th{background:var(--blue);color:#fff;padding:7px 10px;text-align:center;}
+  table.tt td{padding:6px 10px;border-bottom:1px solid #e0e0e0;text-align:center;font-family:'Patrick Hand',cursive;font-size:14px;}
+  table.tt tr:nth-child(even) td{background:#f5f5f5;}
+  .step-card{background:var(--box-purple);border-left:4px solid var(--purple);padding:8px 14px;margin:5px 0;border-radius:0 6px 6px 0;}
+  .step-head{font-size:14px;font-weight:700;color:var(--purple);}
+  .step-body{font-size:13.5px;line-height:24px;color:var(--ink2);}
+  .ec-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:14px;}
+  .ec-table th{background:var(--teal);color:#fff;padding:7px 10px;}
+  .ec-table td{padding:6px 10px;border-bottom:1px solid #e0e0e0;line-height:26px;font-family:'Patrick Hand',cursive;font-size:14.5px;}
+  .ec-table tr:nth-child(even) td{background:#f5f5f5;}
+
+
+  :root{--ink:#1a1a2e;--ink2:#2c2c54;--blue:#1565C0;--red:#b71c1c;--green:#1b5e20;--purple:#4a148c;--teal:#006064;--line:#c5cae9;--page:#fafaf7;--highlight:#fff9c4;--box-blue:#e8f4fd;--box-green:#e8f5e9;--box-purple:#f3e5f5;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:#e0e0e0;font-family:'Kalam',cursive;color:var(--ink);padding:30px 20px;}
+  .page{background:var(--page);max-width:820px;margin:0 auto 40px;border-radius:4px;box-shadow:0 2px 16px rgba(0,0,0,0.18),0 0 0 1px rgba(0,0,0,0.08);padding:60px 70px 70px 90px;position:relative;min-height:1060px;background-image:repeating-linear-gradient(transparent,transparent 31px,var(--line) 31px,var(--line) 32px);background-position:0 56px;}
+  .page::before{content:'';position:absolute;left:72px;top:0;bottom:0;width:1.5px;background:#ef9a9a;opacity:0.7;}
+  .holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-around;padding:40px 0;}
+  .hole{width:22px;height:22px;border-radius:50%;background:#e0e0e0;border:1.5px solid #bdbdbd;box-shadow:inset 0 1px 3px rgba(0,0,0,0.2);}
+  .page-num{position:absolute;bottom:28px;right:50px;font-size:13px;color:#9e9e9e;}
+  .page-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
+  .date-tag{font-size:13px;color:#9e9e9e;}
+  .unit-badge{background:var(--blue);color:#fff;font-size:13px;padding:2px 14px;border-radius:20px;font-weight:700;}
+  h1.section-title{font-size:24px;font-weight:700;color:var(--ink2);text-align:center;margin:8px 0 4px;text-decoration:underline;text-underline-offset:5px;text-decoration-color:var(--blue);}
+  h1.section-title .sn{color:var(--blue);}
+  h2.topic{font-size:18px;font-weight:700;color:var(--blue);margin:18px 0 6px;border-bottom:1.5px solid var(--blue);padding-bottom:2px;display:inline-block;}
+  h3.sub{font-size:15px;font-weight:700;color:var(--purple);margin:12px 0 4px;}
+  p,li{font-size:15px;line-height:30px;}
+  .def-box{background:var(--box-blue);border-left:4px solid var(--blue);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
+  .note-box{background:var(--highlight);border-left:4px solid #f9a825;border-radius:0 6px 6px 0;padding:8px 14px;margin:8px 0 10px;font-size:14px;line-height:26px;}
+  .rule-box{background:var(--box-green);border:1.5px solid #81c784;border-radius:6px;padding:10px 16px;margin:10px 0;font-size:14.5px;line-height:28px;}
+  .formula{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--blue);}
+  .formula-red{font-family:'Patrick Hand',cursive;font-size:15px;color:var(--red);}
+  .divider{border:none;border-top:1px dashed #b0bec5;margin:14px 0 8px;}
+  ul.plain{list-style:none;padding-left:4px;}
+  ul.plain li::before{content:'→ ';color:var(--blue);font-weight:700;}
+  ul.plain li{font-size:15px;line-height:30px;}
+  .nfa-wrap{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:12px 14px;margin:10px 0;text-align:center;}
+  .nfa-title{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:6px;}
+  .nfa-svg{width:100%;max-width:680px;}
+  .qbox{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:12px 16px;margin:10px 0;}
+  .q-label{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:2px;}
+  .q-step{font-size:14px;color:var(--green);margin-top:4px;line-height:26px;}
+  .q-ans{font-size:15px;color:var(--red);font-family:'Patrick Hand',cursive;margin-top:4px;line-height:28px;}
+  table.tt{width:100%;border-collapse:collapse;margin:10px 0;font-size:14px;}
+  table.tt th{background:var(--blue);color:#fff;padding:7px 10px;text-align:center;}
+  table.tt td{padding:6px 10px;border-bottom:1px solid #e0e0e0;text-align:center;font-family:'Patrick Hand',cursive;font-size:15px;}
+  table.tt tr:nth-child(even) td{background:#f5f5f5;}
+  table.tt .init-row td:first-child::before{content:"→ ";color:var(--blue);font-weight:700;}
+  table.tt .final-row td:first-child::before{content:"* ";color:var(--green);font-weight:700;}
+  table.tt .initfinal-row td:first-child::before{content:"→* ";color:var(--purple);font-weight:700;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0;}
+  .dfa-components{background:var(--box-purple);border-radius:8px;padding:12px 16px;margin:10px 0;}
+  .comp-item{display:flex;gap:10px;align-items:flex-start;margin:4px 0;}
+  .comp-symbol{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--purple);min-width:30px;font-weight:700;}
+  .comp-desc{font-size:14px;line-height:24px;color:var(--ink2);}
+
+
+.cover-page {
+  background: linear-gradient(135deg, #006064 0%, #004d40 100%);
+  max-width: 820px;
+  margin: 0 auto 40px;
+  border-radius: 8px;
+  padding: 80px 60px;
+  text-align: center;
+  color: #fff;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+  position: relative;
+  overflow: hidden;
+}
+.cover-page::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 250px; height: 250px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+}
+.cover-subject { font-family: 'Kalam', cursive; font-size: 14px; letter-spacing: 3px; opacity: 0.7; margin-bottom: 16px; }
+.cover-title { font-family: 'Kalam', cursive; font-size: 40px; font-weight: 700; line-height: 1.2; margin-bottom: 12px; }
+.cover-unit { font-family: 'Kalam', cursive; font-size: 20px; opacity: 0.85; margin-bottom: 30px; }
+.cover-divider { width: 80px; height: 3px; background: rgba(255,255,255,0.4); margin: 0 auto 24px; border-radius: 2px; }
+.cover-toc { text-align: left; background: rgba(255,255,255,0.1); border-radius: 8px; padding: 20px 28px; display: inline-block; min-width: 420px; }
+.cover-toc-item { font-family: 'Kalam', cursive; font-size: 15px; line-height: 32px; display: flex; justify-content: space-between; gap: 20px; }
 @media(max-width:600px){
 body{padding:10px 0 30px;}
 .page{padding:20px 16px 30px 16px;min-height:unset;}
@@ -78,7 +323,12 @@ body{padding:10px 0 30px;}
 .vs-right{border-left:none;border-top:1px solid #90caf9;}
 nav.part-nav{padding:0 10px;gap:6px;}
 .cover-title{font-size:28px;}
-}</style>
+}.part-nav{max-width:820px;margin:0 auto 20px;display:flex;gap:10px;justify-content:center;align-items:center;font-family:'Kalam',cursive;flex-wrap:wrap;}
+.part-nav a{padding:6px 20px;border-radius:20px;background:#fff;border:1.5px solid #90caf9;color:#1565C0;text-decoration:none;font-size:14px;font-weight:700;}
+.part-nav a:hover:not(.active){background:#e3f2fd;}
+.part-nav .back{background:#f5f5f5;border-color:#ccc;color:#555;font-size:13px;}
+.part-nav a.active{background:#006064;border-color:#006064;color:#fff;}
+</style>
 </head>
 <body>
 
@@ -89,33 +339,422 @@ nav.part-nav{padding:0 10px;gap:6px;}
   <a href="part3.html">Part 3</a>
 </div>
 
-<div class="cover-page" style="background:linear-gradient(135deg,#006064 0%,#004d40 100%);">
-  <div class="cover-subject">THEORY OF AUTOMATA & FORMAL LANGUAGES</div>
-  <div class="cover-title">Unit 1 — Part 2</div>
-  <div class="cover-unit">[ Awaiting Content ]</div>
-  <div class="cover-divider"></div>
-  <div class="cover-toc">
-    <div class="cover-toc-item" style="opacity:0.6;font-style:italic;justify-content:center;"><span>Content to be added</span></div>
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 1</span><span class="unit-badge">SECTION 3</span></div>
+  <h1 class="section-title"><span class="sn">Section 3</span> — NFA &amp; Equivalence with DFA</h1>
+
+  <h2 class="topic">1. Definition of NFA</h2>
+  <div class="def-box">
+    A <strong>Non-Deterministic Finite Automaton (NFA)</strong> is a 5-tuple: <span class="formula">M = (Q, Σ, δ, q₀, F)</span><br><br>
+    Same components as DFA, BUT the <strong>transition function</strong> is different:<br>
+    <span class="formula">δ : Q × Σ → 2^Q</span> &nbsp;&nbsp;(maps state+symbol to a <em>SET</em> of states, possibly empty)
   </div>
+
+  <div class="vs-box">
+    <div class="vs-left">
+      <div class="vs-head" style="color:#1565C0;">DFA</div>
+      <div class="vs-item">→ For each (state, symbol): <strong>exactly 1</strong> next state</div>
+      <div class="vs-item">→ No ambiguity in transitions</div>
+      <div class="vs-item">→ Dead state needed if no transition</div>
+      <div class="vs-item">→ δ : Q × Σ → Q</div>
+      <div class="vs-item">→ Harder to design, easy to simulate</div>
+    </div>
+    <div class="vs-right">
+      <div class="vs-head" style="color:#4a148c;">NFA</div>
+      <div class="vs-item">→ For each (state, symbol): <strong>0, 1, or many</strong> next states</div>
+      <div class="vs-item">→ Multiple paths possible simultaneously</div>
+      <div class="vs-item">→ Missing transition = implicit dead state</div>
+      <div class="vs-item">→ δ : Q × Σ → 2^Q (power set)</div>
+      <div class="vs-item">→ Easier to design, harder to simulate</div>
+    </div>
+  </div>
+
+  <div class="note-box"><strong>★ Acceptance in NFA:</strong> A string w is accepted by an NFA if there EXISTS AT LEAST ONE computation path that ends in a final state. Even if some paths reject, if any path accepts → string is accepted.</div>
+
+  <h2 class="topic">2. NFA Example — Strings ending in 'ab'</h2>
+  <p>L = { w ∈ {a,b}* | w ends with 'ab' }</p>
+  <div class="two-col">
+    <div class="nfa-wrap">
+      <div class="nfa-title">NFA — 3 states</div>
+      <svg class="nfa-svg" viewBox="0 0 300 100">
+        <defs><marker id="n1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M2 2L8 5L2 8" fill="none" stroke="#4a148c" stroke-width="1.5"/></marker></defs>
+        <line x1="5" y1="50" x2="42" y2="50" stroke="#4a148c" stroke-width="1.5" marker-end="url(#n1)"/>
+        <circle cx="60" cy="50" r="18" fill="#f3e5f5" stroke="#4a148c" stroke-width="1.5"/>
+        <text x="60" y="54" text-anchor="middle" font-family="Kalam" font-size="12" fill="#4a148c">q₀</text>
+        <!-- q0 self a,b -->
+        <path d="M47 32 Q60 12 73 32" fill="none" stroke="#b71c1c" stroke-width="1.5" marker-end="url(#n1)"/>
+        <text x="60" y="12" text-anchor="middle" font-family="Patrick Hand" font-size="12" fill="#b71c1c">a,b</text>
+        <!-- q0->q1 on a (non-det) -->
+        <line x1="78" y1="50" x2="140" y2="50" stroke="#4a148c" stroke-width="1.5" marker-end="url(#n1)"/>
+        <text x="109" y="42" text-anchor="middle" font-family="Patrick Hand" font-size="13" fill="#b71c1c">a</text>
+        <circle cx="158" cy="50" r="18" fill="#f3e5f5" stroke="#4a148c" stroke-width="1.5"/>
+        <text x="158" y="54" text-anchor="middle" font-family="Kalam" font-size="12" fill="#4a148c">q₁</text>
+        <line x1="176" y1="50" x2="238" y2="50" stroke="#4a148c" stroke-width="1.5" marker-end="url(#n1)"/>
+        <text x="207" y="42" text-anchor="middle" font-family="Patrick Hand" font-size="13" fill="#b71c1c">b</text>
+        <!-- q2 final -->
+        <circle cx="256" cy="50" r="18" fill="#e8f5e9" stroke="#1b5e20" stroke-width="1.5"/>
+        <circle cx="256" cy="50" r="14" fill="none" stroke="#1b5e20" stroke-width="1.2"/>
+        <text x="256" y="54" text-anchor="middle" font-family="Kalam" font-size="12" fill="#1b5e20">q₂</text>
+      </svg>
+    </div>
+    <div class="nfa-wrap">
+      <div class="nfa-title">NFA Transition Table</div>
+      <table class="tt" style="width:auto;margin:8px auto;">
+        <tr><th>State</th><th>a</th><th>b</th></tr>
+        <tr><td>→q₀</td><td>{q₀,q₁}</td><td>{q₀}</td></tr>
+        <tr><td>q₁</td><td>∅</td><td>{q₂}</td></tr>
+        <tr><td>*q₂</td><td>∅</td><td>∅</td></tr>
+      </table>
+      <p style="font-size:12px;color:#555;">∅ = empty set (no transition)</p>
+    </div>
+  </div>
+  <p style="font-size:14px; margin-top:4px;">★ q₀ on 'a' goes to BOTH q₀ and q₁ simultaneously (non-determinism). If ANY path reaches q₂, string is accepted.</p>
+
+  <div class="page-num">1 / 3</div>
 </div>
 
-<!-- ================================================
-     ADD CONTENT SECTIONS BELOW THIS LINE
+<!-- PAGE 2 -->
 
-     Each section pattern:
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 1 | Section 3</span><span class="unit-badge">NFA → DFA</span></div>
 
-     <div class="page">
-       <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
-       <div class="page-header">
-         <span class="date-tag">TALF — Unit 4</span>
-         <span class="unit-badge">SECTION X</span>
-       </div>
-       <h1 class="section-title"><span class="sn">§X</span> Title Here</h1>
-       <hr class="divider">
-       ... content ...
-       <div class="page-num">1 / 1</div>
-     </div>
-     ================================================ -->
+  <h2 class="topic">3. Equivalence of NFA and DFA</h2>
+  <div class="purple-box">
+    <strong>Theorem:</strong> For every NFA, there exists an equivalent DFA that accepts the same language.<br><br>
+    i.e., NFA and DFA are <strong>equivalent in expressive power</strong> — both recognise exactly the class of Regular Languages. NFA does NOT recognise more languages than DFA.
+  </div>
+
+  <h2 class="topic">4. Subset Construction — NFA to DFA Conversion</h2>
+  <p>The key idea: <strong>each state in the DFA = a SET of NFA states</strong> (a subset of Q in NFA).</p>
+
+  <div class="step-card">
+    <div class="step-head">Step 1 — Start state</div>
+    <div class="step-body">The start state of the DFA = {q₀} (the set containing only the NFA's start state)</div>
+  </div>
+  <div class="step-card">
+    <div class="step-head">Step 2 — Compute transitions</div>
+    <div class="step-body">For each DFA state (set of NFA states S) and each symbol a: DFA δ(S, a) = ∪ δ_NFA(q, a) for all q in S</div>
+  </div>
+  <div class="step-card">
+    <div class="step-head">Step 3 — Add new states</div>
+    <div class="step-body">Any new set produced by Step 2 that hasn't been seen yet → add as a new DFA state. Repeat Step 2 for each new state.</div>
+  </div>
+  <div class="step-card">
+    <div class="step-head">Step 4 — Mark final states</div>
+    <div class="step-body">A DFA state (set S) is a final state if S contains at least one NFA final state.</div>
+  </div>
+  <div class="step-card">
+    <div class="step-head">Step 5 — Dead state</div>
+    <div class="step-body">The empty set ∅ becomes the dead/trap state in the DFA (if reached, stays there, non-accepting).</div>
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">Q1 — Convert NFA (strings ending in 'ab') to DFA</div>
+    <div class="q-step">NFA states: Q = {q₀, q₁, q₂}, Σ = {a,b}, F = {q₂}<br>
+    NFA δ: δ(q₀,a)={q₀,q₁}, δ(q₀,b)={q₀}, δ(q₁,a)=∅, δ(q₁,b)={q₂}, δ(q₂,a)=∅, δ(q₂,b)=∅</div>
+
+    <table class="tt" style="margin-top:8px;">
+      <tr><th>DFA State (NFA subset)</th><th>a</th><th>b</th><th>Final?</th></tr>
+      <tr><td>→{q₀}</td><td>{q₀,q₁}</td><td>{q₀}</td><td>No</td></tr>
+      <tr><td>{q₀,q₁}</td><td>{q₀,q₁}</td><td>{q₀,q₂}</td><td>No</td></tr>
+      <tr><td>{q₀,q₂} ← *</td><td>{q₀,q₁}</td><td>{q₀}</td><td><strong>YES</strong> (q₂ ∈ F)</td></tr>
+    </table>
+    <div class="q-step">DFA has 3 states: {q₀}, {q₀,q₁}, {q₀,q₂}. Empty set ∅ never reached here so no dead state needed.</div>
+    <div class="nfa-wrap" style="margin-top:8px;">
+      <div class="nfa-title">Equivalent DFA for 'strings ending in ab'</div>
+      <svg class="nfa-svg" viewBox="0 0 380 100">
+        <defs><marker id="n2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M2 2L8 5L2 8" fill="none" stroke="#1565C0" stroke-width="1.5"/></marker></defs>
+        <line x1="5" y1="50" x2="42" y2="50" stroke="#1565C0" stroke-width="1.5" marker-end="url(#n2)"/>
+        <circle cx="62" cy="50" r="20" fill="#e8f4fd" stroke="#1565C0" stroke-width="1.5"/>
+        <text x="62" y="47" text-anchor="middle" font-family="Kalam" font-size="10" fill="#1565C0">{q₀}</text>
+        <text x="62" y="60" text-anchor="middle" font-family="Kalam" font-size="9" fill="#888">A</text>
+        <!-- A->B on a -->
+        <line x1="82" y1="50" x2="148" y2="50" stroke="#1565C0" stroke-width="1.5" marker-end="url(#n2)"/>
+        <text x="115" y="42" text-anchor="middle" font-family="Patrick Hand" font-size="13" fill="#b71c1c">a</text>
+        <!-- A self on b -->
+        <path d="M47 32 Q62 12 77 32" fill="none" stroke="#b71c1c" stroke-width="1.5" marker-end="url(#n2)"/>
+        <text x="62" y="12" text-anchor="middle" font-family="Patrick Hand" font-size="13" fill="#b71c1c">b</text>
+        <!-- B {q0,q1} -->
+        <circle cx="168" cy="50" r="20" fill="#e8f4fd" stroke="#1565C0" stroke-width="1.5"/>
+        <text x="168" y="47" text-anchor="middle" font-family="Kalam" font-size="10" fill="#1565C0">{q₀,q₁}</text>
+        <text x="168" y="60" text-anchor="middle" font-family="Kalam" font-size="9" fill="#888">B</text>
+        <!-- B self on a -->
+        <path d="M153 32 Q168 12 183 32" fill="none" stroke="#b71c1c" stroke-width="1.5" marker-end="url(#n2)"/>
+        <text x="168" y="12" text-anchor="middle" font-family="Patrick Hand" font-size="13" fill="#b71c1c">a</text>
+        <!-- B->C on b -->
+        <line x1="188" y1="50" x2="254" y2="50" stroke="#1565C0" stroke-width="1.5" marker-end="url(#n2)"/>
+        <text x="221" y="42" text-anchor="middle" font-family="Patrick Hand" font-size="13" fill="#b71c1c">b</text>
+        <!-- C {q0,q2} final -->
+        <circle cx="274" cy="50" r="20" fill="#e8f5e9" stroke="#1b5e20" stroke-width="1.5"/>
+        <circle cx="274" cy="50" r="16" fill="none" stroke="#1b5e20" stroke-width="1.2"/>
+        <text x="274" y="47" text-anchor="middle" font-family="Kalam" font-size="10" fill="#1b5e20">{q₀,q₂}</text>
+        <text x="274" y="60" text-anchor="middle" font-family="Kalam" font-size="9" fill="#555">C</text>
+        <!-- C->B on a -->
+        <path d="M264 68 Q221 86 178 68" fill="none" stroke="#1565C0" stroke-width="1.5" marker-end="url(#n2)"/>
+        <text x="221" y="86" text-anchor="middle" font-family="Patrick Hand" font-size="13" fill="#b71c1c">a</text>
+        <!-- C->A on b -->
+        <path d="M264 68 Q165 88 72 68" fill="none" stroke="#1565C0" stroke-width="1.4" stroke-dasharray="4,2" marker-end="url(#n2)"/>
+        <text x="168" y="92" text-anchor="middle" font-family="Patrick Hand" font-size="12" fill="#b71c1c">b</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="page-num">2 / 3</div>
+</div>
+
+<!-- PAGE 3 -->
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 1 | Section 3</span><span class="unit-badge">NFA → DFA</span></div>
+
+  <div class="qbox">
+    <div class="q-label">Q2 — NFA to DFA conversion: Σ={0,1}, NFA has states {A,B,C} with C as final</div>
+    <div class="q-step">NFA table: δ(A,0)={A,B}, δ(A,1)={A}, δ(B,0)=∅, δ(B,1)={C}, δ(C,0)=∅, δ(C,1)=∅</div>
+    <table class="tt" style="margin-top:8px;">
+      <tr><th>DFA State</th><th>0</th><th>1</th><th>Final?</th></tr>
+      <tr><td>→{A}</td><td>{A,B}</td><td>{A}</td><td>No</td></tr>
+      <tr><td>{A,B}</td><td>{A,B}</td><td>{A,C}</td><td>No</td></tr>
+      <tr><td>{A} (revisit)</td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td>*{A,C}</td><td>{A,B}</td><td>{A}</td><td><strong>YES</strong> (C∈F)</td></tr>
+    </table>
+    <div class="q-step">Final DFA: 3 states {A}, {A,B}, {A,C}. Only {A,C} is accepting. Language = strings ending in "01"... → 0 followed by 1 seen (B→C via 1 after 0).</div>
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">Q3 — NFA with dead state: δ(q₀,a)={q₀,q₁}, δ(q₀,b)=∅, δ(q₁,b)={q₂}, δ(q₁,a)=∅, δ(q₂,a)=∅, δ(q₂,b)=∅. F={q₂}</div>
+    <table class="tt" style="margin-top:6px;">
+      <tr><th>DFA State</th><th>a</th><th>b</th><th>Final?</th></tr>
+      <tr><td>→{q₀}</td><td>{q₀,q₁}</td><td>∅ (dead)</td><td>No</td></tr>
+      <tr><td>{q₀,q₁}</td><td>{q₀,q₁}</td><td>{q₂}</td><td>No</td></tr>
+      <tr><td>*{q₂}</td><td>∅ (dead)</td><td>∅ (dead)</td><td>YES</td></tr>
+      <tr><td>∅ (dead)</td><td>∅</td><td>∅</td><td>No</td></tr>
+    </table>
+    <div class="q-step">∅ (empty set) becomes dead/trap state in DFA. DFA has 4 states total.</div>
+  </div>
+
+  <hr class="divider"/>
+
+  <h2 class="topic">5. Why NFA is useful despite being equivalent to DFA?</h2>
+  <div class="rule-box">
+    <ul class="plain">
+      <li>NFA is <strong>easier and more compact</strong> to design for many languages</li>
+      <li>NFA may have <strong>exponentially fewer states</strong> than equivalent DFA</li>
+      <li>DFA conversion can lead to 2ⁿ states (worst case) from an n-state NFA</li>
+      <li>NFA is used as intermediate step: <strong>RE → NFA → DFA</strong></li>
+      <li>Both accept exactly the class of <strong>Regular Languages</strong></li>
+    </ul>
+  </div>
+
+  <div class="note-box">
+    <strong>★ State complexity:</strong> An NFA with n states may require up to <strong>2ⁿ states</strong> in the equivalent DFA (subset construction). However, in practice many subsets are unreachable and the actual DFA is much smaller.
+  </div>
+
+  <h2 class="topic">6. Summary — DFA vs NFA</h2>
+  <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:6px;">
+    <tr style="background:var(--blue);color:#fff;"><th style="padding:7px 10px;">Property</th><th style="padding:7px 10px;">DFA</th><th style="padding:7px 10px;">NFA</th></tr>
+    <tr><td style="padding:6px 10px;border-bottom:1px solid #e0e0e0;">Transition per (state,symbol)</td><td style="padding:6px 10px;border-bottom:1px solid #e0e0e0;">Exactly 1</td><td style="padding:6px 10px;border-bottom:1px solid #e0e0e0;">0, 1 or many</td></tr>
+    <tr style="background:#f5f5f5;"><td style="padding:6px 10px;border-bottom:1px solid #e0e0e0;">Dead state needed?</td><td style="padding:6px 10px;border-bottom:1px solid #e0e0e0;">Yes (for completeness)</td><td style="padding:6px 10px;border-bottom:1px solid #e0e0e0;">No (∅ = implicit dead)</td></tr>
+    <tr><td style="padding:6px 10px;border-bottom:1px solid #e0e0e0;">Acceptance</td><td style="padding:6px 10px;border-bottom:1px solid #e0e0e0;">End in final state</td><td style="padding:6px 10px;border-bottom:1px solid #e0e0e0;">ANY path ends in final state</td></tr>
+    <tr style="background:#f5f5f5;"><td style="padding:6px 10px;border-bottom:1px solid #e0e0e0;">Simulation</td><td style="padding:6px 10px;border-bottom:1px solid #e0e0e0;">Simpler (deterministic)</td><td style="padding:6px 10px;border-bottom:1px solid #e0e0e0;">Harder (track all paths)</td></tr>
+    <tr><td style="padding:6px 10px;">Expressive power</td><td style="padding:6px 10px;">Regular Languages</td><td style="padding:6px 10px;">Regular Languages (same!)</td></tr>
+  </table>
+
+  <div class="page-num">3 / 3</div>
+</div>
+
+
+
+<!-- PAGE 1 -->
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 1</span><span class="unit-badge">SECTION 4</span></div>
+  <h1 class="section-title"><span class="sn">Section 4</span> — NFA with ε-Transition</h1>
+
+  <h2 class="topic">1. NFA with ε-Transitions (ε-NFA)</h2>
+  <div class="def-box">
+    An <strong>ε-NFA</strong> is an NFA that also allows <strong>ε-transitions</strong> — transitions that occur without consuming any input symbol. The machine can spontaneously move to another state for "free".<br><br>
+    Transition function: <span class="formula">δ : Q × (Σ ∪ {ε}) → 2^Q</span>
+  </div>
+
+  <div class="nfa-wrap">
+    <div class="nfa-title">ε-NFA Example: L = { aⁿ | n ≥ 0 } ∪ { bᵐ | m ≥ 0 } = strings of only a's OR only b's</div>
+    <svg class="nfa-svg" viewBox="0 0 400 110">
+      <defs><marker id="e1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M2 2L8 5L2 8" fill="none" stroke="#006064" stroke-width="1.5"/></marker></defs>
+      <line x1="5" y1="55" x2="40" y2="55" stroke="#006064" stroke-width="1.5" marker-end="url(#e1)"/>
+      <!-- q0 init+final -->
+      <circle cx="58" cy="55" r="18" fill="#e0f7fa" stroke="#006064" stroke-width="1.5"/>
+      <circle cx="58" cy="55" r="14" fill="none" stroke="#006064" stroke-width="1.2"/>
+      <text x="58" y="59" text-anchor="middle" font-family="Kalam" font-size="12" fill="#006064">q₀</text>
+      <!-- ε to q1 (top) -->
+      <line x1="76" y1="47" x2="120" y2="25" stroke="#555" stroke-width="1.2" stroke-dasharray="4,2" marker-end="url(#e1)"/>
+      <text x="92" y="28" font-family="Patrick Hand" font-size="13" fill="#555">ε</text>
+      <!-- ε to q3 (bottom) -->
+      <line x1="76" y1="63" x2="120" y2="85" stroke="#555" stroke-width="1.2" stroke-dasharray="4,2" marker-end="url(#e1)"/>
+      <text x="92" y="84" font-family="Patrick Hand" font-size="13" fill="#555">ε</text>
+      <!-- q1 -->
+      <circle cx="138" cy="18" r="18" fill="#e8f4fd" stroke="#1565C0" stroke-width="1.5"/>
+      <text x="138" y="22" text-anchor="middle" font-family="Kalam" font-size="12" fill="#1565C0">q₁</text>
+      <!-- q1 self on a -->
+      <path d="M124 2 Q138 -14 152 2" fill="none" stroke="#b71c1c" stroke-width="1.5" marker-end="url(#e1)"/>
+      <text x="138" y="-12" text-anchor="middle" font-family="Patrick Hand" font-size="13" fill="#b71c1c">a</text>
+      <!-- q1->q2 on ε (final) -->
+      <line x1="156" y1="18" x2="200" y2="18" stroke="#555" stroke-width="1.2" stroke-dasharray="4,2" marker-end="url(#e1)"/>
+      <text x="178" y="10" text-anchor="middle" font-family="Patrick Hand" font-size="12" fill="#555">ε</text>
+      <circle cx="218" cy="18" r="18" fill="#e8f5e9" stroke="#1b5e20" stroke-width="1.5"/>
+      <circle cx="218" cy="18" r="14" fill="none" stroke="#1b5e20" stroke-width="1.2"/>
+      <text x="218" y="22" text-anchor="middle" font-family="Kalam" font-size="12" fill="#1b5e20">q₂</text>
+      <!-- q3 -->
+      <circle cx="138" cy="92" r="18" fill="#e8f4fd" stroke="#1565C0" stroke-width="1.5"/>
+      <text x="138" y="96" text-anchor="middle" font-family="Kalam" font-size="12" fill="#1565C0">q₃</text>
+      <!-- q3 self on b -->
+      <path d="M124 108 Q138 118 152 108" fill="none" stroke="#b71c1c" stroke-width="1.5" marker-end="url(#e1)"/>
+      <text x="138" y="118" text-anchor="middle" font-family="Patrick Hand" font-size="13" fill="#b71c1c">b</text>
+      <!-- q3->q4 final -->
+      <line x1="156" y1="92" x2="200" y2="92" stroke="#555" stroke-width="1.2" stroke-dasharray="4,2" marker-end="url(#e1)"/>
+      <text x="178" y="84" text-anchor="middle" font-family="Patrick Hand" font-size="12" fill="#555">ε</text>
+      <circle cx="218" cy="92" r="18" fill="#e8f5e9" stroke="#1b5e20" stroke-width="1.5"/>
+      <circle cx="218" cy="92" r="14" fill="none" stroke="#1b5e20" stroke-width="1.2"/>
+      <text x="218" y="96" text-anchor="middle" font-family="Kalam" font-size="12" fill="#1b5e20">q₄</text>
+    </svg>
+  </div>
+
+  <h2 class="topic">2. ε-Closure</h2>
+  <div class="teal-box">
+    The <strong>ε-closure</strong> of a state q, written <span class="formula">ε-closure(q)</span>, is the set of all states reachable from q using <strong>zero or more ε-transitions</strong> (including q itself).<br><br>
+    <strong>ε-closure({q₁, q₂, ...})</strong> = union of ε-closures of each individual state.
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">ε-closure Example</div>
+    <div class="q-step">Given: q₀ →ε→ q₁ →ε→ q₂, and q₃ →ε→ q₃ (only itself)<br><br>
+    ε-closure(q₀) = {q₀, q₁, q₂} &nbsp;(q₀ reaches q₁ via ε, q₁ reaches q₂ via ε)<br>
+    ε-closure(q₁) = {q₁, q₂}<br>
+    ε-closure(q₂) = {q₂}<br>
+    ε-closure(q₃) = {q₃}</div>
+  </div>
+
+  <div class="page-num">1 / 3</div>
+</div>
+
+<!-- PAGE 2 -->
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 1 | Section 4</span><span class="unit-badge">ε-NFA → DFA</span></div>
+
+  <h2 class="topic">3. Converting ε-NFA to DFA (ε-closure + Subset Construction)</h2>
+
+  <div class="step-card">
+    <div class="step-head">Step 1 — Start state of DFA</div>
+    <div class="step-body">DFA start state = ε-closure(q₀) of the ε-NFA</div>
+  </div>
+  <div class="step-card">
+    <div class="step-head">Step 2 — Transition computation</div>
+    <div class="step-body">For DFA state S and symbol a: &nbsp; DFA δ(S,a) = ε-closure( ∪ δ_NFA(q,a) for all q ∈ S )</div>
+  </div>
+  <div class="step-card">
+    <div class="step-head">Step 3 — Repeat until stable</div>
+    <div class="step-body">Add each new set produced as a new DFA state. Compute its transitions. Repeat until no new states.</div>
+  </div>
+  <div class="step-card">
+    <div class="step-head">Step 4 — Final states</div>
+    <div class="step-body">A DFA state (set S) is final if S contains at least one ε-NFA final state.</div>
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">Q1 — Convert ε-NFA to DFA. States: {q₀,q₁,q₂}, Σ={a,b}, F={q₂}</div>
+    <div class="q-step">ε-NFA transitions: δ(q₀,ε)={q₁}, δ(q₀,a)={q₀}, δ(q₁,b)={q₂}, δ(q₂,a)={q₂}</div>
+    <div class="q-step"><strong>Step 1: ε-closures:</strong><br>
+    ε-closure(q₀) = {q₀, q₁} &nbsp;[q₀ reaches q₁ via ε]<br>
+    ε-closure(q₁) = {q₁}<br>
+    ε-closure(q₂) = {q₂}</div>
+    <div class="q-step"><strong>DFA Start = ε-closure(q₀) = {q₀, q₁} = State A</strong></div>
+
+    <table class="ec-table" style="margin-top:8px;">
+      <tr><th>DFA State</th><th>ε-closure</th><th>on 'a'</th><th>on 'b'</th><th>Final?</th></tr>
+      <tr><td>→A = {q₀,q₁}</td><td>{q₀,q₁}</td><td>ε-cls({q₀})={q₀,q₁}=A</td><td>ε-cls({q₂})={q₂}=B</td><td>No</td></tr>
+      <tr><td>*B = {q₂}</td><td>{q₂}</td><td>ε-cls({q₂})={q₂}=B</td><td>ε-cls(∅)=∅=dead</td><td>YES (q₂∈F)</td></tr>
+      <tr><td>dead = ∅</td><td>—</td><td>∅</td><td>∅</td><td>No</td></tr>
+    </table>
+    <div class="q-step">Final DFA: A (start), B (final), dead state. A→A on 'a', A→B on 'b', B→B on 'a', B→dead on 'b'. Accepts strings matching a*b(a)* — strings containing exactly one b with a's around it.</div>
+  </div>
+
+  <div class="page-num">2 / 3</div>
+</div>
+
+<!-- PAGE 3 -->
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 1 | Section 4</span><span class="unit-badge">ε EQUIVALENCE</span></div>
+
+  <h2 class="topic">4. Equivalence of NFA with and without ε-Transitions</h2>
+  <div class="teal-box">
+    <strong>Theorem:</strong> For every ε-NFA, there exists an equivalent NFA (without ε-transitions) that accepts the same language.<br><br>
+    Consequence: DFA = NFA = ε-NFA in expressive power — all three recognise exactly the <strong>Regular Languages</strong>.
+  </div>
+
+  <h3 class="sub">Method to convert ε-NFA to NFA (remove ε-transitions)</h3>
+  <ul class="plain">
+    <li>Compute ε-closure for every state</li>
+    <li>For new NFA: δ'(q, a) = ε-closure( δ(ε-closure(q), a) )</li>
+    <li>New start state = ε-closure(old start state)</li>
+    <li>State q is final in new NFA if ε-closure(q) contains any old final state</li>
+  </ul>
+
+  <div class="qbox">
+    <div class="q-label">Q2 — Full Worked Example: ε-NFA to NFA without ε</div>
+    <div class="q-step">ε-NFA: q₀ →ε→ q₁, q₀ →ε→ q₂, q₁ →a→ q₁, q₂ →b→ q₂. F={q₁,q₂}.</div>
+    <div class="q-step">
+    <strong>ε-closures:</strong><br>
+    ε-closure(q₀) = {q₀, q₁, q₂}<br>
+    ε-closure(q₁) = {q₁}<br>
+    ε-closure(q₂) = {q₂}<br><br>
+    <strong>New NFA transitions:</strong><br>
+    δ'(q₀, a) = ε-closure(δ({q₀,q₁,q₂}, a)) = ε-closure({q₁}) = {q₁}<br>
+    δ'(q₀, b) = ε-closure(δ({q₀,q₁,q₂}, b)) = ε-closure({q₂}) = {q₂}<br>
+    δ'(q₁, a) = ε-closure(δ({q₁}, a)) = ε-closure({q₁}) = {q₁}<br>
+    δ'(q₁, b) = ε-closure(∅) = ∅<br>
+    δ'(q₂, a) = ε-closure(∅) = ∅<br>
+    δ'(q₂, b) = ε-closure({q₂}) = {q₂}<br><br>
+    <strong>Final states in new NFA:</strong> q₀ (since ε-closure(q₀) contains q₁,q₂ which are final), q₁, q₂
+    </div>
+  </div>
+
+  <hr class="divider"/>
+
+  <h2 class="topic">5. Summary — Three-way Equivalence</h2>
+  <div class="rule-box">
+    <div style="text-align:center; font-size:16px; margin:8px 0;">
+      <span style="font-family:'Patrick Hand',cursive; color:var(--blue);">DFA</span>
+      &nbsp;≡&nbsp;
+      <span style="font-family:'Patrick Hand',cursive; color:var(--purple);">NFA</span>
+      &nbsp;≡&nbsp;
+      <span style="font-family:'Patrick Hand',cursive; color:var(--teal);">ε-NFA</span>
+      &nbsp;&nbsp;⟺&nbsp;&nbsp;
+      <span style="font-family:'Patrick Hand',cursive; color:var(--red);">Regular Languages</span>
+    </div>
+    <ul class="plain" style="margin-top:8px;">
+      <li>All three models have <strong>equal expressive power</strong></li>
+      <li><strong>DFA → NFA</strong>: trivial (DFA is a special case of NFA)</li>
+      <li><strong>NFA → DFA</strong>: subset construction (may exponentially increase states)</li>
+      <li><strong>ε-NFA → NFA</strong>: ε-closure computation + redefine transitions</li>
+      <li><strong>ε-NFA → DFA</strong>: ε-closure + subset construction (combined)</li>
+    </ul>
+  </div>
+
+  <div class="note-box"><strong>★ Important Flow:</strong> RE → ε-NFA (Thompson's) → NFA → DFA (Subset) → Minimised DFA. Each conversion is well-defined and the resulting automaton accepts the same language.</div>
+
+  <div class="page-num">3 / 3</div>
+</div>
+
+
+
+<!-- PAGE 1 -->
 
 <script>
 (function(){
@@ -123,6 +762,7 @@ nav.part-nav{padding:0 10px;gap:6px;}
   var secPages = [];
   pages.forEach(function(p){ if(p.querySelector('h1.section-title')) secPages.push(p); });
   secPages.forEach(function(p,i){ p.id = 'sec-'+(i+1); });
+
   var tocItems = document.querySelectorAll('.cover-toc-item');
   tocItems.forEach(function(item, i){
     if(i >= secPages.length) return;
@@ -136,5 +776,6 @@ nav.part-nav{padding:0 10px;gap:6px;}
   });
 })();
 </script>
+
 </body>
 </html>

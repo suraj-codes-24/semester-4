@@ -6,64 +6,703 @@
 <title>TALF Unit 2 — Part 2</title>
 <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Patrick+Hand&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#1a1a2e;--ink2:#2c2c54;--blue:#1565C0;--red:#b71c1c;--green:#1b5e20;--purple:#4a148c;--teal:#006064;--orange:#e65100;--line:#c5cae9;--page:#fafaf7;--highlight:#fff9c4;--box-blue:#e8f4fd;--box-green:#e8f5e9;--box-purple:#f3e5f5;--box-orange:#fff3e0;--box-red:#fce4ec;--box-teal:#e0f7fa;}
-*{margin:0;padding:0;box-sizing:border-box;}
-body{background:#e0e0e0;font-family:'Kalam',cursive;color:var(--ink);padding:30px 20px;}
-.page{background:var(--page);max-width:820px;margin:0 auto 40px;border-radius:4px;box-shadow:0 2px 16px rgba(0,0,0,0.18),0 0 0 1px rgba(0,0,0,0.08);padding:60px 70px 70px 90px;position:relative;min-height:1060px;background-image:repeating-linear-gradient(transparent,transparent 31px,var(--line) 31px,var(--line) 32px);background-position:0 56px;}
-.page::before{content:'';position:absolute;left:72px;top:0;bottom:0;width:1.5px;background:#ef9a9a;opacity:0.7;}
-.holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-around;padding:40px 0;}
-.hole{width:22px;height:22px;border-radius:50%;background:#e0e0e0;border:1.5px solid #bdbdbd;box-shadow:inset 0 1px 3px rgba(0,0,0,0.2);}
-.page-num{position:absolute;bottom:28px;right:50px;font-size:13px;color:#9e9e9e;}
-.page-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
-.date-tag{font-size:13px;color:#9e9e9e;}
-.unit-badge{color:#fff;font-size:13px;padding:2px 14px;border-radius:20px;font-weight:700;}
-h1.section-title{font-size:24px;font-weight:700;color:var(--ink2);text-align:center;margin:8px 0 4px;text-decoration:underline;text-underline-offset:5px;}
-h2.topic{font-size:18px;font-weight:700;color:var(--blue);margin:18px 0 6px;border-bottom:1.5px solid var(--blue);padding-bottom:2px;display:inline-block;}
-h3.sub{font-size:15px;font-weight:700;color:var(--purple);margin:12px 0 4px;}
-p,li{font-size:15px;line-height:32px;}
-.def-box{background:var(--box-blue);border-left:4px solid var(--blue);border-radius:0 6px 6px 0;padding:10px 16px;margin:10px 0 12px;font-size:15px;line-height:30px;}
-.note-box{background:var(--highlight);border-left:4px solid #f9a825;border-radius:0 6px 6px 0;padding:8px 14px;margin:8px 0 10px;font-size:14px;line-height:26px;}
-.rule-box{background:var(--box-green);border:1.5px solid #81c784;border-radius:6px;padding:10px 16px;margin:10px 0;font-size:14.5px;line-height:28px;}
-.purple-box{background:var(--box-purple);border-left:4px solid var(--purple);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
-.orange-box{background:var(--box-orange);border-left:4px solid var(--orange);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
-.teal-box{background:var(--box-teal);border-left:4px solid var(--teal);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
-.formula{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--blue);}
-.divider{border:none;border-top:1px dashed #b0bec5;margin:14px 0 10px;}
-ul.plain{list-style:none;padding-left:4px;}
-ul.plain li::before{content:'→ ';color:var(--blue);font-weight:700;}
-ul.plain li{font-size:15px;line-height:32px;}
-.qbox{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:12px 16px;margin:10px 0;}
-.q-label{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:2px;}
-.q-step{font-size:14px;color:var(--green);margin-top:4px;line-height:26px;}
-.q-ans{font-size:15px;color:var(--red);font-family:'Patrick Hand',cursive;margin-top:4px;}
-table.tt{width:100%;border-collapse:collapse;margin:8px 0;font-size:14px;}
-table.tt th{color:#fff;padding:7px 10px;text-align:center;}
-table.tt td{padding:6px 10px;border-bottom:1px solid #e0e0e0;text-align:center;font-family:'Patrick Hand',cursive;font-size:14px;}
-table.tt tr:nth-child(even) td{background:#f5f5f5;}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0;}
-.vs-box{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:12px 0;border-radius:8px;overflow:hidden;border:1.5px solid #90caf9;}
-.vs-left{background:#e8f4fd;padding:12px 14px;}
-.vs-right{background:var(--box-purple);padding:12px 14px;border-left:1px solid #90caf9;}
-.vs-head{font-size:15px;font-weight:700;margin-bottom:8px;}
-.vs-item{font-size:14px;line-height:26px;}
-.step-card{background:var(--box-purple);border-left:4px solid var(--purple);padding:8px 14px;margin:5px 0;border-radius:0 6px 6px 0;}
-.step-head{font-size:14px;font-weight:700;color:var(--purple);}
-.step-body{font-size:13.5px;line-height:24px;color:var(--ink2);}
-.cover-page{max-width:820px;margin:0 auto 40px;border-radius:8px;padding:80px 60px;text-align:center;color:#fff;box-shadow:0 4px 24px rgba(0,0,0,0.3);position:relative;overflow:hidden;}
-.cover-subject{font-size:14px;letter-spacing:3px;opacity:0.7;margin-bottom:16px;}
-.cover-title{font-size:40px;font-weight:700;line-height:1.2;margin-bottom:12px;}
-.cover-unit{font-size:20px;opacity:0.85;margin-bottom:30px;}
-.cover-divider{width:80px;height:3px;background:rgba(255,255,255,0.4);margin:0 auto 24px;border-radius:2px;}
-.cover-toc{text-align:left;background:rgba(255,255,255,0.1);border-radius:8px;padding:20px 28px;display:inline-block;min-width:420px;}
-.cover-toc-item{font-size:15px;line-height:32px;display:flex;justify-content:space-between;gap:20px;}
-.part-nav{max-width:820px;margin:0 auto 20px;display:flex;gap:10px;justify-content:center;align-items:center;font-family:'Kalam',cursive;flex-wrap:wrap;}
-.part-nav a{padding:6px 20px;border-radius:20px;background:#fff;border:1.5px solid #90caf9;color:var(--blue);text-decoration:none;font-size:14px;font-weight:700;}
-.part-nav a:hover:not(.active){background:#e3f2fd;}
-.part-nav .back{background:#f5f5f5;border-color:#ccc;color:#555;font-size:13px;}
-.unit-badge{background:#006064;}
-h1.section-title{text-decoration-color:#006064;}
-h1.section-title .sn{color:#006064;}
-.part-nav a.active{background:#006064;border-color:#006064;color:#fff;}
+
+  :root {
+    --ink:#1a1a2e;--ink2:#2c2c54;--blue:#1565C0;--red:#b71c1c;--green:#1b5e20;
+    --purple:#4a148c;--line:#c5cae9;--page:#fafaf7;--highlight:#fff9c4;
+    --box-blue:#e8f4fd;--box-green:#e8f5e9;--box-red:#fce4ec;--box-purple:#f3e5f5;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:#e0e0e0;font-family:'Kalam',cursive;color:var(--ink);padding:30px 20px;}
+  .page{background:var(--page);max-width:820px;margin:0 auto 40px;border-radius:4px;
+    box-shadow:0 2px 16px rgba(0,0,0,0.18),0 0 0 1px rgba(0,0,0,0.08);
+    padding:60px 70px 70px 90px;position:relative;min-height:1060px;
+    background-image:repeating-linear-gradient(transparent,transparent 31px,var(--line) 31px,var(--line) 32px);
+    background-position:0 56px;}
+  .page::before{content:'';position:absolute;left:72px;top:0;bottom:0;width:1.5px;background:#ef9a9a;opacity:0.7;}
+  .holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-around;padding:40px 0;}
+  .hole{width:22px;height:22px;border-radius:50%;background:#e0e0e0;border:1.5px solid #bdbdbd;box-shadow:inset 0 1px 3px rgba(0,0,0,0.2);}
+  .page-num{position:absolute;bottom:28px;right:50px;font-size:13px;color:#9e9e9e;}
+  .page-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
+  .date-tag{font-size:13px;color:#9e9e9e;border-bottom:1px solid #ccc;padding-bottom:2px;}
+  .unit-badge{background:var(--blue);color:#fff;font-size:13px;padding:2px 14px;border-radius:20px;font-weight:700;}
+  h1.section-title{font-size:24px;font-weight:700;color:var(--ink2);text-align:center;margin:8px 0 4px;
+    text-decoration:underline;text-underline-offset:5px;text-decoration-color:var(--blue);}
+  h1.section-title .section-num{color:var(--blue);}
+  h2.topic{font-size:18px;font-weight:700;color:var(--blue);margin:20px 0 6px;border-bottom:1.5px solid var(--blue);padding-bottom:2px;display:inline-block;}
+  p,li{font-size:15.5px;line-height:32px;}
+  .def-box{background:var(--box-blue);border-left:4px solid var(--blue);border-radius:0 6px 6px 0;padding:10px 16px;margin:10px 0 14px;font-size:15.5px;line-height:32px;}
+  .note-box{background:var(--highlight);border-left:4px solid #f9a825;border-radius:0 6px 6px 0;padding:8px 14px;margin:8px 0 12px;font-size:14.5px;line-height:28px;}
+  .rule-box{background:var(--box-green);border:1.5px solid #81c784;border-radius:6px;padding:10px 16px;margin:10px 0 14px;font-size:15px;line-height:32px;}
+  .formula{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--blue);}
+  .formula-red{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--red);}
+  .formula-purple{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--purple);}
+  table.re-table{width:100%;border-collapse:collapse;margin:10px 0 16px;font-size:15px;}
+  table.re-table th{background:var(--blue);color:#fff;padding:7px 12px;text-align:left;font-weight:700;font-size:14px;}
+  table.re-table td{padding:7px 12px;border-bottom:1px solid #e3e3e3;line-height:30px;}
+  table.re-table tr:nth-child(even) td{background:#f5f5f5;}
+  .qbox{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:12px 16px;margin:10px 0 6px;}
+  .q-label{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:2px;}
+  .q-text{font-size:15px;color:var(--ink2);line-height:28px;}
+  .q-ans{font-size:15.5px;color:var(--red);margin-top:4px;font-family:'Patrick Hand',cursive;line-height:28px;}
+  .q-step{font-size:14px;color:var(--green);margin-top:2px;line-height:26px;}
+  .step-row{display:flex;gap:8px;align-items:flex-start;margin:3px 0;}
+  .step-num{min-width:22px;height:22px;border-radius:50%;background:var(--blue);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:4px;}
+  .identity-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0;}
+  .id-card{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:10px 14px;}
+  .id-num{font-size:11px;color:var(--blue);font-weight:700;margin-bottom:2px;}
+  .id-eq{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--ink2);line-height:28px;}
+  .id-desc{font-size:12px;color:#666;line-height:20px;margin-top:2px;}
+  .divider{border:none;border-top:1px dashed #b0bec5;margin:18px 0 10px;}
+  ul.plain{list-style:none;padding-left:4px;}
+  ul.plain li::before{content:'→ ';color:var(--blue);font-weight:700;}
+  .proof-box{background:var(--box-purple);border:1.5px solid #ce93d8;border-radius:8px;padding:12px 18px;margin:10px 0;}
+  .proof-line{font-family:'Patrick Hand',cursive;font-size:15px;line-height:30px;color:var(--ink2);}
+  .proof-reason{font-size:12px;color:#7b1fa2;margin-left:12px;}
+
+
+  :root{--ink:#1a1a2e;--ink2:#2c2c54;--blue:#1565C0;--red:#b71c1c;--green:#1b5e20;--purple:#4a148c;--line:#c5cae9;--page:#fafaf7;--highlight:#fff9c4;--box-blue:#e8f4fd;--box-green:#e8f5e9;--box-purple:#f3e5f5;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:#e0e0e0;font-family:'Kalam',cursive;color:var(--ink);padding:30px 20px;}
+  .page{background:var(--page);max-width:820px;margin:0 auto 40px;border-radius:4px;box-shadow:0 2px 16px rgba(0,0,0,0.18),0 0 0 1px rgba(0,0,0,0.08);padding:60px 70px 70px 90px;position:relative;min-height:1060px;background-image:repeating-linear-gradient(transparent,transparent 31px,var(--line) 31px,var(--line) 32px);background-position:0 56px;}
+  .page::before{content:'';position:absolute;left:72px;top:0;bottom:0;width:1.5px;background:#ef9a9a;opacity:0.7;}
+  .holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-around;padding:40px 0;}
+  .hole{width:22px;height:22px;border-radius:50%;background:#e0e0e0;border:1.5px solid #bdbdbd;box-shadow:inset 0 1px 3px rgba(0,0,0,0.2);}
+  .page-num{position:absolute;bottom:28px;right:50px;font-size:13px;color:#9e9e9e;}
+  .page-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
+  .date-tag{font-size:13px;color:#9e9e9e;}
+  .unit-badge{background:var(--purple);color:#fff;font-size:13px;padding:2px 14px;border-radius:20px;font-weight:700;}
+  h1.section-title{font-size:24px;font-weight:700;color:var(--ink2);text-align:center;margin:8px 0 4px;text-decoration:underline;text-underline-offset:5px;text-decoration-color:var(--purple);}
+  h1.section-title .section-num{color:var(--purple);}
+  h2.topic{font-size:18px;font-weight:700;color:var(--blue);margin:18px 0 6px;border-bottom:1.5px solid var(--blue);padding-bottom:2px;display:inline-block;}
+  p,li{font-size:15px;line-height:30px;}
+  .def-box{background:var(--box-blue);border-left:4px solid var(--blue);border-radius:0 6px 6px 0;padding:10px 16px;margin:10px 0 14px;font-size:15px;line-height:30px;}
+  .note-box{background:var(--highlight);border-left:4px solid #f9a825;border-radius:0 6px 6px 0;padding:8px 14px;margin:8px 0 12px;font-size:14px;line-height:26px;}
+  .rule-box{background:var(--box-green);border:1.5px solid #81c784;border-radius:6px;padding:10px 16px;margin:10px 0 14px;font-size:14.5px;line-height:28px;}
+  .formula{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--blue);}
+  .divider{border:none;border-top:1px dashed #b0bec5;margin:14px 0 8px;}
+  ul.plain{list-style:none;padding-left:4px;}
+  ul.plain li::before{content:'→ ';color:var(--blue);font-weight:700;}
+  ul.plain li{font-size:14.5px;line-height:28px;}
+  .decision-card{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:12px 16px;margin:8px 0;}
+  .dc-head{font-size:14px;font-weight:700;color:var(--blue);margin-bottom:4px;}
+  .dc-body{font-size:14px;line-height:26px;color:var(--ink2);}
+  .dc-proof{font-size:13px;color:var(--green);margin-top:4px;line-height:24px;border-left:3px solid var(--green);padding-left:8px;}
+  table.reg-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13.5px;}
+  table.reg-table th{background:var(--blue);color:#fff;padding:7px 10px;font-size:13px;}
+  table.reg-table td{padding:6px 10px;border-bottom:1px solid #e3e3e3;line-height:26px;}
+  table.reg-table tr:nth-child(even) td{background:#f5f5f5;}
+  .badge-rl{display:inline-block;background:#1b5e20;color:#fff;font-size:11px;padding:1px 8px;border-radius:10px;}
+  .badge-notrl{display:inline-block;background:#b71c1c;color:#fff;font-size:11px;padding:1px 8px;border-radius:10px;}
+  .limit-card{background:#fff8f8;border-left:4px solid var(--red);border-radius:0 8px 8px 0;padding:10px 14px;margin:8px 0;}
+  .limit-num{font-size:13px;font-weight:700;color:var(--red);margin-bottom:2px;}
+  .limit-body{font-size:14px;line-height:26px;color:var(--ink2);}
+  .rules-box{background:var(--box-purple);border:1.5px solid #ce93d8;border-radius:8px;padding:12px 16px;margin:10px 0;}
+  .rule-item{font-size:14px;line-height:28px;}
+
+
+  :root{--ink:#1a1a2e;--ink2:#2c2c54;--blue:#1565C0;--red:#b71c1c;--green:#1b5e20;--purple:#4a148c;--line:#c5cae9;--page:#fafaf7;--highlight:#fff9c4;--box-blue:#e8f4fd;--box-green:#e8f5e9;--box-purple:#f3e5f5;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:#e0e0e0;font-family:'Kalam',cursive;color:var(--ink);padding:30px 20px;}
+  .page{background:var(--page);max-width:820px;margin:0 auto 40px;border-radius:4px;box-shadow:0 2px 16px rgba(0,0,0,0.18),0 0 0 1px rgba(0,0,0,0.08);padding:60px 70px 70px 90px;position:relative;min-height:1060px;background-image:repeating-linear-gradient(transparent,transparent 31px,var(--line) 31px,var(--line) 32px);background-position:0 56px;}
+  .page::before{content:'';position:absolute;left:72px;top:0;bottom:0;width:1.5px;background:#ef9a9a;opacity:0.7;}
+  .holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-around;padding:40px 0;}
+  .hole{width:22px;height:22px;border-radius:50%;background:#e0e0e0;border:1.5px solid #bdbdbd;box-shadow:inset 0 1px 3px rgba(0,0,0,0.2);}
+  .page-num{position:absolute;bottom:28px;right:50px;font-size:13px;color:#9e9e9e;}
+  .page-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
+  .date-tag{font-size:13px;color:#9e9e9e;}
+  .unit-badge{background:var(--blue);color:#fff;font-size:13px;padding:2px 14px;border-radius:20px;font-weight:700;}
+  h1.section-title{font-size:24px;font-weight:700;color:var(--ink2);text-align:center;margin:8px 0 4px;text-decoration:underline;text-underline-offset:5px;text-decoration-color:var(--blue);}
+  h1.section-title .section-num{color:var(--blue);}
+  h2.topic{font-size:18px;font-weight:700;color:var(--blue);margin:20px 0 6px;border-bottom:1.5px solid var(--blue);padding-bottom:2px;display:inline-block;}
+  p,li{font-size:15.5px;line-height:32px;}
+  .def-box{background:var(--box-blue);border-left:4px solid var(--blue);border-radius:0 6px 6px 0;padding:10px 16px;margin:10px 0 14px;font-size:15.5px;line-height:32px;}
+  .note-box{background:var(--highlight);border-left:4px solid #f9a825;border-radius:0 6px 6px 0;padding:8px 14px;margin:8px 0 12px;font-size:14.5px;line-height:28px;}
+  .rule-box{background:var(--box-green);border:1.5px solid #81c784;border-radius:6px;padding:10px 16px;margin:10px 0 14px;font-size:15px;line-height:32px;}
+  .formula{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--blue);}
+  .formula-red{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--red);}
+  .qbox{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:12px 16px;margin:10px 0 6px;}
+  .q-label{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:2px;}
+  .q-text{font-size:15px;color:var(--ink2);line-height:28px;}
+  .q-ans{font-size:15.5px;color:var(--red);margin-top:4px;font-family:'Patrick Hand',cursive;line-height:28px;}
+  .q-step{font-size:14px;color:var(--green);margin-top:2px;line-height:26px;}
+  .divider{border:none;border-top:1px dashed #b0bec5;margin:16px 0 10px;}
+  ul.plain{list-style:none;padding-left:4px;}
+  ul.plain li::before{content:'→ ';color:var(--blue);font-weight:700;}
+  ul.plain li{font-size:15px;line-height:32px;}
+  .nfa-wrap{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:16px;margin:12px 0;text-align:center;}
+  .nfa-title{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:8px;}
+  .nfa-svg{width:100%;max-width:680px;}
+  .step-card{background:var(--box-purple);border-left:4px solid var(--purple);border-radius:0 8px 8px 0;padding:10px 14px;margin:6px 0;}
+  .step-head{font-weight:700;color:var(--purple);font-size:15px;}
+  .step-body{font-size:14px;color:var(--ink2);line-height:26px;margin-top:2px;}
+  table.equiv-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:14px;}
+  table.equiv-table th{background:var(--purple);color:#fff;padding:7px 12px;font-size:13px;}
+  table.equiv-table td{padding:6px 12px;border-bottom:1px solid #e3e3e3;line-height:28px;}
+  table.equiv-table tr:nth-child(even) td{background:#f5f5f5;}
+
+
+  :root {
+    --ink: #1a1a2e;
+    --ink2: #2c2c54;
+    --blue: #1565C0;
+    --red: #b71c1c;
+    --green: #1b5e20;
+    --purple: #4a148c;
+    --line: #c5cae9;
+    --page: #fafaf7;
+    --accent: #e3f2fd;
+    --highlight: #fff9c4;
+    --box-blue: #e8f4fd;
+    --box-green: #e8f5e9;
+    --box-red: #fce4ec;
+    --box-purple: #f3e5f5;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #e0e0e0;
+    font-family: 'Kalam', cursive;
+    color: var(--ink);
+    padding: 30px 20px;
+  }
+
+  .page {
+    background: var(--page);
+    max-width: 820px;
+    margin: 0 auto 40px;
+    border-radius: 4px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.08);
+    padding: 60px 70px 70px 90px;
+    position: relative;
+    min-height: 1060px;
+    background-image:
+      repeating-linear-gradient(transparent, transparent 31px, var(--line) 31px, var(--line) 32px);
+    background-position: 0 56px;
+  }
+
+  /* Red margin line */
+  .page::before {
+    content: '';
+    position: absolute;
+    left: 72px;
+    top: 0;
+    bottom: 0;
+    width: 1.5px;
+    background: #ef9a9a;
+    opacity: 0.7;
+  }
+
+  /* Spiral holes */
+  .holes {
+    position: absolute;
+    left: 18px;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 40px 0;
+    gap: 0;
+  }
+  .hole {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #e0e0e0;
+    border: 1.5px solid #bdbdbd;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+  }
+
+  /* Page number */
+  .page-num {
+    position: absolute;
+    bottom: 28px;
+    right: 50px;
+    font-family: 'Kalam', cursive;
+    font-size: 13px;
+    color: #9e9e9e;
+  }
+
+  /* Date & header */
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 6px;
+  }
+  .date-tag {
+    font-size: 13px;
+    color: #9e9e9e;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 2px;
+  }
+  .unit-badge {
+    background: var(--blue);
+    color: #fff;
+    font-size: 13px;
+    padding: 2px 14px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+    font-weight: 700;
+  }
+
+  h1.section-title {
+    font-family: 'Kalam', cursive;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ink2);
+    text-align: center;
+    margin: 8px 0 4px;
+    letter-spacing: 0.5px;
+    text-decoration: underline;
+    text-underline-offset: 5px;
+    text-decoration-color: var(--blue);
+  }
+  h1.section-title .section-num {
+    color: var(--blue);
+  }
+
+  h2.topic {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--blue);
+    margin: 24px 0 6px;
+    border-bottom: 1.5px solid var(--blue);
+    padding-bottom: 2px;
+    display: inline-block;
+  }
+
+  h3.sub {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--purple);
+    margin: 14px 0 4px;
+  }
+
+  p, li {
+    font-size: 15.5px;
+    line-height: 32px;
+    color: var(--ink);
+  }
+
+  .def-box {
+    background: var(--box-blue);
+    border-left: 4px solid var(--blue);
+    border-radius: 0 6px 6px 0;
+    padding: 10px 16px;
+    margin: 10px 0 14px;
+    font-size: 15.5px;
+    line-height: 32px;
+  }
+
+  .note-box {
+    background: var(--highlight);
+    border-left: 4px solid #f9a825;
+    border-radius: 0 6px 6px 0;
+    padding: 8px 14px;
+    margin: 8px 0 12px;
+    font-size: 14.5px;
+    line-height: 28px;
+  }
+
+  .rule-box {
+    background: var(--box-green);
+    border: 1.5px solid #81c784;
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin: 10px 0 14px;
+    font-size: 15px;
+    line-height: 32px;
+  }
+
+  .formula {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 16px;
+    color: var(--blue);
+    font-weight: 400;
+  }
+
+  .formula-red {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 16px;
+    color: var(--red);
+    font-weight: 400;
+  }
+
+  table.re-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0 16px;
+    font-size: 15px;
+  }
+  table.re-table th {
+    background: var(--blue);
+    color: #fff;
+    padding: 7px 12px;
+    text-align: left;
+    font-weight: 700;
+    font-size: 14px;
+  }
+  table.re-table td {
+    padding: 6px 12px;
+    border-bottom: 1px solid #e3e3e3;
+    line-height: 30px;
+  }
+  table.re-table tr:nth-child(even) td {
+    background: #f5f5f5;
+  }
+  table.re-table td .formula, table.re-table td .formula-red {
+    font-size: 15px;
+  }
+
+  .qbox {
+    background: #fff;
+    border: 1.5px solid #90caf9;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 10px 0 6px;
+  }
+  .qbox .q-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--blue);
+    margin-bottom: 2px;
+    letter-spacing: 0.3px;
+  }
+  .qbox .q-text {
+    font-size: 15px;
+    color: var(--ink2);
+    line-height: 28px;
+  }
+  .qbox .q-ans {
+    font-size: 15.5px;
+    color: var(--red);
+    margin-top: 4px;
+    font-family: 'Patrick Hand', cursive;
+    line-height: 28px;
+  }
+  .qbox .q-step {
+    font-size: 14px;
+    color: var(--green);
+    margin-top: 2px;
+    line-height: 26px;
+  }
+
+  .q-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin: 8px 0;
+  }
+
+  .prec-box {
+    background: var(--box-purple);
+    border: 1.5px solid #ce93d8;
+    border-radius: 8px;
+    padding: 12px 18px;
+    margin: 10px 0 14px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .prec-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+  .prec-op {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 22px;
+    color: var(--purple);
+    font-weight: 700;
+  }
+  .prec-label {
+    font-size: 11px;
+    color: #7b1fa2;
+    text-align: center;
+  }
+  .prec-arrow {
+    font-size: 22px;
+    color: #9e9e9e;
+    margin: 0 4px;
+  }
+
+  ul.plain { list-style: none; padding-left: 4px; }
+  ul.plain li::before { content: '→ '; color: var(--blue); font-weight: 700; }
+
+  .underline-red { text-decoration: underline; text-decoration-color: var(--red); text-underline-offset: 3px; }
+  .underline-blue { text-decoration: underline; text-decoration-color: var(--blue); text-underline-offset: 3px; }
+
+  .divider {
+    border: none;
+    border-top: 1px dashed #b0bec5;
+    margin: 18px 0 10px;
+  }
+
+  .tag {
+    display: inline-block;
+    background: var(--blue);
+    color: #fff;
+    font-size: 11px;
+    padding: 1px 8px;
+    border-radius: 10px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .tag.green { background: #388e3c; }
+  .tag.red { background: #c62828; }
+
+  .star { color: #f9a825; }
+
+
+  :root{--ink:#1a1a2e;--ink2:#2c2c54;--blue:#1565C0;--red:#b71c1c;--green:#1b5e20;--purple:#4a148c;--line:#c5cae9;--page:#fafaf7;--highlight:#fff9c4;--box-blue:#e8f4fd;--box-green:#e8f5e9;--box-purple:#f3e5f5;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:#e0e0e0;font-family:'Kalam',cursive;color:var(--ink);padding:30px 20px;}
+  .page{background:var(--page);max-width:820px;margin:0 auto 40px;border-radius:4px;box-shadow:0 2px 16px rgba(0,0,0,0.18),0 0 0 1px rgba(0,0,0,0.08);padding:60px 70px 70px 90px;position:relative;min-height:1060px;background-image:repeating-linear-gradient(transparent,transparent 31px,var(--line) 31px,var(--line) 32px);background-position:0 56px;}
+  .page::before{content:'';position:absolute;left:72px;top:0;bottom:0;width:1.5px;background:#ef9a9a;opacity:0.7;}
+  .holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-around;padding:40px 0;}
+  .hole{width:22px;height:22px;border-radius:50%;background:#e0e0e0;border:1.5px solid #bdbdbd;box-shadow:inset 0 1px 3px rgba(0,0,0,0.2);}
+  .page-num{position:absolute;bottom:28px;right:50px;font-size:13px;color:#9e9e9e;}
+  .page-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
+  .date-tag{font-size:13px;color:#9e9e9e;}
+  .unit-badge{background:var(--blue);color:#fff;font-size:13px;padding:2px 14px;border-radius:20px;font-weight:700;}
+  h1.section-title{font-size:24px;font-weight:700;color:var(--ink2);text-align:center;margin:8px 0 4px;text-decoration:underline;text-underline-offset:5px;text-decoration-color:var(--blue);}
+  h1.section-title .section-num{color:var(--blue);}
+  h2.topic{font-size:18px;font-weight:700;color:var(--blue);margin:20px 0 6px;border-bottom:1.5px solid var(--blue);padding-bottom:2px;display:inline-block;}
+  p,li{font-size:15.5px;line-height:32px;}
+  .def-box{background:var(--box-blue);border-left:4px solid var(--blue);border-radius:0 6px 6px 0;padding:10px 16px;margin:10px 0 14px;font-size:15.5px;line-height:32px;}
+  .note-box{background:var(--highlight);border-left:4px solid #f9a825;border-radius:0 6px 6px 0;padding:8px 14px;margin:8px 0 12px;font-size:14.5px;line-height:28px;}
+  .rule-box{background:var(--box-green);border:1.5px solid #81c784;border-radius:6px;padding:10px 16px;margin:10px 0 14px;font-size:15px;line-height:32px;}
+  .formula{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--blue);}
+  .formula-red{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--red);}
+  .qbox{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:12px 16px;margin:10px 0 6px;}
+  .q-label{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:2px;}
+  .q-text{font-size:15px;color:var(--ink2);line-height:28px;}
+  .q-ans{font-size:15.5px;color:var(--red);margin-top:4px;font-family:'Patrick Hand',cursive;line-height:28px;}
+  .q-step{font-size:14px;color:var(--green);margin-top:2px;line-height:26px;}
+  .divider{border:none;border-top:1px dashed #b0bec5;margin:16px 0 10px;}
+  ul.plain{list-style:none;padding-left:4px;}
+  ul.plain li::before{content:'→ ';color:var(--blue);font-weight:700;}
+  ul.plain li{font-size:15px;line-height:32px;}
+  .nfa-wrap{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:16px;margin:12px 0;text-align:center;}
+  .nfa-title{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:8px;}
+  .nfa-svg{width:100%;max-width:680px;}
+  .proof-box{background:var(--box-purple);border:1.5px solid #ce93d8;border-radius:8px;padding:14px 18px;margin:10px 0;}
+  .proof-line{font-family:'Patrick Hand',cursive;font-size:16px;line-height:32px;color:var(--ink2);}
+  .proof-reason{font-size:12px;color:#7b1fa2;margin-left:16px;display:inline;}
+  .arden-formula{background:var(--blue);color:#fff;border-radius:8px;padding:12px 20px;text-align:center;font-family:'Patrick Hand',cursive;font-size:22px;margin:14px 0;letter-spacing:1px;}
+  .solve-step{margin:6px 0;padding:6px 10px;border-left:3px solid var(--blue);background:#f8f9ff;font-size:15px;line-height:28px;}
+  .solve-reason{font-size:12px;color:var(--purple);font-style:italic;margin-left:10px;}
+  .assumptions-box{background:#fff8e1;border:1.5px solid #ffcc02;border-radius:8px;padding:12px 16px;margin:10px 0;}
+
+
+  :root{--ink:#1a1a2e;--ink2:#2c2c54;--blue:#1565C0;--red:#b71c1c;--green:#1b5e20;--purple:#4a148c;--line:#c5cae9;--page:#fafaf7;--highlight:#fff9c4;--box-blue:#e8f4fd;--box-green:#e8f5e9;--box-purple:#f3e5f5;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:#e0e0e0;font-family:'Kalam',cursive;color:var(--ink);padding:30px 20px;}
+  .page{background:var(--page);max-width:820px;margin:0 auto 40px;border-radius:4px;box-shadow:0 2px 16px rgba(0,0,0,0.18),0 0 0 1px rgba(0,0,0,0.08);padding:60px 70px 70px 90px;position:relative;min-height:1060px;background-image:repeating-linear-gradient(transparent,transparent 31px,var(--line) 31px,var(--line) 32px);background-position:0 56px;}
+  .page::before{content:'';position:absolute;left:72px;top:0;bottom:0;width:1.5px;background:#ef9a9a;opacity:0.7;}
+  .holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-around;padding:40px 0;}
+  .hole{width:22px;height:22px;border-radius:50%;background:#e0e0e0;border:1.5px solid #bdbdbd;box-shadow:inset 0 1px 3px rgba(0,0,0,0.2);}
+  .page-num{position:absolute;bottom:28px;right:50px;font-size:13px;color:#9e9e9e;}
+  .page-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
+  .date-tag{font-size:13px;color:#9e9e9e;}
+  .unit-badge{background:var(--blue);color:#fff;font-size:13px;padding:2px 14px;border-radius:20px;font-weight:700;}
+  h1.section-title{font-size:24px;font-weight:700;color:var(--ink2);text-align:center;margin:8px 0 4px;text-decoration:underline;text-underline-offset:5px;text-decoration-color:var(--blue);}
+  h1.section-title .section-num{color:var(--blue);}
+  h2.topic{font-size:18px;font-weight:700;color:var(--blue);margin:20px 0 6px;border-bottom:1.5px solid var(--blue);padding-bottom:2px;display:inline-block;}
+  p,li{font-size:15.5px;line-height:32px;}
+  .def-box{background:var(--box-blue);border-left:4px solid var(--blue);border-radius:0 6px 6px 0;padding:10px 16px;margin:10px 0 14px;font-size:15.5px;line-height:32px;}
+  .note-box{background:var(--highlight);border-left:4px solid #f9a825;border-radius:0 6px 6px 0;padding:8px 14px;margin:8px 0 12px;font-size:14.5px;line-height:28px;}
+  .formula{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--blue);}
+  .formula-red{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--red);}
+  .qbox{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:12px 16px;margin:10px 0 6px;}
+  .q-label{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:2px;}
+  .q-text{font-size:15px;color:var(--ink2);line-height:28px;}
+  .q-ans{font-size:15.5px;color:var(--red);margin-top:4px;font-family:'Patrick Hand',cursive;line-height:28px;}
+  .q-step{font-size:14px;color:var(--green);margin-top:2px;line-height:26px;}
+  .divider{border:none;border-top:1px dashed #b0bec5;margin:16px 0 10px;}
+  ul.plain{list-style:none;padding-left:4px;}
+  ul.plain li::before{content:'→ ';color:var(--blue);font-weight:700;}
+  ul.plain li{font-size:15px;line-height:32px;}
+
+  /* NFA diagrams using SVG-style CSS */
+  .nfa-wrap{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:16px;margin:12px 0;text-align:center;}
+  .nfa-title{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:8px;}
+  .nfa-svg{width:100%;max-width:680px;}
+
+  .kleene-box{background:var(--box-purple);border:1.5px solid #ce93d8;border-radius:8px;padding:14px 18px;margin:12px 0;}
+  .kleene-item{display:flex;align-items:flex-start;gap:12px;margin:6px 0;}
+  .kleene-arrow{font-size:18px;color:var(--purple);margin-top:6px;min-width:20px;}
+  .kleene-text{font-size:15px;line-height:28px;color:var(--ink2);}
+
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0;}
+  .step-box{background:var(--box-green);border-radius:6px;padding:8px 12px;}
+  .step-num-badge{display:inline-block;background:var(--green);color:#fff;border-radius:50%;width:20px;height:20px;text-align:center;font-size:12px;font-weight:700;line-height:20px;margin-right:6px;}
+
+
+  :root{--ink:#1a1a2e;--ink2:#2c2c54;--blue:#1565C0;--red:#b71c1c;--green:#1b5e20;--purple:#4a148c;--line:#c5cae9;--page:#fafaf7;--highlight:#fff9c4;--box-blue:#e8f4fd;--box-green:#e8f5e9;--box-purple:#f3e5f5;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:#e0e0e0;font-family:'Kalam',cursive;color:var(--ink);padding:30px 20px;}
+  .page{background:var(--page);max-width:820px;margin:0 auto 40px;border-radius:4px;box-shadow:0 2px 16px rgba(0,0,0,0.18),0 0 0 1px rgba(0,0,0,0.08);padding:60px 70px 70px 90px;position:relative;min-height:1060px;background-image:repeating-linear-gradient(transparent,transparent 31px,var(--line) 31px,var(--line) 32px);background-position:0 56px;}
+  .page::before{content:'';position:absolute;left:72px;top:0;bottom:0;width:1.5px;background:#ef9a9a;opacity:0.7;}
+  .holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-around;padding:40px 0;}
+  .hole{width:22px;height:22px;border-radius:50%;background:#e0e0e0;border:1.5px solid #bdbdbd;box-shadow:inset 0 1px 3px rgba(0,0,0,0.2);}
+  .page-num{position:absolute;bottom:28px;right:50px;font-size:13px;color:#9e9e9e;}
+  .page-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
+  .date-tag{font-size:13px;color:#9e9e9e;}
+  .unit-badge{background:var(--red);color:#fff;font-size:13px;padding:2px 14px;border-radius:20px;font-weight:700;}
+  h1.section-title{font-size:24px;font-weight:700;color:var(--ink2);text-align:center;margin:8px 0 4px;text-decoration:underline;text-underline-offset:5px;text-decoration-color:var(--red);}
+  h1.section-title .section-num{color:var(--red);}
+  h2.topic{font-size:18px;font-weight:700;color:var(--blue);margin:20px 0 6px;border-bottom:1.5px solid var(--blue);padding-bottom:2px;display:inline-block;}
+  p,li{font-size:15.5px;line-height:32px;}
+  .def-box{background:var(--box-blue);border-left:4px solid var(--blue);border-radius:0 6px 6px 0;padding:10px 16px;margin:10px 0 14px;font-size:15.5px;line-height:32px;}
+  .note-box{background:var(--highlight);border-left:4px solid #f9a825;border-radius:0 6px 6px 0;padding:8px 14px;margin:8px 0 12px;font-size:14.5px;line-height:28px;}
+  .rule-box{background:var(--box-green);border:1.5px solid #81c784;border-radius:6px;padding:10px 16px;margin:10px 0 14px;font-size:15px;line-height:32px;}
+  .formula{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--blue);}
+  .divider{border:none;border-top:1px dashed #b0bec5;margin:16px 0 10px;}
+  ul.plain{list-style:none;padding-left:4px;}
+  ul.plain li::before{content:'→ ';color:var(--blue);font-weight:700;}
+  ul.plain li{font-size:15px;line-height:32px;}
+  .nfa-wrap{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:12px 14px;margin:8px 0;text-align:center;}
+  .nfa-svg{width:100%;max-width:680px;}
+  .pumping-box{background:#fff8f8;border:2px solid var(--red);border-radius:10px;padding:16px 20px;margin:14px 0;}
+  .pump-head{font-size:17px;font-weight:700;color:var(--red);margin-bottom:8px;}
+  .pump-cond{background:#fff;border-left:4px solid var(--red);padding:8px 12px;margin:6px 0;border-radius:0 6px 6px 0;font-family:'Patrick Hand',cursive;font-size:16px;line-height:30px;}
+  .pump-cond .label{font-size:12px;color:var(--purple);display:block;margin-bottom:2px;}
+  .flow-box{display:flex;align-items:center;gap:10px;margin:14px 0;flex-wrap:wrap;}
+  .flow-item{background:var(--box-blue);border:1.5px solid var(--blue);border-radius:8px;padding:8px 14px;font-size:14px;text-align:center;}
+  .flow-arr{font-size:22px;color:#888;}
+  .flow-fail{background:#fce4ec;border-color:var(--red);}
+  .flow-pass{background:var(--box-purple);border-color:var(--purple);}
+  .xyz-diagram{background:#f5f5f5;border-radius:8px;padding:12px;margin:12px 0;text-align:center;}
+  .xyz-bar{display:flex;justify-content:center;align-items:stretch;gap:0;margin:8px auto;max-width:500px;border-radius:6px;overflow:hidden;border:1.5px solid #bbb;}
+  .xyz-x{background:#bbdefb;padding:8px 20px;font-family:'Patrick Hand',cursive;font-size:16px;font-weight:700;color:#1565C0;min-width:80px;text-align:center;}
+  .xyz-y{background:#ffcc02;padding:8px 20px;font-family:'Patrick Hand',cursive;font-size:16px;font-weight:700;color:#6d4c41;min-width:80px;text-align:center;}
+  .xyz-z{background:#c8e6c9;padding:8px 20px;font-family:'Patrick Hand',cursive;font-size:16px;font-weight:700;color:#1b5e20;min-width:80px;text-align:center;}
+  .xyz-label{display:flex;justify-content:center;gap:60px;font-size:12px;color:#666;margin-top:4px;}
+
+
+  :root{--ink:#1a1a2e;--ink2:#2c2c54;--blue:#1565C0;--red:#b71c1c;--green:#1b5e20;--purple:#4a148c;--orange:#e65100;--line:#c5cae9;--page:#fafaf7;--highlight:#fff9c4;--box-blue:#e8f4fd;--box-green:#e8f5e9;--box-purple:#f3e5f5;--box-orange:#fff3e0;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:#e0e0e0;font-family:'Kalam',cursive;color:var(--ink);padding:30px 20px;}
+  .page{background:var(--page);max-width:820px;margin:0 auto 40px;border-radius:4px;box-shadow:0 2px 16px rgba(0,0,0,0.18),0 0 0 1px rgba(0,0,0,0.08);padding:60px 70px 70px 90px;position:relative;min-height:1060px;background-image:repeating-linear-gradient(transparent,transparent 31px,var(--line) 31px,var(--line) 32px);background-position:0 56px;}
+  .page::before{content:'';position:absolute;left:72px;top:0;bottom:0;width:1.5px;background:#ef9a9a;opacity:0.7;}
+  .holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-around;padding:40px 0;}
+  .hole{width:22px;height:22px;border-radius:50%;background:#e0e0e0;border:1.5px solid #bdbdbd;box-shadow:inset 0 1px 3px rgba(0,0,0,0.2);}
+  .page-num{position:absolute;bottom:28px;right:50px;font-size:13px;color:#9e9e9e;}
+  .page-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
+  .date-tag{font-size:13px;color:#9e9e9e;}
+  .unit-badge{background:var(--blue);color:#fff;font-size:13px;padding:2px 14px;border-radius:20px;font-weight:700;}
+  h1.section-title{font-size:24px;font-weight:700;color:var(--ink2);text-align:center;margin:8px 0 4px;text-decoration:underline;text-underline-offset:5px;text-decoration-color:var(--blue);}
+  h1.section-title .section-num{color:var(--blue);}
+  h2.topic{font-size:18px;font-weight:700;color:var(--blue);margin:20px 0 6px;border-bottom:1.5px solid var(--blue);padding-bottom:2px;display:inline-block;}
+  p,li{font-size:15.5px;line-height:32px;}
+  .def-box{background:var(--box-blue);border-left:4px solid var(--blue);border-radius:0 6px 6px 0;padding:10px 16px;margin:10px 0 14px;font-size:15.5px;line-height:32px;}
+  .note-box{background:var(--highlight);border-left:4px solid #f9a825;border-radius:0 6px 6px 0;padding:8px 14px;margin:8px 0 12px;font-size:14.5px;line-height:28px;}
+  .rule-box{background:var(--box-green);border:1.5px solid #81c784;border-radius:6px;padding:10px 16px;margin:10px 0 14px;font-size:15px;line-height:32px;}
+  .formula{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--blue);}
+  .formula-red{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--red);}
+  .divider{border:none;border-top:1px dashed #b0bec5;margin:14px 0 10px;}
+  ul.plain{list-style:none;padding-left:4px;}
+  ul.plain li::before{content:'→ ';color:var(--blue);font-weight:700;}
+  ul.plain li{font-size:15px;line-height:32px;}
+  .nfa-wrap{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:12px 14px;margin:8px 0;text-align:center;}
+  .nfa-title{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:6px;}
+  .nfa-svg{width:100%;max-width:680px;}
+  .closure-card{border-radius:8px;padding:12px 16px;margin:10px 0;border-left:5px solid var(--blue);}
+  .closure-card.union{background:#e3f2fd;border-left-color:#1565C0;}
+  .closure-card.concat{background:#e8f5e9;border-left-color:#1b5e20;}
+  .closure-card.complement{background:#fce4ec;border-left-color:#b71c1c;}
+  .closure-card.reversal{background:#f3e5f5;border-left-color:#4a148c;}
+  .closure-card.diff{background:#fff3e0;border-left-color:#e65100;}
+  .closure-card.kleene{background:#e0f7fa;border-left-color:#006064;}
+  .closure-card.homo{background:#f9fbe7;border-left-color:#558b2f;}
+  .closure-card.inter{background:#ede7f6;border-left-color:#4527a0;}
+  .closure-head{font-size:15px;font-weight:700;color:var(--ink2);margin-bottom:4px;}
+  .closure-body{font-size:14px;line-height:26px;color:var(--ink);}
+  .closure-formula{font-family:'Patrick Hand',cursive;font-size:15px;color:var(--blue);margin-top:4px;}
+  table.summary-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:14px;}
+  table.summary-table th{background:var(--blue);color:#fff;padding:7px 12px;font-size:13px;}
+  table.summary-table td{padding:6px 12px;border-bottom:1px solid #e3e3e3;line-height:26px;}
+  table.summary-table tr:nth-child(even) td{background:#f5f5f5;}
+  .closed-badge{display:inline-block;background:#1b5e20;color:#fff;font-size:11px;padding:1px 8px;border-radius:10px;}
+
+
+  :root{--ink:#1a1a2e;--ink2:#2c2c54;--blue:#1565C0;--red:#b71c1c;--green:#1b5e20;--purple:#4a148c;--line:#c5cae9;--page:#fafaf7;--highlight:#fff9c4;--box-blue:#e8f4fd;--box-green:#e8f5e9;--box-purple:#f3e5f5;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:#e0e0e0;font-family:'Kalam',cursive;color:var(--ink);padding:30px 20px;}
+  .page{background:var(--page);max-width:820px;margin:0 auto 40px;border-radius:4px;box-shadow:0 2px 16px rgba(0,0,0,0.18),0 0 0 1px rgba(0,0,0,0.08);padding:60px 70px 70px 90px;position:relative;min-height:1060px;background-image:repeating-linear-gradient(transparent,transparent 31px,var(--line) 31px,var(--line) 32px);background-position:0 56px;}
+  .page::before{content:'';position:absolute;left:72px;top:0;bottom:0;width:1.5px;background:#ef9a9a;opacity:0.7;}
+  .holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-around;padding:40px 0;}
+  .hole{width:22px;height:22px;border-radius:50%;background:#e0e0e0;border:1.5px solid #bdbdbd;box-shadow:inset 0 1px 3px rgba(0,0,0,0.2);}
+  .page-num{position:absolute;bottom:28px;right:50px;font-size:13px;color:#9e9e9e;}
+  .page-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
+  .date-tag{font-size:13px;color:#9e9e9e;}
+  .unit-badge{background:var(--red);color:#fff;font-size:13px;padding:2px 14px;border-radius:20px;font-weight:700;}
+  h1.section-title{font-size:24px;font-weight:700;color:var(--ink2);text-align:center;margin:8px 0 4px;text-decoration:underline;text-underline-offset:5px;text-decoration-color:var(--red);}
+  h1.section-title .section-num{color:var(--red);}
+  h2.topic{font-size:18px;font-weight:700;color:var(--blue);margin:18px 0 6px;border-bottom:1.5px solid var(--blue);padding-bottom:2px;display:inline-block;}
+  p,li{font-size:15px;line-height:30px;}
+  .note-box{background:var(--highlight);border-left:4px solid #f9a825;border-radius:0 6px 6px 0;padding:8px 14px;margin:8px 0 10px;font-size:14px;line-height:26px;}
+  .formula{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--blue);}
+  .formula-red{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--red);}
+  .divider{border:none;border-top:1px dashed #b0bec5;margin:14px 0 8px;}
+  .proof-card{background:#fff;border:2px solid var(--red);border-radius:10px;padding:14px 18px;margin:10px 0;}
+  .proof-head{font-size:15px;font-weight:700;color:var(--red);margin-bottom:6px;}
+  .step{display:flex;gap:8px;align-items:flex-start;margin:5px 0;}
+  .step-badge{min-width:24px;height:24px;border-radius:50%;background:var(--blue);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+  .step-badge.red{background:var(--red);}
+  .step-text{font-size:14.5px;line-height:26px;color:var(--ink2);}
+  .contradiction{background:#fce4ec;border:1.5px solid var(--red);border-radius:6px;padding:8px 12px;margin:8px 0;font-family:'Patrick Hand',cursive;font-size:16px;color:var(--red);}
+  .conclusion{background:var(--box-green);border:1.5px solid #81c784;border-radius:6px;padding:8px 12px;margin:6px 0;font-size:15px;font-weight:700;color:var(--green);}
+  .xyz-inline{font-family:'Patrick Hand',cursive;font-size:15px;}
+  .x-part{color:#1565C0;}
+  .y-part{color:#b71c1c;}
+  .z-part{color:#1b5e20;}
+
+
+/* Cover page */
+.cover-page {
+  background: #1565C0;
+  max-width: 820px;
+  margin: 0 auto 40px;
+  border-radius: 8px;
+  padding: 80px 60px;
+  text-align: center;
+  color: #fff;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+  position: relative;
+  overflow: hidden;
+}
+.cover-page::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 250px; height: 250px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.07);
+}
+.cover-page::after {
+  content: '';
+  position: absolute;
+  bottom: -40px; left: -40px;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.05);
+}
+.cover-subject { font-family: 'Kalam', cursive; font-size: 14px; letter-spacing: 3px; opacity: 0.7; margin-bottom: 16px; }
+.cover-title { font-family: 'Kalam', cursive; font-size: 40px; font-weight: 700; line-height: 1.2; margin-bottom: 12px; }
+.cover-unit { font-family: 'Kalam', cursive; font-size: 20px; opacity: 0.85; margin-bottom: 30px; }
+.cover-divider { width: 80px; height: 3px; background: rgba(255,255,255,0.4); margin: 0 auto 24px; border-radius: 2px; }
+.cover-toc { text-align: left; background: rgba(255,255,255,0.1); border-radius: 8px; padding: 20px 28px; display: inline-block; min-width: 400px; }
+.cover-toc-item { font-family: 'Kalam', cursive; font-size: 15px; line-height: 32px; display: flex; justify-content: space-between; gap: 20px; }
+.section-divider { max-width: 820px; margin: 0 auto 30px; display: flex; align-items: center; gap: 14px; }
+.sd-line { flex: 1; height: 2px; background: #1565C0; }
+.sd-label { font-family: 'Kalam', cursive; font-size: 15px; font-weight: 700; color: #1565C0; white-space: nowrap; }
 @media(max-width:600px){
 body{padding:10px 0 30px;}
 .page{padding:20px 16px 30px 16px;min-height:unset;}
@@ -78,7 +717,12 @@ body{padding:10px 0 30px;}
 .vs-right{border-left:none;border-top:1px solid #90caf9;}
 nav.part-nav{padding:0 10px;gap:6px;}
 .cover-title{font-size:28px;}
-}</style>
+}.part-nav{max-width:820px;margin:0 auto 20px;display:flex;gap:10px;justify-content:center;align-items:center;font-family:'Kalam',cursive;flex-wrap:wrap;}
+.part-nav a{padding:6px 20px;border-radius:20px;background:#fff;border:1.5px solid #90caf9;color:#1565C0;text-decoration:none;font-size:14px;font-weight:700;}
+.part-nav a:hover:not(.active){background:#e3f2fd;}
+.part-nav .back{background:#f5f5f5;border-color:#ccc;color:#555;font-size:13px;}
+.part-nav a.active{background:#006064;border-color:#006064;color:#fff;}
+</style>
 </head>
 <body>
 
@@ -89,33 +733,646 @@ nav.part-nav{padding:0 10px;gap:6px;}
   <a href="part3.html">Part 3</a>
 </div>
 
-<div class="cover-page" style="background:linear-gradient(135deg,#006064 0%,#004d40 100%);">
-  <div class="cover-subject">THEORY OF AUTOMATA & FORMAL LANGUAGES</div>
-  <div class="cover-title">Unit 2 — Part 2</div>
-  <div class="cover-unit">[ Awaiting Content ]</div>
-  <div class="cover-divider"></div>
-  <div class="cover-toc">
-    <div class="cover-toc-item" style="opacity:0.6;font-style:italic;justify-content:center;"><span>Content to be added</span></div>
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 2</span><span class="unit-badge">SECTION 5</span></div>
+  <h1 class="section-title"><span class="section-num">Section 5</span> — Arden's Theorem (FSA → RE)</h1>
+
+  <h2 class="topic">1. What is Arden's Theorem?</h2>
+  <div class="def-box">
+    Arden's theorem is used to <strong>find the Regular Expression recognised by a Transition System</strong> (conversion from FSA → RE).<br><br>
+    It solves equations of the form: &nbsp;<span class="formula">R = Q + RP</span><br>
+    where R, P, Q are regular expressions.
   </div>
+
+  <div class="arden-formula">R = Q + RP &nbsp;&nbsp;has unique solution&nbsp;&nbsp; R = QP*</div>
+
+  <h2 class="topic">2. Proof</h2>
+  <div class="proof-box">
+    <div class="proof-line">Given: &nbsp; R = Q + RP &nbsp;&nbsp;&nbsp;&nbsp;— (1)</div>
+    <div class="proof-line" style="margin-top:6px;">Substitute R = QP* in both sides:</div>
+    <div class="proof-line">QP* = Q + QP*·P</div>
+    <div class="proof-line">QP* = Q + Q(P*·P)</div>
+    <div class="proof-line">QP* = Q(ε + P*·P)</div>
+    <div class="proof-line">QP* = QP* &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#1b5e20;">← by Identity I₉: ε + P*P = P*</span></div>
+    <div class="proof-line" style="color:var(--red); font-weight:700; margin-top:6px;">∴ R = QP* is the solution to equation (1). ✓</div>
+  </div>
+
+  <h2 class="topic">3. Assumptions for Arden's Method</h2>
+  <div class="assumptions-box">
+    <ul class="plain">
+      <li>Transition graph does <strong>NOT</strong> have ε-moves</li>
+      <li>It has only <strong>one initial state</strong></li>
+      <li>To get strings recognised: take <strong>union of all equations for final states</strong></li>
+    </ul>
+  </div>
+
+  <h2 class="topic">4. How to Apply — Step-by-Step</h2>
+  <ul class="plain">
+    <li>Write one equation per state of the FSA</li>
+    <li>Each equation: qᵢ = Σ (qⱼ · symbol) for all transitions into qᵢ, plus ε if qᵢ is initial</li>
+    <li>Solve equations by substitution (use Arden's rule: R = Q + RP → R = QP*)</li>
+    <li>The final answer RE = equation(s) of the final state(s)</li>
+  </ul>
+
+  <div class="page-num">1 / 3</div>
 </div>
 
-<!-- ================================================
-     ADD CONTENT SECTIONS BELOW THIS LINE
+<!-- PAGE 2 -->
 
-     Each section pattern:
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 2 | Section 5</span><span class="unit-badge">SOLVED EXAMPLES</span></div>
 
-     <div class="page">
-       <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
-       <div class="page-header">
-         <span class="date-tag">TALF — Unit 4</span>
-         <span class="unit-badge">SECTION X</span>
-       </div>
-       <h1 class="section-title"><span class="sn">§X</span> Title Here</h1>
-       <hr class="divider">
-       ... content ...
-       <div class="page-num">1 / 1</div>
-     </div>
-     ================================================ -->
+  <h2 class="topic">5. Solved Examples</h2>
+
+  <div class="qbox">
+    <div class="q-label">Q1 — Find RE for FSA with states q₁, q₂, q₃ over Σ = {a, b}</div>
+    <div class="nfa-wrap">
+      <svg class="nfa-svg" viewBox="0 0 420 90">
+        <defs><marker id="c1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M2 2L8 5L2 8" fill="none" stroke="#1565C0" stroke-width="1.5"/></marker></defs>
+        <line x1="5" y1="45" x2="45" y2="45" stroke="#1565C0" stroke-width="1.5" marker-end="url(#c1)"/>
+        <circle cx="65" cy="45" r="20" fill="#e8f4fd" stroke="#1565C0" stroke-width="1.5"/>
+        <text x="65" y="49" text-anchor="middle" font-family="Kalam" font-size="13" fill="#1565C0">q₁</text>
+        <!-- self loop a -->
+        <path d="M50 26 Q65 6 80 26" fill="none" stroke="#b71c1c" stroke-width="1.5" marker-end="url(#c1)"/>
+        <text x="65" y="8" text-anchor="middle" font-family="Patrick Hand" font-size="13" fill="#b71c1c">a</text>
+        <!-- q1->q2 on b -->
+        <line x1="85" y1="45" x2="155" y2="45" stroke="#1565C0" stroke-width="1.5" marker-end="url(#c1)"/>
+        <text x="120" y="36" text-anchor="middle" font-family="Patrick Hand" font-size="13" fill="#b71c1c">b</text>
+        <!-- q2 -->
+        <circle cx="175" cy="45" r="20" fill="#e8f4fd" stroke="#1565C0" stroke-width="1.5"/>
+        <text x="175" y="49" text-anchor="middle" font-family="Kalam" font-size="13" fill="#1565C0">q₂</text>
+        <!-- q2->q1 on a (bottom arc) -->
+        <path d="M165 65 Q120 85 75 65" fill="none" stroke="#1565C0" stroke-width="1.5" marker-end="url(#c1)"/>
+        <text x="120" y="84" text-anchor="middle" font-family="Patrick Hand" font-size="13" fill="#b71c1c">a</text>
+        <!-- q2->q3 on a -->
+        <line x1="195" y1="45" x2="265" y2="45" stroke="#1565C0" stroke-width="1.5" marker-end="url(#c1)"/>
+        <text x="230" y="36" text-anchor="middle" font-family="Patrick Hand" font-size="13" fill="#b71c1c">a</text>
+        <!-- q3 final -->
+        <circle cx="285" cy="45" r="20" fill="#e8f5e9" stroke="#1b5e20" stroke-width="1.5"/>
+        <circle cx="285" cy="45" r="16" fill="none" stroke="#1b5e20" stroke-width="1.2"/>
+        <text x="285" y="49" text-anchor="middle" font-family="Kalam" font-size="13" fill="#1b5e20">q₃</text>
+        <!-- q3 self loop on a -->
+        <path d="M270 26 Q285 6 300 26" fill="none" stroke="#b71c1c" stroke-width="1.5" marker-end="url(#c1)"/>
+        <text x="285" y="8" text-anchor="middle" font-family="Patrick Hand" font-size="13" fill="#b71c1c">a</text>
+      </svg>
+    </div>
+    <div class="q-text"><strong>Write equations:</strong></div>
+    <div class="proof-box" style="margin-top:6px; padding:10px 14px;">
+      <div class="proof-line">q₁ = ε + q₁·a + q₂·b &nbsp;&nbsp;—(i) &nbsp;&nbsp;<span class="solve-reason">[q₁ is initial; self-loop a; q₂→q₁ on b]</span></div>
+      <div class="proof-line">q₂ = q₁·a + q₂·b + q₃·a &nbsp;—(ii)</div>
+      <div class="proof-line">q₃ = q₂·a &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;—(iii)</div>
+    </div>
+    <div class="q-text"><strong>Solve:</strong></div>
+    <div class="solve-step">From (ii): q₂ = q₁a + q₂b + q₂a·a = q₁a + q₂(b+aa)
+      <br>Apply Arden: q₂ = q₁·a · (b+aa)* <span class="solve-reason">← R=Q+RP → R=QP*, Q=q₁a, P=(b+aa)</span></div>
+    <div class="solve-step">From (i): q₁ = ε + q₁·a + q₁·a(b+aa)*·b
+      <br>= ε + q₁[a + a(b+aa)*b] = ε + q₁·a[ε+(b+aa)*b]
+      <br>Apply Arden: q₁ = (a + a(b+aa)*b)* = (a(ε+(b+aa)*b))*</div>
+    <div class="solve-step">q₂ = (a(ε+(b+aa)*b))* · a(b+aa)*</div>
+    <div class="solve-step">q₃ (final) = q₂·a = [(a+a(b+aa)*b)* · a(b+aa)*] · a</div>
+    <div class="q-ans">RE = (a+a(b+aa)*b)* · a(b+aa)* · a</div>
+  </div>
+
+  <div class="page-num">2 / 3</div>
+</div>
+
+<!-- PAGE 3 -->
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 2 | Section 5</span><span class="unit-badge">SOLVED EXAMPLES</span></div>
+
+  <div class="qbox">
+    <div class="q-label">Q2 — Find RE for FSA over Σ = {0, 1} with states q₁(init+final), q₂(final), q₃</div>
+    <div class="nfa-wrap">
+      <svg class="nfa-svg" viewBox="0 0 380 100">
+        <defs><marker id="c2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M2 2L8 5L2 8" fill="none" stroke="#1565C0" stroke-width="1.5"/></marker></defs>
+        <line x1="5" y1="50" x2="42" y2="50" stroke="#1565C0" stroke-width="1.5" marker-end="url(#c2)"/>
+        <!-- q1 init+final -->
+        <circle cx="62" cy="50" r="20" fill="#e8f5e9" stroke="#1b5e20" stroke-width="1.5"/>
+        <circle cx="62" cy="50" r="16" fill="none" stroke="#1b5e20" stroke-width="1.2"/>
+        <text x="62" y="54" text-anchor="middle" font-family="Kalam" font-size="13" fill="#1b5e20">q₁</text>
+        <!-- self loop 0 -->
+        <path d="M47 31 Q62 11 77 31" fill="none" stroke="#b71c1c" stroke-width="1.5" marker-end="url(#c2)"/>
+        <text x="62" y="12" text-anchor="middle" font-family="Patrick Hand" font-size="13" fill="#b71c1c">0</text>
+        <!-- q1->q2 on 1 -->
+        <line x1="82" y1="50" x2="148" y2="50" stroke="#1565C0" stroke-width="1.5" marker-end="url(#c2)"/>
+        <text x="115" y="42" text-anchor="middle" font-family="Patrick Hand" font-size="13" fill="#b71c1c">1</text>
+        <!-- q2 final -->
+        <circle cx="168" cy="50" r="20" fill="#e8f5e9" stroke="#1b5e20" stroke-width="1.5"/>
+        <circle cx="168" cy="50" r="16" fill="none" stroke="#1b5e20" stroke-width="1.2"/>
+        <text x="168" y="54" text-anchor="middle" font-family="Kalam" font-size="13" fill="#1b5e20">q₂</text>
+        <!-- q2 self loop 1 -->
+        <path d="M153 31 Q168 11 183 31" fill="none" stroke="#b71c1c" stroke-width="1.5" marker-end="url(#c2)"/>
+        <text x="168" y="12" text-anchor="middle" font-family="Patrick Hand" font-size="13" fill="#b71c1c">1</text>
+        <!-- q2->q3 on 0 -->
+        <line x1="188" y1="50" x2="258" y2="50" stroke="#1565C0" stroke-width="1.5" marker-end="url(#c2)"/>
+        <text x="223" y="42" text-anchor="middle" font-family="Patrick Hand" font-size="13" fill="#b71c1c">0</text>
+        <!-- q3 -->
+        <circle cx="278" cy="50" r="20" fill="#e8f4fd" stroke="#1565C0" stroke-width="1.5"/>
+        <text x="278" y="54" text-anchor="middle" font-family="Kalam" font-size="13" fill="#1565C0">q₃</text>
+        <!-- q3 self loop 0,1 -->
+        <path d="M263 31 Q278 11 293 31" fill="none" stroke="#b71c1c" stroke-width="1.5" marker-end="url(#c2)"/>
+        <text x="278" y="12" text-anchor="middle" font-family="Patrick Hand" font-size="12" fill="#b71c1c">0,1</text>
+      </svg>
+    </div>
+    <div class="proof-box" style="padding:10px 14px;">
+      <div class="proof-line">q₁ = ε + q₁·0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;—(i)</div>
+      <div class="proof-line">q₂ = q₁·1 + q₂·1 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;—(ii)</div>
+      <div class="proof-line">q₃ = q₂·0 + q₃·(0+1) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;—(iii) [trap/dead state]</div>
+    </div>
+    <div class="solve-step">From (i) → Arden: q₁ = ε·0* = <strong>0*</strong></div>
+    <div class="solve-step">From (ii): q₂ = 0*·1 + q₂·1 → Arden: q₂ = 0*·1·1* = <strong>0*·11*</strong></div>
+    <div class="solve-step">Final states: q₁ and q₂<br>
+    Union: RE = q₁ + q₂ = 0* + 0*·11*</div>
+    <div class="q-ans">RE = 0* + 0*·11*</div>
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">Q3 — Find RE for: q₁(init+final) ↔ q₂, transitions: ab and ba</div>
+    <div class="proof-box" style="padding:10px 14px;">
+      <div class="proof-line">q₁ = ε + q₂·b + q₃·a</div>
+      <div class="proof-line">q₂ = q₁·a</div>
+      <div class="proof-line">q₃ = q₁·b</div>
+      <div class="proof-line" style="margin-top:6px;">→ q₁ = ε + q₁·ab + q₁·ba</div>
+      <div class="proof-line">→ q₁ = ε + q₁(ab+ba) &nbsp;&nbsp;&nbsp;[Q=ε, P=ab+ba]</div>
+      <div class="proof-line" style="color:var(--red); font-weight:700;">→ q₁ = (ab+ba)* &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← Arden: R=QP*, Q=ε</div>
+    </div>
+    <div class="q-ans">RE = (ab + ba)*</div>
+  </div>
+
+  <div class="rule-box" style="margin-top:10px;">
+    <strong>★ Quick Reference — Arden Substitution Pattern:</strong>
+    <ul class="plain" style="margin-top:4px;">
+      <li>Equation form: <span class="formula">R = Q + RP</span> &nbsp;→&nbsp; Solution: <span class="formula">R = QP*</span></li>
+      <li>If Q = ε: &nbsp;<span class="formula">R = ε + RP → R = P*</span></li>
+      <li>Multiple transitions out: combine using union (+) before applying Arden</li>
+      <li>Always solve non-final states first, substitute into final state equations</li>
+    </ul>
+  </div>
+
+  <div class="page-num">3 / 3</div>
+</div>
+
+
+
+<!-- PAGE 1 -->
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 2</span><span class="unit-badge">SECTION 6</span></div>
+  <h1 class="section-title"><span class="section-num">Section 6</span> — Closure Properties of Regular Languages</h1>
+
+  <div class="def-box">
+    Regular Languages are <strong>closed</strong> under an operation if applying that operation to RL(s) always gives a Regular Language. The Regular Languages are closed under the following 8 operations:
+  </div>
+
+  <h2 class="topic">1. Union</h2>
+  <div class="closure-card union">
+    <div class="closure-head">Closed under Union ✓</div>
+    <div class="closure-body">If L₁ and L₂ are RLs over Σ, then L₁ ∪ L₂ is also RL.</div>
+    <div class="closure-formula">Construction: Create a new start state → ε to both FSA start states; accept if either machine accepts.</div>
+  </div>
+  <div class="nfa-wrap">
+    <div class="nfa-title">Union construction: new start → ε → L₁ FSA and L₂ FSA</div>
+    <svg class="nfa-svg" viewBox="0 0 420 110">
+      <defs><marker id="d1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M2 2L8 5L2 8" fill="none" stroke="#1565C0" stroke-width="1.5"/></marker></defs>
+      <line x1="5" y1="55" x2="40" y2="55" stroke="#1565C0" stroke-width="1.5" marker-end="url(#d1)"/>
+      <circle cx="56" cy="55" r="16" fill="#e8f4fd" stroke="#1565C0" stroke-width="1.5"/>
+      <text x="56" y="59" text-anchor="middle" font-family="Kalam" font-size="12" fill="#1565C0">q₀</text>
+      <text x="56" y="75" text-anchor="middle" font-family="Kalam" font-size="10" fill="#555">new start</text>
+      <!-- ε to L1 -->
+      <line x1="72" y1="47" x2="130" y2="22" stroke="#555" stroke-width="1.2" stroke-dasharray="4,2" marker-end="url(#d1)"/>
+      <text x="96" y="28" font-family="Patrick Hand" font-size="12" fill="#555">ε</text>
+      <!-- L1 box -->
+      <rect x="130" y="8" width="90" height="30" rx="6" fill="#bbdefb" stroke="#1565C0" stroke-width="1.5"/>
+      <text x="175" y="27" text-anchor="middle" font-family="Kalam" font-size="13" fill="#1565C0">L₁ FSA</text>
+      <!-- ε to L2 -->
+      <line x1="72" y1="63" x2="130" y2="82" stroke="#555" stroke-width="1.2" stroke-dasharray="4,2" marker-end="url(#d1)"/>
+      <text x="96" y="82" font-family="Patrick Hand" font-size="12" fill="#555">ε</text>
+      <!-- L2 box -->
+      <rect x="130" y="70" width="90" height="30" rx="6" fill="#c8e6c9" stroke="#1b5e20" stroke-width="1.5"/>
+      <text x="175" y="89" text-anchor="middle" font-family="Kalam" font-size="13" fill="#1b5e20">L₂ FSA</text>
+      <!-- both final -->
+      <line x1="220" y1="23" x2="280" y2="55" stroke="#555" stroke-width="1.2" stroke-dasharray="4,2" marker-end="url(#d1)"/>
+      <line x1="220" y1="85" x2="280" y2="55" stroke="#555" stroke-width="1.2" stroke-dasharray="4,2" marker-end="url(#d1)"/>
+      <text x="252" y="43" font-family="Patrick Hand" font-size="12" fill="#555">ε</text>
+      <text x="252" y="75" font-family="Patrick Hand" font-size="12" fill="#555">ε</text>
+      <circle cx="296" cy="55" r="16" fill="#e8f5e9" stroke="#1b5e20" stroke-width="1.5"/>
+      <circle cx="296" cy="55" r="12" fill="none" stroke="#1b5e20" stroke-width="1.2"/>
+      <text x="296" y="59" text-anchor="middle" font-family="Kalam" font-size="12" fill="#1b5e20">qf</text>
+      <text x="296" y="75" text-anchor="middle" font-family="Kalam" font-size="10" fill="#555">new final</text>
+    </svg>
+  </div>
+
+  <h2 class="topic">2. Concatenation</h2>
+  <div class="closure-card concat">
+    <div class="closure-head">Closed under Concatenation ✓</div>
+    <div class="closure-body">If L₁ and L₂ are RLs, then L₁·L₂ (concatenation) is also RL.</div>
+    <div class="closure-formula">Construction: Connect final states of L₁ to start of L₂ via ε-transitions. Remove final status from L₁ states.</div>
+  </div>
+
+  <h2 class="topic">3. Complement</h2>
+  <div class="closure-card complement">
+    <div class="closure-head">Closed under Complement ✓</div>
+    <div class="closure-body">If L is RL over Σ, then L̄ (complement) is also RL.</div>
+    <div class="closure-formula">Construction: In the complete DFA for L, swap final ↔ non-final states.</div>
+  </div>
+  <p style="font-size:14px; margin-top:4px;">L = {strings containing 'a'} → L̄ = {strings NOT containing 'a'}</p>
+
+  <div class="page-num">1 / 3</div>
+</div>
+
+<!-- PAGE 2 -->
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 2 | Section 6</span><span class="unit-badge">CLOSURE PROPS</span></div>
+
+  <h2 class="topic">4. Reversal</h2>
+  <div class="closure-card reversal">
+    <div class="closure-head">Closed under Reversal ✓</div>
+    <div class="closure-body">If L is RL, then L^R (reversal of all strings) is also RL.</div>
+    <div class="closure-formula">Construction: Reverse all edge directions in the FSA. Swap initial ↔ final states.</div>
+  </div>
+  <p style="font-size:14px; margin-top:4px;">If L = {ab, abab, a---b} then L^R = {ba, baba, b---a}</p>
+  <div class="nfa-wrap" style="margin-top:6px;">
+    <div class="nfa-title">Reversal: swap initial↔final, reverse all arrows</div>
+    <svg class="nfa-svg" viewBox="0 0 440 80">
+      <defs><marker id="d2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M2 2L8 5L2 8" fill="none" stroke="#1565C0" stroke-width="1.5"/></marker></defs>
+      <!-- Original FSA -->
+      <line x1="5" y1="40" x2="40" y2="40" stroke="#1565C0" stroke-width="1.5" marker-end="url(#d2)"/>
+      <circle cx="56" cy="40" r="16" fill="#e8f4fd" stroke="#1565C0" stroke-width="1.5"/>
+      <text x="56" y="44" text-anchor="middle" font-family="Kalam" font-size="12" fill="#1565C0">q₀</text>
+      <line x1="72" y1="40" x2="112" y2="40" stroke="#1565C0" stroke-width="1.5" marker-end="url(#d2)"/>
+      <text x="92" y="32" text-anchor="middle" font-family="Patrick Hand" font-size="13" fill="#b71c1c">a</text>
+      <circle cx="128" cy="40" r="16" fill="#e8f5e9" stroke="#1b5e20" stroke-width="1.5"/>
+      <circle cx="128" cy="40" r="12" fill="none" stroke="#1b5e20" stroke-width="1.2"/>
+      <text x="128" y="44" text-anchor="middle" font-family="Kalam" font-size="12" fill="#1b5e20">q₁</text>
+      <text x="90" y="70" text-anchor="middle" font-family="Kalam" font-size="12" fill="#555">Original L</text>
+      <!-- Arrow between -->
+      <text x="190" y="44" text-anchor="middle" font-size="22" fill="#888">→</text>
+      <text x="190" y="62" text-anchor="middle" font-family="Kalam" font-size="11" fill="#888">reverse</text>
+      <!-- Reversed FSA -->
+      <line x1="350" y1="40" x2="316" y2="40" stroke="#4a148c" stroke-width="1.5" marker-end="url(#d2)"/>
+      <text x="333" y="32" text-anchor="middle" font-family="Patrick Hand" font-size="13" fill="#b71c1c">a</text>
+      <line x1="222" y1="40" x2="258" y2="40" stroke="#4a148c" stroke-width="1.5" marker-end="url(#d2)"/>
+      <!-- q1 now start -->
+      <circle cx="300" cy="40" r="16" fill="#e8f4fd" stroke="#4a148c" stroke-width="1.5"/>
+      <text x="300" y="44" text-anchor="middle" font-family="Kalam" font-size="12" fill="#4a148c">q₁</text>
+      <text x="300" y="62" text-anchor="middle" font-family="Kalam" font-size="10" fill="#888">new start</text>
+      <!-- q0 now final -->
+      <circle cx="208" cy="40" r="16" fill="#e8f5e9" stroke="#1b5e20" stroke-width="1.5"/>
+      <circle cx="208" cy="40" r="12" fill="none" stroke="#1b5e20" stroke-width="1.2"/>
+      <text x="208" y="44" text-anchor="middle" font-family="Kalam" font-size="12" fill="#1b5e20">q₀</text>
+      <text x="208" y="62" text-anchor="middle" font-family="Kalam" font-size="10" fill="#888">new final</text>
+      <text x="252" y="70" text-anchor="middle" font-family="Kalam" font-size="12" fill="#555">L^R</text>
+    </svg>
+  </div>
+
+  <h2 class="topic">5. Difference</h2>
+  <div class="closure-card diff">
+    <div class="closure-head">Closed under Difference ✓</div>
+    <div class="closure-body">If L and M are RLs, then L − M is also RL.</div>
+    <div class="closure-formula">L − M = L ∩ M̄ &nbsp;&nbsp;(intersection of L with complement of M)</div>
+  </div>
+
+  <h2 class="topic">6. Kleene's Closure</h2>
+  <div class="closure-card kleene">
+    <div class="closure-head">Closed under Kleene Closure ✓</div>
+    <div class="closure-body">If L is RL, then L* (zero or more concatenations of L) is also RL.</div>
+    <div class="closure-formula">L = {a} → L* = {ε, a, aa, aaa, …}<br>
+    Construction: Add ε-transition from all final states back to initial state. Add new start (also final).</div>
+  </div>
+
+  <h2 class="topic">7. Intersection</h2>
+  <div class="closure-card inter">
+    <div class="closure-head">Closed under Intersection ✓</div>
+    <div class="closure-body">If L₁ and L₂ are RLs, then L₁ ∩ L₂ is also RL.</div>
+    <div class="closure-formula">Proof: L₁ ∩ L₂ = L̄₁ ∪ L̄₂ &nbsp;(De Morgan's law applied to RL closures)</div>
+    <div class="closure-body" style="margin-top:4px;">Also proved by product construction of two DFAs — final states = pairs where BOTH components are final.</div>
+  </div>
+
+  <div class="page-num">2 / 3</div>
+</div>
+
+<!-- PAGE 3 -->
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 2 | Section 6</span><span class="unit-badge">HOMOMORPHISM</span></div>
+
+  <h2 class="topic">8. Homomorphism</h2>
+  <div class="closure-card homo">
+    <div class="closure-head">Closed under Homomorphism ✓</div>
+    <div class="closure-body">A <strong>string homomorphism</strong> h is a function on strings that works by substituting a particular string for each symbol.</div>
+    <div class="closure-formula">
+      Formal definition: h(L) = { h(w) | w ∈ L }<br>
+      where h : Σ → Γ* is called a homomorphism.
+    </div>
+  </div>
+  <div class="nfa-wrap" style="margin-top:6px;">
+    <div class="nfa-title">Example: Σ = {0,1}, Γ = {a,b} — h(0)='aa', h(1)='bb'</div>
+    <p style="font-size:14px; text-align:center; margin-top:4px;">If L = {00, 101} then h(L) = { h(0)h(0), h(1)h(0)h(1) } = { aaaa, bbaabb }</p>
+  </div>
+
+  <h2 class="topic">9. Inverse Homomorphism</h2>
+  <div class="closure-card homo" style="background:#fff8e1; border-left-color:#f9a825;">
+    <div class="closure-head">Closed under Inverse Homomorphism ✓</div>
+    <div class="closure-body">If L is RL over Γ and h : Σ → Γ* is a homomorphism, then h⁻¹(L) is also RL over Σ.</div>
+    <div class="closure-formula">h⁻¹(L) = { w ∈ Σ* | h(w) ∈ L }</div>
+  </div>
+  <p style="margin-top:6px; font-size:14px;">Example: h(0)=a, h(1)=b, h(2)=ab &nbsp;|&nbsp; L = {abab}<br>
+  h⁻¹(L) = {0101, 22, 012, 201} &nbsp;&nbsp;— strings that map INTO L via h</p>
+  <p style="margin-top:4px; font-size:14px; color:var(--green);">Check: h(0101) = abab ✓, h(22) = abab ✓, h(012) = aabb ✗ — wait: h(012) = h(0)h(1)h(2) = a·b·ab = abab ✓</p>
+
+  <hr class="divider"/>
+
+  <h2 class="topic">10. Summary Table</h2>
+  <table class="summary-table">
+    <tr><th>Operation</th><th>Closed?</th><th>Key Method</th></tr>
+    <tr><td>Union (L₁ ∪ L₂)</td><td><span class="closed-badge">✓ Closed</span></td><td>New start → ε → both FSAs</td></tr>
+    <tr><td>Concatenation (L₁·L₂)</td><td><span class="closed-badge">✓ Closed</span></td><td>ε from L₁ finals to L₂ start</td></tr>
+    <tr><td>Complement (L̄)</td><td><span class="closed-badge">✓ Closed</span></td><td>Swap final/non-final in DFA</td></tr>
+    <tr><td>Reversal (L^R)</td><td><span class="closed-badge">✓ Closed</span></td><td>Reverse edges, swap init/final</td></tr>
+    <tr><td>Difference (L − M)</td><td><span class="closed-badge">✓ Closed</span></td><td>L ∩ M̄</td></tr>
+    <tr><td>Kleene Closure (L*)</td><td><span class="closed-badge">✓ Closed</span></td><td>ε back-arcs to initial</td></tr>
+    <tr><td>Intersection (L₁ ∩ L₂)</td><td><span class="closed-badge">✓ Closed</span></td><td>Product DFA, both finals</td></tr>
+    <tr><td>Homomorphism h(L)</td><td><span class="closed-badge">✓ Closed</span></td><td>Substitute symbols per h</td></tr>
+    <tr><td>Inverse Homomorphism h⁻¹(L)</td><td><span class="closed-badge">✓ Closed</span></td><td>Strings whose image is in L</td></tr>
+  </table>
+
+  <div class="note-box"><strong>★ Key Insight:</strong> Regular Languages are closed under ALL these operations. This is a distinguishing property — Context-Free Languages are NOT closed under complement and intersection.</div>
+
+  <div class="page-num">3 / 3</div>
+</div>
+
+
+
+<!-- PAGE 1 -->
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 2</span><span class="unit-badge">SECTION 7</span></div>
+  <h1 class="section-title"><span class="section-num">Section 7</span> — Pigeonhole Principle &amp; Pumping Lemma</h1>
+
+  <h2 class="topic">1. Pigeonhole Principle</h2>
+  <div class="def-box">
+    <strong>Theorem:</strong> If <em>n</em> pigeons are assigned to <em>m</em> pigeonholes and <em>m &lt; n</em>, then at least one pigeonhole contains <strong>two or more</strong> pigeons.
+  </div>
+  <p>★ In FSA context: if a string of length ≥ n is processed by a DFA with n states, at least one state must be <strong>revisited</strong> (repeated). This creates a loop — the basis of the Pumping Lemma.</p>
+
+  <hr class="divider"/>
+
+  <h2 class="topic">2. Pumping Lemma for Regular Languages</h2>
+  <div class="def-box">
+    <strong>Statement:</strong> All Regular Languages have a special property called the <em>pumping property</em>. Every string in the language can be <em>"pumped"</em> (a section repeated) if it is at least as long as a certain special value called the <strong>pumping length</strong>, with the result string still remaining in the language.
+  </div>
+
+  <div class="pumping-box">
+    <div class="pump-head">★ Formal Statement</div>
+    <p style="font-size:14.5px; margin-bottom:10px;">Let L be a regular language. Then there exists a constant <strong>n</strong> such that for any string <strong>w ∈ L</strong> with |w| ≥ n, we can write <strong>w = xyz</strong> such that:</p>
+    <div class="pump-cond">
+      <span class="label">Condition 1</span>
+      |xy| ≤ n &nbsp;&nbsp;&nbsp;(x and y together are not too long)
+    </div>
+    <div class="pump-cond">
+      <span class="label">Condition 2</span>
+      |y| ≥ 1 &nbsp;&nbsp;&nbsp;&nbsp;(y is not empty — it has at least 1 symbol)
+    </div>
+    <div class="pump-cond">
+      <span class="label">Condition 3</span>
+      xy^i z ∈ L &nbsp;&nbsp;&nbsp;for all i ≥ 0 &nbsp;&nbsp;(pumping y any number of times keeps string in L)
+    </div>
+    <p style="font-size:13px; color:var(--purple); margin-top:8px;">★ Note: n is no greater than the number of states in the smallest DFA accepting L.</p>
+  </div>
+
+  <div class="xyz-diagram">
+    <p style="font-size:14px; color:#555; margin-bottom:6px;">Decomposition of w = xyz</p>
+    <div class="xyz-bar">
+      <div class="xyz-x">x</div>
+      <div class="xyz-y">y</div>
+      <div class="xyz-z">z</div>
+    </div>
+    <div class="xyz-label">
+      <span>|xy| ≤ n</span>
+      <span>|y| ≥ 1 (pumpable part)</span>
+      <span>remainder</span>
+    </div>
+    <p style="font-size:13px; color:var(--red); margin-top:6px;">xy<sup>i</sup>z ∈ L for all i ≥ 0 (i=0 means y is deleted, i=2 means y is doubled, etc.)</p>
+  </div>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<!-- PAGE 2 -->
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 2 | Section 7</span><span class="unit-badge">PUMPING LEMMA</span></div>
+
+  <h2 class="topic">3. How to USE the Pumping Lemma</h2>
+  <div class="note-box">
+    <strong>IMPORTANT:</strong> Pumping Lemma can ONLY be used to <strong>PROVE a language is NOT regular</strong>. If a language PASSES the pumping lemma, it is <strong>undecidable</strong> (not guaranteed to be regular).
+  </div>
+
+  <div class="flow-box">
+    <div class="flow-item">Language L</div>
+    <span class="flow-arr">→</span>
+    <div class="flow-item">Apply<br>Pumping Lemma</div>
+    <span class="flow-arr">→</span>
+    <div class="flow-item flow-fail">FAILS<br>↓<br>L is NOT Regular</div>
+    <div style="font-size:12px; color:#888; align-self:center; margin-left:8px;">OR</div>
+    <div class="flow-item flow-pass">PASSES<br>↓<br>Undecidable (could still be non-regular)</div>
+  </div>
+
+  <h2 class="topic">4. Proof of Pumping Lemma</h2>
+  <p>Suppose w is any string in L represented as: &nbsp;<span class="formula">w = a₁a₂a₃...aₘ</span> &nbsp;where m ≥ n</p>
+  <p>The string w requires (m+1) states to process: &nbsp;q₀, q₁, ..., qₘ</p>
+  <div class="nfa-wrap" style="margin-top:8px;">
+    <svg class="nfa-svg" viewBox="0 0 560 90">
+      <defs><marker id="e1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M2 2L8 5L2 8" fill="none" stroke="#1565C0" stroke-width="1.5"/></marker></defs>
+      <line x1="5" y1="45" x2="36" y2="45" stroke="#1565C0" stroke-width="1.5" marker-end="url(#e1)"/>
+      <!-- q0 -->
+      <circle cx="52" cy="45" r="16" fill="#e8f4fd" stroke="#1565C0" stroke-width="1.5"/>
+      <text x="52" y="49" text-anchor="middle" font-family="Kalam" font-size="12" fill="#1565C0">q₀</text>
+      <!-- a1..ai to qi-aj -->
+      <line x1="68" y1="45" x2="130" y2="45" stroke="#1565C0" stroke-width="1.5" marker-end="url(#e1)"/>
+      <text x="99" y="36" text-anchor="middle" font-family="Patrick Hand" font-size="12" fill="#555">a₁…aᵢ</text>
+      <!-- qi-aj state (loop) -->
+      <circle cx="146" cy="45" r="16" fill="#fff9c4" stroke="#f9a825" stroke-width="2"/>
+      <text x="146" y="49" text-anchor="middle" font-family="Kalam" font-size="11" fill="#6d4c41">qᵢ-qⱼ</text>
+      <!-- loop arc (y part) -->
+      <path d="M132 28 Q146 8 160 28" fill="none" stroke="#b71c1c" stroke-width="2" marker-end="url(#e1)"/>
+      <text x="146" y="8" text-anchor="middle" font-family="Patrick Hand" font-size="12" fill="#b71c1c">y = aᵢ₊₁…aⱼ</text>
+      <!-- to qm final -->
+      <line x1="162" y1="45" x2="230" y2="45" stroke="#1565C0" stroke-width="1.5" marker-end="url(#e1)"/>
+      <text x="196" y="36" text-anchor="middle" font-family="Patrick Hand" font-size="12" fill="#555">aⱼ₊₁…aₘ</text>
+      <circle cx="246" cy="45" r="16" fill="#e8f5e9" stroke="#1b5e20" stroke-width="1.5"/>
+      <circle cx="246" cy="45" r="12" fill="none" stroke="#1b5e20" stroke-width="1.2"/>
+      <text x="246" y="49" text-anchor="middle" font-family="Kalam" font-size="12" fill="#1b5e20">qₘ</text>
+      <!-- x label -->
+      <text x="99" y="68" text-anchor="middle" font-family="Kalam" font-size="11" fill="#1565C0">x</text>
+      <!-- z label -->
+      <text x="196" y="68" text-anchor="middle" font-family="Kalam" font-size="11" fill="#1b5e20">z</text>
+    </svg>
+  </div>
+  <p>Since m ≥ n states and DFA has only n states → by Pigeonhole, <strong>at least one state repeats</strong>.</p>
+  <p>The repeated state creates a <strong>loop</strong> — the part of the string that goes around the loop is <strong>y</strong>.</p>
+  <p>Since the loop can be taken 0, 1, 2, ... times → <span class="formula">xy<sup>i</sup>z ∈ L for all i ≥ 0</span> &nbsp;✓ &nbsp;<strong>Hence Proved</strong></p>
+
+  <h2 class="topic">5. 4-Step Method to DISPROVE Regularity</h2>
+  <div class="rule-box">
+    <strong>Step 1:</strong> Assume L is a Regular Language.<br>
+    <strong>Step 2:</strong> If L is RL, let n be the number of states in minimised FSA accepting L.<br>
+    <strong>Step 3:</strong> Consider a string w ∈ L such that |w| ≥ n. By Pumping Lemma, w = xyz with |xy| ≤ n, |y| ≥ 1, and xy<sup>i</sup>z ∈ L for all i ≥ 0.<br>
+    <strong>Step 4:</strong> Show that for some i, xy<sup>i</sup>z ∉ L → Contradiction! Hence L is NOT Regular.
+  </div>
+
+  <div class="note-box"><strong>★ Exam Tip:</strong> Always choose w carefully — pick the string that will give a clear contradiction when y is pumped. Usually pick w = a<sup>n</sup>b<sup>n</sup> or similar balanced structure. The contradiction is always about violating the balance condition.</div>
+
+  <div class="page-num">2 / 2</div>
+</div>
+
+
+
+<!-- PAGE 1 -->
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 2</span><span class="unit-badge">SECTION 8</span></div>
+  <h1 class="section-title"><span class="section-num">Section 8</span> — Applications of Pumping Lemma</h1>
+
+  <div class="note-box"><strong>Template for ALL proofs:</strong> Step 1: Assume RL → Step 2: Let n = states → Step 3: Choose w ∈ L, |w|≥n, apply lemma → Step 4: Contradiction → Hence NOT RL</div>
+
+  <!-- Q1 -->
+  <h2 class="topic">Q1 — Show L = { aⁿbⁿ | n ≥ 1 } is NOT a Regular Language</h2>
+  <div class="proof-card">
+    <div class="proof-head">Proof by Pumping Lemma</div>
+    <div class="step"><div class="step-badge">1</div><div class="step-text">Suppose L is a Regular Language.</div></div>
+    <div class="step"><div class="step-badge">2</div><div class="step-text">If L is RL, let n be the number of states in the minimised FSA accepting L.</div></div>
+    <div class="step"><div class="step-badge">3</div><div class="step-text">Consider string <strong>w = aⁿbⁿ ∈ L</strong>, and |w| = 2n ≥ n. &nbsp;✓<br>
+    By Pumping Lemma, we can write w = xyz such that |xy| ≤ n, |y| ≥ 1, xy<sup>i</sup>z ∈ L for all i ≥ 0.<br><br>
+    Since |xy| ≤ n and w starts with n a's, the substring xy lies entirely within the <strong>a-part</strong>.<br>
+    So: &nbsp; <span class="xyz-inline"><span class="x-part">x = aˢ</span> &nbsp; <span class="y-part">y = aᵏ</span> &nbsp; <span class="z-part">z = aⁿ⁻ˢ⁻ᵏ bⁿ</span></span> &nbsp; where k ≥ 1<br><br>
+    Take i = 2: &nbsp;<span class="formula">xy²z = aˢ · a²ᵏ · aⁿ⁻ˢ⁻ᵏ bⁿ = aⁿ⁺ᵏ bⁿ</span></div></div>
+    <div class="step"><div class="step-badge red">4</div><div class="step-text">
+    <div class="contradiction">xy²z = aⁿ⁺ᵏ bⁿ where k ≥ 1 → number of a's ≠ number of b's → xy²z ∉ L</div>
+    This contradicts Pumping Lemma (which says xy<sup>i</sup>z ∈ L for all i ≥ 0).</div></div>
+    <div class="conclusion">∴ L = { aⁿbⁿ | n ≥ 1 } is NOT a Regular Language. ✓</div>
+  </div>
+
+  <!-- Q2 -->
+  <h2 class="topic">Q2 — Show L = { wwᴿ | w ∈ {a,b}* } is NOT a RL</h2>
+  <div class="proof-card">
+    <div class="proof-head">Proof by Pumping Lemma</div>
+    <div class="step"><div class="step-badge">1</div><div class="step-text">Suppose L is a RL. If RL, let n = no. of states in minimised FSA.</div></div>
+    <div class="step"><div class="step-badge">3</div><div class="step-text">Choose w = aᵐbᵐ · bᵐaᵐ where m = 2, so w = aabbbbaa for simplicity.<br>
+    Actually: take w = aⁿbⁿbⁿaⁿ ∈ L (which is (aⁿbⁿ) concatenated with its reverse).<br>
+    |w| = 4n ≥ n ✓<br><br>
+    By Pumping Lemma: w = xyz, |xy| ≤ n, |y| ≥ 1.<br>
+    Since |xy| ≤ n and w starts with n a's: y = aᵏ for some k ≥ 1<br><br>
+    For i = 2: &nbsp;<span class="formula">xy²z = aⁿ⁺ᵏ bⁿ bⁿ aⁿ</span></div></div>
+    <div class="step"><div class="step-badge red">4</div><div class="step-text">
+    <div class="contradiction">aⁿ⁺ᵏbⁿbⁿaⁿ — first half has more a's than second half → NOT of form wwᴿ → ∉ L</div></div></div>
+    <div class="conclusion">∴ L = { wwᴿ | w ∈ {a,b}* } is NOT a Regular Language. ✓</div>
+  </div>
+
+  <div class="page-num">1 / 3</div>
+</div>
+
+<!-- PAGE 2 -->
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 2 | Section 8</span><span class="unit-badge">APPLICATIONS</span></div>
+
+  <!-- Q3 -->
+  <h2 class="topic">Q3 — Show L = { aᵖ | p is a prime number } is NOT a RL</h2>
+  <div class="proof-card">
+    <div class="proof-head">Proof by Pumping Lemma</div>
+    <div class="step"><div class="step-badge">1</div><div class="step-text">Suppose L is a RL. Let n = no. of states in minimised FSA.</div></div>
+    <div class="step"><div class="step-badge">2</div><div class="step-text">Consider string w = aᵖ where p is a prime, p ≥ n. So |w| = p ≥ n ✓</div></div>
+    <div class="step"><div class="step-badge">3</div><div class="step-text">By Pumping Lemma: w = xyz with |xy| ≤ n, |y| ≥ 1.<br>
+    Let |y| = k, where 1 ≤ k ≤ n<br>
+    Then |xyz| = p, and |xz| = p − k<br><br>
+    Pump y (p+1) times (i = p+1 — a tricky choice!):<br>
+    <span class="formula">|xy^(p+1)z| = |xz| + (p+1)|y| = (p−k) + (p+1)k = p + pk = p(1 + k)</span><br><br>
+    Since p(1+k) = p × (1+k) → this is a <strong>product of two numbers both > 1</strong> (since p ≥ 2, k ≥ 1 → 1+k ≥ 2)</div></div>
+    <div class="step"><div class="step-badge red">4</div><div class="step-text">
+    <div class="contradiction">p(1+k) is NOT prime (multiplication of two numbers > 1 can never be prime) → xy^(p+1)z ∉ L</div></div></div>
+    <div class="conclusion">∴ L = { aᵖ | p is prime } is NOT a Regular Language. ✓</div>
+  </div>
+
+  <!-- Q4 -->
+  <h2 class="topic">Q4 — Show L = { w ∈ {a,b}* | nₐ(w) &lt; n_b(w) } is NOT a RL</h2>
+  <p style="font-size:14px; margin-bottom:6px;">L = strings where count of a's is strictly less than count of b's</p>
+  <div class="proof-card">
+    <div class="proof-head">Proof by Pumping Lemma</div>
+    <div class="step"><div class="step-badge">1</div><div class="step-text">Suppose L is RL. Let n = no. of states in minimised FSA.</div></div>
+    <div class="step"><div class="step-badge">3</div><div class="step-text">Choose w = aᵐ b^(m+1) where m ≥ n. So nₐ(w)=m &lt; n_b(w)=m+1 ✓ → w ∈ L<br>
+    By PL: w = xyz, |xy| ≤ n, |y| ≥ 1.<br>
+    Since |xy| ≤ n and w starts with m a's: <strong>y = aᵏ</strong> for some k ≥ 1<br><br>
+    For i = 2: &nbsp;<span class="formula">xy²z = a^(m+k) b^(m+1)</span><br>
+    Now: nₐ = m+k &nbsp;and&nbsp; n_b = m+1<br>
+    Is m+k &lt; m+1? → Only if k &lt; 1. But k ≥ 1, so m+k ≥ m+1 → nₐ ≥ n_b</div></div>
+    <div class="step"><div class="step-badge red">4</div><div class="step-text">
+    <div class="contradiction">xy²z = a^(m+k) b^(m+1) where k≥1 → nₐ(xy²z) ≥ n_b(xy²z) → xy²z ∉ L</div></div></div>
+    <div class="conclusion">∴ L is NOT a Regular Language. ✓</div>
+  </div>
+
+  <div class="page-num">2 / 3</div>
+</div>
+
+<!-- PAGE 3 -->
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">TAFL — Unit 2 | Section 8</span><span class="unit-badge">APPLICATIONS</span></div>
+
+  <!-- Q5 -->
+  <h2 class="topic">Q5 — Show L = { 0ⁿ | n is a perfect square } is NOT a RL</h2>
+  <div class="proof-card">
+    <div class="proof-head">Proof by Pumping Lemma</div>
+    <div class="step"><div class="step-badge">1</div><div class="step-text">Suppose L is RL. Let n = no. of states in minimised FSA.</div></div>
+    <div class="step"><div class="step-badge">3</div><div class="step-text">Choose w = 0^(n²) ∈ L (n² is a perfect square) &nbsp;&nbsp; |w| = n² ≥ n ✓<br>
+    By PL: w = xyz, |xy| ≤ n, |y| ≥ 1. Let |y| = k, 1 ≤ k ≤ n.<br><br>
+    For i = 2: &nbsp;<span class="formula">|xy²z| = n² + k</span><br><br>
+    Need to check: is n² + k a perfect square?<br>
+    We know: &nbsp;<span class="formula">n² &lt; n² + k ≤ n² + n &lt; n² + 2n + 1 = (n+1)²</span><br>
+    So: &nbsp;<span class="formula">n² &lt; n²+k &lt; (n+1)²</span></div></div>
+    <div class="step"><div class="step-badge red">4</div><div class="step-text">
+    <div class="contradiction">n² + k lies strictly between two consecutive perfect squares n² and (n+1)² → n²+k cannot be a perfect square → xy²z ∉ L</div></div></div>
+    <div class="conclusion">∴ L = { 0ⁿ | n is a perfect square } is NOT a Regular Language. ✓</div>
+  </div>
+
+  <hr class="divider"/>
+
+  <h2 class="topic">Quick Reference — Pumping Lemma Proof Structure</h2>
+  <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:8px;">
+    <tr style="background:var(--blue);color:#fff;">
+      <th style="padding:7px 10px;text-align:left;">Language</th>
+      <th style="padding:7px 10px;text-align:left;">Choose w</th>
+      <th style="padding:7px 10px;text-align:left;">y lies in</th>
+      <th style="padding:7px 10px;text-align:left;">Contradiction (i=2)</th>
+    </tr>
+    <tr><td style="padding:6px 10px;border-bottom:1px solid #e0e0e0;">aⁿbⁿ</td><td style="padding:6px 10px;border-bottom:1px solid #e0e0e0;">aⁿbⁿ</td><td style="padding:6px 10px;border-bottom:1px solid #e0e0e0;">a-part only</td><td style="padding:6px 10px;border-bottom:1px solid #e0e0e0;">more a's than b's</td></tr>
+    <tr style="background:#f9f9f9;"><td style="padding:6px 10px;border-bottom:1px solid #e0e0e0;">wwᴿ</td><td style="padding:6px 10px;border-bottom:1px solid #e0e0e0;">aⁿbⁿbⁿaⁿ</td><td style="padding:6px 10px;border-bottom:1px solid #e0e0e0;">a-part only</td><td style="padding:6px 10px;border-bottom:1px solid #e0e0e0;">first half ≠ reverse of second half</td></tr>
+    <tr><td style="padding:6px 10px;border-bottom:1px solid #e0e0e0;">aᵖ (prime)</td><td style="padding:6px 10px;border-bottom:1px solid #e0e0e0;">aᵖ, p≥n prime</td><td style="padding:6px 10px;border-bottom:1px solid #e0e0e0;">a-part, |y|=k</td><td style="padding:6px 10px;border-bottom:1px solid #e0e0e0;">p(1+k) not prime (i=p+1)</td></tr>
+    <tr style="background:#f9f9f9;"><td style="padding:6px 10px;border-bottom:1px solid #e0e0e0;">nₐ&lt;n_b</td><td style="padding:6px 10px;border-bottom:1px solid #e0e0e0;">aᵐb^(m+1)</td><td style="padding:6px 10px;border-bottom:1px solid #e0e0e0;">a-part, |y|=k</td><td style="padding:6px 10px;border-bottom:1px solid #e0e0e0;">nₐ becomes ≥ n_b</td></tr>
+    <tr><td style="padding:6px 10px;">0ⁿ (perfect sq)</td><td style="padding:6px 10px;">0^(n²)</td><td style="padding:6px 10px;">0-part, |y|=k</td><td style="padding:6px 10px;">n²+k not a perfect square</td></tr>
+  </table>
+
+  <div class="note-box" style="margin-top:14px;"><strong>★ Golden Rule:</strong> In all pumping lemma proofs — because |xy| ≤ n and the string starts with a's, the y-part ALWAYS falls in the initial block (a-part or 0-part). This forces the pumped string to break the balance condition. This insight solves 90% of pumping lemma problems.</div>
+
+  <div class="page-num">3 / 3</div>
+</div>
+
+
+
+<!-- ══════════════ SECTION 9 PAGE 1 ══════════════ -->
 
 <script>
 (function(){
@@ -123,6 +1380,7 @@ nav.part-nav{padding:0 10px;gap:6px;}
   var secPages = [];
   pages.forEach(function(p){ if(p.querySelector('h1.section-title')) secPages.push(p); });
   secPages.forEach(function(p,i){ p.id = 'sec-'+(i+1); });
+
   var tocItems = document.querySelectorAll('.cover-toc-item');
   tocItems.forEach(function(item, i){
     if(i >= secPages.length) return;

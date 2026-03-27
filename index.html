@@ -7,25 +7,74 @@
 <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-body{background:#e0e0e0;font-family:'Kalam',cursive;padding:40px 20px;}
-.main-header{max-width:820px;margin:0 auto 30px;text-align:center;}
-.main-header h1{font-size:36px;color:#1a1a2e;margin-bottom:8px;font-family:'Kalam',cursive;}
-.main-header p{color:#666;font-size:15px;font-family:'Kalam',cursive;}
-.grid{max-width:820px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:20px;}
-.subj-card{border-radius:10px;padding:36px 30px;color:#fff;text-decoration:none;box-shadow:0 4px 20px rgba(0,0,0,0.2);transition:transform 0.15s,box-shadow 0.15s;display:block;}
-.subj-card:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,0.25);}
-.subj-name{font-size:24px;font-weight:700;margin-bottom:6px;font-family:'Kalam',cursive;}
-.subj-full{font-size:14px;opacity:0.8;margin-bottom:16px;font-family:'Kalam',cursive;}
-.subj-units{font-size:13px;opacity:0.65;background:rgba(255,255,255,0.15);display:inline-block;padding:3px 14px;border-radius:16px;font-family:'Kalam',cursive;}
-@media(max-width:600px){body{padding:20px 12px;}.main-header h1{font-size:26px;}.grid{grid-template-columns:1fr;}.subj-card{padding:24px 20px;}}</style>
+body{min-height:100vh;background:#0d1117;font-family:'Kalam',cursive;color:#fff;}
+.hero{padding:60px 20px 48px;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(96,165,250,0.07),transparent);}
+.hero-eyebrow{font-size:11px;letter-spacing:4px;color:#4b5563;margin-bottom:16px;position:relative;}
+.hero-title{font-size:54px;font-weight:700;margin-bottom:10px;line-height:1.1;position:relative;}
+.hero-title .accent{background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-sub{color:#6b7280;font-size:14px;margin-bottom:36px;position:relative;}
+.stats-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative;}
+.stat-pill{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:12px 24px;text-align:center;}
+.stat-n{font-size:28px;font-weight:700;}
+.stat-l{font-size:10px;color:#4b5563;letter-spacing:2px;margin-top:3px;}
+.grid{max-width:860px;margin:0 auto;padding:40px 20px 64px;display:grid;grid-template-columns:repeat(auto-fill,minmax(390px,1fr));gap:18px;}
+.subj-card{border-radius:18px;overflow:hidden;text-decoration:none;display:block;transition:transform 0.2s,box-shadow 0.2s;box-shadow:0 4px 24px rgba(0,0,0,0.35);}
+.subj-card:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(0,0,0,0.45);}
+.card-inner{padding:28px 28px 26px;}
+.card-row1{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;}
+.card-icon{width:46px;height:46px;border-radius:12px;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:#fff;}
+.card-tag{font-size:12px;color:rgba(255,255,255,0.6);background:rgba(255,255,255,0.12);padding:3px 12px;border-radius:20px;}
+.card-name{font-size:24px;font-weight:700;color:#fff;margin-bottom:4px;}
+.card-full{font-size:13px;color:rgba(255,255,255,0.55);line-height:1.5;}
+@media(max-width:600px){
+  .hero{padding:40px 16px 36px;}
+  .hero-title{font-size:38px;}
+  .grid{grid-template-columns:1fr;padding:24px 14px 48px;gap:14px;}
+  .card-inner{padding:22px 20px 20px;}
+}
+</style>
 </head>
 <body>
-<div class="main-header"><h1>Semester 4 Notes</h1><p>Select a subject to view all units</p></div>
+<div class="hero">
+  <div class="hero-eyebrow">B.TECH · 2024–25</div>
+  <div class="hero-title">Semester <span class="accent">4</span> Notes</div>
+  <div class="hero-sub">All subjects in one place — tap a card to open</div>
+  <div class="stats-row">
+    <div class="stat-pill"><div class="stat-n">4</div><div class="stat-l">SUBJECTS</div></div>
+    <div class="stat-pill"><div class="stat-n">20</div><div class="stat-l">UNITS</div></div>
+    <div class="stat-pill"><div class="stat-n">7</div><div class="stat-l">COMPLETE</div></div>
+  </div>
+</div>
 <div class="grid">
-<a href="TALF/index.html" class="subj-card" style="background:linear-gradient(135deg,#006064 0%,#004d40 100%);"><div class="subj-name">TALF</div><div class="subj-full">Theory of Automata & Formal Languages</div><div class="subj-units">5 Units</div></a>
-<a href="OOP-JAVA/index.html" class="subj-card" style="background:linear-gradient(135deg,#1b5e20 0%,#00695c 100%);"><div class="subj-name">OOP JAVA</div><div class="subj-full">Object-Oriented Programming in Java</div><div class="subj-units">5 Units</div></a>
-<a href="OS/index.html" class="subj-card" style="background:linear-gradient(135deg,#4a148c 0%,#1a237e 100%);"><div class="subj-name">OS</div><div class="subj-full">Operating Systems</div><div class="subj-units">5 Units</div></a>
-<a href="DIGITAL-ELECTRONICS/index.html" class="subj-card" style="background:linear-gradient(135deg,#e65100 0%,#bf360c 100%);"><div class="subj-name">DIGITAL ELECTRONICS</div><div class="subj-full">Digital Electronics</div><div class="subj-units">5 Units</div></a>
+  <a href="TALF/index.html" class="subj-card" style="background:linear-gradient(135deg,#006064,#004d40);">
+    <div class="card-inner">
+      <div class="card-row1"><div class="card-icon">TA</div><span class="card-tag">3 / 5 done</span></div>
+      <div class="card-name">TALF</div>
+      <div class="card-full">Theory of Automata &amp; Formal Languages</div>
+    </div>
+  </a>
+  <a href="OOP-JAVA/index.html" class="subj-card" style="background:linear-gradient(135deg,#1b5e20,#00695c);">
+    <div class="card-inner">
+      <div class="card-row1"><div class="card-icon">OJ</div><span class="card-tag">2 / 5 done</span></div>
+      <div class="card-name">OOP JAVA</div>
+      <div class="card-full">Object-Oriented Programming in Java</div>
+    </div>
+  </a>
+  <a href="OS/index.html" class="subj-card" style="background:linear-gradient(135deg,#4a148c,#1a237e);">
+    <div class="card-inner">
+      <div class="card-row1"><div class="card-icon">OS</div><span class="card-tag">0 / 5 done</span></div>
+      <div class="card-name">OS</div>
+      <div class="card-full">Operating Systems</div>
+    </div>
+  </a>
+  <a href="DIGITAL-ELECTRONICS/index.html" class="subj-card" style="background:linear-gradient(135deg,#e65100,#bf360c);">
+    <div class="card-inner">
+      <div class="card-row1"><div class="card-icon">DE</div><span class="card-tag">2 / 5 done</span></div>
+      <div class="card-name">DIGITAL ELECTRONICS</div>
+      <div class="card-full">Digital Electronics</div>
+    </div>
+  </a>
 </div>
 </body>
 </html>

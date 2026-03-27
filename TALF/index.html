@@ -6,32 +6,110 @@
 <title>TALF — Units</title>
 <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
+:root{--accent:#006064;--dark:#004d40;}
 *{margin:0;padding:0;box-sizing:border-box;}
-body{background:#e0e0e0;font-family:'Kalam',cursive;padding:30px 20px;}
-.back-link{max-width:820px;margin:0 auto 20px;display:block;}
-.back-link a{font-family:'Kalam',cursive;font-size:14px;color:#555;text-decoration:none;background:#fff;padding:6px 16px;border-radius:20px;border:1.5px solid #ccc;}
-.back-link a:hover{background:#f5f5f5;}
-.header{max-width:820px;margin:0 auto 30px;background:linear-gradient(135deg,#006064 0%,#004d40 100%);border-radius:8px;padding:50px 60px;text-align:center;color:#fff;box-shadow:0 4px 24px rgba(0,0,0,0.3);}
-.header h1{font-size:36px;margin-bottom:8px;font-family:'Kalam',cursive;}
-.header p{opacity:0.75;font-size:15px;font-family:'Kalam',cursive;}
-.grid{max-width:820px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;}
-.unit-card{background:#fff;border-radius:8px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,0.1);}
-.unit-num{display:inline-block;color:#fff;font-size:13px;font-weight:700;padding:3px 16px;border-radius:20px;margin-bottom:8px;}
-.unit-status{font-size:13px;margin-bottom:12px;}
-.unit-parts{display:flex;gap:8px;flex-wrap:wrap;}
-.unit-parts a{font-family:'Kalam',cursive;font-size:13px;padding:4px 14px;border-radius:16px;border:1.5px solid #90caf9;color:#1565C0;text-decoration:none;}
-.unit-parts a:hover{background:#e3f2fd;}
-@media(max-width:600px){body{padding:16px 10px;}.header{padding:30px 20px;}.header h1{font-size:26px;}.grid{grid-template-columns:1fr;}.unit-parts{flex-wrap:wrap;}}</style>
+body{background:#f0f0f5;font-family:'Kalam',cursive;min-height:100vh;}
+.hero{background:linear-gradient(135deg,var(--accent),var(--dark));padding:36px 20px 44px;color:#fff;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;right:-80px;top:-80px;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,0.06);}
+.hero::after{content:'';position:absolute;left:-60px;bottom:-100px;width:260px;height:260px;border-radius:50%;background:rgba(255,255,255,0.04);}
+.hero-inner{max-width:820px;margin:0 auto;position:relative;z-index:1;}
+.back-btn{display:inline-flex;align-items:center;gap:6px;font-family:'Kalam',cursive;font-size:13px;color:rgba(255,255,255,0.75);text-decoration:none;background:rgba(255,255,255,0.12);padding:5px 14px;border-radius:20px;margin-bottom:22px;border:1px solid rgba(255,255,255,0.18);transition:background 0.15s;}
+.back-btn:hover{background:rgba(255,255,255,0.2);}
+.hero-eyebrow{font-size:10px;letter-spacing:3px;opacity:0.55;margin-bottom:6px;}
+.hero-name{font-size:48px;font-weight:700;margin-bottom:4px;line-height:1.1;}
+.hero-full{font-size:14px;opacity:0.7;margin-bottom:22px;}
+.hero-stats{display:flex;gap:12px;flex-wrap:wrap;}
+.hs{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:8px 16px;text-align:center;}
+.hs-n{font-size:22px;font-weight:700;line-height:1;}
+.hs-l{font-size:10px;opacity:0.6;margin-top:3px;letter-spacing:1px;}
+.main{max-width:820px;margin:0 auto;padding:28px 20px 60px;}
+.section-label{font-size:10px;letter-spacing:3px;color:#9ca3af;margin-bottom:14px;}
+.unit-card{background:#fff;border-radius:12px;padding:18px 20px;margin-bottom:12px;box-shadow:0 1px 8px rgba(0,0,0,0.06);border-left:4px solid var(--accent);display:flex;align-items:center;gap:16px;transition:box-shadow 0.18s,transform 0.15s;}
+.unit-card:hover{box-shadow:0 5px 20px rgba(0,0,0,0.11);transform:translateX(4px);}
+.unit-num-badge{width:50px;height:50px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--dark));color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0;}
+.unit-info{flex:1;min-width:0;}
+.unit-name{font-size:15px;font-weight:700;color:#1a1a2e;margin-bottom:5px;}
+.unit-meta{margin-bottom:10px;}
+.badge-done{background:#e8f5e9;color:#2e7d32;font-size:11px;padding:2px 10px;border-radius:10px;font-weight:700;}
+.badge-blank{background:#f5f5f5;color:#9e9e9e;font-size:11px;padding:2px 10px;border-radius:10px;}
+.unit-parts{display:flex;gap:7px;flex-wrap:wrap;}
+.unit-parts a{font-family:'Kalam',cursive;font-size:12px;padding:4px 14px;border-radius:14px;text-decoration:none;border:1.5px solid var(--accent);color:var(--accent);transition:background 0.15s,color 0.15s;}
+.unit-parts a:hover,.unit-parts a.primary{background:var(--accent);color:#fff;}
+@media(max-width:600px){
+  .hero{padding:24px 14px 32px;}.hero-name{font-size:36px;}
+  .unit-card{flex-direction:column;align-items:flex-start;gap:10px;}
+  .unit-num-badge{width:44px;height:44px;font-size:13px;}.main{padding:18px 12px 40px;}
+}
+</style>
 </head>
 <body>
-<div class="back-link"><a href="../index.html">↩ All Subjects</a></div>
-<div class="header"><h1>TALF</h1><p>Theory of Automata & Formal Languages</p></div>
-<div class="grid">
-<div class="unit-card"><div class="unit-num" style="background:#006064;">Unit 1</div><div class="unit-status" style="color:#1b5e20;">✓ Complete</div><div class="unit-parts"><a href="UNIT-1/part1.html" style="background:#006064;color:#fff;border-color:#006064;">Part 1</a><a href="UNIT-1/part2.html">Part 2</a><a href="UNIT-1/part3.html">Part 3</a></div></div>
-<div class="unit-card"><div class="unit-num" style="background:#006064;">Unit 2</div><div class="unit-status" style="color:#1b5e20;">✓ Complete</div><div class="unit-parts"><a href="UNIT-2/part1.html" style="background:#006064;color:#fff;border-color:#006064;">Part 1</a><a href="UNIT-2/part2.html">Part 2</a><a href="UNIT-2/part3.html">Part 3</a></div></div>
-<div class="unit-card"><div class="unit-num" style="background:#006064;">Unit 3</div><div class="unit-status" style="color:#1b5e20;">✓ Complete</div><div class="unit-parts"><a href="UNIT-3/part1.html" style="background:#006064;color:#fff;border-color:#006064;">Part 1</a><a href="UNIT-3/part2.html">Part 2</a><a href="UNIT-3/part3.html">Part 3</a></div></div>
-<div class="unit-card"><div class="unit-num" style="background:#006064;">Unit 4</div><div class="unit-status" style="color:#9e9e9e;">□ Blank</div><div class="unit-parts"><a href="UNIT-4/part1.html" style="background:#006064;color:#fff;border-color:#006064;">Open Notes</a></div></div>
-<div class="unit-card"><div class="unit-num" style="background:#006064;">Unit 5</div><div class="unit-status" style="color:#9e9e9e;">□ Blank</div><div class="unit-parts"><a href="UNIT-5/part1.html" style="background:#006064;color:#fff;border-color:#006064;">Open Notes</a></div></div>
+<div class="hero">
+  <div class="hero-inner">
+    <a href="../index.html" class="back-btn">↩ All Subjects</a>
+    <div class="hero-eyebrow">SEMESTER 4</div>
+    <div class="hero-name">TALF</div>
+    <div class="hero-full">Theory of Automata &amp; Formal Languages</div>
+    <div class="hero-stats">
+      <div class="hs"><div class="hs-n">5</div><div class="hs-l">UNITS</div></div>
+      <div class="hs"><div class="hs-n">3</div><div class="hs-l">COMPLETE</div></div>
+      <div class="hs"><div class="hs-n">9</div><div class="hs-l">PARTS</div></div>
+    </div>
+  </div>
+</div>
+<div class="main">
+  <div class="section-label">ALL UNITS</div>
+  <div class="unit-card">
+    <div class="unit-num-badge">U 1</div>
+    <div class="unit-info">
+      <div class="unit-name">Unit 1</div>
+      <div class="unit-meta"><span class="badge-done">✓ Complete</span></div>
+      <div class="unit-parts">
+        <a href="UNIT-1/part1.html" class="primary">Part 1</a>
+        <a href="UNIT-1/part2.html">Part 2</a>
+        <a href="UNIT-1/part3.html">Part 3</a>
+      </div>
+    </div>
+  </div>
+  <div class="unit-card">
+    <div class="unit-num-badge">U 2</div>
+    <div class="unit-info">
+      <div class="unit-name">Unit 2</div>
+      <div class="unit-meta"><span class="badge-done">✓ Complete</span></div>
+      <div class="unit-parts">
+        <a href="UNIT-2/part1.html" class="primary">Part 1</a>
+        <a href="UNIT-2/part2.html">Part 2</a>
+        <a href="UNIT-2/part3.html">Part 3</a>
+      </div>
+    </div>
+  </div>
+  <div class="unit-card">
+    <div class="unit-num-badge">U 3</div>
+    <div class="unit-info">
+      <div class="unit-name">Unit 3</div>
+      <div class="unit-meta"><span class="badge-done">✓ Complete</span></div>
+      <div class="unit-parts">
+        <a href="UNIT-3/part1.html" class="primary">Part 1</a>
+        <a href="UNIT-3/part2.html">Part 2</a>
+        <a href="UNIT-3/part3.html">Part 3</a>
+      </div>
+    </div>
+  </div>
+  <div class="unit-card">
+    <div class="unit-num-badge">U 4</div>
+    <div class="unit-info">
+      <div class="unit-name">Unit 4</div>
+      <div class="unit-meta"><span class="badge-blank">□ Blank</span></div>
+      <div class="unit-parts"><a href="UNIT-4/part1.html" class="primary">Open Notes</a></div>
+    </div>
+  </div>
+  <div class="unit-card">
+    <div class="unit-num-badge">U 5</div>
+    <div class="unit-info">
+      <div class="unit-name">Unit 5</div>
+      <div class="unit-meta"><span class="badge-blank">□ Blank</span></div>
+      <div class="unit-parts"><a href="UNIT-5/part1.html" class="primary">Open Notes</a></div>
+    </div>
+  </div>
 </div>
 </body>
 </html>
