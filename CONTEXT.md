@@ -4,7 +4,7 @@
 ```
 sem-4/
   index.html              ← main hub (links to all subjects)
-  TALF/index.html         ← UNIT-1..5 (unit-1.html, Unit-2.html, part1/2/3.html for U3-5)
+  TAFL/index.html         ← UNIT-1..5 (unit-1.html, Unit-2.html, part1/2/3.html for U3-5)
   OOP-JAVA/index.html     ← UNIT-1..5 (part1/2/3.html each)
   OS/index.html           ← UNIT-1..5 (part1/2/3.html each)
   DIGITAL-ELECTRONICS/index.html ← UNIT-1..5 (part1/2/3.html each)
@@ -23,4 +23,4 @@ sem-4/
 - OOP-JAVA: UNIT-3, UNIT-4, UNIT-5
 - OS: all units
 - DIGITAL-ELECTRONICS: all units
-- TALF: all units (note: U1=unit-1.html, U2=Unit-2.html, U3-5=part1/2/3.html)
+- TAFL: all units (note: U1=unit-1.html, U2=Unit-2.html, U3-5=part1/2/3.html)
