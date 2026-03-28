@@ -23,23 +23,27 @@ body{font-family:'Patrick Hand',cursive;background:#cec5af;min-height:100vh;padd
 .part-nav .sep{color:#555;margin:0 2px;}
 .notebook{max-width:840px;margin:28px auto;display:flex;flex-direction:column;}
 /* COVER */
-.cover-page{background:linear-gradient(135deg,#1a237e,#1565c0);padding:60px 60px 50px 90px;position:relative;overflow:hidden;min-height:500px;box-shadow:4px 4px 20px rgba(0,0,0,.25);}
-.cover-page::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(transparent,transparent 38px,rgba(255,255,255,.05) 38px,rgba(255,255,255,.05) 39px);}
-.cover-spine{position:absolute;left:0;top:0;bottom:0;width:50px;background:linear-gradient(to right,#0d1b6b,#1a237e);border-right:2px solid rgba(255,255,255,.1);}
-.cover-holes{position:absolute;left:14px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-evenly;align-items:center;padding:40px 0;}
-.cover-holes .hole{width:20px;height:20px;background:#cec5af;border-radius:50%;box-shadow:inset 0 2px 4px rgba(0,0,0,.4);}
-.cover-tag{font-family:'Special Elite',serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#90caf9;margin-bottom:10px;}
-.cover-subject{font-family:'Caveat',cursive;font-size:52px;font-weight:700;color:#fff;line-height:1;margin-bottom:4px;}
-.cover-unit{font-family:'Caveat',cursive;font-size:26px;color:#bbdefb;margin-bottom:4px;}
-.cover-subtitle{font-family:'Patrick Hand',cursive;font-size:15px;color:#90caf9;margin-bottom:28px;}
-.cover-badge{display:inline-block;background:#ffd54f;color:#1a237e;font-family:'Special Elite',serif;font-size:13px;font-weight:700;letter-spacing:2px;padding:5px 18px;margin-bottom:26px;}
-.cover-hr{border:none;border-top:1px solid rgba(255,255,255,.2);margin:16px 0;}
-.cover-toc h3{font-family:'Special Elite',serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#90caf9;margin-bottom:12px;}
-.cover-toc table{width:100%;border-collapse:collapse;}
-.cover-toc td{padding:5px 0;font-size:14px;color:#e3f2fd;}
-.cover-toc td:first-child{width:36px;color:#ffd54f;font-weight:700;}
-.cover-toc td:last-child{text-align:right;color:#90caf9;font-size:12px;}
-.cover-toc tr{border-bottom:1px solid rgba(255,255,255,.06);}
+.cover-page{width:840px;max-width:98vw;margin:0 auto 28px;
+  background:linear-gradient(135deg,#0d1b6b 0%,#1a237e 50%,#1565c0 100%);
+  border-radius:6px;box-shadow:6px 6px 20px rgba(0,0,0,.45);
+  padding:50px 60px 50px 80px;position:relative;overflow:hidden;color:white;min-height:460px;}
+.cover-page::before{content:'';position:absolute;top:-60px;right:-60px;width:300px;height:300px;
+  background:radial-gradient(circle,rgba(144,202,249,.25) 0%,transparent 70%);border-radius:50%;}
+.cover-page::after{content:'';position:absolute;bottom:-40px;left:40px;width:220px;height:220px;
+  background:radial-gradient(circle,rgba(255,213,79,.15) 0%,transparent 70%);border-radius:50%;}
+.cover-holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-evenly;align-items:center;width:32px;}
+.cover-subject{font-family:'Special Elite',cursive;font-size:.78rem;letter-spacing:.25em;text-transform:uppercase;color:#90caf9;margin-bottom:8px;position:relative;z-index:1;}
+.cover-title{font-family:'Caveat',cursive;font-size:3rem;font-weight:700;line-height:1.1;margin-bottom:6px;position:relative;z-index:1;}
+.cover-unit{font-family:'Kalam','Patrick Hand',cursive;font-size:1.15rem;color:#bbdefb;margin-bottom:4px;position:relative;z-index:1;}
+.cover-subtitle{font-family:'Kalam','Patrick Hand',cursive;font-size:.95rem;color:#ffd54f;margin-bottom:22px;position:relative;z-index:1;}
+.cover-part-badge{display:inline-block;background:var(--blue);color:white;font-family:'Caveat',cursive;
+  font-weight:700;font-size:1.1rem;padding:6px 20px;border-radius:20px;margin-bottom:22px;position:relative;z-index:1;letter-spacing:.06em;}
+.cover-toc{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.2);padding-top:18px;}
+.cover-toc h3{font-family:'Special Elite',cursive;font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:#90caf9;margin-bottom:10px;}
+.toc-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px dotted rgba(255,255,255,.12);}
+.toc-sec{font-family:'Caveat',cursive;font-size:.98rem;font-weight:600;color:#f5f5f5;}
+.toc-sec span.toc-num{color:#ffd54f;margin-right:8px;font-family:'Special Elite',cursive;}
+.toc-pages{font-family:'Special Elite',cursive;font-size:.75rem;color:#a6adc8;background:rgba(255,255,255,.07);padding:2px 8px;border-radius:8px;}
 /* PAGES */
 .page{background:#fffef7;position:relative;padding:26px 36px 36px 80px;min-height:680px;box-shadow:2px 2px 8px rgba(0,0,0,.1);border-bottom:1px solid #e0ddd0;background-image:repeating-linear-gradient(transparent,transparent 30px,var(--line) 30px,var(--line) 31px);}
 .page::before{content:'';position:absolute;left:66px;top:0;bottom:0;width:1px;background:#ffcdd2;}
@@ -111,25 +115,17 @@ table.tt tr:nth-child(even) td{background:#f5f5f5;}
 
 <!-- COVER -->
 <div class="cover-page">
-  <div class="cover-spine"></div>
-  <div class="cover-holes">
-    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
-    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
-    <div class="hole"></div><div class="hole"></div><div class="hole"></div>
-  </div>
-  <div class="cover-tag">Digital System Design &nbsp;·&nbsp; BEC 302 / BOE 310 / BOE 410</div>
-  <div class="cover-subject">Unit 3</div>
-  <div class="cover-unit">Combinational Logic</div>
+  <div class="cover-holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="cover-subject">Digital System Design · BEC 302 / BOE 310 / BOE 410</div>
+  <div class="cover-title">Unit 3 Notes</div>
+  <div class="cover-unit">Unit 3 — Combinational Logic</div>
   <div class="cover-subtitle">MSI Devices — Comparator · Multiplexers · Demultiplexers</div>
-  <div class="cover-badge">PART 1 OF 3</div>
-  <hr class="cover-hr">
+  <div class="cover-part-badge">📒 Part 1 of 3 — MSI Devices I</div>
   <div class="cover-toc">
     <h3>Contents — Part 1</h3>
-    <table>
-      <tr><td>§1</td><td>Magnitude Comparator</td><td>3 pages</td></tr>
-      <tr><td>§2</td><td>Multiplexers (MUX)</td><td>3 pages</td></tr>
-      <tr><td>§3</td><td>Demultiplexers (DEMUX)</td><td>2 pages</td></tr>
-    </table>
+    <div class="toc-row"><span class="toc-sec"><span class="toc-num">§1</span>Magnitude Comparator</span><span class="toc-pages">3 pages</span></div>
+    <div class="toc-row"><span class="toc-sec"><span class="toc-num">§2</span>Multiplexers (MUX)</span><span class="toc-pages">3 pages</span></div>
+    <div class="toc-row"><span class="toc-sec"><span class="toc-num">§3</span>Demultiplexers (DEMUX)</span><span class="toc-pages">2 pages</span></div>
   </div>
 </div>
 
