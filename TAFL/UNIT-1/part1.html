@@ -735,44 +735,50 @@ nav.part-nav{padding:0 10px;gap:6px;}
     <div class="q-step">Need 5 states: q₀ (start), qₐ (started with a), q_b (started with b), qₐf (started with a, last was a), q_bf (started with b, last was b)</div>
     <div class="nfa-wrap" style="margin-top:6px;">
       <div class="nfa-title">DFA — 5 states. Final states: qₐf and q_bf</div>
-      <svg class="nfa-svg" viewBox="0 0 500 130">
-        <defs><marker id="ar4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M2 2L8 5L2 8" fill="none" stroke="#1565C0" stroke-width="1.5"/></marker></defs>
-        <line x1="5" y1="65" x2="38" y2="65" stroke="#1565C0" stroke-width="1.5" marker-end="url(#ar4)"/>
-        <circle cx="55" cy="65" r="17" fill="#e8f4fd" stroke="#1565C0" stroke-width="1.5"/>
-        <text x="55" y="69" text-anchor="middle" font-family="Kalam" font-size="12" fill="#1565C0">q₀</text>
-        <!-- q0->qa on a -->
-        <line x1="72" y1="57" x2="120" y2="35" stroke="#1565C0" stroke-width="1.5" marker-end="url(#ar4)"/>
-        <text x="89" y="38" font-family="Patrick Hand" font-size="12" fill="#b71c1c">a</text>
-        <!-- q0->qb on b -->
-        <line x1="72" y1="73" x2="120" y2="95" stroke="#1565C0" stroke-width="1.5" marker-end="url(#ar4)"/>
-        <text x="89" y="96" font-family="Patrick Hand" font-size="12" fill="#b71c1c">b</text>
-        <!-- qa -->
-        <circle cx="138" cy="28" r="17" fill="#e8f5e9" stroke="#1b5e20" stroke-width="1.5"/>
-        <circle cx="138" cy="28" r="13" fill="none" stroke="#1b5e20" stroke-width="1.2"/>
-        <text x="138" y="32" text-anchor="middle" font-family="Kalam" font-size="11" fill="#1b5e20">qₐ</text>
-        <!-- qa self on a -->
-        <path d="M126 12 Q138 -2 150 12" fill="none" stroke="#b71c1c" stroke-width="1.5" marker-end="url(#ar4)"/>
-        <text x="138" y="-2" text-anchor="middle" font-family="Patrick Hand" font-size="12" fill="#b71c1c">a</text>
-        <!-- qa->qb_trap on b -->
-        <line x1="155" y1="28" x2="205" y2="60" stroke="#555" stroke-width="1.2" stroke-dasharray="3,2" marker-end="url(#ar4)"/>
-        <text x="183" y="38" font-family="Patrick Hand" font-size="11" fill="#555">b</text>
-        <!-- qb -->
-        <circle cx="138" cy="100" r="17" fill="#e8f5e9" stroke="#1b5e20" stroke-width="1.5"/>
-        <circle cx="138" cy="100" r="13" fill="none" stroke="#1b5e20" stroke-width="1.2"/>
-        <text x="138" y="104" text-anchor="middle" font-family="Kalam" font-size="11" fill="#1b5e20">qb</text>
-        <!-- qb self on b -->
-        <path d="M126 116 Q138 128 150 116" fill="none" stroke="#b71c1c" stroke-width="1.5" marker-end="url(#ar4)"/>
-        <text x="138" y="130" text-anchor="middle" font-family="Patrick Hand" font-size="12" fill="#b71c1c">b</text>
-        <!-- qb->qa_trap on a -->
-        <line x1="155" y1="100" x2="205" y2="68" stroke="#555" stroke-width="1.2" stroke-dasharray="3,2" marker-end="url(#ar4)"/>
-        <text x="183" y="90" font-family="Patrick Hand" font-size="11" fill="#555">a</text>
-        <!-- trap state -->
-        <circle cx="222" cy="65" r="17" fill="#fce4ec" stroke="#b71c1c" stroke-width="1.5"/>
-        <text x="222" y="69" text-anchor="middle" font-family="Kalam" font-size="11" fill="#b71c1c">qt</text>
-        <text x="222" y="87" text-anchor="middle" font-family="Kalam" font-size="10" fill="#888">trap</text>
-        <!-- trap self loop -->
-        <path d="M209 48 Q222 32 235 48" fill="none" stroke="#b71c1c" stroke-width="1.2" marker-end="url(#ar4)"/>
-        <text x="222" y="30" text-anchor="middle" font-family="Patrick Hand" font-size="11" fill="#b71c1c">a,b</text>
+      <svg class="nfa-svg" viewBox="0 0 300 178" style="max-height:210px">
+        <defs>
+          <marker id="ar4b" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M2 2L8 5L2 8" fill="none" stroke="#1565C0" stroke-width="1.5"/></marker>
+          <marker id="ar4r" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M2 2L8 5L2 8" fill="none" stroke="#b71c1c" stroke-width="1.5"/></marker>
+          <marker id="ar4g" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M2 2L8 5L2 8" fill="none" stroke="#888" stroke-width="1.5"/></marker>
+        </defs>
+        <!-- start arrow -->
+        <line x1="4" y1="88" x2="32" y2="88" stroke="#1565C0" stroke-width="1.5" marker-end="url(#ar4b)"/>
+        <!-- q₀ -->
+        <circle cx="50" cy="88" r="18" fill="#e8f4fd" stroke="#1565C0" stroke-width="1.5"/>
+        <text x="50" y="93" text-anchor="middle" font-family="Kalam,cursive" font-size="13" fill="#1565C0">q₀</text>
+        <!-- q₀→qₐ on a -->
+        <line x1="63" y1="76" x2="118" y2="50" stroke="#1565C0" stroke-width="1.5" marker-end="url(#ar4b)"/>
+        <text x="84" y="54" font-family="sans-serif" font-size="12" fill="#c62828" font-weight="bold">a</text>
+        <!-- q₀→qb on b -->
+        <line x1="63" y1="100" x2="118" y2="126" stroke="#1565C0" stroke-width="1.5" marker-end="url(#ar4b)"/>
+        <text x="80" y="126" font-family="sans-serif" font-size="12" fill="#c62828" font-weight="bold">b</text>
+        <!-- qₐ (final, top) -->
+        <circle cx="138" cy="40" r="18" fill="#e8f5e9" stroke="#1b5e20" stroke-width="1.5"/>
+        <circle cx="138" cy="40" r="13" fill="none" stroke="#1b5e20" stroke-width="1.2"/>
+        <text x="138" y="45" text-anchor="middle" font-family="Kalam,cursive" font-size="12" fill="#1b5e20">qₐ</text>
+        <!-- qₐ self-loop on a -->
+        <path d="M125 24 Q138 11 151 24" fill="none" stroke="#b71c1c" stroke-width="1.5" marker-end="url(#ar4r)"/>
+        <text x="138" y="14" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#b71c1c" font-weight="bold">a</text>
+        <!-- qₐ→qt on b (dashed) -->
+        <line x1="156" y1="47" x2="208" y2="76" stroke="#888" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#ar4g)"/>
+        <text x="193" y="55" font-family="sans-serif" font-size="11" fill="#888">b</text>
+        <!-- qb (final, bottom) -->
+        <circle cx="138" cy="136" r="18" fill="#e8f5e9" stroke="#1b5e20" stroke-width="1.5"/>
+        <circle cx="138" cy="136" r="13" fill="none" stroke="#1b5e20" stroke-width="1.2"/>
+        <text x="138" y="141" text-anchor="middle" font-family="Kalam,cursive" font-size="12" fill="#1b5e20">qb</text>
+        <!-- qb self-loop on b -->
+        <path d="M125 152 Q138 165 151 152" fill="none" stroke="#b71c1c" stroke-width="1.5" marker-end="url(#ar4r)"/>
+        <text x="138" y="172" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#b71c1c" font-weight="bold">b</text>
+        <!-- qb→qt on a (dashed) -->
+        <line x1="156" y1="129" x2="208" y2="100" stroke="#888" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#ar4g)"/>
+        <text x="190" y="127" font-family="sans-serif" font-size="11" fill="#888">a</text>
+        <!-- qt (trap) -->
+        <circle cx="230" cy="88" r="18" fill="#fce4ec" stroke="#b71c1c" stroke-width="1.5"/>
+        <text x="230" y="85" text-anchor="middle" font-family="Kalam,cursive" font-size="11" fill="#b71c1c">qt</text>
+        <text x="230" y="97" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#888">trap</text>
+        <!-- qt self-loop on a,b -->
+        <path d="M216 71 Q230 56 244 71" fill="none" stroke="#b71c1c" stroke-width="1.2" marker-end="url(#ar4r)"/>
+        <text x="230" y="54" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#b71c1c">a,b</text>
       </svg>
     </div>
     <div class="q-step">★ qₐ is final (started AND ended with a). qb is final (started AND ended with b). qt is dead/trap state (started a, got b before end, or similar mismatch). Simplified version shown — complete DFA needs distinct tracking states.</div>
@@ -805,28 +811,34 @@ nav.part-nav{padding:0 10px;gap:6px;}
   <div class="qbox">
     <div class="q-label">Q4 — DFA for L = strings over {a,b} with even number of a's</div>
     <div class="nfa-wrap">
-      <svg class="nfa-svg" viewBox="0 0 280 90">
-        <defs><marker id="ar5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M2 2L8 5L2 8" fill="none" stroke="#1565C0" stroke-width="1.5"/></marker></defs>
-        <line x1="5" y1="45" x2="42" y2="45" stroke="#1565C0" stroke-width="1.5" marker-end="url(#ar5)"/>
-        <circle cx="62" cy="45" r="20" fill="#e8f5e9" stroke="#1b5e20" stroke-width="1.5"/>
-        <circle cx="62" cy="45" r="16" fill="none" stroke="#1b5e20" stroke-width="1.2"/>
-        <text x="62" y="49" text-anchor="middle" font-family="Kalam" font-size="13" fill="#1b5e20">q₀</text>
-        <text x="62" y="70" text-anchor="middle" font-family="Kalam" font-size="10" fill="#555">even a's</text>
-        <!-- q0 self on b -->
-        <path d="M47 26 Q62 6 77 26" fill="none" stroke="#b71c1c" stroke-width="1.5" marker-end="url(#ar5)"/>
-        <text x="62" y="6" text-anchor="middle" font-family="Patrick Hand" font-size="13" fill="#b71c1c">b</text>
-        <!-- q0<->q1 on a -->
-        <path d="M82 38 Q130 20 158 38" fill="none" stroke="#1565C0" stroke-width="1.5" marker-end="url(#ar5)"/>
-        <text x="120" y="24" text-anchor="middle" font-family="Patrick Hand" font-size="13" fill="#b71c1c">a</text>
-        <path d="M158 52 Q130 70 82 52" fill="none" stroke="#1565C0" stroke-width="1.5" marker-end="url(#ar5)"/>
-        <text x="120" y="72" text-anchor="middle" font-family="Patrick Hand" font-size="13" fill="#b71c1c">a</text>
-        <!-- q1 -->
-        <circle cx="178" cy="45" r="20" fill="#e8f4fd" stroke="#1565C0" stroke-width="1.5"/>
-        <text x="178" y="49" text-anchor="middle" font-family="Kalam" font-size="13" fill="#1565C0">q₁</text>
-        <text x="178" y="70" text-anchor="middle" font-family="Kalam" font-size="10" fill="#555">odd a's</text>
-        <!-- q1 self on b -->
-        <path d="M163 26 Q178 6 193 26" fill="none" stroke="#b71c1c" stroke-width="1.5" marker-end="url(#ar5)"/>
-        <text x="178" y="6" text-anchor="middle" font-family="Patrick Hand" font-size="13" fill="#b71c1c">b</text>
+      <svg class="nfa-svg" viewBox="0 0 290 108" style="max-height:140px">
+        <defs>
+          <marker id="ar5b" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M2 2L8 5L2 8" fill="none" stroke="#1565C0" stroke-width="1.5"/></marker>
+          <marker id="ar5r" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M2 2L8 5L2 8" fill="none" stroke="#b71c1c" stroke-width="1.5"/></marker>
+        </defs>
+        <!-- start arrow -->
+        <line x1="4" y1="58" x2="38" y2="58" stroke="#1565C0" stroke-width="1.5" marker-end="url(#ar5b)"/>
+        <!-- q₀ (final, double circle) -->
+        <circle cx="60" cy="58" r="20" fill="#e8f5e9" stroke="#1b5e20" stroke-width="1.5"/>
+        <circle cx="60" cy="58" r="15" fill="none" stroke="#1b5e20" stroke-width="1.2"/>
+        <text x="60" y="55" text-anchor="middle" font-family="Kalam,cursive" font-size="14" fill="#1b5e20">q₀</text>
+        <text x="60" y="68" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#555">even a's</text>
+        <!-- q₀ self-loop on b -->
+        <path d="M45 39 Q60 22 75 39" fill="none" stroke="#b71c1c" stroke-width="1.5" marker-end="url(#ar5r)"/>
+        <text x="60" y="20" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#b71c1c" font-weight="bold">b</text>
+        <!-- q₀→q₁ on a -->
+        <path d="M80 50 Q148 28 188 50" fill="none" stroke="#1565C0" stroke-width="1.5" marker-end="url(#ar5b)"/>
+        <text x="134" y="30" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#1565C0" font-weight="bold">a</text>
+        <!-- q₁→q₀ on a -->
+        <path d="M188 66 Q148 88 80 66" fill="none" stroke="#1565C0" stroke-width="1.5" marker-end="url(#ar5b)"/>
+        <text x="134" y="90" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#1565C0" font-weight="bold">a</text>
+        <!-- q₁ (non-final) -->
+        <circle cx="210" cy="58" r="20" fill="#e8f4fd" stroke="#1565C0" stroke-width="1.5"/>
+        <text x="210" y="55" text-anchor="middle" font-family="Kalam,cursive" font-size="14" fill="#1565C0">q₁</text>
+        <text x="210" y="68" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#555">odd a's</text>
+        <!-- q₁ self-loop on b -->
+        <path d="M195 39 Q210 22 225 39" fill="none" stroke="#b71c1c" stroke-width="1.5" marker-end="url(#ar5r)"/>
+        <text x="210" y="20" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#b71c1c" font-weight="bold">b</text>
       </svg>
     </div>
     <div class="q-step">q₀ = even count of a's (accept). q₁ = odd count of a's (reject). b loops in same state (doesn't change count). Parity tracking — classic 2-state DFA.</div>
