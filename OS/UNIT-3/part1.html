@@ -3,138 +3,640 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OS Unit 3 — Part 1</title>
-<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+<title>Operating Systems — Unit 3 | Part 1</title>
 <style>
-:root{--ink:#1a1a2e;--ink2:#2c2c54;--blue:#1565C0;--red:#b71c1c;--green:#1b5e20;--purple:#4a148c;--teal:#006064;--orange:#e65100;--line:#c5cae9;--page:#fafaf7;--highlight:#fff9c4;--box-blue:#e8f4fd;--box-green:#e8f5e9;--box-purple:#f3e5f5;--box-orange:#fff3e0;--box-red:#fce4ec;--box-teal:#e0f7fa;}
-*{margin:0;padding:0;box-sizing:border-box;}
-body{background:#e0e0e0;font-family:'Kalam',cursive;color:var(--ink);padding:30px 20px;}
-.page{background:var(--page);max-width:820px;margin:0 auto 40px;border-radius:4px;box-shadow:0 2px 16px rgba(0,0,0,0.18),0 0 0 1px rgba(0,0,0,0.08);padding:60px 70px 70px 90px;position:relative;min-height:1060px;background-image:repeating-linear-gradient(transparent,transparent 31px,var(--line) 31px,var(--line) 32px);background-position:0 56px;}
-.page::before{content:'';position:absolute;left:72px;top:0;bottom:0;width:1.5px;background:#ef9a9a;opacity:0.7;}
-.holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-around;padding:40px 0;}
-.hole{width:22px;height:22px;border-radius:50%;background:#e0e0e0;border:1.5px solid #bdbdbd;box-shadow:inset 0 1px 3px rgba(0,0,0,0.2);}
-.page-num{position:absolute;bottom:28px;right:50px;font-size:13px;color:#9e9e9e;}
-.page-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
-.date-tag{font-size:13px;color:#9e9e9e;}
-.unit-badge{color:#fff;font-size:13px;padding:2px 14px;border-radius:20px;font-weight:700;}
-h1.section-title{font-size:24px;font-weight:700;color:var(--ink2);text-align:center;margin:8px 0 4px;text-decoration:underline;text-underline-offset:5px;}
-h2.topic{font-size:18px;font-weight:700;color:var(--blue);margin:18px 0 6px;border-bottom:1.5px solid var(--blue);padding-bottom:2px;display:inline-block;}
-h3.sub{font-size:15px;font-weight:700;color:var(--purple);margin:12px 0 4px;}
-p,li{font-size:15px;line-height:32px;}
-.def-box{background:var(--box-blue);border-left:4px solid var(--blue);border-radius:0 6px 6px 0;padding:10px 16px;margin:10px 0 12px;font-size:15px;line-height:30px;}
-.note-box{background:var(--highlight);border-left:4px solid #f9a825;border-radius:0 6px 6px 0;padding:8px 14px;margin:8px 0 10px;font-size:14px;line-height:26px;}
-.rule-box{background:var(--box-green);border:1.5px solid #81c784;border-radius:6px;padding:10px 16px;margin:10px 0;font-size:14.5px;line-height:28px;}
-.purple-box{background:var(--box-purple);border-left:4px solid var(--purple);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
-.orange-box{background:var(--box-orange);border-left:4px solid var(--orange);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
-.teal-box{background:var(--box-teal);border-left:4px solid var(--teal);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
-.formula{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--blue);}
-.divider{border:none;border-top:1px dashed #b0bec5;margin:14px 0 10px;}
-ul.plain{list-style:none;padding-left:4px;}
-ul.plain li::before{content:'→ ';color:var(--blue);font-weight:700;}
-ul.plain li{font-size:15px;line-height:32px;}
-.qbox{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:12px 16px;margin:10px 0;}
-.q-label{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:2px;}
-.q-step{font-size:14px;color:var(--green);margin-top:4px;line-height:26px;}
-.q-ans{font-size:15px;color:var(--red);font-family:'Patrick Hand',cursive;margin-top:4px;}
-table.tt{width:100%;border-collapse:collapse;margin:8px 0;font-size:14px;}
-table.tt th{color:#fff;padding:7px 10px;text-align:center;}
-table.tt td{padding:6px 10px;border-bottom:1px solid #e0e0e0;text-align:center;font-family:'Patrick Hand',cursive;font-size:14px;}
-table.tt tr:nth-child(even) td{background:#f5f5f5;}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0;}
-.vs-box{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:12px 0;border-radius:8px;overflow:hidden;border:1.5px solid #90caf9;}
-.vs-left{background:#e8f4fd;padding:12px 14px;}
-.vs-right{background:var(--box-purple);padding:12px 14px;border-left:1px solid #90caf9;}
-.vs-head{font-size:15px;font-weight:700;margin-bottom:8px;}
-.vs-item{font-size:14px;line-height:26px;}
-.step-card{background:var(--box-purple);border-left:4px solid var(--purple);padding:8px 14px;margin:5px 0;border-radius:0 6px 6px 0;}
-.step-head{font-size:14px;font-weight:700;color:var(--purple);}
-.step-body{font-size:13.5px;line-height:24px;color:var(--ink2);}
-.cover-page{max-width:820px;margin:0 auto 40px;border-radius:8px;padding:80px 60px;text-align:center;color:#fff;box-shadow:0 4px 24px rgba(0,0,0,0.3);position:relative;overflow:hidden;}
-.cover-subject{font-size:14px;letter-spacing:3px;opacity:0.7;margin-bottom:16px;}
-.cover-title{font-size:40px;font-weight:700;line-height:1.2;margin-bottom:12px;}
-.cover-unit{font-size:20px;opacity:0.85;margin-bottom:30px;}
-.cover-divider{width:80px;height:3px;background:rgba(255,255,255,0.4);margin:0 auto 24px;border-radius:2px;}
-.cover-toc{text-align:left;background:rgba(255,255,255,0.1);border-radius:8px;padding:20px 28px;display:inline-block;min-width:420px;}
-.cover-toc-item{font-size:15px;line-height:32px;display:flex;justify-content:space-between;gap:20px;}
-.part-nav{max-width:820px;margin:0 auto 20px;display:flex;gap:10px;justify-content:center;align-items:center;font-family:'Kalam',cursive;flex-wrap:wrap;}
-.part-nav a{padding:6px 20px;border-radius:20px;background:#fff;border:1.5px solid #90caf9;color:var(--blue);text-decoration:none;font-size:14px;font-weight:700;}
-.part-nav a:hover:not(.active){background:#e3f2fd;}
-.part-nav .back{background:#f5f5f5;border-color:#ccc;color:#555;font-size:13px;}
-.unit-badge{background:#4a148c;}
-h1.section-title{text-decoration-color:#4a148c;}
-h1.section-title .sn{color:#4a148c;}
-.part-nav a.active{background:#4a148c;border-color:#4a148c;color:#fff;}
-@media(max-width:600px){
-body{padding:10px 0 30px;}
-.page{padding:20px 16px 30px 16px;min-height:unset;}
-.page::before{display:none;}
-.holes{display:none;}
-.cover-page{padding:40px 20px;margin:0 10px 20px;}
-.cover-toc{min-width:unset;width:100%;padding:14px 16px;}
-.part-nav{padding:0 10px;gap:6px;}
-.part-nav a{padding:5px 12px;font-size:13px;}
-.two-col{grid-template-columns:1fr;}
-.vs-box{grid-template-columns:1fr;}
-.vs-right{border-left:none;border-top:1px solid #90caf9;}
-nav.part-nav{padding:0 10px;gap:6px;}
-.cover-title{font-size:28px;}
-}</style>
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Kalam:wght@300;400;700&family=Special+Elite&display=swap');
+  :root{--paper:#fdf9f0;--ink:#1a1a2e;--ink-light:#2d2d4e;--blue:#1a56db;--blue-light:#dbeafe;--green:#0d6b3f;--green-light:#d1fae5;--orange:#c05621;--orange-light:#fef3c7;--purple:#5b21b6;--purple-light:#ede9fe;--red:#b91c1c;--red-light:#fee2e2;--teal:#0e7490;--teal-light:#cffafe;--rule-line:#c8d8e8;--margin-line:#f4a0a0;--hole-bg:#e8e0d0;--shadow:rgba(0,0,0,0.08);--accent:#0e7490;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:#082030;background-image:radial-gradient(circle at 20% 50%,rgba(14,116,144,.2) 0%,transparent 55%),radial-gradient(circle at 80% 20%,rgba(13,107,63,.15) 0%,transparent 50%);font-family:'Kalam',cursive;color:var(--ink);padding:20px 0 40px;min-height:100vh;}
+  .part-nav{display:flex;justify-content:center;gap:10px;margin-bottom:28px;flex-wrap:wrap;padding:0 16px;}
+  .part-nav a{font-family:'Caveat',cursive;font-size:1rem;font-weight:600;padding:7px 20px;border-radius:20px;text-decoration:none;background:rgba(255,255,255,.5);color:#555;border:2px solid rgba(255,255,255,.7);transition:all .2s;}
+  .part-nav a.active{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 4px 12px rgba(14,116,144,.45);}
+  .part-nav a:hover:not(.active){background:rgba(255,255,255,.8);color:#333;}
+  .page{width:760px;max-width:98vw;margin:0 auto 28px;background:var(--paper);border-radius:3px;box-shadow:4px 4px 14px var(--shadow),0 1px 3px rgba(0,0,0,.12);position:relative;padding:36px 44px 44px 80px;min-height:600px;background-image:repeating-linear-gradient(transparent,transparent 31px,var(--rule-line) 31px,var(--rule-line) 32px);background-position:0 64px;}
+  .page::before{content:'';position:absolute;left:68px;top:0;bottom:0;width:2px;background:var(--margin-line);opacity:.7;}
+  .holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-evenly;align-items:center;width:32px;}
+  .hole{width:18px;height:18px;border-radius:50%;background:var(--hole-bg);border:1.5px solid #b8a898;box-shadow:inset 0 1px 3px rgba(0,0,0,.2);}
+  .page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+  .date-tag{font-family:'Special Elite',cursive;font-size:.72rem;color:var(--teal);letter-spacing:.05em;text-transform:uppercase;}
+  .unit-badge{font-family:'Caveat',cursive;font-size:.85rem;font-weight:700;background:var(--accent);color:white;padding:2px 12px;border-radius:10px;letter-spacing:.08em;}
+  .section-title{font-family:'Caveat',cursive;font-size:2rem;font-weight:700;color:var(--ink);margin:8px 0 4px;line-height:1.2;}
+  .sn{font-family:'Special Elite',cursive;color:var(--accent);margin-right:6px;font-size:1.7rem;}
+  .divider{border:none;border-top:2.5px solid var(--accent);margin:6px 0 18px;border-radius:2px;}
+  h2.topic{font-family:'Caveat',cursive;font-size:1.45rem;font-weight:700;color:var(--accent);margin:20px 0 8px;padding-bottom:3px;border-bottom:1.5px dashed var(--rule-line);}
+  h3.sub{font-family:'Kalam',cursive;font-size:1.1rem;font-weight:700;color:var(--purple);margin:14px 0 6px;}
+  .def-box,.rule-box,.note-box,.purple-box,.orange-box{border-radius:8px;padding:13px 16px;margin:14px 0;font-size:.97rem;line-height:1.65;}
+  .def-box{background:var(--blue-light);border-left:4px solid var(--blue);}
+  .def-box::before{content:'📘 Definition';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--blue);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .rule-box{background:var(--green-light);border-left:4px solid var(--green);}
+  .rule-box::before{content:'📗 Key Result';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--green);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .note-box{background:var(--red-light);border-left:4px solid var(--red);}
+  .note-box::before{content:'⚠️ Exam Tip';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--red);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .purple-box{background:var(--purple-light);border-left:4px solid var(--purple);}
+  .purple-box::before{content:'💡 Important';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--purple);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .orange-box{background:var(--orange-light);border-left:4px solid var(--orange);}
+  .orange-box::before{content:'🔧 How it Works';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--orange);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .teal-box{background:var(--teal-light);border-left:4px solid var(--teal);border-radius:8px;padding:13px 16px;margin:14px 0;font-size:.97rem;line-height:1.65;}
+  .teal-box::before{content:'✨ Note';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--teal);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .qbox{background:#fffbf0;border:1.5px solid #e4cc88;border-radius:8px;padding:14px 16px;margin:14px 0;font-size:.96rem;}
+  .q-label{font-family:'Caveat',cursive;font-weight:700;font-size:1.05rem;color:var(--orange);margin-bottom:6px;}
+  .q-step{margin:5px 0;padding-left:16px;position:relative;line-height:1.6;color:var(--ink-light);}
+  .q-step::before{content:'→';position:absolute;left:0;color:var(--accent);font-weight:700;}
+  .q-ans{font-family:'Caveat',cursive;font-weight:700;font-size:1.05rem;color:var(--green);margin-top:8px;padding-top:6px;border-top:1px dashed #e4cc88;}
+  ul.plain{list-style:none;padding-left:0;margin:8px 0;}
+  ul.plain li{padding:4px 0 4px 22px;position:relative;line-height:1.6;font-size:.97rem;}
+  ul.plain li::before{content:'→';position:absolute;left:2px;color:var(--accent);font-weight:700;}
+  .formula{font-family:'Special Elite',cursive;background:rgba(14,116,144,.1);color:var(--teal);padding:2px 8px;border-radius:4px;font-size:.95em;display:inline-block;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:12px 0;}
+  @media(max-width:600px){.two-col{grid-template-columns:1fr;}}
+  .vs-box{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:12px 0;border-radius:8px;overflow:hidden;border:1.5px solid #d0d0d0;font-size:.93rem;}
+  .vs-left{background:#e0f2fe;padding:12px 14px;border-right:1.5px solid #d0d0d0;}
+  .vs-right{background:#d1fae5;padding:12px 14px;}
+  .vs-left strong,.vs-right strong{font-family:'Caveat',cursive;font-size:1.05rem;display:block;margin-bottom:6px;}
+  .vs-left strong{color:var(--blue);} .vs-right strong{color:var(--green);}
+  table.tt{width:100%;border-collapse:collapse;font-size:.9rem;margin:12px 0;}
+  table.tt th{background:var(--accent);color:white;padding:8px 12px;text-align:left;font-family:'Caveat',cursive;font-size:1rem;}
+  table.tt td{padding:7px 12px;border-bottom:1px solid var(--rule-line);}
+  table.tt tr:nth-child(even) td{background:rgba(14,116,144,.04);}
+  .step-card{display:flex;gap:12px;margin:10px 0;align-items:flex-start;}
+  .step-head{background:var(--accent);color:white;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-family:'Caveat',cursive;font-weight:700;font-size:1rem;flex-shrink:0;margin-top:2px;}
+  .step-body{flex:1;line-height:1.65;font-size:.97rem;}
+  .page-num{position:absolute;bottom:14px;right:22px;font-family:'Caveat',cursive;font-size:.85rem;color:#999;}
+  .evo{display:flex;gap:0;margin:12px 0;border-radius:8px;overflow:hidden;font-size:.88rem;}
+  .evo-block{flex:1;padding:10px 12px;text-align:center;}
+  .evo-block .ev-label{font-family:'Caveat',cursive;font-weight:700;font-size:.9rem;display:block;margin-bottom:4px;}
+  .eb1{background:#fee2e2;} .eb1 .ev-label{color:var(--red);}
+  .eb2{background:#fef3c7;} .eb2 .ev-label{color:var(--orange);}
+  .eb3{background:#d1fae5;} .eb3 .ev-label{color:var(--green);}
+  .eb4{background:#dbeafe;} .eb4 .ev-label{color:var(--blue);}
+  pre.code-block{background:#1e1e2e;color:#cdd6f4;border-radius:8px;padding:14px 16px;font-family:'Courier New',monospace;font-size:.82rem;line-height:1.7;margin:12px 0;overflow-x:auto;border-left:4px solid var(--accent);}
+  .kw{color:#89b4fa;font-weight:bold;} .cm{color:#6c7086;font-style:italic;} .st{color:#a6e3a1;} .nm{color:#fab387;}
+  .cover-page{width:760px;max-width:98vw;margin:0 auto 28px;background:linear-gradient(135deg,#042f2e 0%,#134e4a 50%,#0d9488 100%);border-radius:6px;box-shadow:6px 6px 20px rgba(0,0,0,.45);padding:50px 60px 50px 80px;position:relative;overflow:hidden;color:white;min-height:460px;}
+  .cover-page::before{content:'';position:absolute;top:-60px;right:-60px;width:300px;height:300px;background:radial-gradient(circle,rgba(94,234,212,.25) 0%,transparent 70%);border-radius:50%;}
+  .cover-holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-evenly;align-items:center;width:32px;}
+  .cover-subject{font-family:'Special Elite',cursive;font-size:.78rem;letter-spacing:.25em;text-transform:uppercase;color:#5eead4;margin-bottom:8px;position:relative;z-index:1;}
+  .cover-title{font-family:'Caveat',cursive;font-size:3rem;font-weight:700;line-height:1.1;margin-bottom:6px;position:relative;z-index:1;}
+  .cover-unit{font-family:'Kalam',cursive;font-size:1.15rem;color:#bbf7d0;margin-bottom:4px;position:relative;z-index:1;}
+  .cover-subtitle{font-family:'Kalam',cursive;font-size:.95rem;color:#fde68a;margin-bottom:22px;position:relative;z-index:1;}
+  .cover-part-badge{display:inline-block;background:var(--accent);color:white;font-family:'Caveat',cursive;font-weight:700;font-size:1.1rem;padding:6px 20px;border-radius:20px;margin-bottom:22px;position:relative;z-index:1;letter-spacing:.06em;}
+  .cover-toc{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.2);padding-top:18px;}
+  .cover-toc h3{font-family:'Special Elite',cursive;font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:#5eead4;margin-bottom:10px;}
+  .toc-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px dotted rgba(255,255,255,.12);}
+  .toc-sec{font-family:'Caveat',cursive;font-size:.98rem;font-weight:600;color:#f5f5f5;}
+  .toc-sec span.toc-num{color:#5eead4;margin-right:8px;font-family:'Special Elite',cursive;}
+  .toc-pages{font-family:'Special Elite',cursive;font-size:.75rem;color:#a6adc8;background:rgba(255,255,255,.07);padding:2px 8px;border-radius:8px;}
+  p{line-height:1.7;margin:8px 0;font-size:.97rem;}
+  strong{color:var(--ink);}
+  code{font-family:'Courier New',monospace;font-size:.9em;background:rgba(0,0,0,.07);padding:1px 5px;border-radius:3px;}
+</style>
 </head>
 <body>
+<nav class="part-nav">
+  <a href="../index.html">↩ Units</a>
+  <a href="part1.html" class="active">◆ Part 1 — Scheduling Concepts</a>
+  <a href="part2.html">◆ Part 2 — Scheduling Algorithms</a>
+  <a href="part3.html">◆ Part 3 — Deadlock</a>
+</nav>
 
-<div class="part-nav">
-  <a href="../index.html" class="back">↩ Units</a>
-  <a href="part1.html" class="active">Part 1</a>
-  <a href="part2.html">Part 2</a>
-  <a href="part3.html">Part 3</a>
-</div>
-
-<div class="cover-page" style="background:linear-gradient(135deg,#4a148c 0%,#1a237e 100%);">
-  <div class="cover-subject">OPERATING SYSTEMS</div>
-  <div class="cover-title">Unit 3 — Part 1</div>
-  <div class="cover-unit">[ Awaiting Content ]</div>
-  <div class="cover-divider"></div>
+<div class="cover-page">
+  <div class="cover-holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="cover-subject">Operating Systems</div>
+  <div class="cover-title">Unit 3 Notes</div>
+  <div class="cover-unit">Unit 3 — CPU Scheduling &amp; Deadlock</div>
+  <div class="cover-subtitle">Process Concept · PCB · Schedulers · Performance Criteria · Threads</div>
+  <div class="cover-part-badge">📒 Part 1 of 3 — Scheduling Concepts &amp; Foundations</div>
   <div class="cover-toc">
-    <div class="cover-toc-item" style="opacity:0.6;font-style:italic;justify-content:center;"><span>Content to be added</span></div>
+    <h3>Contents — Part 1</h3>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§1</span> Process Concept &amp; Address Space</div><div class="toc-pages">3 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§2</span> Process States &amp; Transition Diagram</div><div class="toc-pages">2 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§3</span> PCB &amp; Process Identification</div><div class="toc-pages">2 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§4</span> Schedulers &amp; Scheduling Concepts</div><div class="toc-pages">3 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§5</span> Performance Criteria &amp; Key Times</div><div class="toc-pages">2 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§6</span> Threads &amp; Their Management</div><div class="toc-pages">2 pages</div></div>
   </div>
 </div>
 
-<!-- ================================================
-     ADD CONTENT SECTIONS BELOW THIS LINE
+<!-- §1 PROCESS CONCEPT & ADDRESS SPACE -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 3</span><span class="unit-badge">SECTION 1</span></div>
+  <h1 class="section-title"><span class="sn">§1</span> Process Concept &amp; Address Space</h1>
+  <hr class="divider">
 
-     Each section pattern:
+  <div class="def-box">
+    A <strong>Process</strong> is a program in execution. A program is a <strong>passive entity</strong> stored on disk (executable file). A process is an <strong>active entity</strong> with resources allocated to it. A program becomes a process when the executable file is loaded into memory. One program can create multiple processes (e.g., multiple users running the same program).
+  </div>
 
-     <div class="page">
-       <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
-       <div class="page-header">
-         <span class="date-tag">OS — Unit 3</span>
-         <span class="unit-badge">SECTION X</span>
-       </div>
-       <h1 class="section-title"><span class="sn">§X</span> Title Here</h1>
-       <hr class="divider">
-       ... content ...
-       <div class="page-num">1 / 1</div>
-     </div>
-     ================================================ -->
+  <h2 class="topic">Process vs Program</h2>
+  <div class="vs-box">
+    <div class="vs-left"><strong>Program</strong>Passive — file on disk. Static instructions. No resources. No state changes. Example: chrome.exe sitting on hard drive.</div>
+    <div class="vs-right"><strong>Process</strong>Active — loaded and executing. Dynamic state changes. Has CPU, memory, I/O. Multiple instances possible. Example: 5 Chrome windows running.</div>
+  </div>
+
+  <h2 class="topic">Process Address Space (Memory Layout)</h2>
+  <div class="orange-box">
+    A process in memory is organized into sections (from high address to low address):<br><br>
+    <strong>Stack</strong> (highest address, grows ↓) — function call frames, local variables, return addresses, function parameters<br>
+    <strong>↕ Free Space</strong> — gap between stack and heap (allows both to grow)<br>
+    <strong>Heap</strong> (grows ↑) — dynamically allocated memory at runtime (<code>malloc()</code>, <code>new</code>)<br>
+    <strong>Data Section</strong> — global and static variables (initialized + BSS for uninitialized)<br>
+    <strong>Text Section</strong> (lowest address) — compiled program code; read-only; shared between multiple instances
+  </div>
+
+  <h2 class="topic">CPU-I/O Burst Cycle</h2>
+  <div class="def-box">
+    Process execution consists of a cycle of <strong>CPU execution</strong> (CPU burst) and <strong>I/O wait</strong> (I/O burst). The process alternates between these two states throughout its lifetime.<br><br>
+    → <strong>CPU burst:</strong> Period where the process is actively using the CPU<br>
+    → <strong>I/O burst:</strong> Period where the process waits for I/O to complete<br><br>
+    CPU burst distribution: Most processes have many <strong>short CPU bursts</strong> (interactive/I/O-bound). Fewer processes have long CPU bursts (CPU-bound like scientific computing).
+  </div>
+
+  <div class="page-num">1 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 3</span><span class="unit-badge">SECTION 1</span></div>
+
+  <h2 class="topic">Types of Processes</h2>
+  <div class="vs-box">
+    <div class="vs-left">
+      <strong>I/O-Bound Process</strong>
+      Spends more time waiting for I/O than computing. Has many SHORT CPU bursts. Example: text editor, web browser, database query. Response time is more important than throughput.
+    </div>
+    <div class="vs-right">
+      <strong>CPU-Bound Process</strong>
+      Spends more time doing computations. Has FEW LONG CPU bursts. Example: video encoding, scientific simulation, matrix multiplication. Throughput and CPU utilization are critical.
+    </div>
+  </div>
+
+  <h2 class="topic">Process Creation in UNIX (Linux representation)</h2>
+  <div class="orange-box">
+    In Linux, each process is represented by a C structure called <code>task_struct</code>:<br><br>
+    <code>pid_t pid;</code> — unique process identifier<br>
+    <code>long state;</code> — current state of the process<br>
+    <code>unsigned int time_slice;</code> — scheduling information<br>
+    <code>struct task_struct *parent;</code> — pointer to parent process<br>
+    <code>struct list_head children;</code> — list of child processes<br>
+    <code>struct files_struct *files;</code> — list of open files<br>
+    <code>struct mm_struct *mm;</code> — pointer to address space (memory map)
+  </div>
+
+  <h2 class="topic">Process Creation (fork + exec)</h2>
+  <div class="step-card"><div class="step-head">1</div><div class="step-body"><strong>fork():</strong> Creates a child process as a duplicate of the parent. Returns 0 to child, child PID to parent. Child inherits open files, privileges, scheduling attributes.</div></div>
+  <div class="step-card"><div class="step-head">2</div><div class="step-body"><strong>exec():</strong> Child overlays its address space with a new program. The child's code is replaced — but PID stays the same.</div></div>
+  <div class="step-card"><div class="step-head">3</div><div class="step-body"><strong>wait():</strong> Parent suspends until child terminates. Collects child's exit status. Prevents zombie processes.</div></div>
+  <div class="step-card"><div class="step-head">4</div><div class="step-body"><strong>exit():</strong> Process terminates, returns status to parent, OS reclaims all resources.</div></div>
+
+  <div class="page-num">2 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 3</span><span class="unit-badge">SECTION 1</span></div>
+
+  <h2 class="topic">Process Termination</h2>
+  <div class="two-col">
+    <div class="def-box" style="margin:0">
+      <strong>Zombie Process</strong><br>
+      Process has finished (called exit()) but parent hasn't called wait() yet. PCB still exists. Consuming no CPU/memory resources but occupying a slot in process table. Shown as "Z" in <code>ps</code>.
+    </div>
+    <div class="def-box" style="margin:0">
+      <strong>Orphan Process</strong><br>
+      Parent terminated before child. In UNIX, orphans are re-parented to <code>init</code> (PID 1) or <code>systemd</code>, which eventually calls wait() to collect them.
+    </div>
+  </div>
+
+  <h2 class="topic">Cascading Termination</h2>
+  <div class="purple-box">
+    Some OSes do not allow a child to continue if its parent terminates. When a parent exits, the OS initiates <strong>cascading termination</strong> — all children, grandchildren, and descendants are also terminated automatically. This ensures no orphan processes exist in such systems.
+  </div>
+
+  <h2 class="topic">Interprocess Communication (IPC)</h2>
+  <div class="rule-box">
+    Processes can be <strong>independent</strong> (no data sharing) or <strong>cooperating</strong> (can affect/be affected by other processes). Cooperating processes need IPC for:<br>
+    → <strong>Information sharing</strong> — multiple processes access same data<br>
+    → <strong>Computation speedup</strong> — parallel execution of subtasks<br>
+    → <strong>Modularity</strong> — divide system into separate communicating processes<br>
+    → <strong>Convenience</strong> — multiple tasks simultaneously<br><br>
+    Two IPC models: <strong>Shared Memory</strong> (fast, needs sync) and <strong>Message Passing</strong> (slower, safer, works over network).
+  </div>
+
+  <div class="note-box">
+    <strong>Process address space layout to memorize (top→bottom):</strong> Stack → (free space) → Heap → Data → Text.<br>
+    <strong>I/O-bound vs CPU-bound:</strong> I/O-bound = many short bursts. CPU-bound = few long bursts.<br>
+    <strong>fork() return:</strong> 0 → child. Positive → parent (gets child PID). -1 → error.
+  </div>
+  <div class="page-num">3 / 3</div>
+</div>
+
+<!-- §2 PROCESS STATES & TRANSITION DIAGRAM -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 3</span><span class="unit-badge">SECTION 2</span></div>
+  <h1 class="section-title"><span class="sn">§2</span> Process States &amp; Transition Diagram</h1>
+  <hr class="divider">
+
+  <div class="def-box">
+    As a process executes, it changes <strong>state</strong>. The state of a process is defined by its current activity. At any point in time, a process is in exactly ONE of these five states.
+  </div>
+
+  <h2 class="topic">The Five Process States</h2>
+  <table class="tt">
+    <tr><th>State</th><th>Description</th><th>Where is process?</th></tr>
+    <tr><td><strong>New</strong></td><td>Process is being created</td><td>Being loaded into memory</td></tr>
+    <tr><td><strong>Ready</strong></td><td>Waiting to be assigned to a processor</td><td>In ready queue in memory</td></tr>
+    <tr><td><strong>Running</strong></td><td>Instructions are being executed</td><td>On the CPU</td></tr>
+    <tr><td><strong>Waiting</strong></td><td>Waiting for some event to occur</td><td>In I/O/device queue</td></tr>
+    <tr><td><strong>Terminated</strong></td><td>Process has finished execution</td><td>Being cleaned up</td></tr>
+  </table>
+
+  <h2 class="topic">Process State Transition Diagram</h2>
+  <div class="evo">
+    <div class="evo-block eb1"><span class="ev-label">NEW</span>Created, admitted</div>
+    <div class="evo-block eb2"><span class="ev-label">READY</span>In ready queue, waiting for CPU</div>
+    <div class="evo-block eb3"><span class="ev-label">RUNNING</span>Executing on CPU</div>
+    <div class="evo-block eb4"><span class="ev-label">WAITING</span>I/O or event wait</div>
+    <div class="evo-block eb1"><span class="ev-label">TERMINATED</span>Finished</div>
+  </div>
+
+  <h2 class="topic">State Transitions (with triggers)</h2>
+  <table class="tt">
+    <tr><th>Transition</th><th>Trigger</th><th>Direction</th></tr>
+    <tr><td>New → Ready</td><td>OS admits the process (memory available)</td><td>Admitted</td></tr>
+    <tr><td>Ready → Running</td><td>CPU scheduler dispatches the process</td><td>Scheduler dispatch</td></tr>
+    <tr><td>Running → Waiting</td><td>Process requests I/O or event (e.g., disk read)</td><td>I/O or event wait</td></tr>
+    <tr><td>Running → Ready</td><td>Process preempted (time quantum expired)</td><td>Interrupt / preemption</td></tr>
+    <tr><td>Waiting → Ready</td><td>I/O completed or event occurred</td><td>I/O or event completion</td></tr>
+    <tr><td>Running → Terminated</td><td>Process completes or is killed</td><td>Exit / abort</td></tr>
+  </table>
+
+  <div class="note-box">
+    <strong>Key transitions for scheduling decisions:</strong><br>
+    Situations 1 (Running→Waiting) and 4 (Terminated): No choice — must schedule next process.<br>
+    Situations 2 (Running→Ready) and 3 (Waiting→Ready): OS has a CHOICE — continue or switch. This is where preemptive vs non-preemptive matters.
+  </div>
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 3</span><span class="unit-badge">SECTION 2</span></div>
+
+  <h2 class="topic">Preemptive vs Non-Preemptive Scheduling</h2>
+  <div class="vs-box">
+    <div class="vs-left">
+      <strong>Non-Preemptive</strong>
+      Scheduling only happens in situations 1 (Running→Waiting) and 4 (Terminated). Once CPU given to a process, it keeps CPU until it finishes OR voluntarily gives it up by waiting for I/O. Simple but can cause convoy effect.
+    </div>
+    <div class="vs-right">
+      <strong>Preemptive</strong>
+      Scheduling can happen in all 4 situations including 2 and 3. OS can forcibly take CPU from running process. Allows fairness and time-sharing. Can cause race conditions on shared data. Used by all modern OS (Windows, Linux, macOS).
+    </div>
+  </div>
+
+  <h2 class="topic">Context Switch</h2>
+  <div class="def-box">
+    A <strong>context switch</strong> occurs when the CPU switches from one process to another. The system must save the state (context) of the old process and load the saved state of the new process.<br><br>
+    <strong>Steps:</strong><br>
+    1. Save all CPU registers, PC, stack pointer of current process → into its PCB<br>
+    2. Update current process state (to Ready or Waiting)<br>
+    3. Load saved state of new process from its PCB<br>
+    4. Update new process state to Running<br>
+    5. Jump to new process's program counter
+  </div>
+
+  <div class="purple-box">
+    <strong>Context switch is PURE OVERHEAD</strong> — no useful computation happens during the switch itself. The more complex the OS and PCB, the longer the context switch takes. Hardware support (multiple register sets) can speed it up. Typical: 1–1000 microseconds per switch. Minimizing context switch frequency is a key OS design goal.
+  </div>
+
+  <h2 class="topic">Dispatcher</h2>
+  <div class="def-box">
+    The <strong>Dispatcher</strong> is the module that gives control of the CPU to the process selected by the CPU scheduler. It involves: switching context, switching to user mode, jumping to the proper location in the user program.<br>
+    <strong>Dispatch latency</strong> = time taken for dispatcher to stop one process and start another running. Should be minimized.
+  </div>
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- §3 PCB & PROCESS IDENTIFICATION -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 3</span><span class="unit-badge">SECTION 3</span></div>
+  <h1 class="section-title"><span class="sn">§3</span> PCB &amp; Process Identification</h1>
+  <hr class="divider">
+
+  <div class="def-box">
+    The <strong>Process Control Block (PCB)</strong> (also called Task Control Block) is a data structure maintained by the OS for every process. It contains all information needed to manage and track a process. It is essentially the "identity card" of a process — when a context switch occurs, the PCB is saved and restored.
+  </div>
+
+  <h2 class="topic">PCB Contents (Complete)</h2>
+  <table class="tt">
+    <tr><th>PCB Field</th><th>Description</th><th>Used For</th></tr>
+    <tr><td><strong>Process State</strong></td><td>Current state: new/ready/running/waiting/terminated</td><td>Scheduling decisions</td></tr>
+    <tr><td><strong>Process ID (PID)</strong></td><td>Unique identifier for this process</td><td>Process identification</td></tr>
+    <tr><td><strong>Program Counter (PC)</strong></td><td>Address of next instruction to execute</td><td>Context switch restore</td></tr>
+    <tr><td><strong>CPU Registers</strong></td><td>All register contents (general, status, stack pointer)</td><td>Context switch save/restore</td></tr>
+    <tr><td><strong>CPU Scheduling Info</strong></td><td>Priority, scheduling queue pointers, time used</td><td>Scheduler decisions</td></tr>
+    <tr><td><strong>Memory Management Info</strong></td><td>Base/limit registers, page tables, segment tables</td><td>Memory protection</td></tr>
+    <tr><td><strong>Accounting Info</strong></td><td>CPU time used, wall-clock time, time limits, job number</td><td>Billing, auditing</td></tr>
+    <tr><td><strong>I/O Status Info</strong></td><td>List of open files, I/O devices allocated to process</td><td>I/O management</td></tr>
+  </table>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 3</span><span class="unit-badge">SECTION 3</span></div>
+
+  <h2 class="topic">Process Identification Information</h2>
+  <div class="orange-box">
+    The OS must be able to uniquely identify every process. Key identification fields:<br><br>
+    → <strong>PID (Process ID):</strong> Unique integer assigned by OS. PID 0 = swapper/idle process. PID 1 = init/systemd (first user process). All other processes have PID ≥ 2.<br>
+    → <strong>PPID (Parent PID):</strong> PID of the process that created this process (parent). Allows tracing the process tree.<br>
+    → <strong>UID / GID:</strong> User ID and Group ID of the process owner. Used for permission/security checks.<br>
+    → <strong>EUID / EGID:</strong> Effective UID/GID — may differ from real UID for setuid programs.<br>
+    → <strong>Session ID / Group ID:</strong> Identifies which terminal session or process group this process belongs to.
+  </div>
+
+  <h2 class="topic">Process Scheduling Queues</h2>
+  <div class="rule-box">
+    The OS maintains multiple queues to track processes:<br>
+    → <strong>Job Queue:</strong> Set of ALL processes in the system (including those on disk)<br>
+    → <strong>Ready Queue:</strong> Set of all processes in main memory, ready and waiting to execute. Usually a linked list of PCBs.<br>
+    → <strong>Device Queues:</strong> Set of processes waiting for a specific I/O device. Each device has its own queue.<br><br>
+    Processes <strong>migrate</strong> among these queues based on their state transitions.
+  </div>
+
+  <h2 class="topic">Ready Queue and Device Queue Structure</h2>
+  <div class="teal-box">
+    The Ready Queue is implemented as a linked list of PCBs. The queue has a header containing pointers to the first and last PCBs in the list. Each PCB has a pointer to the next PCB in the queue. When a process becomes ready, its PCB is linked to the tail of the ready queue. The CPU scheduler picks from the head.
+  </div>
+
+  <div class="note-box">
+    <strong>PCB = identity + state + context of a process.</strong> Every time you're asked "what info does OS maintain about a process?" — the answer is PCB fields.<br>
+    <strong>PID 1 = init/systemd.</strong> If init dies, the entire OS panics.<br>
+    <strong>Ready queue ≠ device queue.</strong> There's ONE ready queue but MULTIPLE device queues (one per I/O device).
+  </div>
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- §4 SCHEDULERS & SCHEDULING CONCEPTS -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 3</span><span class="unit-badge">SECTION 4</span></div>
+  <h1 class="section-title"><span class="sn">§4</span> Schedulers &amp; Scheduling Concepts</h1>
+  <hr class="divider">
+
+  <div class="def-box">
+    <strong>CPU Scheduling</strong> is the basis of multiprogrammed operating systems. The objective is to maximize CPU utilization by ensuring the CPU always has a process to execute. Whenever the CPU becomes idle, the OS must select one of the processes in the ready queue to be executed — this is done by the <strong>CPU Scheduler</strong>.
+  </div>
+
+  <h2 class="topic">Three Types of Schedulers</h2>
+
+  <h3 class="sub">1. Short-Term Scheduler (CPU Scheduler)</h3>
+  <div class="teal-box">
+    → Selects which process from the <strong>ready queue</strong> gets the CPU next<br>
+    → Invoked very <strong>frequently</strong> — every milliseconds<br>
+    → Must be very <strong>FAST</strong> (since it runs so often — overhead must be minimal)<br>
+    → Sometimes the only scheduler in the system<br>
+    → Makes the actual dispatch decision
+  </div>
+
+  <h3 class="sub">2. Long-Term Scheduler (Job Scheduler)</h3>
+  <div class="teal-box">
+    → Selects which processes from the <strong>job pool (on disk)</strong> to bring into the ready queue (load into memory)<br>
+    → Invoked <strong>infrequently</strong> — seconds to minutes between invocations<br>
+    → Can be <strong>slow</strong> (takes time to make good decisions)<br>
+    → Controls the <strong>degree of multiprogramming</strong> (how many processes are in memory)<br>
+    → Strives for a good <strong>mix of CPU-bound and I/O-bound</strong> processes
+  </div>
+
+  <h3 class="sub">3. Medium-Term Scheduler (Swapper)</h3>
+  <div class="teal-box">
+    → <strong>Swaps processes out</strong> of memory to disk and back<br>
+    → Used when memory is overloaded — reduces the degree of multiprogramming temporarily<br>
+    → Swapping out: move a process from memory to disk (free up memory)<br>
+    → Swapping in: bring a swapped process back when memory available
+  </div>
+
+  <div class="page-num">1 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 3</span><span class="unit-badge">SECTION 4</span></div>
+
+  <h2 class="topic">Scheduler Comparison Table</h2>
+  <table class="tt">
+    <tr><th>Feature</th><th>Short-Term</th><th>Long-Term</th><th>Medium-Term</th></tr>
+    <tr><td>Also called</td><td>CPU Scheduler</td><td>Job Scheduler</td><td>Swapper</td></tr>
+    <tr><td>Selects from</td><td>Ready queue</td><td>Job pool (disk)</td><td>Memory ↔ Disk</td></tr>
+    <tr><td>Moves process to</td><td>CPU (running)</td><td>Ready queue (memory)</td><td>Disk or back to memory</td></tr>
+    <tr><td>Frequency</td><td>Very frequent (ms)</td><td>Infrequent (min)</td><td>Moderate</td></tr>
+    <tr><td>Must be</td><td>Very FAST</td><td>Can be slow</td><td>Moderate</td></tr>
+    <tr><td>Controls</td><td>CPU time allocation</td><td>Degree of multiprogramming</td><td>Memory pressure</td></tr>
+    <tr><td>Present in</td><td>All systems</td><td>Batch/some systems</td><td>Some systems</td></tr>
+  </table>
+
+  <h2 class="topic">Degree of Multiprogramming</h2>
+  <div class="purple-box">
+    The <strong>degree of multiprogramming</strong> = number of processes currently in memory (ready queue). The long-term scheduler controls this. If it stays constant → long-term scheduler only invoked when a process leaves the system (terminates). The long-term scheduler must carefully select a mix of I/O-bound and CPU-bound processes:<br>
+    → All I/O-bound → CPU always idle (waiting for I/O)<br>
+    → All CPU-bound → I/O devices idle (waiting for CPU bursts to finish)<br>
+    → <strong>Good mix</strong> → both CPU and I/O devices are busy simultaneously
+  </div>
+
+  <h2 class="topic">Scheduling Decisions: When Does Scheduling Occur?</h2>
+  <div class="rule-box">
+    CPU scheduling decisions may take place when a process:<br>
+    <strong>1.</strong> Switches from Running → Waiting (e.g., I/O request) — must schedule<br>
+    <strong>2.</strong> Switches from Running → Ready (e.g., time quantum expired) — choice<br>
+    <strong>3.</strong> Switches from Waiting → Ready (e.g., I/O completion) — choice<br>
+    <strong>4.</strong> Process terminates — must schedule<br><br>
+    Non-preemptive: scheduling only in cases <strong>1 and 4</strong>. Preemptive: scheduling in all <strong>4 cases</strong>.
+  </div>
+  <div class="page-num">2 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 3</span><span class="unit-badge">SECTION 4</span></div>
+
+  <h2 class="topic">Preemptive Scheduling — Caution Areas</h2>
+  <div class="note-box">
+    Preemptive scheduling introduces complexity:<br>
+    → <strong>Race conditions on shared data:</strong> If Process A is updating shared data and is preempted, Process B may read inconsistent data → need synchronization.<br>
+    → <strong>Preemption in kernel mode:</strong> If OS is processing a system call and gets preempted, kernel data structures could be left inconsistent → need reentrant kernel.<br>
+    → <strong>Interrupts during OS activities:</strong> Critical sections in OS must be protected from interrupts.<br><br>
+    All modern OS (Windows, macOS, Linux, UNIX) use preemptive scheduling despite these challenges.
+  </div>
+
+  <h2 class="topic">Gantt Chart</h2>
+  <div class="def-box">
+    A <strong>Gantt Chart</strong> is a bar chart used to illustrate a CPU schedule. Time is shown on the x-axis. Each process is shown as a horizontal bar spanning from its start time to its end time on the CPU. Idle CPU time is shown as a gap or labeled "Idle".<br><br>
+    Example (FCFS: P1=24, P2=3, P3=3 arriving in order P1, P2, P3):<br><br>
+    <span class="formula">|——P1——|P2|P3|</span><br>
+    <span class="formula">0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;24&nbsp;27&nbsp;30</span><br><br>
+    WT: P1=0, P2=24, P3=27. Average WT = (0+24+27)/3 = 17 ms
+  </div>
+
+  <div class="purple-box">
+    <strong>Why maximize CPU utilization?</strong><br>
+    CPU is the most expensive resource in a computer system. Historically, CPUs were very expensive — any idle CPU time = wasted money. In modern systems: CPU utilization = 40% (lightly loaded) to 90% (heavily loaded). Goal: keep CPU as busy as possible by always having a ready process available.
+  </div>
+  <div class="page-num">3 / 3</div>
+</div>
+
+<!-- §5 PERFORMANCE CRITERIA -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 3</span><span class="unit-badge">SECTION 5</span></div>
+  <h1 class="section-title"><span class="sn">§5</span> Performance Criteria &amp; Key Times</h1>
+  <hr class="divider">
+
+  <h2 class="topic">Scheduling Criteria (Optimization Goals)</h2>
+  <table class="tt">
+    <tr><th>Criterion</th><th>Definition</th><th>Goal</th></tr>
+    <tr><td><strong>CPU Utilization</strong></td><td>Percentage of time CPU is busy (not idle)</td><td><strong>Maximize</strong></td></tr>
+    <tr><td><strong>Throughput</strong></td><td>Number of processes completing per unit time</td><td><strong>Maximize</strong></td></tr>
+    <tr><td><strong>Turnaround Time (TAT)</strong></td><td>Total time from submission to completion</td><td><strong>Minimize</strong></td></tr>
+    <tr><td><strong>Waiting Time (WT)</strong></td><td>Total time spent in ready queue</td><td><strong>Minimize</strong></td></tr>
+    <tr><td><strong>Response Time (RT)</strong></td><td>Time from submission until first response (not output)</td><td><strong>Minimize</strong></td></tr>
+  </table>
+
+  <h2 class="topic">Key Time Definitions &amp; Formulas</h2>
+  <div class="orange-box">
+    <strong>Arrival Time (AT):</strong> Point of time process enters the ready queue<br><br>
+    <strong>Burst Time (BT):</strong> Total CPU time required by the process to execute (also called Execution Time or Running Time). Cannot be known in advance — must be estimated.<br><br>
+    <strong>Completion Time (CT):</strong> Time at which process finishes execution and exits. Also called Exit Time.<br><br>
+    <strong>Turnaround Time (TAT):</strong> Total time in system from arrival to completion.<br>
+    <span class="formula">TAT = CT - AT</span> &nbsp;&nbsp; OR &nbsp;&nbsp; <span class="formula">TAT = BT + WT</span><br><br>
+    <strong>Waiting Time (WT):</strong> Time spent waiting in ready queue (not executing).<br>
+    <span class="formula">WT = TAT - BT</span> &nbsp;&nbsp; OR &nbsp;&nbsp; <span class="formula">WT = CT - AT - BT</span><br><br>
+    <strong>Response Time (RT):</strong> Time from arrival until process FIRST gets the CPU.<br>
+    <span class="formula">RT = (First CPU time) - AT</span>
+  </div>
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 3</span><span class="unit-badge">SECTION 5</span></div>
+
+  <h2 class="topic">Solved Example: Computing All Times</h2>
+  <div class="qbox">
+    <div class="q-label">🧪 FCFS Example — Computing CT, TAT, WT</div>
+    <div class="q-step">Given: P1(AT=0, BT=4), P2(AT=1, BT=3), P3(AT=2, BT=1), P4(AT=3, BT=2), P5(AT=4, BT=5)</div>
+    <div class="q-step">FCFS Order (by arrival): P1→P2→P3→P4→P5</div>
+    <div class="q-step">Gantt: |P1|P2|P3|P4|P5| → 0,4,7,8,10,15</div>
+    <div class="q-step">CT: P1=4, P2=7, P3=8, P4=10, P5=15</div>
+    <div class="q-step">TAT = CT - AT: P1=4-0=4, P2=7-1=6, P3=8-2=6, P4=10-3=7, P5=15-4=11</div>
+    <div class="q-step">WT = TAT - BT: P1=0, P2=3, P3=5, P4=5, P5=6</div>
+    <div class="q-ans">✓ Avg CT=8.8, Avg TAT=6.8, Avg WT=3.8</div>
+  </div>
+
+  <h2 class="topic">Summary: All Formulas at a Glance</h2>
+  <div class="rule-box">
+    <span class="formula">CT = time process exits system</span><br>
+    <span class="formula">TAT = CT - AT</span> (also = BT + WT)<br>
+    <span class="formula">WT = TAT - BT</span> (also = CT - AT - BT)<br>
+    <span class="formula">RT = first CPU time - AT</span><br>
+    <span class="formula">Avg TAT = sum of all TAT / number of processes</span><br>
+    <span class="formula">Avg WT = sum of all WT / number of processes</span>
+  </div>
+
+  <div class="note-box">
+    <strong>TAT vs WT:</strong> TAT includes the burst time (execution time). WT is only the time waiting, not executing.<br>
+    <strong>Response Time ≠ Waiting Time:</strong> RT = first CPU time - arrival. WT = total waiting time across all ready queue periods.<br>
+    <strong>For non-preemptive algorithms:</strong> WT = TAT - BT = CT - AT - BT. This is the most commonly used formula in exams.
+  </div>
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- §6 THREADS AND THEIR MANAGEMENT -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 3</span><span class="unit-badge">SECTION 6</span></div>
+  <h1 class="section-title"><span class="sn">§6</span> Threads &amp; Their Management</h1>
+  <hr class="divider">
+
+  <div class="def-box">
+    A <strong>Thread</strong> (thread of execution) is the smallest sequence of programmed instructions that can be managed independently by a scheduler. A thread is a <strong>path of execution within a process</strong>. Also called a <strong>Lightweight Process (LWP)</strong>. Multiple threads within a process share the process's resources but execute independently — this is called <strong>Multithreading</strong>.
+  </div>
+
+  <h2 class="topic">What Each Thread Has (Own) vs Shares</h2>
+  <div class="two-col">
+    <div class="orange-box" style="margin:0">
+      <strong>Thread's OWN (Private):</strong><br>
+      → Program Counter (PC)<br>
+      → CPU Registers<br>
+      → Stack (function calls, local vars)<br>
+      → Thread state (ready/running/waiting)<br>
+      → Thread ID
+    </div>
+    <div class="teal-box" style="margin:0">
+      <strong>SHARED with all threads in process:</strong><br>
+      → Code section (text)<br>
+      → Data section (global variables)<br>
+      → Heap (dynamic memory)<br>
+      → Open files and I/O resources<br>
+      → Process ID and privileges
+    </div>
+  </div>
+
+  <h2 class="topic">Benefits of Multithreading</h2>
+  <ul class="plain">
+    <li><strong>Responsiveness:</strong> One thread handles UI while another does computation — app stays responsive</li>
+    <li><strong>Resource Sharing:</strong> Threads share process memory — no need for complex IPC</li>
+    <li><strong>Economy:</strong> Creating/destroying threads is much cheaper than processes (no new address space)</li>
+    <li><strong>Scalability:</strong> On SMP systems, threads can run truly in parallel on different CPUs</li>
+    <li><strong>Parallelism:</strong> A single application can divide its task into multiple parallel threads</li>
+  </ul>
+
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 3</span><span class="unit-badge">SECTION 6</span></div>
+
+  <h2 class="topic">Thread Management — Types of Threads</h2>
+  <div class="vs-box">
+    <div class="vs-left">
+      <strong>User-Level Threads (ULT)</strong>
+      Managed by user-space thread library (e.g., POSIX Pthreads, Java threads). OS is unaware — sees only one process. Fast to create and context-switch. If one thread makes a blocking system call, ALL threads in the process block. Cannot run truly in parallel on multiprocessors.
+    </div>
+    <div class="vs-right">
+      <strong>Kernel-Level Threads (KLT)</strong>
+      Managed directly by the OS kernel. OS can schedule individual threads independently. If one thread blocks, others can still run. Can run in true parallel on multiple CPUs. Slower to create (kernel involvement). Example: Windows threads, Linux pthreads (mapped to kernel).
+    </div>
+  </div>
+
+  <h2 class="topic">Thread Models (Mapping ULT to KLT)</h2>
+  <table class="tt">
+    <tr><th>Model</th><th>Mapping</th><th>Example</th><th>Pros/Cons</th></tr>
+    <tr><td><strong>Many-to-One</strong></td><td>Many ULT → 1 KLT</td><td>Green threads</td><td>Fast, but blocks all if one blocks</td></tr>
+    <tr><td><strong>One-to-One</strong></td><td>1 ULT → 1 KLT</td><td>Linux, Windows</td><td>True parallelism, but kernel overhead per thread</td></tr>
+    <tr><td><strong>Many-to-Many</strong></td><td>Many ULT → Many KLT (≤ ULT)</td><td>Solaris, older UNIX</td><td>Best of both; complex to implement</td></tr>
+  </table>
+
+  <h2 class="topic">Thread Storage in PCB</h2>
+  <div class="purple-box">
+    Since threads are part of a process, the PCB must be extended to support multiple threads. For each thread, the OS stores: thread ID, thread state, program counter, register set, and stack pointer. The PCB maintains a list of all thread structures for that process. Modern Linux uses a unified <code>task_struct</code> for both processes and threads (threads are just processes sharing address space).
+  </div>
+
+  <div class="note-box">
+    <strong>Thread = lightweight process.</strong> Key difference: threads share address space; processes don't.<br>
+    <strong>Creating a thread is faster than creating a process</strong> — no new page table, no new address space, no copy of parent.<br>
+    <strong>One-to-One is most common today</strong> (Linux, Windows). Each user thread maps to one kernel thread.<br>
+    <strong>Multiple PCs per process = multithreading.</strong> The PCB needs storage for multiple program counters.
+  </div>
+  <div class="page-num">2 / 2</div>
+</div>
 
 <script>
-(function(){
-  var pages = document.querySelectorAll('.page');
-  var secPages = [];
-  pages.forEach(function(p){ if(p.querySelector('h1.section-title')) secPages.push(p); });
-  secPages.forEach(function(p,i){ p.id = 'sec-'+(i+1); });
-  var tocItems = document.querySelectorAll('.cover-toc-item');
-  tocItems.forEach(function(item, i){
-    if(i >= secPages.length) return;
-    item.style.cursor = 'pointer';
-    item.style.borderRadius = '4px';
-    item.style.transition = 'background 0.18s';
-    item.setAttribute('title', 'Click to jump to this section');
-    item.addEventListener('mouseenter', function(){ item.style.background='rgba(255,255,255,0.18)'; });
-    item.addEventListener('mouseleave', function(){ item.style.background=''; });
-    item.addEventListener('click', function(){ secPages[i].scrollIntoView({behavior:'smooth'}); });
-  });
-})();
+  document.querySelectorAll('.part-nav a').forEach(a=>{if(a.href===window.location.href)a.classList.add('active');});
 </script>
 </body>
 </html>

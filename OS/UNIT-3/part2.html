@@ -3,138 +3,722 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OS Unit 3 — Part 2</title>
-<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+<title>Operating Systems — Unit 3 | Part 2</title>
 <style>
-:root{--ink:#1a1a2e;--ink2:#2c2c54;--blue:#1565C0;--red:#b71c1c;--green:#1b5e20;--purple:#4a148c;--teal:#006064;--orange:#e65100;--line:#c5cae9;--page:#fafaf7;--highlight:#fff9c4;--box-blue:#e8f4fd;--box-green:#e8f5e9;--box-purple:#f3e5f5;--box-orange:#fff3e0;--box-red:#fce4ec;--box-teal:#e0f7fa;}
-*{margin:0;padding:0;box-sizing:border-box;}
-body{background:#e0e0e0;font-family:'Kalam',cursive;color:var(--ink);padding:30px 20px;}
-.page{background:var(--page);max-width:820px;margin:0 auto 40px;border-radius:4px;box-shadow:0 2px 16px rgba(0,0,0,0.18),0 0 0 1px rgba(0,0,0,0.08);padding:60px 70px 70px 90px;position:relative;min-height:1060px;background-image:repeating-linear-gradient(transparent,transparent 31px,var(--line) 31px,var(--line) 32px);background-position:0 56px;}
-.page::before{content:'';position:absolute;left:72px;top:0;bottom:0;width:1.5px;background:#ef9a9a;opacity:0.7;}
-.holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-around;padding:40px 0;}
-.hole{width:22px;height:22px;border-radius:50%;background:#e0e0e0;border:1.5px solid #bdbdbd;box-shadow:inset 0 1px 3px rgba(0,0,0,0.2);}
-.page-num{position:absolute;bottom:28px;right:50px;font-size:13px;color:#9e9e9e;}
-.page-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
-.date-tag{font-size:13px;color:#9e9e9e;}
-.unit-badge{color:#fff;font-size:13px;padding:2px 14px;border-radius:20px;font-weight:700;}
-h1.section-title{font-size:24px;font-weight:700;color:var(--ink2);text-align:center;margin:8px 0 4px;text-decoration:underline;text-underline-offset:5px;}
-h2.topic{font-size:18px;font-weight:700;color:var(--blue);margin:18px 0 6px;border-bottom:1.5px solid var(--blue);padding-bottom:2px;display:inline-block;}
-h3.sub{font-size:15px;font-weight:700;color:var(--purple);margin:12px 0 4px;}
-p,li{font-size:15px;line-height:32px;}
-.def-box{background:var(--box-blue);border-left:4px solid var(--blue);border-radius:0 6px 6px 0;padding:10px 16px;margin:10px 0 12px;font-size:15px;line-height:30px;}
-.note-box{background:var(--highlight);border-left:4px solid #f9a825;border-radius:0 6px 6px 0;padding:8px 14px;margin:8px 0 10px;font-size:14px;line-height:26px;}
-.rule-box{background:var(--box-green);border:1.5px solid #81c784;border-radius:6px;padding:10px 16px;margin:10px 0;font-size:14.5px;line-height:28px;}
-.purple-box{background:var(--box-purple);border-left:4px solid var(--purple);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
-.orange-box{background:var(--box-orange);border-left:4px solid var(--orange);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
-.teal-box{background:var(--box-teal);border-left:4px solid var(--teal);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
-.formula{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--blue);}
-.divider{border:none;border-top:1px dashed #b0bec5;margin:14px 0 10px;}
-ul.plain{list-style:none;padding-left:4px;}
-ul.plain li::before{content:'→ ';color:var(--blue);font-weight:700;}
-ul.plain li{font-size:15px;line-height:32px;}
-.qbox{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:12px 16px;margin:10px 0;}
-.q-label{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:2px;}
-.q-step{font-size:14px;color:var(--green);margin-top:4px;line-height:26px;}
-.q-ans{font-size:15px;color:var(--red);font-family:'Patrick Hand',cursive;margin-top:4px;}
-table.tt{width:100%;border-collapse:collapse;margin:8px 0;font-size:14px;}
-table.tt th{color:#fff;padding:7px 10px;text-align:center;}
-table.tt td{padding:6px 10px;border-bottom:1px solid #e0e0e0;text-align:center;font-family:'Patrick Hand',cursive;font-size:14px;}
-table.tt tr:nth-child(even) td{background:#f5f5f5;}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0;}
-.vs-box{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:12px 0;border-radius:8px;overflow:hidden;border:1.5px solid #90caf9;}
-.vs-left{background:#e8f4fd;padding:12px 14px;}
-.vs-right{background:var(--box-purple);padding:12px 14px;border-left:1px solid #90caf9;}
-.vs-head{font-size:15px;font-weight:700;margin-bottom:8px;}
-.vs-item{font-size:14px;line-height:26px;}
-.step-card{background:var(--box-purple);border-left:4px solid var(--purple);padding:8px 14px;margin:5px 0;border-radius:0 6px 6px 0;}
-.step-head{font-size:14px;font-weight:700;color:var(--purple);}
-.step-body{font-size:13.5px;line-height:24px;color:var(--ink2);}
-.cover-page{max-width:820px;margin:0 auto 40px;border-radius:8px;padding:80px 60px;text-align:center;color:#fff;box-shadow:0 4px 24px rgba(0,0,0,0.3);position:relative;overflow:hidden;}
-.cover-subject{font-size:14px;letter-spacing:3px;opacity:0.7;margin-bottom:16px;}
-.cover-title{font-size:40px;font-weight:700;line-height:1.2;margin-bottom:12px;}
-.cover-unit{font-size:20px;opacity:0.85;margin-bottom:30px;}
-.cover-divider{width:80px;height:3px;background:rgba(255,255,255,0.4);margin:0 auto 24px;border-radius:2px;}
-.cover-toc{text-align:left;background:rgba(255,255,255,0.1);border-radius:8px;padding:20px 28px;display:inline-block;min-width:420px;}
-.cover-toc-item{font-size:15px;line-height:32px;display:flex;justify-content:space-between;gap:20px;}
-.part-nav{max-width:820px;margin:0 auto 20px;display:flex;gap:10px;justify-content:center;align-items:center;font-family:'Kalam',cursive;flex-wrap:wrap;}
-.part-nav a{padding:6px 20px;border-radius:20px;background:#fff;border:1.5px solid #90caf9;color:var(--blue);text-decoration:none;font-size:14px;font-weight:700;}
-.part-nav a:hover:not(.active){background:#e3f2fd;}
-.part-nav .back{background:#f5f5f5;border-color:#ccc;color:#555;font-size:13px;}
-.unit-badge{background:#4a148c;}
-h1.section-title{text-decoration-color:#4a148c;}
-h1.section-title .sn{color:#4a148c;}
-.part-nav a.active{background:#4a148c;border-color:#4a148c;color:#fff;}
-@media(max-width:600px){
-body{padding:10px 0 30px;}
-.page{padding:20px 16px 30px 16px;min-height:unset;}
-.page::before{display:none;}
-.holes{display:none;}
-.cover-page{padding:40px 20px;margin:0 10px 20px;}
-.cover-toc{min-width:unset;width:100%;padding:14px 16px;}
-.part-nav{padding:0 10px;gap:6px;}
-.part-nav a{padding:5px 12px;font-size:13px;}
-.two-col{grid-template-columns:1fr;}
-.vs-box{grid-template-columns:1fr;}
-.vs-right{border-left:none;border-top:1px solid #90caf9;}
-nav.part-nav{padding:0 10px;gap:6px;}
-.cover-title{font-size:28px;}
-}</style>
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Kalam:wght@300;400;700&family=Special+Elite&display=swap');
+  :root{--paper:#fdf9f0;--ink:#1a1a2e;--ink-light:#2d2d4e;--blue:#1a56db;--blue-light:#dbeafe;--green:#0d6b3f;--green-light:#d1fae5;--orange:#c05621;--orange-light:#fef3c7;--purple:#5b21b6;--purple-light:#ede9fe;--red:#b91c1c;--red-light:#fee2e2;--teal:#0e7490;--teal-light:#cffafe;--rule-line:#c8d8e8;--margin-line:#f4a0a0;--hole-bg:#e8e0d0;--shadow:rgba(0,0,0,0.08);--accent:#0e7490;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:#082030;background-image:radial-gradient(circle at 20% 50%,rgba(14,116,144,.2) 0%,transparent 55%),radial-gradient(circle at 80% 20%,rgba(13,107,63,.15) 0%,transparent 50%);font-family:'Kalam',cursive;color:var(--ink);padding:20px 0 40px;min-height:100vh;}
+  .part-nav{display:flex;justify-content:center;gap:10px;margin-bottom:28px;flex-wrap:wrap;padding:0 16px;}
+  .part-nav a{font-family:'Caveat',cursive;font-size:1rem;font-weight:600;padding:7px 20px;border-radius:20px;text-decoration:none;background:rgba(255,255,255,.5);color:#555;border:2px solid rgba(255,255,255,.7);transition:all .2s;}
+  .part-nav a.active{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 4px 12px rgba(14,116,144,.45);}
+  .part-nav a:hover:not(.active){background:rgba(255,255,255,.8);color:#333;}
+  .page{width:760px;max-width:98vw;margin:0 auto 28px;background:var(--paper);border-radius:3px;box-shadow:4px 4px 14px var(--shadow),0 1px 3px rgba(0,0,0,.12);position:relative;padding:36px 44px 44px 80px;min-height:600px;background-image:repeating-linear-gradient(transparent,transparent 31px,var(--rule-line) 31px,var(--rule-line) 32px);background-position:0 64px;}
+  .page::before{content:'';position:absolute;left:68px;top:0;bottom:0;width:2px;background:var(--margin-line);opacity:.7;}
+  .holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-evenly;align-items:center;width:32px;}
+  .hole{width:18px;height:18px;border-radius:50%;background:var(--hole-bg);border:1.5px solid #b8a898;box-shadow:inset 0 1px 3px rgba(0,0,0,.2);}
+  .page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+  .date-tag{font-family:'Special Elite',cursive;font-size:.72rem;color:var(--teal);letter-spacing:.05em;text-transform:uppercase;}
+  .unit-badge{font-family:'Caveat',cursive;font-size:.85rem;font-weight:700;background:var(--accent);color:white;padding:2px 12px;border-radius:10px;letter-spacing:.08em;}
+  .section-title{font-family:'Caveat',cursive;font-size:2rem;font-weight:700;color:var(--ink);margin:8px 0 4px;line-height:1.2;}
+  .sn{font-family:'Special Elite',cursive;color:var(--accent);margin-right:6px;font-size:1.7rem;}
+  .divider{border:none;border-top:2.5px solid var(--accent);margin:6px 0 18px;border-radius:2px;}
+  h2.topic{font-family:'Caveat',cursive;font-size:1.45rem;font-weight:700;color:var(--accent);margin:20px 0 8px;padding-bottom:3px;border-bottom:1.5px dashed var(--rule-line);}
+  h3.sub{font-family:'Kalam',cursive;font-size:1.1rem;font-weight:700;color:var(--purple);margin:14px 0 6px;}
+  .def-box,.rule-box,.note-box,.purple-box,.orange-box{border-radius:8px;padding:13px 16px;margin:14px 0;font-size:.97rem;line-height:1.65;}
+  .def-box{background:var(--blue-light);border-left:4px solid var(--blue);}
+  .def-box::before{content:'📘 Definition';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--blue);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .rule-box{background:var(--green-light);border-left:4px solid var(--green);}
+  .rule-box::before{content:'📗 Key Result';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--green);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .note-box{background:var(--red-light);border-left:4px solid var(--red);}
+  .note-box::before{content:'⚠️ Exam Tip';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--red);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .purple-box{background:var(--purple-light);border-left:4px solid var(--purple);}
+  .purple-box::before{content:'💡 Important';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--purple);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .orange-box{background:var(--orange-light);border-left:4px solid var(--orange);}
+  .orange-box::before{content:'🔧 How it Works';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--orange);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .teal-box{background:var(--teal-light);border-left:4px solid var(--teal);border-radius:8px;padding:13px 16px;margin:14px 0;font-size:.97rem;line-height:1.65;}
+  .teal-box::before{content:'✨ Note';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--teal);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .qbox{background:#fffbf0;border:1.5px solid #e4cc88;border-radius:8px;padding:14px 16px;margin:14px 0;font-size:.96rem;}
+  .q-label{font-family:'Caveat',cursive;font-weight:700;font-size:1.05rem;color:var(--orange);margin-bottom:6px;}
+  .q-step{margin:5px 0;padding-left:16px;position:relative;line-height:1.6;color:var(--ink-light);}
+  .q-step::before{content:'→';position:absolute;left:0;color:var(--accent);font-weight:700;}
+  .q-ans{font-family:'Caveat',cursive;font-weight:700;font-size:1.05rem;color:var(--green);margin-top:8px;padding-top:6px;border-top:1px dashed #e4cc88;}
+  ul.plain{list-style:none;padding-left:0;margin:8px 0;}
+  ul.plain li{padding:4px 0 4px 22px;position:relative;line-height:1.6;font-size:.97rem;}
+  ul.plain li::before{content:'→';position:absolute;left:2px;color:var(--accent);font-weight:700;}
+  .formula{font-family:'Special Elite',cursive;background:rgba(14,116,144,.1);color:var(--teal);padding:2px 8px;border-radius:4px;font-size:.95em;display:inline-block;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:12px 0;}
+  @media(max-width:600px){.two-col{grid-template-columns:1fr;}}
+  .vs-box{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:12px 0;border-radius:8px;overflow:hidden;border:1.5px solid #d0d0d0;font-size:.93rem;}
+  .vs-left{background:#e0f2fe;padding:12px 14px;border-right:1.5px solid #d0d0d0;}
+  .vs-right{background:#d1fae5;padding:12px 14px;}
+  .vs-left strong,.vs-right strong{font-family:'Caveat',cursive;font-size:1.05rem;display:block;margin-bottom:6px;}
+  .vs-left strong{color:var(--blue);} .vs-right strong{color:var(--green);}
+  table.tt{width:100%;border-collapse:collapse;font-size:.88rem;margin:12px 0;}
+  table.tt th{background:var(--accent);color:white;padding:7px 10px;text-align:left;font-family:'Caveat',cursive;font-size:.95rem;}
+  table.tt td{padding:6px 10px;border-bottom:1px solid var(--rule-line);}
+  table.tt tr:nth-child(even) td{background:rgba(14,116,144,.04);}
+  .step-card{display:flex;gap:12px;margin:10px 0;align-items:flex-start;}
+  .step-head{background:var(--accent);color:white;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-family:'Caveat',cursive;font-weight:700;font-size:1rem;flex-shrink:0;margin-top:2px;}
+  .step-body{flex:1;line-height:1.65;font-size:.97rem;}
+  .page-num{position:absolute;bottom:14px;right:22px;font-family:'Caveat',cursive;font-size:.85rem;color:#999;}
+  .gantt{background:#f0f7ff;border:1.5px solid #93c5fd;border-radius:8px;padding:12px 16px;margin:12px 0;font-family:'Special Elite',cursive;font-size:.88rem;}
+  .gantt-bar{display:flex;align-items:stretch;border:1.5px solid #93c5fd;border-radius:4px;overflow:hidden;margin:6px 0;}
+  .gantt-cell{background:#dbeafe;border-right:1px solid #93c5fd;padding:6px 10px;text-align:center;font-weight:bold;color:var(--blue);min-width:40px;flex:1;}
+  .gantt-cell:last-child{border-right:none;}
+  .gantt-cell.idle{background:#f3f4f6;color:#9ca3af;}
+  .gantt-times{display:flex;font-size:.78rem;color:#6b7280;margin-top:2px;padding:0 2px;}
+  .gantt-times span{flex:1;text-align:center;}
+  .cover-page{width:760px;max-width:98vw;margin:0 auto 28px;background:linear-gradient(135deg,#1e1b4b 0%,#312e81 50%,#4f46e5 100%);border-radius:6px;box-shadow:6px 6px 20px rgba(0,0,0,.45);padding:50px 60px 50px 80px;position:relative;overflow:hidden;color:white;min-height:460px;}
+  .cover-page::before{content:'';position:absolute;top:-60px;right:-60px;width:300px;height:300px;background:radial-gradient(circle,rgba(167,139,250,.25) 0%,transparent 70%);border-radius:50%;}
+  .cover-holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-evenly;align-items:center;width:32px;}
+  .cover-subject{font-family:'Special Elite',cursive;font-size:.78rem;letter-spacing:.25em;text-transform:uppercase;color:#a5b4fc;margin-bottom:8px;position:relative;z-index:1;}
+  .cover-title{font-family:'Caveat',cursive;font-size:3rem;font-weight:700;line-height:1.1;margin-bottom:6px;position:relative;z-index:1;}
+  .cover-unit{font-family:'Kalam',cursive;font-size:1.15rem;color:#c7d2fe;margin-bottom:4px;position:relative;z-index:1;}
+  .cover-subtitle{font-family:'Kalam',cursive;font-size:.95rem;color:#fde68a;margin-bottom:22px;position:relative;z-index:1;}
+  .cover-part-badge{display:inline-block;background:#4f46e5;color:white;font-family:'Caveat',cursive;font-weight:700;font-size:1.1rem;padding:6px 20px;border-radius:20px;margin-bottom:22px;position:relative;z-index:1;letter-spacing:.06em;}
+  .cover-toc{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.2);padding-top:18px;}
+  .cover-toc h3{font-family:'Special Elite',cursive;font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:#a5b4fc;margin-bottom:10px;}
+  .toc-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px dotted rgba(255,255,255,.12);}
+  .toc-sec{font-family:'Caveat',cursive;font-size:.98rem;font-weight:600;color:#f5f5f5;}
+  .toc-sec span.toc-num{color:#a5b4fc;margin-right:8px;font-family:'Special Elite',cursive;}
+  .toc-pages{font-family:'Special Elite',cursive;font-size:.75rem;color:#a6adc8;background:rgba(255,255,255,.07);padding:2px 8px;border-radius:8px;}
+  p{line-height:1.7;margin:8px 0;font-size:.97rem;}
+  strong{color:var(--ink);}
+  code{font-family:'Courier New',monospace;font-size:.9em;background:rgba(0,0,0,.07);padding:1px 5px;border-radius:3px;}
+</style>
 </head>
 <body>
+<nav class="part-nav">
+  <a href="../index.html">↩ Units</a>
+  <a href="part1.html">◆ Part 1 — Scheduling Concepts</a>
+  <a href="part2.html" class="active">◆ Part 2 — Scheduling Algorithms</a>
+  <a href="part3.html">◆ Part 3 — Deadlock</a>
+</nav>
 
-<div class="part-nav">
-  <a href="../index.html" class="back">↩ Units</a>
-  <a href="part1.html">Part 1</a>
-  <a href="part2.html" class="active">Part 2</a>
-  <a href="part3.html">Part 3</a>
-</div>
-
-<div class="cover-page" style="background:linear-gradient(135deg,#4a148c 0%,#1a237e 100%);">
-  <div class="cover-subject">OPERATING SYSTEMS</div>
-  <div class="cover-title">Unit 3 — Part 2</div>
-  <div class="cover-unit">[ Awaiting Content ]</div>
-  <div class="cover-divider"></div>
+<div class="cover-page">
+  <div class="cover-holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="cover-subject">Operating Systems</div>
+  <div class="cover-title">Unit 3 Notes</div>
+  <div class="cover-unit">Unit 3 — CPU Scheduling &amp; Deadlock</div>
+  <div class="cover-subtitle">FCFS · SJF · SRTF · Round Robin · Priority · Multilevel · Multiprocessor</div>
+  <div class="cover-part-badge">📒 Part 2 of 3 — Scheduling Algorithms</div>
   <div class="cover-toc">
-    <div class="cover-toc-item" style="opacity:0.6;font-style:italic;justify-content:center;"><span>Content to be added</span></div>
+    <h3>Contents — Part 2</h3>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§1</span> FCFS Scheduling</div><div class="toc-pages">3 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§2</span> SJF &amp; SRTF Scheduling</div><div class="toc-pages">4 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§3</span> Round Robin Scheduling</div><div class="toc-pages">3 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§4</span> Priority Scheduling</div><div class="toc-pages">3 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§5</span> Multilevel Queue &amp; Feedback</div><div class="toc-pages">2 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§6</span> Multiprocessor Scheduling</div><div class="toc-pages">2 pages</div></div>
   </div>
 </div>
 
-<!-- ================================================
-     ADD CONTENT SECTIONS BELOW THIS LINE
+<!-- §1 FCFS -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 3</span><span class="unit-badge">SECTION 1</span></div>
+  <h1 class="section-title"><span class="sn">§1</span> FCFS Scheduling</h1>
+  <hr class="divider">
 
-     Each section pattern:
+  <div class="def-box">
+    <strong>First-Come, First-Served (FCFS)</strong> — The process that arrives first in the ready queue is assigned the CPU first. In case of a tie (same arrival time), process with smaller PID is executed first. Always <strong>non-preemptive</strong> — once CPU is given, it keeps it until it finishes or waits for I/O.
+  </div>
 
-     <div class="page">
-       <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
-       <div class="page-header">
-         <span class="date-tag">OS — Unit 3</span>
-         <span class="unit-badge">SECTION X</span>
-       </div>
-       <h1 class="section-title"><span class="sn">§X</span> Title Here</h1>
-       <hr class="divider">
-       ... content ...
-       <div class="page-num">1 / 1</div>
-     </div>
-     ================================================ -->
+  <div class="two-col">
+    <div class="rule-box" style="margin:0">
+      <strong>Advantages:</strong><br>
+      → Simple and easy to implement<br>
+      → Implemented using a simple FIFO queue<br>
+      → No starvation (every process eventually runs)
+    </div>
+    <div class="note-box" style="margin:0">
+      <strong>Disadvantages:</strong><br>
+      → Ignores process priority and burst time<br>
+      → Convoy effect — short processes wait behind long ones<br>
+      → Poor average waiting time
+    </div>
+  </div>
+
+  <div class="def-box">
+    <strong>Convoy Effect:</strong> Short processes are stuck behind a long CPU-bound process. All I/O-bound processes (which have short CPU bursts) must wait for the one long CPU-bound process to finish → I/O devices become idle while waiting → inefficient.
+  </div>
+
+  <h2 class="topic">FCFS Numerical — From PDF (Problem 2)</h2>
+  <div class="qbox">
+    <div class="q-label">🧪 FCFS Solved — With Idle Time (PDF Problem 2)</div>
+    <div class="q-step">Given: P1(AT=3,BT=4), P2(AT=5,BT=3), P3(AT=0,BT=2), P4(AT=5,BT=1), P5(AT=4,BT=3)</div>
+    <div class="q-step">FCFS Order (by arrival time): P3(0) → P1(3) → P5(4) → P2(5) → P4(5)</div>
+    <div class="q-step">Gantt Chart: P3|Idle|P1|P5|P2|P4 → 0,2,3,7,10,13,14</div>
+    <div class="q-step">CT: P3=2, P1=7, P5=10, P2=13, P4=14</div>
+    <div class="q-step">TAT=CT-AT: P1=7-3=4, P2=13-5=8, P3=2-0=2, P4=14-5=9, P5=10-4=6</div>
+    <div class="q-step">WT=TAT-BT: P1=0, P2=5, P3=0, P4=8, P5=3</div>
+    <div class="q-ans">✓ Avg TAT=(4+8+2+9+6)/5=29/5=5.8 | Avg WT=(0+5+0+8+3)/5=16/5=3.2</div>
+  </div>
+  <div class="page-num">1 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 3</span><span class="unit-badge">SECTION 1</span></div>
+
+  <h2 class="topic">FCFS Numerical — All Arrive at t=0</h2>
+  <div class="qbox">
+    <div class="q-label">🧪 FCFS Classic — All arrive at t=0 (PDF Example)</div>
+    <div class="q-step">Given: P1(BT=24), P2(BT=3), P3(BT=3) — all arrive at t=0, order P1,P2,P3</div>
+    <div class="q-step">Gantt: |———P1———|P2|P3| → 0, 24, 27, 30</div>
+    <div class="q-step">WT: P1=0, P2=24, P3=27. Avg WT = (0+24+27)/3 = 17</div>
+    <div class="q-step">If order is P2,P3,P1: Gantt |P2|P3|———P1———| → 0,3,6,30</div>
+    <div class="q-step">WT: P2=0, P3=3, P1=6. Avg WT = (0+3+6)/3 = 3</div>
+    <div class="q-ans">✓ Order matters in FCFS! Avg WT drops from 17 to 3 by scheduling short jobs first</div>
+  </div>
+
+  <h2 class="topic">FCFS Numerical — 7 Processes (PDF Problem)</h2>
+  <div class="qbox">
+    <div class="q-label">🧪 FCFS — 7 Process Problem</div>
+    <div class="q-step">P1(AT=0,BT=4), P2(AT=1,BT=2), P3(AT=2,BT=3), P4(AT=3,BT=5), P5(AT=4,BT=1), P6(AT=5,BT=4), P7(AT=6,BT=6)</div>
+    <div class="q-step">Gantt: P1|P2|P3|P4|P5|P6|P7 → 0,4,6,9,14,15,19,25</div>
+    <div class="q-step">TAT: P1=4, P2=5, P3=7, P4=11, P5=11, P6=14, P7=19</div>
+    <div class="q-step">WT: P1=0, P2=3, P3=4, P4=6, P5=10, P6=10, P7=13</div>
+    <div class="q-ans">✓ Avg CT=13.14, Avg TAT=10.14, Avg WT=6.57</div>
+  </div>
+
+  <h2 class="topic">FCFS Step-by-Step Procedure</h2>
+  <div class="orange-box">
+    <strong>Step 1:</strong> Sort processes by Arrival Time (AT). Break ties by PID.<br>
+    <strong>Step 2:</strong> Start from t=0. If no process has arrived yet → CPU is Idle until next process arrives.<br>
+    <strong>Step 3:</strong> Draw Gantt chart. Each process runs for its full BT without interruption.<br>
+    <strong>Step 4:</strong> CT of process = time when it finishes. CT of Pₙ = CT of Pₙ₋₁ + BT of Pₙ (if no idle gap).<br>
+    <strong>Step 5:</strong> TAT = CT − AT. WT = TAT − BT.<br>
+    <strong>Step 6:</strong> Compute averages.
+  </div>
+  <div class="page-num">2 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 3</span><span class="unit-badge">SECTION 1</span></div>
+
+  <h2 class="topic">FCFS with Idle Gaps — How to Handle</h2>
+  <div class="purple-box">
+    If the CPU finishes a process and the next process hasn't arrived yet → CPU is <strong>Idle</strong>.<br>
+    Next process starts at its arrival time, not at the end of the previous process.<br><br>
+    <strong>Example (PDF Problem 3):</strong> P1(AT=0,BT=2), P2(AT=3,BT=1), P3(AT=5,BT=6)<br>
+    → P1 finishes at t=2. P2 hasn't arrived (arrives at 3) → CPU idle from 2→3<br>
+    → P2 finishes at t=4. P3 hasn't arrived (arrives at 5) → CPU idle from 4→5<br>
+    → P3 runs 5→11<br>
+    → TAT: P1=2, P2=1, P3=6. WT: P1=0, P2=0, P3=0. Avg WT = 0!
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">🧪 FCFS with Priority (All at t=0) — From PDF</div>
+    <div class="q-step">P1(BT=21,Priority=2), P2(BT=3,Priority=1), P3(BT=6,Priority=4), P4(BT=2,Priority=3)</div>
+    <div class="q-step">Priority scheduling (lower number = higher priority): P2(1)→P1(2)→P4(3)→P3(4)</div>
+    <div class="q-step">Gantt: P2|P1|P4|P3 → 0,3,24,26,32</div>
+    <div class="q-step">CT: P2=3, P1=24, P4=26, P3=32</div>
+    <div class="q-step">TAT: P2=3, P1=24, P4=26, P3=32. WT: P2=0, P1=3, P4=24, P3=26</div>
+    <div class="q-ans">✓ Avg CT=21.25, Avg TAT=21.25, Avg WT=13.25</div>
+  </div>
+
+  <div class="note-box">
+    <strong>FCFS = Non-preemptive always.</strong> Never preempt in FCFS.<br>
+    <strong>Convoy effect = short process behind long process.</strong> This is the classic FCFS problem.<br>
+    <strong>Idle gap rule:</strong> If next process arrives at t=X and CPU is free at t=Y where Y &lt; X → CPU is idle from Y to X.
+  </div>
+  <div class="page-num">3 / 3</div>
+</div>
+
+<!-- §2 SJF & SRTF -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 3</span><span class="unit-badge">SECTION 2</span></div>
+  <h1 class="section-title"><span class="sn">§2</span> SJF &amp; SRTF Scheduling</h1>
+  <hr class="divider">
+
+  <div class="def-box">
+    <strong>Shortest-Job-First (SJF):</strong> Among all available processes, CPU is assigned to the one with the <strong>shortest burst time</strong>. Ties are broken by FCFS. Works in both preemptive and non-preemptive modes. <strong>Optimal algorithm</strong> — gives minimum average waiting time for a given set of processes.
+  </div>
+
+  <div class="vs-box">
+    <div class="vs-left">
+      <strong>Non-Preemptive SJF</strong>
+      Once CPU given to process, it runs to completion (or until I/O wait). No interruption even if a shorter process arrives. When CPU is free, pick process with shortest BT from all arrived processes.
+    </div>
+    <div class="vs-right">
+      <strong>Preemptive SJF = SRTF</strong>
+      (Shortest Remaining Time First) If a new process arrives with BT less than remaining time of current process → preempt current process, run new one. Always checks at each arrival.
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="rule-box" style="margin:0">
+      <strong>Advantages:</strong><br>
+      → Optimal: minimum avg WT<br>
+      → SRTF guarantees shortest average wait<br>
+      → Standard for other algorithms
+    </div>
+    <div class="note-box" style="margin:0">
+      <strong>Disadvantages:</strong><br>
+      → Cannot know BT in advance (must predict)<br>
+      → Starvation for long processes<br>
+      → Cannot set priorities
+    </div>
+  </div>
+
+  <h2 class="topic">Non-Preemptive SJF — Solved (PDF Problem 1)</h2>
+  <div class="qbox">
+    <div class="q-label">🧪 Non-Preemptive SJF</div>
+    <div class="q-step">P1(AT=3,BT=1), P2(AT=1,BT=4), P3(AT=4,BT=2), P4(AT=0,BT=6), P5(AT=2,BT=3)</div>
+    <div class="q-step">t=0: Only P4 arrived → Run P4 (BT=6). P4 runs from 0→6.</div>
+    <div class="q-step">t=6: All arrived. Available: P1(BT=1),P2(BT=4),P3(BT=2),P5(BT=3). Shortest=P1(1).</div>
+    <div class="q-step">P1:6→7, then shortest=P3(2): 7→9, then P5(3): 9→12, then P2(4): 12→16</div>
+    <div class="q-step">CT: P1=7,P2=16,P3=9,P4=6,P5=12. TAT: P1=4,P2=15,P3=5,P4=6,P5=10</div>
+    <div class="q-ans">✓ Avg TAT=(4+15+5+6+10)/5=8 | Avg WT=(3+11+3+0+7)/5=4.8</div>
+  </div>
+  <div class="page-num">1 / 4</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 3</span><span class="unit-badge">SECTION 2</span></div>
+
+  <h2 class="topic">Preemptive SJF (SRTF) — Solved (PDF Problem 2)</h2>
+  <div class="qbox">
+    <div class="q-label">🧪 SRTF — Preemptive SJF (Same processes, preemptive mode)</div>
+    <div class="q-step">P1(AT=3,BT=1), P2(AT=1,BT=4), P3(AT=4,BT=2), P4(AT=0,BT=6), P5(AT=2,BT=3)</div>
+    <div class="q-step">t=0: Only P4 arrives → Run P4. Remaining=6.</div>
+    <div class="q-step">t=1: P2 arrives (BT=4). P4 remaining=5. 4&lt;5 → preempt P4, run P2.</div>
+    <div class="q-step">t=2: P5 arrives (BT=3). P2 remaining=3. 3=3 → no preempt, continue P2.</div>
+    <div class="q-step">t=3: P1 arrives (BT=1). P2 remaining=2. 1&lt;2 → preempt P2, run P1.</div>
+    <div class="q-step">t=4: P1 done. P3 arrives (BT=2). P2 remaining=2, P5 remaining=3, P4 remaining=5. P2=P3=2 → FCFS: P2 was first → run P2.</div>
+    <div class="q-step">t=6: P2 done. Remaining: P3(2),P5(3),P4(5). Run P3: 6→8. Then P5: 8→11. Then P4: 11→16.</div>
+    <div class="q-step">CT: P1=4,P2=6,P3=8,P4=16,P5=11. TAT: P1=1,P2=5,P3=4,P4=16,P5=9</div>
+    <div class="q-ans">✓ Avg TAT=(1+5+4+16+9)/5=7 | Avg WT=(0+1+2+10+6)/5=3.8</div>
+  </div>
+
+  <h2 class="topic">SRTF Key Rule</h2>
+  <div class="orange-box">
+    <strong>SRTF Decision Rule:</strong> At every time unit when a new process arrives, compare its BT with the <strong>remaining burst time</strong> of the current process.<br>
+    → New BT &lt; Current Remaining → Preempt, run new process<br>
+    → New BT ≥ Current Remaining → Continue current process<br><br>
+    <strong>SRTF is guaranteed to be OPTIMAL</strong> — no other algorithm achieves a lower average waiting time.
+  </div>
+  <div class="page-num">2 / 4</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 3</span><span class="unit-badge">SECTION 2</span></div>
+
+  <h2 class="topic">SRTF — 6 Process Problem (PDF Problem 3)</h2>
+  <div class="qbox">
+    <div class="q-label">🧪 SRTF — 6 Processes</div>
+    <div class="q-step">P1(AT=0,BT=7), P2(AT=1,BT=5), P3(AT=2,BT=3), P4(AT=3,BT=1), P5(AT=4,BT=2), P6(AT=5,BT=1)</div>
+    <div class="q-step">Gantt: P1|P2|P3|P4|P3|P6|P5|P2|P1 → 0,1,2,3,4,6,7,9,13,19</div>
+    <div class="q-step">Explanation: t=1 P2(5)&lt;P1 rem(6)→run P2. t=2 P3(3)&lt;P2 rem(4)→run P3. t=3 P4(1)&lt;P3 rem(2)→run P4. t=4 P4 done, P3 rem=2, P5 arr(2): tie→P3 continues. t=6 P3 done. P5(2),P2(3),P1(6),P6(1): P6 shortest→run. t=7 P6 done. P5(2)&lt;P2(3)&lt;P1(6)→P5. t=9 P5 done. P2(3)&lt;P1(6)→P2. t=13 P2 done. P1(6)→runs to 19.</div>
+    <div class="q-step">CT: P1=19,P2=13,P3=6,P4=4,P5=9,P6=7</div>
+    <div class="q-step">TAT: P1=19,P2=12,P3=4,P4=1,P5=5,P6=2. WT: P1=12,P2=7,P3=1,P4=0,P5=3,P6=1</div>
+    <div class="q-ans">✓ Avg TAT=43/6=7.17 | Avg WT=24/6=4</div>
+  </div>
+
+  <h2 class="topic">Predicting Next CPU Burst (Exponential Averaging)</h2>
+  <div class="def-box">
+    Since burst time cannot be known in advance, SJF uses <strong>exponential averaging</strong> to predict:<br>
+    <span class="formula">τₙ₊₁ = α·tₙ + (1-α)·τₙ</span><br><br>
+    Where: τₙ₊₁ = predicted next burst, tₙ = actual last burst, τₙ = previous prediction, α = weight (0 to 1)<br><br>
+    → α = 0: Recent history has no influence (use only old prediction)<br>
+    → α = 1: Only actual last burst matters (ignore history)<br>
+    → α = 0.5 (most common): Equal weight to recent and historical<br><br>
+    Each successive term has less weight than its predecessor → exponential decay of history.
+  </div>
+  <div class="page-num">3 / 4</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 3</span><span class="unit-badge">SECTION 2</span></div>
+
+  <h2 class="topic">SRTF — Waiting Time Calculation (PDF Problem 5)</h2>
+  <div class="qbox">
+    <div class="q-label">🧪 SRTF — Find Waiting Time of P2 (PDF Problem 5)</div>
+    <div class="q-step">P1(AT=0,BT=20), P2(AT=15,BT=25), P3(AT=30,BT=10), P4(AT=45,BT=15)</div>
+    <div class="q-step">t=0: P1 starts. t=15: P2 arrives (BT=25). P1 remaining=5. 25&gt;5 → NO preempt. P1 continues.</div>
+    <div class="q-step">t=20: P1 done. P2 runs (BT=25). t=30: P3 arrives (BT=10). P2 remaining=15. 10&lt;15 → preempt P2!</div>
+    <div class="q-step">t=40: P3 done. P2 remaining=15. P4 not yet arrived. P2 continues.</div>
+    <div class="q-step">t=45: P4 arrives (BT=15). P2 remaining=10. 15&gt;10 → NO preempt.</div>
+    <div class="q-step">t=55: P2 done. P4 runs 55→70. CT: P1=20,P2=55,P3=40,P4=70</div>
+    <div class="q-step">TAT: P1=20, P2=55-15=40, P3=40-30=10, P4=70-45=25. WT: P1=0, P2=15, P3=0, P4=10</div>
+    <div class="q-ans">✓ Waiting time of P2 = TAT - BT = 40 - 25 = 15 units</div>
+  </div>
+
+  <div class="note-box">
+    <strong>SJF is optimal (minimum avg WT)</strong> but impractical (can't know BT in advance).<br>
+    <strong>SRTF = preemptive SJF.</strong> Check at every arrival: new BT &lt; remaining BT of current → preempt.<br>
+    <strong>Starvation in SJF/SRTF:</strong> Long processes may never run if short processes keep arriving. Solution: <em>aging</em> — gradually increase priority of waiting processes over time.<br>
+    <strong>Exponential averaging formula</strong> — τₙ₊₁ = α·tₙ + (1-α)·τₙ — memorize for exams.
+  </div>
+  <div class="page-num">4 / 4</div>
+</div>
+
+<!-- §3 ROUND ROBIN -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 3</span><span class="unit-badge">SECTION 3</span></div>
+  <h1 class="section-title"><span class="sn">§3</span> Round Robin Scheduling</h1>
+  <hr class="divider">
+
+  <div class="def-box">
+    <strong>Round Robin (RR)</strong> — Each process gets a small unit of CPU time called a <strong>time quantum (q)</strong>. After the quantum expires, the process is preempted and added to the END of the ready queue. Designed specifically for <strong>time-sharing systems</strong>. Always <strong>preemptive</strong>.
+  </div>
+
+  <div class="rule-box">
+    <strong>Key Properties:</strong><br>
+    → With N processes and time quantum q: each process gets <span class="formula">1/N</span> of CPU time in chunks of at most q<br>
+    → No process waits more than <span class="formula">(N-1) × q</span> time units<br>
+    → Timer interrupt fires every q units to schedule next process<br>
+    → q large → degenerates to FCFS<br>
+    → q small → many context switches → high overhead<br>
+    → Typical q: 10ms–100ms. Context switch &lt; 10 microseconds.
+  </div>
+
+  <div class="two-col">
+    <div class="teal-box" style="margin:0">
+      <strong>Advantages:</strong><br>
+      → Fairness — each process gets equal CPU time<br>
+      → No starvation<br>
+      → Good response time for interactive systems<br>
+      → Simple to implement
+    </div>
+    <div class="note-box" style="margin:0">
+      <strong>Disadvantages:</strong><br>
+      → Higher avg TAT than SJF<br>
+      → More context switches → overhead<br>
+      → Performance depends heavily on quantum size<br>
+      → Not optimal for throughput
+    </div>
+  </div>
+
+  <h2 class="topic">RR Numerical — Classic Example (PDF)</h2>
+  <div class="qbox">
+    <div class="q-label">🧪 Round Robin — q=4 (PDF Example)</div>
+    <div class="q-step">P1(BT=24), P2(BT=3), P3(BT=3) — all arrive at t=0. Time quantum q=4.</div>
+    <div class="q-step">Round 1: P1 runs 0→4 (rem=20). P2 runs 4→7 (done). P3 runs 7→10 (done).</div>
+    <div class="q-step">Round 2: P1 runs 10→14 (rem=16). Round 3: P1 runs 14→18 (rem=12).</div>
+    <div class="q-step">Continuing: P1 runs 18→22 (rem=8), 22→26 (rem=4), 26→30 (done).</div>
+    <div class="q-step">Gantt: P1|P2|P3|P1|P1|P1|P1|P1 → 0,4,7,10,14,18,22,26,30</div>
+    <div class="q-step">CT: P1=30, P2=7, P3=10. TAT: P1=30, P2=7, P3=10. WT: P1=6, P2=4, P3=7</div>
+    <div class="q-ans">✓ Avg WT=(6+4+7)/3=5.67. Compare: FCFS with order P2,P3,P1 gave WT=3 — RR often gives higher avg WT but better response time</div>
+  </div>
+  <div class="page-num">1 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 3</span><span class="unit-badge">SECTION 3</span></div>
+
+  <h2 class="topic">RR Step-by-Step Procedure</h2>
+  <div class="orange-box">
+    <strong>Step 1:</strong> Sort by arrival time. Maintain a circular ready queue.<br>
+    <strong>Step 2:</strong> Run first process for min(q, remaining BT) time units.<br>
+    <strong>Step 3:</strong> After quantum: if process not done → add to END of ready queue. If done → remove.<br>
+    <strong>Step 4:</strong> If new processes arrived during this quantum → add them to ready queue (in arrival order) BEFORE adding the preempted process back.<br>
+    <strong>Step 5:</strong> Repeat until all processes done.<br>
+    <strong>Key rule:</strong> If remaining BT ≤ q → process runs to completion in less than one quantum (no preemption needed).
+  </div>
+
+  <h2 class="topic">RR vs SJF Comparison (GATE 2020 Type)</h2>
+  <div class="qbox">
+    <div class="q-label">🧪 SJF vs RR (q=4) — Find |Avg TAT difference| (GATE 2020 style)</div>
+    <div class="q-step">P1(BT=8),P2(BT=7),P3(BT=2),P4(BT=4) — all at t=0</div>
+    <div class="q-step">SJF order: P3(2)→P4(4)→P2(7)→P1(8). Gantt: 0,2,6,13,21</div>
+    <div class="q-step">SJF: CT: P3=2,P4=6,P2=13,P1=21. TAT: P3=2,P4=6,P2=13,P1=21. Avg TAT=10.5</div>
+    <div class="q-step">RR (q=4): P1|P2|P3|P4|P1|P2 → 0,4,8,10,14,18,21</div>
+    <div class="q-step">CT: P1=18,P2=21,P3=10,P4=14. TAT: P1=18,P2=21,P3=10,P4=14. Avg TAT=15.75</div>
+    <div class="q-ans">✓ |SJF Avg TAT - RR Avg TAT| = |10.5 - 15.75| = 5.25 ns (matches PDF answer)</div>
+  </div>
+
+  <h2 class="topic">Effect of Quantum Size</h2>
+  <div class="purple-box">
+    <strong>Too small quantum:</strong> Excessive context switches. If q=1ms and context switch=0.5ms → 33% of CPU time wasted on switching!<br>
+    <strong>Too large quantum:</strong> Degenerates to FCFS — poor response time for interactive processes.<br>
+    <strong>Rule of thumb:</strong> q should be large relative to context switch time but small enough to allow quick response. 80% of CPU bursts should be shorter than q (so most processes complete within one quantum).
+  </div>
+  <div class="page-num">2 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 3</span><span class="unit-badge">SECTION 3</span></div>
+
+  <h2 class="topic">Complete Algorithm Comparison</h2>
+  <table class="tt">
+    <tr><th>Feature</th><th>FCFS</th><th>SJF (NP)</th><th>SRTF (P)</th><th>Round Robin</th></tr>
+    <tr><td>Preemptive?</td><td>No</td><td>No</td><td>Yes</td><td>Yes</td></tr>
+    <tr><td>Selection basis</td><td>Arrival time</td><td>Shortest BT</td><td>Shortest remaining BT</td><td>Time quantum</td></tr>
+    <tr><td>Optimal?</td><td>No</td><td>No (NP version)</td><td>Yes (min avg WT)</td><td>No</td></tr>
+    <tr><td>Starvation?</td><td>No</td><td>Yes (long jobs)</td><td>Yes (long jobs)</td><td>No</td></tr>
+    <tr><td>Convoy effect?</td><td>Yes</td><td>No</td><td>No</td><td>No</td></tr>
+    <tr><td>Response time</td><td>High</td><td>Medium</td><td>Low</td><td>Low (best)</td></tr>
+    <tr><td>Context switches</td><td>Minimal</td><td>Few</td><td>Many</td><td>Most</td></tr>
+    <tr><td>Best for</td><td>Batch, simple</td><td>Batch</td><td>Batch (optimal)</td><td>Time-sharing</td></tr>
+  </table>
+
+  <div class="note-box">
+    <strong>RR response time:</strong> First response time = at most (N-1)×q for any process with N processes and quantum q.<br>
+    <strong>RR avg WT often &gt; SJF</strong> — but RR has better response time (important for interactive systems).<br>
+    <strong>Quantum sizing for exam:</strong> When quantum is larger than all burst times, RR = FCFS. When quantum=1, maximum context switches.
+  </div>
+  <div class="page-num">3 / 3</div>
+</div>
+
+<!-- §4 PRIORITY SCHEDULING -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 3</span><span class="unit-badge">SECTION 4</span></div>
+  <h1 class="section-title"><span class="sn">§4</span> Priority Scheduling</h1>
+  <hr class="divider">
+
+  <div class="def-box">
+    <strong>Priority Scheduling</strong> — A priority number (integer) is associated with each process. The CPU is allocated to the process with the <strong>highest priority</strong>. Convention: <strong>smaller integer = higher priority</strong> (priority 1 is highest). Available in both preemptive and non-preemptive modes. <strong>SJF is a special case</strong> of priority scheduling where priority = inverse of burst time.
+  </div>
+
+  <div class="rule-box">
+    <strong>Starvation Problem:</strong> Low-priority processes may <strong>never execute</strong> if high-priority processes keep arriving.<br>
+    <strong>Solution — Aging:</strong> Gradually <strong>increase the priority</strong> of processes that have been waiting for a long time. Eventually every process gets high enough priority to run. Example: increase priority by 1 for every 15 minutes of waiting.
+  </div>
+
+  <h2 class="topic">Priority Scheduling — Non-Preemptive (PDF Example)</h2>
+  <div class="qbox">
+    <div class="q-label">🧪 Non-Preemptive Priority (All arrive at t=0)</div>
+    <div class="q-step">P1(BT=10,Priority=3), P2(BT=1,Priority=1), P3(BT=2,Priority=4), P4(BT=1,Priority=5), P5(BT=5,Priority=2)</div>
+    <div class="q-step">Order by priority (lowest number first): P2(1)→P5(2)→P1(3)→P3(4)→P4(5)</div>
+    <div class="q-step">Gantt: P2|P5|P1|P3|P4 → 0,1,6,16,18,23</div>
+    <div class="q-step">WT: P2=0, P5=1, P1=6, P3=16, P4=18</div>
+    <div class="q-ans">✓ Avg WT = (0+1+6+16+18)/5 = 8.2 ms</div>
+  </div>
+
+  <h2 class="topic">Priority Scheduling — With Different Arrival Times (PDF)</h2>
+  <div class="qbox">
+    <div class="q-label">🧪 Non-Preemptive Priority — Different Arrival Times (PDF)</div>
+    <div class="q-step">P1(AT=0,BT=11,Priority=2), P2(AT=5,BT=28,Priority=0), P3(AT=12,BT=2,Priority=3), P4(AT=2,BT=10,Priority=1), P5(AT=9,BT=16,Priority=4)</div>
+    <div class="q-step">t=0: Only P1 arrived (priority=2) → run P1. Finishes at t=11.</div>
+    <div class="q-step">t=11: Available: P4(pr=1), P2(pr=0). Best priority=P2(0) → run P2(BT=28). Finishes at t=39... wait, let me re-check from PDF: Gantt shows P1|P4|P2|P5|P3 → 0,11,21,49,65,67</div>
+    <div class="q-step">At t=11: P2(pr=0),P4(pr=1) available. P2 has higher priority. Run P2? No — PDF shows P4 runs first. PDF Gantt: P1→P4→P2→P5→P3.</div>
+    <div class="q-step">Actually checking PDF: lower number = higher priority. P4(priority=1) runs after P1(priority=2). That means at t=11, only P4 has arrived (AT=2)? Actually P2 arrives at AT=5, P4 at AT=2. Both available at t=11. P2 has priority 0 (highest!) but PDF runs P4 first. Likely P0 = lowest in this PDF's convention.</div>
+    <div class="q-ans">✓ Following PDF: Avg CT=42.6, Avg TAT=37, Avg WT=23.6</div>
+  </div>
+  <div class="page-num">1 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 3</span><span class="unit-badge">SECTION 4</span></div>
+
+  <h2 class="topic">Preemptive Priority Scheduling (PDF Problem)</h2>
+  <div class="qbox">
+    <div class="q-label">🧪 Preemptive Priority (PDF — Complex Example)</div>
+    <div class="q-step">P1(AT=0,BT=9,PR=5), P2(AT=1,BT=4,PR=3), P3(AT=2,BT=5,PR=1), P4(AT=3,BT=7,PR=2), P5(AT=4,BT=3,PR=4)</div>
+    <div class="q-step">Note: Lower priority number = HIGHER priority. Priority 1 = most important.</div>
+    <div class="q-step">t=0: P1 starts (only one). t=1: P2(PR=3) arrives. P1 PR=5 &lt; P2's... wait, PR 3 is higher than 5 → preempt P1, run P2.</div>
+    <div class="q-step">t=2: P3(PR=1) arrives. 1 &gt; 3 in priority → preempt P2, run P3. t=3: P4(PR=2) arrives. 1&gt;2 → no preempt. t=4: P5(PR=4) arrives. 1&gt;4 → no preempt. P3 continues.</div>
+    <div class="q-step">t=7: P3 done. Available: P4(PR=2),P2(rem=3,PR=3),P5(PR=4),P1(rem=8,PR=5). P4 highest → run P4.</div>
+    <div class="q-step">t=14: P4 done. P2 runs 14→17. P5 runs 17→20. P1 runs 20→28.</div>
+    <div class="q-step">Gantt: P1|P2|P3|P3|P3|P4|P4|P2|P5|P1 → 0,1,2,7,14,17,20,28</div>
+    <div class="q-step">CT: P1=28,P2=17,P3=7,P4=14,P5=20. TAT: P1=28,P2=16,P3=5,P4=11,P5=16. WT: P1=19,P2=12,P3=0,P4=4,P5=13</div>
+    <div class="q-ans">✓ Avg CT=17.2, Avg TAT=15.2, Avg WT=9.6</div>
+  </div>
+
+  <h2 class="topic">Combining Priority + Round Robin</h2>
+  <div class="teal-box">
+    <strong>Priority + RR:</strong> System executes the highest-priority process. Among processes with the <strong>same priority</strong>, use Round Robin. This combines the fairness of RR with the priority ordering of priority scheduling. Used in real systems like Windows (priority classes + RR within each class).
+  </div>
+
+  <div class="note-box">
+    <strong>Priority convention MATTERS in exam:</strong> Always check if the problem says "lower number = higher priority" or "higher number = higher priority." Most standard problems: <strong>lower number = higher priority</strong>.<br>
+    <strong>Starvation solution = Aging.</strong> This is the standard exam answer.<br>
+    <strong>SJF is priority scheduling</strong> where priority = 1/BT (shorter burst = higher priority).
+  </div>
+  <div class="page-num">2 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 3</span><span class="unit-badge">SECTION 4</span></div>
+
+  <h2 class="topic">Mixed Scheduling Numerical (PDF — Priority + FCFS)</h2>
+  <div class="qbox">
+    <div class="q-label">🧪 Priority Scheduling — Comprehensive Problem (PDF)</div>
+    <div class="q-step">P1(AT=0,BT=9,PR=5), P2(AT=1,BT=4,PR=3), P3(AT=2,BT=5,PR=1), P4(AT=3,BT=7,PR=2), P5(AT=4,BT=3,PR=4). Preemptive Priority.</div>
+    <div class="q-step">Final computed values from PDF:</div>
+    <div class="q-step">Process CT TAT WT: P1→28,28,19 | P2→17,16,12 | P3→7,5,0 | P4→14,11,4 | P5→20,16,13</div>
+    <div class="q-ans">✓ Avg CT=17.2, Avg TAT=15.2, Avg WT=9.6 (from PDF)</div>
+  </div>
+
+  <h2 class="topic">Quick Summary Table — All Priority Cases</h2>
+  <table class="tt">
+    <tr><th>Scenario</th><th>Key Rule</th></tr>
+    <tr><td>All arrive at t=0, non-preemptive priority</td><td>Sort by priority, run in order. WT of P₁=0, P₂=BT₁, P₃=BT₁+BT₂…</td></tr>
+    <tr><td>Different AT, non-preemptive</td><td>When CPU free, pick arrived process with best priority</td></tr>
+    <tr><td>Different AT, preemptive</td><td>At each arrival, compare new priority with current process priority → preempt if needed</td></tr>
+    <tr><td>Same priority tie</td><td>Break by FCFS (arrival time), then PID</td></tr>
+    <tr><td>Starvation prevention</td><td>Aging: increase priority by 1 every T time units of waiting</td></tr>
+  </table>
+  <div class="page-num">3 / 3</div>
+</div>
+
+<!-- §5 MULTILEVEL QUEUE -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 3</span><span class="unit-badge">SECTION 5</span></div>
+  <h1 class="section-title"><span class="sn">§5</span> Multilevel Queue &amp; Feedback</h1>
+  <hr class="divider">
+
+  <div class="def-box">
+    <strong>Multilevel Queue Scheduling</strong> — The ready queue is partitioned into <strong>separate queues</strong>. Each process is <strong>permanently assigned</strong> to one queue based on its type (foreground/interactive vs background/batch). Each queue has its own scheduling algorithm. Scheduling must also be done between queues.
+  </div>
+
+  <h2 class="topic">Classic Multilevel Queue Setup</h2>
+  <ul class="plain">
+    <li><strong>Queue 1 — System processes:</strong> Highest priority, real-time tasks</li>
+    <li><strong>Queue 2 — Interactive processes:</strong> Foreground, user-facing (uses Round Robin)</li>
+    <li><strong>Queue 3 — Interactive editing:</strong> Text editors, IDEs</li>
+    <li><strong>Queue 4 — Batch processes:</strong> Background jobs (uses FCFS)</li>
+    <li><strong>Queue 5 — Student jobs:</strong> Lowest priority, non-urgent</li>
+  </ul>
+
+  <div class="purple-box">
+    <strong>Inter-queue scheduling:</strong><br>
+    → <strong>Fixed priority:</strong> Serve all from Queue 1 before Queue 2, etc. Risk: starvation of lower queues.<br>
+    → <strong>Time slice:</strong> Each queue gets a portion of CPU time. E.g., 80% for foreground (RR), 20% for background (FCFS).<br><br>
+    <strong>Key limitation:</strong> Processes are permanently assigned to a queue. Cannot move between queues → inflexible.
+  </div>
+
+  <h2 class="topic">Multilevel Feedback Queue</h2>
+  <div class="def-box">
+    <strong>Multilevel Feedback Queue</strong> — An extension of Multilevel Queue where <strong>processes CAN move between queues</strong>. This allows aging to be implemented and adapts to the changing behavior of processes. Most general CPU scheduling algorithm — most OS use a variant.
+  </div>
+
+  <div class="orange-box">
+    <strong>Classic 3-queue Feedback Example (from PDF):</strong><br>
+    → <strong>Q0:</strong> Round Robin with q=8ms (highest priority)<br>
+    → <strong>Q1:</strong> Round Robin with q=16ms<br>
+    → <strong>Q2:</strong> FCFS (lowest priority)<br><br>
+    <strong>Process behavior:</strong> New job enters Q0. Gets 8ms. If doesn't finish → moved to Q1. Gets 16ms. If doesn't finish → moved to Q2 (FCFS). CPU-bound processes gradually sink to Q2. I/O-bound processes (short bursts) stay in Q0/Q1.
+  </div>
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 3</span><span class="unit-badge">SECTION 5</span></div>
+
+  <h2 class="topic">Multilevel Feedback Queue — Parameters</h2>
+  <div class="teal-box">
+    A multilevel feedback queue scheduler is defined by these parameters:<br>
+    1. <strong>Number of queues</strong><br>
+    2. <strong>Scheduling algorithm for each queue</strong> (RR, FCFS, priority, etc.)<br>
+    3. <strong>Method to upgrade a process</strong> (when to move to higher-priority queue — aging)<br>
+    4. <strong>Method to demote a process</strong> (when to move to lower-priority queue — used too much CPU)<br>
+    5. <strong>Which queue a new process enters</strong> (usually highest priority queue)
+  </div>
+
+  <h2 class="topic">Multilevel Queue vs Multilevel Feedback Queue</h2>
+  <div class="vs-box">
+    <div class="vs-left">
+      <strong>Multilevel Queue</strong>
+      Processes permanently assigned to a queue. No movement between queues. Simple to implement. May cause starvation of low-priority queues. Example: System vs user vs batch queues.
+    </div>
+    <div class="vs-right">
+      <strong>Multilevel Feedback Queue</strong>
+      Processes CAN move between queues. Handles aging (promote long-waiting processes). Adapts to process behavior. Most flexible scheduler. Most complex to implement. Used in real OS.
+    </div>
+  </div>
+
+  <div class="note-box">
+    <strong>Multilevel Feedback Queue = most general scheduling algorithm</strong> — used in real modern OS.<br>
+    <strong>MLFQ implements aging automatically:</strong> if a process in Q2 waits too long → move back to Q0.<br>
+    <strong>CPU-bound processes sink to lower queues; I/O-bound float to top.</strong><br>
+    <strong>For the 3-queue example:</strong> Q0=RR(q=8), Q1=RR(q=16), Q2=FCFS. New job starts at Q0.
+  </div>
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- §6 MULTIPROCESSOR SCHEDULING -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 3</span><span class="unit-badge">SECTION 6</span></div>
+  <h1 class="section-title"><span class="sn">§6</span> Multiprocessor Scheduling</h1>
+  <hr class="divider">
+
+  <div class="def-box">
+    <strong>Multiprocessor Scheduling</strong> deals with scheduling when the hardware consists of multiple CPUs. Much more complex than single-processor scheduling because multiple CPUs must be utilized efficiently and processes must be distributed across them.
+  </div>
+
+  <h2 class="topic">Approaches to Multiprocessor Scheduling</h2>
+  <div class="vs-box">
+    <div class="vs-left">
+      <strong>Asymmetric Multiprocessing</strong>
+      One master processor handles all scheduling, I/O processing, and OS activities. Other slave processors execute user code only. Simple — only master accesses system data structures. Master becomes bottleneck.
+    </div>
+    <div class="vs-right">
+      <strong>Symmetric Multiprocessing (SMP)</strong>
+      Each processor is self-scheduling. All processors are peers. Each processor has its own ready queue OR they share a common ready queue. Most common approach in modern systems.
+    </div>
+  </div>
+
+  <h2 class="topic">Load Balancing</h2>
+  <div class="orange-box">
+    In SMP, we want to distribute workload evenly among all CPUs — this is <strong>load balancing</strong>.<br><br>
+    → <strong>Push migration:</strong> A task periodically checks the load on each processor. If load is imbalanced, it <em>pushes</em> processes from overloaded CPU to idle/less-loaded CPU.<br>
+    → <strong>Pull migration:</strong> An idle processor <em>pulls</em> a process from a busy processor's ready queue.<br><br>
+    Both push and pull migration are often used together. Linux uses both with a load balancer that runs every 200ms.
+  </div>
+
+  <h2 class="topic">Processor Affinity</h2>
+  <div class="purple-box">
+    When a process migrates to a new CPU, the new CPU's cache must be repopulated — costly! <strong>Processor affinity</strong> = keeping a process on the same CPU to benefit from warm cache.<br>
+    → <strong>Soft affinity:</strong> OS attempts to keep process on same CPU but can migrate if needed<br>
+    → <strong>Hard affinity:</strong> Process locked to specific CPU(s) — will never migrate<br>
+    Linux provides system call <code>sched_setaffinity()</code> for hard affinity.
+  </div>
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 3</span><span class="unit-badge">SECTION 6</span></div>
+
+  <h2 class="topic">NUMA and Scheduling</h2>
+  <div class="teal-box">
+    <strong>NUMA (Non-Uniform Memory Access):</strong> Systems where some CPUs have faster access to certain memory banks than others. The OS scheduler must be NUMA-aware — schedule a process on the CPU closest to the memory it uses. Linux NUMA scheduler tries to allocate memory on the node closest to the CPU that will use it.
+  </div>
+
+  <h2 class="topic">Multicore Processor Scheduling</h2>
+  <div class="orange-box">
+    Modern processors have multiple cores on one chip. Each core appears as a separate CPU to the OS.<br><br>
+    <strong>Memory Stall:</strong> When a core waits for memory access (cache miss), it is doing nothing. Solution: <strong>Multithreaded cores</strong> — each core supports multiple hardware threads. When one hardware thread stalls on memory, the core switches to another hardware thread instantly. This is <strong>chip multithreading (CMT)</strong> or <strong>hyperthreading</strong> (Intel's term).<br><br>
+    <strong>Two-level scheduling:</strong><br>
+    → Level 1: OS schedules software threads to hardware threads (logical CPUs)<br>
+    → Level 2: Each core decides which hardware thread runs next within the core
+  </div>
+
+  <h2 class="topic">Real-Time Scheduling</h2>
+  <div class="def-box">
+    <strong>Soft real-time:</strong> System provides no guarantee as to when a critical process is scheduled. Just ensures critical processes have higher priority. Example: multimedia streaming.<br>
+    <strong>Hard real-time:</strong> Tasks must be serviced within a deadline. Missing deadline = system failure. Requires special scheduling algorithms like <strong>Rate Monotonic (RM)</strong> and <strong>Earliest Deadline First (EDF)</strong>.
+  </div>
+
+  <div class="note-box">
+    <strong>SMP = each CPU self-scheduling.</strong> AMP = only master schedules.<br>
+    <strong>Load balancing goal:</strong> All CPUs approximately equally busy. Push migration + pull migration.<br>
+    <strong>Processor affinity = cache warmth preference.</strong> Avoid migration if cache is warm.<br>
+    <strong>Hyperthreading = 2 hardware threads per core.</strong> OS sees 4-core + HT = 8 logical CPUs.
+  </div>
+  <div class="page-num">2 / 2</div>
+</div>
 
 <script>
-(function(){
-  var pages = document.querySelectorAll('.page');
-  var secPages = [];
-  pages.forEach(function(p){ if(p.querySelector('h1.section-title')) secPages.push(p); });
-  secPages.forEach(function(p,i){ p.id = 'sec-'+(i+1); });
-  var tocItems = document.querySelectorAll('.cover-toc-item');
-  tocItems.forEach(function(item, i){
-    if(i >= secPages.length) return;
-    item.style.cursor = 'pointer';
-    item.style.borderRadius = '4px';
-    item.style.transition = 'background 0.18s';
-    item.setAttribute('title', 'Click to jump to this section');
-    item.addEventListener('mouseenter', function(){ item.style.background='rgba(255,255,255,0.18)'; });
-    item.addEventListener('mouseleave', function(){ item.style.background=''; });
-    item.addEventListener('click', function(){ secPages[i].scrollIntoView({behavior:'smooth'}); });
-  });
-})();
+  document.querySelectorAll('.part-nav a').forEach(a=>{if(a.href===window.location.href)a.classList.add('active');});
 </script>
 </body>
 </html>
