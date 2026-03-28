@@ -694,12 +694,15 @@
   border-radius: 50%;
   background: rgba(255,255,255,0.05);
 }
-.cover-subject { font-family: 'Kalam', cursive; font-size: 14px; letter-spacing: 3px; opacity: 0.7; margin-bottom: 16px; }
-.cover-title { font-family: 'Kalam', cursive; font-size: 40px; font-weight: 700; line-height: 1.2; margin-bottom: 12px; }
-.cover-unit { font-family: 'Kalam', cursive; font-size: 20px; opacity: 0.85; margin-bottom: 30px; }
-.cover-divider { width: 80px; height: 3px; background: rgba(255,255,255,0.4); margin: 0 auto 24px; border-radius: 2px; }
-.cover-toc { text-align: left; background: rgba(255,255,255,0.1); border-radius: 8px; padding: 20px 28px; display: inline-block; min-width: 400px; }
-.cover-toc-item { font-family: 'Kalam', cursive; font-size: 15px; line-height: 32px; display: flex; justify-content: space-between; gap: 20px; }
+.cover-eyebrow{font-size:13px;letter-spacing:3px;opacity:0.6;margin-bottom:12px;}
+.cover-title{font-size:38px;font-weight:700;line-height:1.2;margin-bottom:8px;}
+.cover-sub{font-size:17px;opacity:0.8;margin-bottom:8px;}
+.cover-part{display:inline-block;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);border-radius:20px;padding:4px 20px;font-size:14px;margin-bottom:28px;}
+.cover-div{width:60px;height:3px;background:rgba(255,255,255,0.35);margin:0 auto 22px;border-radius:2px;}
+.cover-toc{text-align:left;background:rgba(255,255,255,0.1);border-radius:8px;padding:18px 26px;display:inline-block;min-width:400px;}
+.cover-toc-item{font-size:14px;line-height:32px;display:flex;justify-content:space-between;gap:20px;}
+.cover-toc-sep{border-top:1px solid rgba(255,255,255,0.25);margin:8px 0;}
+.unit-label{font-size:13px;font-weight:700;color:#888;padding:6px 4px;align-self:center;}
 .section-divider { max-width: 820px; margin: 0 auto 30px; display: flex; align-items: center; gap: 14px; }
 .sd-line { flex: 1; height: 2px; background: #1565C0; }
 .sd-label { font-family: 'Kalam', cursive; font-size: 15px; font-weight: 700; color: #1565C0; white-space: nowrap; }
@@ -727,10 +730,26 @@ nav.part-nav{padding:0 10px;gap:6px;}
 <body>
 
 <div class="part-nav">
-  <a href="../index.html" class="back">↩ Units</a>
+  <a href="../index.html">&#8617; Units</a>
+  <span class="unit-label">Unit 2 · Regular Languages</span>
   <a href="part1.html">Part 1</a>
   <a href="part2.html">Part 2</a>
   <a href="part3.html" class="active">Part 3</a>
+</div>
+
+<div class="cover-page">
+  <div class="cover-eyebrow">THEORY OF AUTOMATA &amp; FORMAL LANGUAGES · UNIT 2</div>
+  <div class="cover-title">Decision Properties &amp; Limitations</div>
+  <div class="cover-sub">Regular vs Non-Regular &amp; FSA Limits</div>
+  <div class="cover-part">Part 3 of 3 — Advanced</div>
+  <div class="cover-div"></div>
+  <div class="cover-toc">
+    <div class="cover-toc-item"><span>§9 — Decision Properties of Regular Sets</span><span>2 pages</span></div>
+    <div class="cover-toc-item"><span>§10 — Regular vs Non-Regular: Quick Reference</span><span>1 page</span></div>
+    <div class="cover-toc-item"><span>§11 — Limitations of FSA</span><span>1 page</span></div>
+    <div class="cover-toc-sep"></div>
+    <div class="cover-toc-item"><strong><span>Total</span><span>4 pages</span></strong></div>
+  </div>
 </div>
 
 <div class="page">

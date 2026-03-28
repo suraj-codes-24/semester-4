@@ -303,10 +303,13 @@
   border-radius: 50%;
   background: rgba(255,255,255,0.06);
 }
-.cover-subject { font-family: 'Kalam', cursive; font-size: 14px; letter-spacing: 3px; opacity: 0.7; margin-bottom: 16px; }
-.cover-title { font-family: 'Kalam', cursive; font-size: 40px; font-weight: 700; line-height: 1.2; margin-bottom: 12px; }
-.cover-unit { font-family: 'Kalam', cursive; font-size: 20px; opacity: 0.85; margin-bottom: 30px; }
-.cover-divider { width: 80px; height: 3px; background: rgba(255,255,255,0.4); margin: 0 auto 24px; border-radius: 2px; }
+.cover-eyebrow{font-size:13px;letter-spacing:3px;opacity:0.6;margin-bottom:12px;}
+.cover-title{font-size:38px;font-weight:700;line-height:1.2;margin-bottom:8px;}
+.cover-sub{font-size:17px;opacity:0.8;margin-bottom:8px;}
+.cover-part{display:inline-block;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);border-radius:20px;padding:4px 20px;font-size:14px;margin-bottom:28px;}
+.cover-div{width:60px;height:3px;background:rgba(255,255,255,0.35);margin:0 auto 22px;border-radius:2px;}
+.cover-toc-sep{border-top:1px solid rgba(255,255,255,0.25);margin:8px 0;}
+.unit-label{font-size:13px;font-weight:700;color:#888;padding:6px 4px;align-self:center;}
 .cover-toc { text-align: left; background: rgba(255,255,255,0.1); border-radius: 8px; padding: 20px 28px; display: inline-block; min-width: 420px; }
 .cover-toc-item { font-family: 'Kalam', cursive; font-size: 15px; line-height: 32px; display: flex; justify-content: space-between; gap: 20px; }
 @media(max-width:600px){
@@ -333,28 +336,24 @@ nav.part-nav{padding:0 10px;gap:6px;}
 <body>
 
 <div class="part-nav">
-  <a href="../index.html" class="back">↩ Units</a>
+  <a href="../index.html">&#8617; Units</a>
+  <span class="unit-label">Unit 1 · Automata Theory</span>
   <a href="part1.html" class="active">Part 1</a>
   <a href="part2.html">Part 2</a>
   <a href="part3.html">Part 3</a>
 </div>
 
 <div class="cover-page">
-  <div class="cover-subject">THEORY OF AUTOMATA AND FORMAL LANGUAGES</div>
-  <div class="cover-title">Unit 1 Complete Notes</div>
-  <div class="cover-unit">Basic Concepts &amp; Automata Theory</div>
-  <div class="cover-divider"></div>
+  <div class="cover-eyebrow">THEORY OF AUTOMATA &amp; FORMAL LANGUAGES · UNIT 1</div>
+  <div class="cover-title">Basic Concepts &amp; DFA</div>
+  <div class="cover-sub">Introduction to ToC &amp; Deterministic Automata</div>
+  <div class="cover-part">Part 1 of 3 — Foundations</div>
+  <div class="cover-div"></div>
   <div class="cover-toc">
-    <div class="cover-toc-item"><span>Section 1 — Introduction to ToC</span><span>3 pages</span></div>
-    <div class="cover-toc-item"><span>Section 2 — Deterministic Finite Automaton (DFA)</span><span>4 pages</span></div>
-    <div class="cover-toc-item"><span>Section 3 — NFA &amp; Equivalence with DFA</span><span>3 pages</span></div>
-    <div class="cover-toc-item"><span>Section 4 — NFA with ε-Transitions</span><span>3 pages</span></div>
-    <div class="cover-toc-item"><span>Section 5 — Moore &amp; Mealy Machines</span><span>3 pages</span></div>
-    <div class="cover-toc-item"><span>Section 6 — Minimization of Finite Automata</span><span>3 pages</span></div>
-    <div style="border-top:1px solid rgba(255,255,255,0.3);margin-top:8px;padding-top:8px;">
-    <div class="cover-toc-item"><span>Section 7 — Practice Questions</span><span>3 pages</span></div>
-    <div class="cover-toc-item"><span><strong>Total</strong></span><span><strong>22 pages</strong></span></div>
-    </div>
+    <div class="cover-toc-item"><span>§1 — Introduction to Theory of Computation</span><span>3 pages</span></div>
+    <div class="cover-toc-item"><span>§2 — Deterministic Finite Automaton (DFA)</span><span>4 pages</span></div>
+    <div class="cover-toc-sep"></div>
+    <div class="cover-toc-item"><strong><span>Total</span><span>7 pages</span></strong></div>
   </div>
 </div>
 

@@ -57,6 +57,20 @@
   :root{--ink:#1a1a2e;--ink2:#2c2c54;--blue:#1565C0;--red:#b71c1c;--green:#1b5e20;--purple:#4a148c;--teal:#006064;--line:#c5cae9;--page:#fafaf7;--highlight:#fff9c4;--box-blue:#e8f4fd;--box-green:#e8f5e9;--box-red:#fce4ec;--box-purple:#f3e5f5;--box-teal:#e0f7fa;}
   *{margin:0;padding:0;box-sizing:border-box;}
   body{background:#e0e0e0;font-family:'Kalam',cursive;color:var(--ink);padding:30px 20px;}
+  .part-nav{max-width:820px;margin:0 auto 20px;display:flex;gap:8px;flex-wrap:wrap;}
+  .part-nav a{padding:6px 18px;border-radius:20px;font-size:13px;font-weight:700;text-decoration:none;border:2px solid #bbb;color:#666;background:#fff;}
+  .part-nav a.active{background:var(--teal);color:#fff;border-color:var(--teal);}
+  .part-nav .unit-label{font-size:13px;font-weight:700;color:#888;padding:6px 4px;align-self:center;}
+  .cover-page{background:linear-gradient(135deg,#006064 0%,#004d40 100%);max-width:820px;margin:0 auto 40px;border-radius:8px;padding:70px 60px;text-align:center;color:#fff;box-shadow:0 4px 24px rgba(0,0,0,0.3);position:relative;overflow:hidden;}
+  .cover-page::before{content:'';position:absolute;top:-50px;right:-50px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,0.05);}
+  .cover-eyebrow{font-size:13px;letter-spacing:3px;opacity:0.6;margin-bottom:12px;}
+  .cover-title{font-size:38px;font-weight:700;line-height:1.2;margin-bottom:8px;}
+  .cover-sub{font-size:17px;opacity:0.8;margin-bottom:8px;}
+  .cover-part{display:inline-block;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);border-radius:20px;padding:4px 20px;font-size:14px;margin-bottom:28px;}
+  .cover-div{width:60px;height:3px;background:rgba(255,255,255,0.35);margin:0 auto 22px;border-radius:2px;}
+  .cover-toc{text-align:left;background:rgba(255,255,255,0.1);border-radius:8px;padding:18px 26px;display:inline-block;min-width:400px;}
+  .cover-toc-item{font-size:14px;line-height:32px;display:flex;justify-content:space-between;gap:20px;}
+  .cover-toc-sep{border-top:1px solid rgba(255,255,255,0.25);margin:8px 0;}
   .page{background:var(--page);max-width:820px;margin:0 auto 40px;border-radius:4px;box-shadow:0 2px 16px rgba(0,0,0,0.18),0 0 0 1px rgba(0,0,0,0.08);padding:60px 70px 70px 90px;position:relative;min-height:1060px;background-image:repeating-linear-gradient(transparent,transparent 31px,var(--line) 31px,var(--line) 32px);background-position:0 56px;}
   .page::before{content:'';position:absolute;left:72px;top:0;bottom:0;width:1.5px;background:#ef9a9a;opacity:0.7;}
   .holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-around;padding:40px 0;}
@@ -333,10 +347,25 @@ nav.part-nav{padding:0 10px;gap:6px;}
 <body>
 
 <div class="part-nav">
-  <a href="../index.html" class="back">↩ Units</a>
+  <a href="../index.html">&#8617; Units</a>
+  <span class="unit-label">Unit 1 · Automata Theory</span>
   <a href="part1.html">Part 1</a>
   <a href="part2.html" class="active">Part 2</a>
   <a href="part3.html">Part 3</a>
+</div>
+
+<div class="cover-page">
+  <div class="cover-eyebrow">THEORY OF AUTOMATA &amp; FORMAL LANGUAGES · UNIT 1</div>
+  <div class="cover-title">NFA &amp; ε-Transitions</div>
+  <div class="cover-sub">Non-Determinism &amp; Equivalence with DFA</div>
+  <div class="cover-part">Part 2 of 3 — Intermediate</div>
+  <div class="cover-div"></div>
+  <div class="cover-toc">
+    <div class="cover-toc-item"><span>§3 — NFA &amp; Equivalence with DFA</span><span>3 pages</span></div>
+    <div class="cover-toc-item"><span>§4 — NFA with ε-Transition</span><span>3 pages</span></div>
+    <div class="cover-toc-sep"></div>
+    <div class="cover-toc-item"><strong><span>Total</span><span>6 pages</span></strong></div>
+  </div>
 </div>
 
 <div class="page">
