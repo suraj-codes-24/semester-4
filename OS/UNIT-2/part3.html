@@ -3,138 +3,613 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OS Unit 2 — Part 3</title>
-<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+<title>Operating Systems — Unit 2 | Part 3</title>
 <style>
-:root{--ink:#1a1a2e;--ink2:#2c2c54;--blue:#1565C0;--red:#b71c1c;--green:#1b5e20;--purple:#4a148c;--teal:#006064;--orange:#e65100;--line:#c5cae9;--page:#fafaf7;--highlight:#fff9c4;--box-blue:#e8f4fd;--box-green:#e8f5e9;--box-purple:#f3e5f5;--box-orange:#fff3e0;--box-red:#fce4ec;--box-teal:#e0f7fa;}
-*{margin:0;padding:0;box-sizing:border-box;}
-body{background:#e0e0e0;font-family:'Kalam',cursive;color:var(--ink);padding:30px 20px;}
-.page{background:var(--page);max-width:820px;margin:0 auto 40px;border-radius:4px;box-shadow:0 2px 16px rgba(0,0,0,0.18),0 0 0 1px rgba(0,0,0,0.08);padding:60px 70px 70px 90px;position:relative;min-height:1060px;background-image:repeating-linear-gradient(transparent,transparent 31px,var(--line) 31px,var(--line) 32px);background-position:0 56px;}
-.page::before{content:'';position:absolute;left:72px;top:0;bottom:0;width:1.5px;background:#ef9a9a;opacity:0.7;}
-.holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-around;padding:40px 0;}
-.hole{width:22px;height:22px;border-radius:50%;background:#e0e0e0;border:1.5px solid #bdbdbd;box-shadow:inset 0 1px 3px rgba(0,0,0,0.2);}
-.page-num{position:absolute;bottom:28px;right:50px;font-size:13px;color:#9e9e9e;}
-.page-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
-.date-tag{font-size:13px;color:#9e9e9e;}
-.unit-badge{color:#fff;font-size:13px;padding:2px 14px;border-radius:20px;font-weight:700;}
-h1.section-title{font-size:24px;font-weight:700;color:var(--ink2);text-align:center;margin:8px 0 4px;text-decoration:underline;text-underline-offset:5px;}
-h2.topic{font-size:18px;font-weight:700;color:var(--blue);margin:18px 0 6px;border-bottom:1.5px solid var(--blue);padding-bottom:2px;display:inline-block;}
-h3.sub{font-size:15px;font-weight:700;color:var(--purple);margin:12px 0 4px;}
-p,li{font-size:15px;line-height:32px;}
-.def-box{background:var(--box-blue);border-left:4px solid var(--blue);border-radius:0 6px 6px 0;padding:10px 16px;margin:10px 0 12px;font-size:15px;line-height:30px;}
-.note-box{background:var(--highlight);border-left:4px solid #f9a825;border-radius:0 6px 6px 0;padding:8px 14px;margin:8px 0 10px;font-size:14px;line-height:26px;}
-.rule-box{background:var(--box-green);border:1.5px solid #81c784;border-radius:6px;padding:10px 16px;margin:10px 0;font-size:14.5px;line-height:28px;}
-.purple-box{background:var(--box-purple);border-left:4px solid var(--purple);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
-.orange-box{background:var(--box-orange);border-left:4px solid var(--orange);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
-.teal-box{background:var(--box-teal);border-left:4px solid var(--teal);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
-.formula{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--blue);}
-.divider{border:none;border-top:1px dashed #b0bec5;margin:14px 0 10px;}
-ul.plain{list-style:none;padding-left:4px;}
-ul.plain li::before{content:'→ ';color:var(--blue);font-weight:700;}
-ul.plain li{font-size:15px;line-height:32px;}
-.qbox{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:12px 16px;margin:10px 0;}
-.q-label{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:2px;}
-.q-step{font-size:14px;color:var(--green);margin-top:4px;line-height:26px;}
-.q-ans{font-size:15px;color:var(--red);font-family:'Patrick Hand',cursive;margin-top:4px;}
-table.tt{width:100%;border-collapse:collapse;margin:8px 0;font-size:14px;}
-table.tt th{color:#fff;padding:7px 10px;text-align:center;}
-table.tt td{padding:6px 10px;border-bottom:1px solid #e0e0e0;text-align:center;font-family:'Patrick Hand',cursive;font-size:14px;}
-table.tt tr:nth-child(even) td{background:#f5f5f5;}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0;}
-.vs-box{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:12px 0;border-radius:8px;overflow:hidden;border:1.5px solid #90caf9;}
-.vs-left{background:#e8f4fd;padding:12px 14px;}
-.vs-right{background:var(--box-purple);padding:12px 14px;border-left:1px solid #90caf9;}
-.vs-head{font-size:15px;font-weight:700;margin-bottom:8px;}
-.vs-item{font-size:14px;line-height:26px;}
-.step-card{background:var(--box-purple);border-left:4px solid var(--purple);padding:8px 14px;margin:5px 0;border-radius:0 6px 6px 0;}
-.step-head{font-size:14px;font-weight:700;color:var(--purple);}
-.step-body{font-size:13.5px;line-height:24px;color:var(--ink2);}
-.cover-page{max-width:820px;margin:0 auto 40px;border-radius:8px;padding:80px 60px;text-align:center;color:#fff;box-shadow:0 4px 24px rgba(0,0,0,0.3);position:relative;overflow:hidden;}
-.cover-subject{font-size:14px;letter-spacing:3px;opacity:0.7;margin-bottom:16px;}
-.cover-title{font-size:40px;font-weight:700;line-height:1.2;margin-bottom:12px;}
-.cover-unit{font-size:20px;opacity:0.85;margin-bottom:30px;}
-.cover-divider{width:80px;height:3px;background:rgba(255,255,255,0.4);margin:0 auto 24px;border-radius:2px;}
-.cover-toc{text-align:left;background:rgba(255,255,255,0.1);border-radius:8px;padding:20px 28px;display:inline-block;min-width:420px;}
-.cover-toc-item{font-size:15px;line-height:32px;display:flex;justify-content:space-between;gap:20px;}
-.part-nav{max-width:820px;margin:0 auto 20px;display:flex;gap:10px;justify-content:center;align-items:center;font-family:'Kalam',cursive;flex-wrap:wrap;}
-.part-nav a{padding:6px 20px;border-radius:20px;background:#fff;border:1.5px solid #90caf9;color:var(--blue);text-decoration:none;font-size:14px;font-weight:700;}
-.part-nav a:hover:not(.active){background:#e3f2fd;}
-.part-nav .back{background:#f5f5f5;border-color:#ccc;color:#555;font-size:13px;}
-.unit-badge{background:#4a148c;}
-h1.section-title{text-decoration-color:#4a148c;}
-h1.section-title .sn{color:#4a148c;}
-.part-nav a.active{background:#4a148c;border-color:#4a148c;color:#fff;}
-@media(max-width:600px){
-body{padding:10px 0 30px;}
-.page{padding:20px 16px 30px 16px;min-height:unset;}
-.page::before{display:none;}
-.holes{display:none;}
-.cover-page{padding:40px 20px;margin:0 10px 20px;}
-.cover-toc{min-width:unset;width:100%;padding:14px 16px;}
-.part-nav{padding:0 10px;gap:6px;}
-.part-nav a{padding:5px 12px;font-size:13px;}
-.two-col{grid-template-columns:1fr;}
-.vs-box{grid-template-columns:1fr;}
-.vs-right{border-left:none;border-top:1px solid #90caf9;}
-nav.part-nav{padding:0 10px;gap:6px;}
-.cover-title{font-size:28px;}
-}</style>
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Kalam:wght@300;400;700&family=Special+Elite&display=swap');
+  :root{--paper:#fdf9f0;--ink:#1a1a2e;--ink-light:#2d2d4e;--blue:#1a56db;--blue-light:#dbeafe;--green:#0d6b3f;--green-light:#d1fae5;--orange:#c05621;--orange-light:#fef3c7;--purple:#5b21b6;--purple-light:#ede9fe;--red:#b91c1c;--red-light:#fee2e2;--teal:#0e7490;--teal-light:#cffafe;--rule-line:#c8d8e8;--margin-line:#f4a0a0;--hole-bg:#e8e0d0;--shadow:rgba(0,0,0,0.08);--accent:#0e7490;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:#082030;background-image:radial-gradient(circle at 20% 50%,rgba(14,116,144,.2) 0%,transparent 55%),radial-gradient(circle at 80% 20%,rgba(13,107,63,.15) 0%,transparent 50%);font-family:'Kalam',cursive;color:var(--ink);padding:20px 0 40px;min-height:100vh;}
+  .part-nav{display:flex;justify-content:center;gap:10px;margin-bottom:28px;flex-wrap:wrap;padding:0 16px;}
+  .part-nav a{font-family:'Caveat',cursive;font-size:1rem;font-weight:600;padding:7px 20px;border-radius:20px;text-decoration:none;background:rgba(255,255,255,.5);color:#555;border:2px solid rgba(255,255,255,.7);transition:all .2s;}
+  .part-nav a.active{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 4px 12px rgba(14,116,144,.45);}
+  .part-nav a:hover:not(.active){background:rgba(255,255,255,.8);color:#333;}
+  .page{width:760px;max-width:98vw;margin:0 auto 28px;background:var(--paper);border-radius:3px;box-shadow:4px 4px 14px var(--shadow),0 1px 3px rgba(0,0,0,.12);position:relative;padding:36px 44px 44px 80px;min-height:600px;background-image:repeating-linear-gradient(transparent,transparent 31px,var(--rule-line) 31px,var(--rule-line) 32px);background-position:0 64px;}
+  .page::before{content:'';position:absolute;left:68px;top:0;bottom:0;width:2px;background:var(--margin-line);opacity:.7;}
+  .holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-evenly;align-items:center;width:32px;}
+  .hole{width:18px;height:18px;border-radius:50%;background:var(--hole-bg);border:1.5px solid #b8a898;box-shadow:inset 0 1px 3px rgba(0,0,0,.2);}
+  .page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+  .date-tag{font-family:'Special Elite',cursive;font-size:.72rem;color:var(--teal);letter-spacing:.05em;text-transform:uppercase;}
+  .unit-badge{font-family:'Caveat',cursive;font-size:.85rem;font-weight:700;background:var(--accent);color:white;padding:2px 12px;border-radius:10px;letter-spacing:.08em;}
+  .section-title{font-family:'Caveat',cursive;font-size:2rem;font-weight:700;color:var(--ink);margin:8px 0 4px;line-height:1.2;}
+  .sn{font-family:'Special Elite',cursive;color:var(--accent);margin-right:6px;font-size:1.7rem;}
+  .divider{border:none;border-top:2.5px solid var(--accent);margin:6px 0 18px;border-radius:2px;}
+  h2.topic{font-family:'Caveat',cursive;font-size:1.45rem;font-weight:700;color:var(--accent);margin:20px 0 8px;padding-bottom:3px;border-bottom:1.5px dashed var(--rule-line);}
+  h3.sub{font-family:'Kalam',cursive;font-size:1.1rem;font-weight:700;color:var(--purple);margin:14px 0 6px;}
+  .def-box,.rule-box,.note-box,.purple-box,.orange-box{border-radius:8px;padding:13px 16px;margin:14px 0;font-size:.97rem;line-height:1.65;}
+  .def-box{background:var(--blue-light);border-left:4px solid var(--blue);}
+  .def-box::before{content:'📘 Definition';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--blue);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .rule-box{background:var(--green-light);border-left:4px solid var(--green);}
+  .rule-box::before{content:'📗 Key Result';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--green);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .note-box{background:var(--red-light);border-left:4px solid var(--red);}
+  .note-box::before{content:'⚠️ Exam Tip';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--red);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .purple-box{background:var(--purple-light);border-left:4px solid var(--purple);}
+  .purple-box::before{content:'💡 Important';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--purple);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .orange-box{background:var(--orange-light);border-left:4px solid var(--orange);}
+  .orange-box::before{content:'🔧 How it Works';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--orange);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .teal-box{background:var(--teal-light);border-left:4px solid var(--teal);border-radius:8px;padding:13px 16px;margin:14px 0;font-size:.97rem;line-height:1.65;}
+  .teal-box::before{content:'✨ Note';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--teal);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .qbox{background:#fffbf0;border:1.5px solid #e4cc88;border-radius:8px;padding:14px 16px;margin:14px 0;font-size:.96rem;}
+  .q-label{font-family:'Caveat',cursive;font-weight:700;font-size:1.05rem;color:var(--orange);margin-bottom:6px;}
+  .q-step{margin:5px 0;padding-left:16px;position:relative;line-height:1.6;color:var(--ink-light);}
+  .q-step::before{content:'→';position:absolute;left:0;color:var(--accent);font-weight:700;}
+  .q-ans{font-family:'Caveat',cursive;font-weight:700;font-size:1.05rem;color:var(--green);margin-top:8px;padding-top:6px;border-top:1px dashed #e4cc88;}
+  ul.plain{list-style:none;padding-left:0;margin:8px 0;}
+  ul.plain li{padding:4px 0 4px 22px;position:relative;line-height:1.6;font-size:.97rem;}
+  ul.plain li::before{content:'→';position:absolute;left:2px;color:var(--accent);font-weight:700;}
+  .formula{font-family:'Special Elite',cursive;background:rgba(14,116,144,.1);color:var(--teal);padding:2px 8px;border-radius:4px;font-size:.95em;display:inline-block;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:12px 0;}
+  @media(max-width:600px){.two-col{grid-template-columns:1fr;}}
+  .vs-box{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:12px 0;border-radius:8px;overflow:hidden;border:1.5px solid #d0d0d0;font-size:.93rem;}
+  .vs-left{background:#e0f2fe;padding:12px 14px;border-right:1.5px solid #d0d0d0;}
+  .vs-right{background:#d1fae5;padding:12px 14px;}
+  .vs-left strong,.vs-right strong{font-family:'Caveat',cursive;font-size:1.05rem;display:block;margin-bottom:6px;}
+  .vs-left strong{color:var(--blue);} .vs-right strong{color:var(--green);}
+  table.tt{width:100%;border-collapse:collapse;font-size:.9rem;margin:12px 0;}
+  table.tt th{background:var(--accent);color:white;padding:8px 12px;text-align:left;font-family:'Caveat',cursive;font-size:1rem;}
+  table.tt td{padding:7px 12px;border-bottom:1px solid var(--rule-line);}
+  table.tt tr:nth-child(even) td{background:rgba(14,116,144,.04);}
+  .step-card{display:flex;gap:12px;margin:10px 0;align-items:flex-start;}
+  .step-head{background:var(--accent);color:white;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-family:'Caveat',cursive;font-weight:700;font-size:1rem;flex-shrink:0;margin-top:2px;}
+  .step-body{flex:1;line-height:1.65;font-size:.97rem;}
+  .page-num{position:absolute;bottom:14px;right:22px;font-family:'Caveat',cursive;font-size:.85rem;color:#999;}
+  pre.code-block{background:#1e1e2e;color:#cdd6f4;border-radius:8px;padding:14px 16px;font-family:'Courier New',monospace;font-size:.82rem;line-height:1.7;margin:12px 0;overflow-x:auto;border-left:4px solid var(--accent);}
+  .kw{color:#89b4fa;font-weight:bold;} .cm{color:#6c7086;font-style:italic;} .st{color:#a6e3a1;} .nm{color:#fab387;}
+  .cover-page{width:760px;max-width:98vw;margin:0 auto 28px;background:linear-gradient(135deg,#1c0a00 0%,#7c2d12 50%,#c2410c 100%);border-radius:6px;box-shadow:6px 6px 20px rgba(0,0,0,.45);padding:50px 60px 50px 80px;position:relative;overflow:hidden;color:white;min-height:460px;}
+  .cover-page::before{content:'';position:absolute;top:-60px;right:-60px;width:300px;height:300px;background:radial-gradient(circle,rgba(253,186,116,.25) 0%,transparent 70%);border-radius:50%;}
+  .cover-holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-evenly;align-items:center;width:32px;}
+  .cover-subject{font-family:'Special Elite',cursive;font-size:.78rem;letter-spacing:.25em;text-transform:uppercase;color:#fed7aa;margin-bottom:8px;position:relative;z-index:1;}
+  .cover-title{font-family:'Caveat',cursive;font-size:3rem;font-weight:700;line-height:1.1;margin-bottom:6px;position:relative;z-index:1;}
+  .cover-unit{font-family:'Kalam',cursive;font-size:1.15rem;color:#fed7aa;margin-bottom:4px;position:relative;z-index:1;}
+  .cover-subtitle{font-family:'Kalam',cursive;font-size:.95rem;color:#fde68a;margin-bottom:22px;position:relative;z-index:1;}
+  .cover-part-badge{display:inline-block;background:#c2410c;color:white;font-family:'Caveat',cursive;font-weight:700;font-size:1.1rem;padding:6px 20px;border-radius:20px;margin-bottom:22px;position:relative;z-index:1;letter-spacing:.06em;}
+  .cover-toc{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.2);padding-top:18px;}
+  .cover-toc h3{font-family:'Special Elite',cursive;font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:#fed7aa;margin-bottom:10px;}
+  .toc-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px dotted rgba(255,255,255,.12);}
+  .toc-sec{font-family:'Caveat',cursive;font-size:.98rem;font-weight:600;color:#f5f5f5;}
+  .toc-sec span.toc-num{color:#fed7aa;margin-right:8px;font-family:'Special Elite',cursive;}
+  .toc-pages{font-family:'Special Elite',cursive;font-size:.75rem;color:#a6adc8;background:rgba(255,255,255,.07);padding:2px 8px;border-radius:8px;}
+  p{line-height:1.7;margin:8px 0;font-size:.97rem;}
+  strong{color:var(--ink);}
+  code{font-family:'Courier New',monospace;font-size:.9em;background:rgba(0,0,0,.07);padding:1px 5px;border-radius:3px;}
+  .rev-section{background:linear-gradient(135deg,#042f2e,#134e4a);color:white;border-radius:10px;padding:16px 20px;margin:14px 0;}
+  .rev-section h3{font-family:'Caveat',cursive;font-size:1.15rem;color:#5eead4;margin-bottom:8px;border-bottom:1px solid rgba(255,255,255,.2);padding-bottom:4px;}
+  .rev-section ul{list-style:none;padding:0;}
+  .rev-section ul li{padding:3px 0 3px 20px;position:relative;font-size:.9rem;color:#e2e8f0;line-height:1.55;}
+  .rev-section ul li::before{content:'◆';position:absolute;left:2px;color:#5eead4;font-size:.65rem;top:6px;}
+  .rev-formula{font-family:'Special Elite',cursive;background:rgba(94,234,212,.15);color:#5eead4;padding:2px 8px;border-radius:4px;font-size:.9em;}
+</style>
 </head>
 <body>
+<nav class="part-nav">
+  <a href="../index.html">↩ Units</a>
+  <a href="part1.html">◆ Part 1 — Concurrency Basics</a>
+  <a href="part2.html">◆ Part 2 — Synchronization Solutions</a>
+  <a href="part3.html" class="active">◆ Part 3 — Classical Problems &amp; IPC</a>
+</nav>
 
-<div class="part-nav">
-  <a href="../index.html" class="back">↩ Units</a>
-  <a href="part1.html">Part 1</a>
-  <a href="part2.html">Part 2</a>
-  <a href="part3.html" class="active">Part 3</a>
-</div>
-
-<div class="cover-page" style="background:linear-gradient(135deg,#4a148c 0%,#1a237e 100%);">
-  <div class="cover-subject">OPERATING SYSTEMS</div>
-  <div class="cover-title">Unit 2 — Part 3</div>
-  <div class="cover-unit">[ Awaiting Content ]</div>
-  <div class="cover-divider"></div>
+<div class="cover-page">
+  <div class="cover-holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="cover-subject">Operating Systems</div>
+  <div class="cover-title">Unit 2 Notes</div>
+  <div class="cover-unit">Unit 2 — Concurrent Processes</div>
+  <div class="cover-subtitle">Dining Philosophers · Sleeping Barber · IPC · Process Generation</div>
+  <div class="cover-part-badge">📒 Part 3 of 3 — Classical Problems &amp; IPC</div>
   <div class="cover-toc">
-    <div class="cover-toc-item" style="opacity:0.6;font-style:italic;justify-content:center;"><span>Content to be added</span></div>
+    <h3>Contents — Part 3</h3>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§1</span> Dining Philosophers Problem</div><div class="toc-pages">3 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§2</span> Sleeping Barber Problem</div><div class="toc-pages">3 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§3</span> IPC Models and Schemes</div><div class="toc-pages">3 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§4</span> Process Generation</div><div class="toc-pages">2 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§5</span> Quick Revision — Unit 2</div><div class="toc-pages">2 pages</div></div>
   </div>
 </div>
 
-<!-- ================================================
-     ADD CONTENT SECTIONS BELOW THIS LINE
+<!-- §1 DINING PHILOSOPHERS -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 2</span><span class="unit-badge">SECTION 1</span></div>
+  <h1 class="section-title"><span class="sn">§1</span> Dining Philosophers Problem</h1>
+  <hr class="divider">
 
-     Each section pattern:
+  <div class="def-box">
+    The <strong>Dining Philosophers Problem</strong> (Dijkstra, 1965) is a classic synchronization problem. Five philosophers sit around a circular table. Between each pair of adjacent philosophers is one chopstick (fork). A philosopher needs <strong>both chopsticks</strong> (left and right) to eat. The problem: design a protocol so philosophers can eat without deadlock or starvation.
+  </div>
 
-     <div class="page">
-       <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
-       <div class="page-header">
-         <span class="date-tag">OS — Unit 2</span>
-         <span class="unit-badge">SECTION X</span>
-       </div>
-       <h1 class="section-title"><span class="sn">§X</span> Title Here</h1>
-       <hr class="divider">
-       ... content ...
-       <div class="page-num">1 / 1</div>
-     </div>
-     ================================================ -->
+  <h2 class="topic">Problem Setup</h2>
+  <div class="orange-box">
+    → 5 philosophers: P₀, P₁, P₂, P₃, P₄<br>
+    → 5 chopsticks: C₀, C₁, C₂, C₃, C₄<br>
+    → Chopstick Cᵢ is between Pᵢ and P(i+1)%5<br>
+    → Philosopher i needs: <strong>left chopstick Cᵢ</strong> AND <strong>right chopstick C(i+1)%5</strong><br>
+    → Each philosopher alternates between <strong>thinking</strong> and <strong>eating</strong><br>
+    → A chopstick can be held by only one philosopher at a time (shared resource)
+  </div>
+
+  <h2 class="topic">Naive Solution (Uses Semaphores — DEADLOCKS!)</h2>
+  <pre class="code-block"><span class="cm">// Shared: semaphore chopstick[5] = {1,1,1,1,1}</span>
+
+<span class="cm">// Philosopher i:</span>
+<span class="kw">do</span> {
+    think();
+    <span class="kw">wait</span>(chopstick[i]);          <span class="cm">// pick up LEFT chopstick</span>
+    <span class="kw">wait</span>(chopstick[(i+<span class="nm">1</span>)%<span class="nm">5</span>]);   <span class="cm">// pick up RIGHT chopstick</span>
+    eat();
+    <span class="kw">signal</span>(chopstick[i]);        <span class="cm">// put down LEFT</span>
+    <span class="kw">signal</span>(chopstick[(i+<span class="nm">1</span>)%<span class="nm">5</span>]); <span class="cm">// put down RIGHT</span>
+} <span class="kw">while</span> (<span class="kw">true</span>);</pre>
+
+  <div class="note-box" style="margin-top:8px">
+    ❌ <strong>Deadlock scenario:</strong> All 5 philosophers simultaneously pick up their LEFT chopstick. Now each philosopher holds one chopstick and waits for the right one — which is held by the neighbor. <strong>Circular wait → Deadlock!</strong>
+  </div>
+  <div class="page-num">1 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 2</span><span class="unit-badge">SECTION 1</span></div>
+
+  <h2 class="topic">Solutions to Dining Philosophers</h2>
+  <div class="step-card"><div class="step-head">1</div><div class="step-body"><strong>Allow at most 4 philosophers to sit:</strong> Use a counting semaphore initialized to 4. At most 4 philosophers can try to eat simultaneously → at least one will always get both chopsticks. Deadlock impossible.</div></div>
+  <div class="step-card"><div class="step-head">2</div><div class="step-body"><strong>Asymmetric solution:</strong> Odd philosophers pick LEFT then RIGHT. Even philosophers pick RIGHT then LEFT. This breaks the circular wait condition → no deadlock.</div></div>
+  <div class="step-card"><div class="step-head">3</div><div class="step-body"><strong>Pick up both at once (Monitor solution):</strong> A philosopher only picks up chopsticks when BOTH are available simultaneously. If not both available, wait. This requires a critical section around the check-and-pick operation.</div></div>
+  <div class="step-card"><div class="step-head">4</div><div class="step-body"><strong>Resource Hierarchy:</strong> Number chopsticks 1–5. Always pick the lower-numbered chopstick first. This imposes a global ordering → breaks circular wait.</div></div>
+
+  <h2 class="topic">Solution 1: Allow Max 4 Philosophers (Code)</h2>
+  <pre class="code-block"><span class="cm">// Shared: semaphore chopstick[5]={1,1,1,1,1}</span>
+<span class="cm">// Shared: semaphore room = 4  (max 4 can try to eat)</span>
+
+<span class="cm">// Philosopher i:</span>
+<span class="kw">do</span> {
+    think();
+    <span class="kw">wait</span>(room);                   <span class="cm">// only 4 allowed at a time</span>
+    <span class="kw">wait</span>(chopstick[i]);
+    <span class="kw">wait</span>(chopstick[(i+<span class="nm">1</span>)%<span class="nm">5</span>]);
+    eat();
+    <span class="kw">signal</span>(chopstick[i]);
+    <span class="kw">signal</span>(chopstick[(i+<span class="nm">1</span>)%<span class="nm">5</span>]);
+    <span class="kw">signal</span>(room);                  <span class="cm">// free up a seat</span>
+} <span class="kw">while</span> (<span class="kw">true</span>);</pre>
+
+  <div class="qbox">
+    <div class="q-label">🧪 Deadlock Check: Why max-4 prevents deadlock</div>
+    <div class="q-step">5 philosophers, 5 chopsticks. If all 5 could try to eat: each picks 1 chopstick → deadlock.</div>
+    <div class="q-step">With room=4: only 4 philosophers can try to eat simultaneously.</div>
+    <div class="q-step">4 philosophers hold at most 4 chopsticks. The 5th chopstick is FREE.</div>
+    <div class="q-step">At least one philosopher can pick up BOTH chopsticks → eats → releases chopsticks → others can proceed.</div>
+    <div class="q-ans">✓ At most 4 in room → at least 1 chopstick always free → no circular wait → no deadlock!</div>
+  </div>
+  <div class="page-num">2 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 2</span><span class="unit-badge">SECTION 1</span></div>
+
+  <h2 class="topic">Philosopher States</h2>
+  <div class="def-box">
+    In the monitor-based solution, each philosopher can be in one of three states:<br>
+    → <strong>THINKING:</strong> Not hungry, not eating<br>
+    → <strong>HUNGRY:</strong> Wants to eat, trying to get chopsticks<br>
+    → <strong>EATING:</strong> Has both chopsticks, currently eating<br><br>
+    A philosopher moves to EATING only when <em>neither neighbor is EATING</em>.
+  </div>
+
+  <h2 class="topic">Deadlock vs Starvation in Dining Philosophers</h2>
+  <div class="vs-box">
+    <div class="vs-left"><strong>Deadlock</strong>All philosophers hold one chopstick and wait for the other. No one can proceed. System is completely stuck. Caused by circular wait. Fixed by breaking one of the 4 Coffman conditions.</div>
+    <div class="vs-right"><strong>Starvation</strong>One philosopher never gets to eat because neighbors always grab chopsticks first. Progress for others, but this philosopher waits indefinitely. Fixed by ensuring fairness (bounded waiting).</div>
+  </div>
+
+  <div class="note-box">
+    <strong>Dining Philosophers demonstrates:</strong> Deadlock, Starvation, and Resource allocation in concurrent systems.<br>
+    <strong>Four Coffman conditions for deadlock:</strong> Mutual Exclusion, Hold and Wait, No Preemption, Circular Wait. Break ANY ONE → no deadlock.<br>
+    <strong>Asymmetric solution is simplest to code:</strong> Odd picks left first, even picks right first. Break circular wait.<br>
+    <strong>This problem models:</strong> Multiple processes competing for multiple shared resources (e.g., database transactions needing multiple locks).
+  </div>
+  <div class="page-num">3 / 3</div>
+</div>
+
+<!-- §2 SLEEPING BARBER -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 2</span><span class="unit-badge">SECTION 2</span></div>
+  <h1 class="section-title"><span class="sn">§2</span> Sleeping Barber Problem</h1>
+  <hr class="divider">
+
+  <div class="def-box">
+    The <strong>Sleeping Barber Problem</strong> (Dijkstra, 1965) models a barber shop with one barber, one barber chair, and a waiting room with N chairs. It demonstrates process synchronization between a service provider (barber) and multiple customers (processes).
+  </div>
+
+  <h2 class="topic">Problem Statement</h2>
+  <div class="orange-box">
+    <strong>Rules:</strong><br>
+    → One barber, one barber chair, N waiting chairs<br>
+    → If NO customers: barber sleeps in barber chair<br>
+    → Customer arrives, barber sleeping → customer wakes barber → gets haircut<br>
+    → Customer arrives, barber busy, waiting chair available → customer sits and waits<br>
+    → Customer arrives, all waiting chairs full → customer LEAVES (lost customer)<br>
+    → After haircut done → barber checks waiting room. If customers waiting → takes next one. Else → goes back to sleep.
+  </div>
+
+  <h2 class="topic">Mapping to OS Concepts</h2>
+  <table class="tt">
+    <tr><th>Barbershop Concept</th><th>OS Equivalent</th></tr>
+    <tr><td>Barber</td><td>Server process / CPU</td></tr>
+    <tr><td>Customer</td><td>Client process / job</td></tr>
+    <tr><td>Haircut</td><td>Service / computation</td></tr>
+    <tr><td>Waiting chairs</td><td>Ready queue / buffer</td></tr>
+    <tr><td>Barber sleeping</td><td>CPU idle (no processes)</td></tr>
+    <tr><td>Customer leaves (chairs full)</td><td>Process rejected (buffer full)</td></tr>
+    <tr><td>Waking the barber</td><td>Interrupt / signal to idle CPU</td></tr>
+  </table>
+  <div class="page-num">1 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 2</span><span class="unit-badge">SECTION 2</span></div>
+
+  <h2 class="topic">Semaphore Variables</h2>
+  <div class="purple-box">
+    <span class="formula">semaphore customers = 0</span> — counts waiting customers (barber waits on this)<br>
+    <span class="formula">semaphore barbers = 0</span> — counts idle barbers (customers wait on this)<br>
+    <span class="formula">semaphore mutex = 1</span> — mutual exclusion for the waiting variable<br>
+    <span class="formula">int waiting = 0</span> — count of customers currently waiting (shared variable)
+  </div>
+
+  <h2 class="topic">Sleeping Barber Solution Code</h2>
+  <pre class="code-block"><span class="cm">// BARBER process:</span>
+<span class="kw">while</span> (<span class="kw">true</span>) {
+    <span class="kw">wait</span>(customers);    <span class="cm">// sleep if no customers (block until customer arrives)</span>
+    <span class="kw">wait</span>(mutex);        <span class="cm">// get exclusive access to 'waiting'</span>
+    waiting--;          <span class="cm">// one less customer waiting</span>
+    <span class="kw">signal</span>(barbers);    <span class="cm">// barber is ready</span>
+    <span class="kw">signal</span>(mutex);
+    cut_hair();         <span class="cm">// give haircut (outside mutex)</span>
+}
+
+<span class="cm">// CUSTOMER process:</span>
+<span class="kw">void</span> customer() {
+    <span class="kw">wait</span>(mutex);
+    <span class="kw">if</span> (waiting &lt; CHAIRS) {   <span class="cm">// check if waiting room has space</span>
+        waiting++;             <span class="cm">// take a seat</span>
+        <span class="kw">signal</span>(customers);    <span class="cm">// wake up barber (or signal one waiting)</span>
+        <span class="kw">signal</span>(mutex);
+        <span class="kw">wait</span>(barbers);        <span class="cm">// wait for barber to be ready</span>
+        get_haircut();
+    } <span class="kw">else</span> {
+        <span class="kw">signal</span>(mutex);        <span class="cm">// no room → leave without haircut</span>
+    }
+}</pre>
+  <div class="page-num">2 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 2</span><span class="unit-badge">SECTION 2</span></div>
+
+  <h2 class="topic">Trace: Sleeping Barber (N=3 chairs)</h2>
+  <div class="qbox">
+    <div class="q-label">🧪 Sleeping Barber Execution Trace (3 waiting chairs)</div>
+    <div class="q-step">Initially: customers=0, barbers=0, waiting=0. Barber executes wait(customers) → SLEEPS.</div>
+    <div class="q-step">Customer 1 arrives: waiting=0 &lt; 3 → waiting=1, signal(customers)→customers=1 → BARBER WAKES UP</div>
+    <div class="q-step">Barber: customers-- (=0), waiting-- (=0), signal(barbers)→barbers=1, cut_hair()</div>
+    <div class="q-step">Customer 1: wait(barbers)→barbers=0 → gets haircut ✅</div>
+    <div class="q-step">Customers 2,3,4 arrive while barber is busy: waiting=1,2,3</div>
+    <div class="q-step">Customer 5 arrives: waiting=3 = CHAIRS → leaves without haircut ❌</div>
+    <div class="q-step">Barber finishes haircut → loops back → wait(customers) → customers=3 (waiting) → takes next</div>
+    <div class="q-ans">✓ Waiting room acts as bounded buffer. Full → customers turned away. Barber = consumer, customers = producers.</div>
+  </div>
+
+  <h2 class="topic">Key Insights</h2>
+  <div class="rule-box">
+    <strong>Race condition to avoid:</strong> Without mutex, two customers could simultaneously check <code>waiting &lt; CHAIRS</code>, both see room available, both increment waiting → waiting exceeds CHAIRS. Mutex prevents this.<br><br>
+    <strong>Without mutex:</strong> Barber might check waiting=0 and decide to sleep, while a customer simultaneously increments waiting to 1 and signals. If barber reaches sleep AFTER signal → barber sleeps forever with a waiting customer! Mutex prevents this race.
+  </div>
+
+  <div class="note-box">
+    <strong>Sleeping Barber = Producer-Consumer variant</strong> with a bounded waiting room.<br>
+    <strong>Three semaphores:</strong> customers, barbers, mutex — memorize all three and their initial values.<br>
+    <strong>Real-world analogy:</strong> Thread pool in a web server — threads (barbers) wait for requests (customers). If request queue (waiting room) is full, new requests are rejected.<br>
+    <strong>Key synchronization insight:</strong> Barber must check for waiting customers and go to sleep atomically — otherwise race condition.
+  </div>
+  <div class="page-num">3 / 3</div>
+</div>
+
+<!-- §3 IPC MODELS AND SCHEMES -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 2</span><span class="unit-badge">SECTION 3</span></div>
+  <h1 class="section-title"><span class="sn">§3</span> IPC Models and Schemes</h1>
+  <hr class="divider">
+
+  <div class="def-box">
+    <strong>Inter-Process Communication (IPC)</strong> refers to mechanisms provided by the OS that allow processes to communicate and synchronize with each other. Processes can be independent (no communication) or cooperating (share data/work). Cooperating processes need IPC.
+  </div>
+
+  <h2 class="topic">Why IPC?</h2>
+  <ul class="plain">
+    <li><strong>Information Sharing:</strong> Multiple processes access the same data (e.g., shared files)</li>
+    <li><strong>Computation Speedup:</strong> Break a task into subtasks running in parallel</li>
+    <li><strong>Modularity:</strong> Divide system functions into separate processes</li>
+    <li><strong>Convenience:</strong> User runs multiple tasks simultaneously</li>
+  </ul>
+
+  <h2 class="topic">Two Fundamental IPC Models</h2>
+  <div class="vs-box">
+    <div class="vs-left">
+      <strong>Shared Memory</strong>
+      Processes share a region of memory. One process writes, another reads. Very FAST — just memory access, no kernel involvement after setup. Requires synchronization (semaphores/mutex) to prevent race conditions. Example: POSIX shm_open(), mmap().
+    </div>
+    <div class="vs-right">
+      <strong>Message Passing</strong>
+      Processes exchange messages via the OS kernel. No shared memory — each process has own address space. Easier to implement correctly (no sync needed). Slower — kernel involved in every message. Example: Pipes, sockets, MPI.
+    </div>
+  </div>
+
+  <table class="tt">
+    <tr><th>Feature</th><th>Shared Memory</th><th>Message Passing</th></tr>
+    <tr><td>Speed</td><td>Fast (no kernel per op)</td><td>Slower (kernel overhead)</td></tr>
+    <tr><td>Synchronization</td><td>User must handle</td><td>OS handles implicitly</td></tr>
+    <tr><td>Data size</td><td>Any size, efficient</td><td>Messages have size limits</td></tr>
+    <tr><td>Implementation</td><td>Complex (race conditions)</td><td>Simpler, safer</td></tr>
+    <tr><td>Distributed</td><td>Not suitable</td><td>Works across network</td></tr>
+    <tr><td>Example</td><td>POSIX shm, mmap</td><td>Pipes, sockets, MPI, signals</td></tr>
+  </table>
+  <div class="page-num">1 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 2</span><span class="unit-badge">SECTION 3</span></div>
+
+  <h2 class="topic">IPC Schemes in Detail</h2>
+
+  <h3 class="sub">1. Pipes</h3>
+  <div class="def-box">
+    A <strong>pipe</strong> is a unidirectional communication channel between two processes. Data flows in one direction only. Created by the OS. The output of one process is the input of another.
+  </div>
+  <div class="two-col">
+    <div class="teal-box" style="margin:0">
+      <strong>Ordinary Pipes</strong> — exist only while processes are running. Parent creates pipe before fork(). Unidirectional. Must use two pipes for bidirectional. UNIX: <code>pipe(fd)</code>
+    </div>
+    <div class="teal-box" style="margin:0">
+      <strong>Named Pipes (FIFOs)</strong> — persist in file system after processes die. Two unrelated processes can communicate. Bidirectional possible. UNIX: <code>mkfifo()</code>
+    </div>
+  </div>
+
+  <h3 class="sub">2. Message Queues</h3>
+  <div class="orange-box">
+    A <strong>message queue</strong> is a linked list of messages stored in the kernel. Processes send messages to the queue; other processes receive from it. Messages have a type and can be received in order (FIFO) or by type (priority). More flexible than pipes — multiple senders and receivers possible.
+  </div>
+
+  <h3 class="sub">3. Shared Memory</h3>
+  <div class="orange-box">
+    A region of physical memory is mapped into the address space of multiple processes. After the OS sets up the mapping, processes read/write directly — no further OS involvement. The fastest IPC mechanism. POSIX: <code>shm_open()</code> + <code>mmap()</code>.
+  </div>
+
+  <h3 class="sub">4. Sockets</h3>
+  <div class="orange-box">
+    An endpoint for communication. Identified by <span class="formula">IP address : port number</span>. Can communicate between processes on the same machine (Unix domain sockets) or different machines (network sockets). Used for client-server communication. Protocols: TCP (reliable), UDP (unreliable/fast).
+  </div>
+  <div class="page-num">2 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 2</span><span class="unit-badge">SECTION 3</span></div>
+
+  <h2 class="topic">More IPC Schemes</h2>
+
+  <h3 class="sub">5. Signals</h3>
+  <div class="def-box">
+    A <strong>signal</strong> is an asynchronous notification sent to a process by the OS or another process. The receiving process handles the signal by calling a signal handler function. Examples: SIGINT (Ctrl+C), SIGKILL (force kill), SIGALRM (timer), SIGSEGV (segmentation fault). Signals are the simplest form of IPC — no data transfer, just notification.
+  </div>
+
+  <h3 class="sub">6. Remote Procedure Call (RPC)</h3>
+  <div class="def-box">
+    <strong>RPC</strong> allows a process to call a function on a remote machine as if it were a local function call. The RPC mechanism handles all network communication transparently. Used in distributed systems. Java version: <strong>RMI (Remote Method Invocation)</strong>.
+  </div>
+
+  <h2 class="topic">Direct vs Indirect Communication</h2>
+  <div class="vs-box">
+    <div class="vs-left"><strong>Direct Communication</strong>Processes name each other explicitly: send(P, message) — send to process P. receive(Q, message) — receive from Q. Simple but tight coupling — if process name changes, must update all senders/receivers.</div>
+    <div class="vs-right"><strong>Indirect Communication (Mailboxes)</strong>Messages sent to/received from mailboxes (ports). send(A, message) — send to mailbox A. receive(A, message) — receive from mailbox A. Decoupled — any process with access to mailbox can communicate. Example: Message queues, sockets.</div>
+  </div>
+
+  <h2 class="topic">Synchronization in Message Passing</h2>
+  <table class="tt">
+    <tr><th>Type</th><th>send()</th><th>receive()</th></tr>
+    <tr><td><strong>Blocking (Synchronous)</strong></td><td>Wait until message delivered</td><td>Wait until message available</td></tr>
+    <tr><td><strong>Non-blocking (Async)</strong></td><td>Return immediately</td><td>Return null if no message</td></tr>
+    <tr><td><strong>Hybrid</strong></td><td>Non-blocking send</td><td>Blocking receive (most common)</td></tr>
+  </table>
+
+  <div class="note-box">
+    <strong>Shared memory = fast but complex; message passing = slower but simpler.</strong><br>
+    <strong>Pipes are unidirectional</strong> — for bidirectional, need TWO pipes.<br>
+    <strong>Socket format: IP:PORT</strong> e.g., 192.168.1.1:8080. Below 1024 = reserved/privileged ports.
+  </div>
+  <div class="page-num">3 / 3</div>
+</div>
+
+<!-- §4 PROCESS GENERATION -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 2</span><span class="unit-badge">SECTION 4</span></div>
+  <h1 class="section-title"><span class="sn">§4</span> Process Generation</h1>
+  <hr class="divider">
+
+  <div class="def-box">
+    <strong>Process Generation</strong> refers to the mechanisms by which new processes are created in an operating system. Processes can be created by the OS at startup, by a user command, by a running process (parent spawning a child), or by a batch job initiation.
+  </div>
+
+  <h2 class="topic">Events that Trigger Process Creation</h2>
+  <ul class="plain">
+    <li><strong>System initialization:</strong> OS creates daemon/background processes at boot (e.g., init, systemd, network services)</li>
+    <li><strong>User request:</strong> User runs a program (double-click, terminal command)</li>
+    <li><strong>Batch job submission:</strong> Job scheduler creates a process to execute a batch job</li>
+    <li><strong>Process creates another process:</strong> Running process calls fork() (UNIX) or CreateProcess() (Windows) to spawn a child</li>
+  </ul>
+
+  <h2 class="topic">UNIX Process Creation: fork() + exec()</h2>
+  <div class="orange-box">
+    <strong>fork():</strong> System call that creates an exact copy of the calling process (parent). The child gets a copy of the parent's address space. Returns 0 to child, child PID to parent, -1 on error.<br><br>
+    <strong>exec():</strong> System call that replaces the current process's memory image with a new program loaded from disk. The process ID stays the same but the code changes.<br><br>
+    <strong>Combined use:</strong> Parent calls fork() → child inherits parent's code → child calls exec() to load a new program. This is how the shell creates processes when you type a command.
+  </div>
+
+  <h2 class="topic">Process Tree (UNIX)</h2>
+  <div class="purple-box">
+    All processes in UNIX form a tree (hierarchy):<br>
+    → <strong>init (PID=1)</strong> is the root — first process created by kernel<br>
+    → init spawns login processes, which spawn shells, which spawn user programs<br>
+    → Each process has exactly ONE parent (except init)<br>
+    → A process can have zero or more children<br>
+    → <code>pstree</code> command shows this tree in Linux
+  </div>
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 2</span><span class="unit-badge">SECTION 4</span></div>
+
+  <h2 class="topic">Resource Sharing Options after fork()</h2>
+  <div class="rule-box">
+    After fork(), the parent and child can:<br>
+    → <strong>Share all resources:</strong> Child gets references to all parent's open files<br>
+    → <strong>Share some resources:</strong> Child gets subset (commonly used)<br>
+    → <strong>Share no resources:</strong> Child is completely independent<br><br>
+    <strong>Execution options:</strong><br>
+    → Parent and child execute concurrently (most common)<br>
+    → Parent waits (calls wait()) until child terminates before continuing
+  </div>
+
+  <h2 class="topic">Windows Process Creation</h2>
+  <div class="teal-box">
+    Windows uses <code>CreateProcess()</code> — a single call that both creates the new process AND loads a program into it (combines fork + exec).<br>
+    → Takes 10 parameters including executable path, command line, security attributes, etc.<br>
+    → Parent can use <code>WaitForSingleObject()</code> to wait for child<br>
+    → <code>TerminateProcess()</code> to kill a process
+  </div>
+
+  <h2 class="topic">Process Termination</h2>
+  <table class="tt">
+    <tr><th>Scenario</th><th>Mechanism</th><th>Notes</th></tr>
+    <tr><td>Normal exit</td><td><code>exit(status)</code></td><td>Returns exit code to parent</td></tr>
+    <tr><td>Error exit</td><td><code>exit(error_code)</code></td><td>Non-zero code indicates error</td></tr>
+    <tr><td>Fatal error</td><td>OS kills process</td><td>Segfault, divide by zero, illegal instruction</td></tr>
+    <tr><td>Killed by another</td><td><code>kill(pid, signal)</code></td><td>Requires permission</td></tr>
+    <tr><td>Parent kills child</td><td><code>abort()</code></td><td>Child exceeded resource limit</td></tr>
+  </table>
+
+  <div class="note-box">
+    <strong>fork() creates a copy — exec() replaces with new program.</strong> Shell workflow: shell forks → child execs the command you typed.<br>
+    <strong>Copy-on-Write (COW):</strong> Modern OSes don't copy memory immediately on fork(). They share pages until one process modifies a page — then copy. Efficient!<br>
+    <strong>PID 1 = init/systemd</strong> (Linux). If init dies, kernel panics.
+  </div>
+  <div class="page-num">2 / 2</div>
+</div>
+
+<!-- §5 QUICK REVISION -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 2</span><span class="unit-badge">SECTION 5</span></div>
+  <h1 class="section-title"><span class="sn">§5</span> Quick Revision — Unit 2</h1>
+  <hr class="divider">
+
+  <div class="rev-section">
+    <h3>🔵 Process &amp; Concurrency Fundamentals</h3>
+    <ul>
+      <li>Process = program in execution (active). Program = file on disk (passive).</li>
+      <li>Process sections: Text, Data, Heap (↑), Stack (↓). PCB = identity of process.</li>
+      <li>States: New → Ready → Running → Waiting → Terminated</li>
+      <li>Context switch = save PCB of current + load PCB of next = pure overhead</li>
+      <li>Concurrency issues: Race Condition, Deadlock, Starvation, Livelock, Priority Inversion</li>
+      <li>Race condition: outcome depends on timing of processes (non-deterministic)</li>
+    </ul>
+  </div>
+
+  <div class="rev-section">
+    <h3>🔴 Producer-Consumer &amp; Critical Section</h3>
+    <ul>
+      <li>counter++ is NOT atomic → 3 instructions: load, increment, store → race condition</li>
+      <li>Critical Section requirements: <strong>Mutual Exclusion + Progress + Bounded Waiting</strong></li>
+      <li>CS structure: entry section → critical section → exit section → remainder section</li>
+      <li>Simple turn variable: ME ✅, Progress ❌ (strict alternation)</li>
+      <li>Boolean flags alone: ME ✅, Progress ❌ (deadlock possible)</li>
+    </ul>
+  </div>
+
+  <div class="rev-section">
+    <h3>🟡 Synchronization Solutions</h3>
+    <ul>
+      <li><strong>Dekker's (1965):</strong> First correct software solution. Variables: flag[2] + turn. Process withdraws if not its turn.</li>
+      <li><strong>Peterson's (1981):</strong> Simpler. Set turn = OTHER process (yield). Wait while: flag[j] AND turn==j.</li>
+      <li><strong>Semaphore:</strong> P=wait=down (decrement). V=signal=up (increment). Binary (0/1) vs Counting.</li>
+      <li>Producer-Consumer semaphores: <span class="rev-formula">mutex=1, empty=N, full=0</span></li>
+      <li>Blocking semaphore: S&lt;0 → |S| processes waiting in queue</li>
+      <li><strong>TAS:</strong> Atomic read-and-set. Returns OLD value. ME ✅, Bounded Wait ❌ (basic version)</li>
+    </ul>
+  </div>
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 2</span><span class="unit-badge">SECTION 5</span></div>
+
+  <div class="rev-section">
+    <h3>🟢 Classical Problems</h3>
+    <ul>
+      <li><strong>Dining Philosophers (5 Phil, 5 Chopsticks):</strong> Naive solution → deadlock (all pick left chopstick)</li>
+      <li>Solutions: (1) Max 4 philosophers (room semaphore=4). (2) Asymmetric: odd=left first, even=right first. (3) Pick both atomically. (4) Resource hierarchy.</li>
+      <li><strong>Sleeping Barber:</strong> Semaphores: customers=0, barbers=0, mutex=1, waiting=0</li>
+      <li>Barber: wait(customers). Customer: check waiting&lt;N → waiting++, signal(customers), wait(barbers)</li>
+      <li>Barber=CPU/Server. Customers=Processes/Jobs. Waiting room=Ready Queue. Full→customer leaves=job rejected</li>
+      <li>Coffman deadlock conditions: Mutual Exclusion + Hold &amp; Wait + No Preemption + Circular Wait</li>
+    </ul>
+  </div>
+
+  <div class="rev-section">
+    <h3>🟣 IPC &amp; Process Generation</h3>
+    <ul>
+      <li>IPC models: Shared Memory (fast, needs sync) vs Message Passing (slow, safer)</li>
+      <li>IPC schemes: Pipes (unidirectional), Named Pipes (FIFO), Message Queues, Shared Memory, Signals, Sockets (IP:PORT), RPC/RMI</li>
+      <li>Direct comm: name processes explicitly. Indirect: use mailboxes/ports.</li>
+      <li>fork() → child copy. exec() → replace with new program. wait() → parent waits for child.</li>
+      <li>Zombie = finished child, parent not called wait(). Orphan = parent died, child adopted by init.</li>
+      <li>Copy-on-Write (COW): pages shared after fork until one process writes → then copied.</li>
+    </ul>
+  </div>
+
+  <div class="rev-section">
+    <h3>⚡ Key Facts &amp; Top Exam Questions</h3>
+    <ul>
+      <li>Dekker = first correct solution (1965). Peterson = simpler solution (1981). Both for 2 processes only.</li>
+      <li>Semaphore wait = P = down. Signal = V = up. Dijkstra's notation.</li>
+      <li>In P-C semaphore: ALWAYS wait(empty/full) BEFORE wait(mutex). Reverse → deadlock!</li>
+      <li>Dining Philosophers with N philosophers needs N chopsticks. Allow max N-1 to eat → no deadlock.</li>
+      <li>Sleeping Barber with N chairs: customer leaves if waiting ≥ N (not waiting &gt; N). Careful!</li>
+      <li>Top questions: Explain Peterson's / Dekker's with code (10m). Dining Philosophers with solution (10m). Sleeping Barber with code (10m). Compare Shared Memory vs Message Passing (5m). Explain semaphore operations with P-C solution (10m).</li>
+    </ul>
+  </div>
+  <div class="page-num">2 / 2</div>
+</div>
 
 <script>
-(function(){
-  var pages = document.querySelectorAll('.page');
-  var secPages = [];
-  pages.forEach(function(p){ if(p.querySelector('h1.section-title')) secPages.push(p); });
-  secPages.forEach(function(p,i){ p.id = 'sec-'+(i+1); });
-  var tocItems = document.querySelectorAll('.cover-toc-item');
-  tocItems.forEach(function(item, i){
-    if(i >= secPages.length) return;
-    item.style.cursor = 'pointer';
-    item.style.borderRadius = '4px';
-    item.style.transition = 'background 0.18s';
-    item.setAttribute('title', 'Click to jump to this section');
-    item.addEventListener('mouseenter', function(){ item.style.background='rgba(255,255,255,0.18)'; });
-    item.addEventListener('mouseleave', function(){ item.style.background=''; });
-    item.addEventListener('click', function(){ secPages[i].scrollIntoView({behavior:'smooth'}); });
-  });
-})();
+  document.querySelectorAll('.part-nav a').forEach(a=>{if(a.href===window.location.href)a.classList.add('active');});
 </script>
 </body>
 </html>

@@ -3,138 +3,586 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OS Unit 2 — Part 2</title>
-<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+<title>Operating Systems — Unit 2 | Part 2</title>
 <style>
-:root{--ink:#1a1a2e;--ink2:#2c2c54;--blue:#1565C0;--red:#b71c1c;--green:#1b5e20;--purple:#4a148c;--teal:#006064;--orange:#e65100;--line:#c5cae9;--page:#fafaf7;--highlight:#fff9c4;--box-blue:#e8f4fd;--box-green:#e8f5e9;--box-purple:#f3e5f5;--box-orange:#fff3e0;--box-red:#fce4ec;--box-teal:#e0f7fa;}
-*{margin:0;padding:0;box-sizing:border-box;}
-body{background:#e0e0e0;font-family:'Kalam',cursive;color:var(--ink);padding:30px 20px;}
-.page{background:var(--page);max-width:820px;margin:0 auto 40px;border-radius:4px;box-shadow:0 2px 16px rgba(0,0,0,0.18),0 0 0 1px rgba(0,0,0,0.08);padding:60px 70px 70px 90px;position:relative;min-height:1060px;background-image:repeating-linear-gradient(transparent,transparent 31px,var(--line) 31px,var(--line) 32px);background-position:0 56px;}
-.page::before{content:'';position:absolute;left:72px;top:0;bottom:0;width:1.5px;background:#ef9a9a;opacity:0.7;}
-.holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-around;padding:40px 0;}
-.hole{width:22px;height:22px;border-radius:50%;background:#e0e0e0;border:1.5px solid #bdbdbd;box-shadow:inset 0 1px 3px rgba(0,0,0,0.2);}
-.page-num{position:absolute;bottom:28px;right:50px;font-size:13px;color:#9e9e9e;}
-.page-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
-.date-tag{font-size:13px;color:#9e9e9e;}
-.unit-badge{color:#fff;font-size:13px;padding:2px 14px;border-radius:20px;font-weight:700;}
-h1.section-title{font-size:24px;font-weight:700;color:var(--ink2);text-align:center;margin:8px 0 4px;text-decoration:underline;text-underline-offset:5px;}
-h2.topic{font-size:18px;font-weight:700;color:var(--blue);margin:18px 0 6px;border-bottom:1.5px solid var(--blue);padding-bottom:2px;display:inline-block;}
-h3.sub{font-size:15px;font-weight:700;color:var(--purple);margin:12px 0 4px;}
-p,li{font-size:15px;line-height:32px;}
-.def-box{background:var(--box-blue);border-left:4px solid var(--blue);border-radius:0 6px 6px 0;padding:10px 16px;margin:10px 0 12px;font-size:15px;line-height:30px;}
-.note-box{background:var(--highlight);border-left:4px solid #f9a825;border-radius:0 6px 6px 0;padding:8px 14px;margin:8px 0 10px;font-size:14px;line-height:26px;}
-.rule-box{background:var(--box-green);border:1.5px solid #81c784;border-radius:6px;padding:10px 16px;margin:10px 0;font-size:14.5px;line-height:28px;}
-.purple-box{background:var(--box-purple);border-left:4px solid var(--purple);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
-.orange-box{background:var(--box-orange);border-left:4px solid var(--orange);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
-.teal-box{background:var(--box-teal);border-left:4px solid var(--teal);border-radius:0 6px 6px 0;padding:10px 16px;margin:8px 0 12px;font-size:15px;line-height:30px;}
-.formula{font-family:'Patrick Hand',cursive;font-size:16px;color:var(--blue);}
-.divider{border:none;border-top:1px dashed #b0bec5;margin:14px 0 10px;}
-ul.plain{list-style:none;padding-left:4px;}
-ul.plain li::before{content:'→ ';color:var(--blue);font-weight:700;}
-ul.plain li{font-size:15px;line-height:32px;}
-.qbox{background:#fff;border:1.5px solid #90caf9;border-radius:8px;padding:12px 16px;margin:10px 0;}
-.q-label{font-size:13px;font-weight:700;color:var(--blue);margin-bottom:2px;}
-.q-step{font-size:14px;color:var(--green);margin-top:4px;line-height:26px;}
-.q-ans{font-size:15px;color:var(--red);font-family:'Patrick Hand',cursive;margin-top:4px;}
-table.tt{width:100%;border-collapse:collapse;margin:8px 0;font-size:14px;}
-table.tt th{color:#fff;padding:7px 10px;text-align:center;}
-table.tt td{padding:6px 10px;border-bottom:1px solid #e0e0e0;text-align:center;font-family:'Patrick Hand',cursive;font-size:14px;}
-table.tt tr:nth-child(even) td{background:#f5f5f5;}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0;}
-.vs-box{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:12px 0;border-radius:8px;overflow:hidden;border:1.5px solid #90caf9;}
-.vs-left{background:#e8f4fd;padding:12px 14px;}
-.vs-right{background:var(--box-purple);padding:12px 14px;border-left:1px solid #90caf9;}
-.vs-head{font-size:15px;font-weight:700;margin-bottom:8px;}
-.vs-item{font-size:14px;line-height:26px;}
-.step-card{background:var(--box-purple);border-left:4px solid var(--purple);padding:8px 14px;margin:5px 0;border-radius:0 6px 6px 0;}
-.step-head{font-size:14px;font-weight:700;color:var(--purple);}
-.step-body{font-size:13.5px;line-height:24px;color:var(--ink2);}
-.cover-page{max-width:820px;margin:0 auto 40px;border-radius:8px;padding:80px 60px;text-align:center;color:#fff;box-shadow:0 4px 24px rgba(0,0,0,0.3);position:relative;overflow:hidden;}
-.cover-subject{font-size:14px;letter-spacing:3px;opacity:0.7;margin-bottom:16px;}
-.cover-title{font-size:40px;font-weight:700;line-height:1.2;margin-bottom:12px;}
-.cover-unit{font-size:20px;opacity:0.85;margin-bottom:30px;}
-.cover-divider{width:80px;height:3px;background:rgba(255,255,255,0.4);margin:0 auto 24px;border-radius:2px;}
-.cover-toc{text-align:left;background:rgba(255,255,255,0.1);border-radius:8px;padding:20px 28px;display:inline-block;min-width:420px;}
-.cover-toc-item{font-size:15px;line-height:32px;display:flex;justify-content:space-between;gap:20px;}
-.part-nav{max-width:820px;margin:0 auto 20px;display:flex;gap:10px;justify-content:center;align-items:center;font-family:'Kalam',cursive;flex-wrap:wrap;}
-.part-nav a{padding:6px 20px;border-radius:20px;background:#fff;border:1.5px solid #90caf9;color:var(--blue);text-decoration:none;font-size:14px;font-weight:700;}
-.part-nav a:hover:not(.active){background:#e3f2fd;}
-.part-nav .back{background:#f5f5f5;border-color:#ccc;color:#555;font-size:13px;}
-.unit-badge{background:#4a148c;}
-h1.section-title{text-decoration-color:#4a148c;}
-h1.section-title .sn{color:#4a148c;}
-.part-nav a.active{background:#4a148c;border-color:#4a148c;color:#fff;}
-@media(max-width:600px){
-body{padding:10px 0 30px;}
-.page{padding:20px 16px 30px 16px;min-height:unset;}
-.page::before{display:none;}
-.holes{display:none;}
-.cover-page{padding:40px 20px;margin:0 10px 20px;}
-.cover-toc{min-width:unset;width:100%;padding:14px 16px;}
-.part-nav{padding:0 10px;gap:6px;}
-.part-nav a{padding:5px 12px;font-size:13px;}
-.two-col{grid-template-columns:1fr;}
-.vs-box{grid-template-columns:1fr;}
-.vs-right{border-left:none;border-top:1px solid #90caf9;}
-nav.part-nav{padding:0 10px;gap:6px;}
-.cover-title{font-size:28px;}
-}</style>
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Kalam:wght@300;400;700&family=Special+Elite&display=swap');
+  :root{--paper:#fdf9f0;--ink:#1a1a2e;--ink-light:#2d2d4e;--blue:#1a56db;--blue-light:#dbeafe;--green:#0d6b3f;--green-light:#d1fae5;--orange:#c05621;--orange-light:#fef3c7;--purple:#5b21b6;--purple-light:#ede9fe;--red:#b91c1c;--red-light:#fee2e2;--teal:#0e7490;--teal-light:#cffafe;--rule-line:#c8d8e8;--margin-line:#f4a0a0;--hole-bg:#e8e0d0;--shadow:rgba(0,0,0,0.08);--accent:#0e7490;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:#082030;background-image:radial-gradient(circle at 20% 50%,rgba(14,116,144,.2) 0%,transparent 55%),radial-gradient(circle at 80% 20%,rgba(13,107,63,.15) 0%,transparent 50%);font-family:'Kalam',cursive;color:var(--ink);padding:20px 0 40px;min-height:100vh;}
+  .part-nav{display:flex;justify-content:center;gap:10px;margin-bottom:28px;flex-wrap:wrap;padding:0 16px;}
+  .part-nav a{font-family:'Caveat',cursive;font-size:1rem;font-weight:600;padding:7px 20px;border-radius:20px;text-decoration:none;background:rgba(255,255,255,.5);color:#555;border:2px solid rgba(255,255,255,.7);transition:all .2s;}
+  .part-nav a.active{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 4px 12px rgba(14,116,144,.45);}
+  .part-nav a:hover:not(.active){background:rgba(255,255,255,.8);color:#333;}
+  .page{width:760px;max-width:98vw;margin:0 auto 28px;background:var(--paper);border-radius:3px;box-shadow:4px 4px 14px var(--shadow),0 1px 3px rgba(0,0,0,.12);position:relative;padding:36px 44px 44px 80px;min-height:600px;background-image:repeating-linear-gradient(transparent,transparent 31px,var(--rule-line) 31px,var(--rule-line) 32px);background-position:0 64px;}
+  .page::before{content:'';position:absolute;left:68px;top:0;bottom:0;width:2px;background:var(--margin-line);opacity:.7;}
+  .holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-evenly;align-items:center;width:32px;}
+  .hole{width:18px;height:18px;border-radius:50%;background:var(--hole-bg);border:1.5px solid #b8a898;box-shadow:inset 0 1px 3px rgba(0,0,0,.2);}
+  .page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+  .date-tag{font-family:'Special Elite',cursive;font-size:.72rem;color:var(--teal);letter-spacing:.05em;text-transform:uppercase;}
+  .unit-badge{font-family:'Caveat',cursive;font-size:.85rem;font-weight:700;background:var(--accent);color:white;padding:2px 12px;border-radius:10px;letter-spacing:.08em;}
+  .section-title{font-family:'Caveat',cursive;font-size:2rem;font-weight:700;color:var(--ink);margin:8px 0 4px;line-height:1.2;}
+  .sn{font-family:'Special Elite',cursive;color:var(--accent);margin-right:6px;font-size:1.7rem;}
+  .divider{border:none;border-top:2.5px solid var(--accent);margin:6px 0 18px;border-radius:2px;}
+  h2.topic{font-family:'Caveat',cursive;font-size:1.45rem;font-weight:700;color:var(--accent);margin:20px 0 8px;padding-bottom:3px;border-bottom:1.5px dashed var(--rule-line);}
+  h3.sub{font-family:'Kalam',cursive;font-size:1.1rem;font-weight:700;color:var(--purple);margin:14px 0 6px;}
+  .def-box,.rule-box,.note-box,.purple-box,.orange-box{border-radius:8px;padding:13px 16px;margin:14px 0;font-size:.97rem;line-height:1.65;}
+  .def-box{background:var(--blue-light);border-left:4px solid var(--blue);}
+  .def-box::before{content:'📘 Definition';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--blue);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .rule-box{background:var(--green-light);border-left:4px solid var(--green);}
+  .rule-box::before{content:'📗 Key Result';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--green);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .note-box{background:var(--red-light);border-left:4px solid var(--red);}
+  .note-box::before{content:'⚠️ Exam Tip';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--red);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .purple-box{background:var(--purple-light);border-left:4px solid var(--purple);}
+  .purple-box::before{content:'💡 Important';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--purple);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .orange-box{background:var(--orange-light);border-left:4px solid var(--orange);}
+  .orange-box::before{content:'🔧 How it Works';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--orange);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .teal-box{background:var(--teal-light);border-left:4px solid var(--teal);border-radius:8px;padding:13px 16px;margin:14px 0;font-size:.97rem;line-height:1.65;}
+  .teal-box::before{content:'✨ Note';font-family:'Caveat',cursive;font-weight:700;font-size:.82rem;color:var(--teal);display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;}
+  .qbox{background:#fffbf0;border:1.5px solid #e4cc88;border-radius:8px;padding:14px 16px;margin:14px 0;font-size:.96rem;}
+  .q-label{font-family:'Caveat',cursive;font-weight:700;font-size:1.05rem;color:var(--orange);margin-bottom:6px;}
+  .q-step{margin:5px 0;padding-left:16px;position:relative;line-height:1.6;color:var(--ink-light);}
+  .q-step::before{content:'→';position:absolute;left:0;color:var(--accent);font-weight:700;}
+  .q-ans{font-family:'Caveat',cursive;font-weight:700;font-size:1.05rem;color:var(--green);margin-top:8px;padding-top:6px;border-top:1px dashed #e4cc88;}
+  ul.plain{list-style:none;padding-left:0;margin:8px 0;}
+  ul.plain li{padding:4px 0 4px 22px;position:relative;line-height:1.6;font-size:.97rem;}
+  ul.plain li::before{content:'→';position:absolute;left:2px;color:var(--accent);font-weight:700;}
+  .formula{font-family:'Special Elite',cursive;background:rgba(14,116,144,.1);color:var(--teal);padding:2px 8px;border-radius:4px;font-size:.95em;display:inline-block;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:12px 0;}
+  @media(max-width:600px){.two-col{grid-template-columns:1fr;}}
+  .vs-box{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:12px 0;border-radius:8px;overflow:hidden;border:1.5px solid #d0d0d0;font-size:.93rem;}
+  .vs-left{background:#e0f2fe;padding:12px 14px;border-right:1.5px solid #d0d0d0;}
+  .vs-right{background:#d1fae5;padding:12px 14px;}
+  .vs-left strong,.vs-right strong{font-family:'Caveat',cursive;font-size:1.05rem;display:block;margin-bottom:6px;}
+  .vs-left strong{color:var(--blue);} .vs-right strong{color:var(--green);}
+  table.tt{width:100%;border-collapse:collapse;font-size:.9rem;margin:12px 0;}
+  table.tt th{background:var(--accent);color:white;padding:8px 12px;text-align:left;font-family:'Caveat',cursive;font-size:1rem;}
+  table.tt td{padding:7px 12px;border-bottom:1px solid var(--rule-line);}
+  table.tt tr:nth-child(even) td{background:rgba(14,116,144,.04);}
+  .step-card{display:flex;gap:12px;margin:10px 0;align-items:flex-start;}
+  .step-head{background:var(--accent);color:white;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-family:'Caveat',cursive;font-weight:700;font-size:1rem;flex-shrink:0;margin-top:2px;}
+  .step-body{flex:1;line-height:1.65;font-size:.97rem;}
+  .page-num{position:absolute;bottom:14px;right:22px;font-family:'Caveat',cursive;font-size:.85rem;color:#999;}
+  pre.code-block{background:#1e1e2e;color:#cdd6f4;border-radius:8px;padding:14px 16px;font-family:'Courier New',monospace;font-size:.82rem;line-height:1.7;margin:12px 0;overflow-x:auto;border-left:4px solid var(--accent);}
+  .kw{color:#89b4fa;font-weight:bold;} .cm{color:#6c7086;font-style:italic;} .st{color:#a6e3a1;} .nm{color:#fab387;}
+  .cover-page{width:760px;max-width:98vw;margin:0 auto 28px;background:linear-gradient(135deg,#1e1b4b 0%,#312e81 50%,#4f46e5 100%);border-radius:6px;box-shadow:6px 6px 20px rgba(0,0,0,.45);padding:50px 60px 50px 80px;position:relative;overflow:hidden;color:white;min-height:460px;}
+  .cover-page::before{content:'';position:absolute;top:-60px;right:-60px;width:300px;height:300px;background:radial-gradient(circle,rgba(167,139,250,.25) 0%,transparent 70%);border-radius:50%;}
+  .cover-holes{position:absolute;left:18px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-evenly;align-items:center;width:32px;}
+  .cover-subject{font-family:'Special Elite',cursive;font-size:.78rem;letter-spacing:.25em;text-transform:uppercase;color:#a5b4fc;margin-bottom:8px;position:relative;z-index:1;}
+  .cover-title{font-family:'Caveat',cursive;font-size:3rem;font-weight:700;line-height:1.1;margin-bottom:6px;position:relative;z-index:1;}
+  .cover-unit{font-family:'Kalam',cursive;font-size:1.15rem;color:#c7d2fe;margin-bottom:4px;position:relative;z-index:1;}
+  .cover-subtitle{font-family:'Kalam',cursive;font-size:.95rem;color:#fde68a;margin-bottom:22px;position:relative;z-index:1;}
+  .cover-part-badge{display:inline-block;background:#4f46e5;color:white;font-family:'Caveat',cursive;font-weight:700;font-size:1.1rem;padding:6px 20px;border-radius:20px;margin-bottom:22px;position:relative;z-index:1;letter-spacing:.06em;}
+  .cover-toc{position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.2);padding-top:18px;}
+  .cover-toc h3{font-family:'Special Elite',cursive;font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:#a5b4fc;margin-bottom:10px;}
+  .toc-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px dotted rgba(255,255,255,.12);}
+  .toc-sec{font-family:'Caveat',cursive;font-size:.98rem;font-weight:600;color:#f5f5f5;}
+  .toc-sec span.toc-num{color:#a5b4fc;margin-right:8px;font-family:'Special Elite',cursive;}
+  .toc-pages{font-family:'Special Elite',cursive;font-size:.75rem;color:#a6adc8;background:rgba(255,255,255,.07);padding:2px 8px;border-radius:8px;}
+  p{line-height:1.7;margin:8px 0;font-size:.97rem;}
+  strong{color:var(--ink);}
+  code{font-family:'Courier New',monospace;font-size:.9em;background:rgba(0,0,0,.07);padding:1px 5px;border-radius:3px;}
+</style>
 </head>
 <body>
+<nav class="part-nav">
+  <a href="../index.html">↩ Units</a>
+  <a href="part1.html">◆ Part 1 — Concurrency Basics</a>
+  <a href="part2.html" class="active">◆ Part 2 — Synchronization Solutions</a>
+  <a href="part3.html">◆ Part 3 — Classical Problems &amp; IPC</a>
+</nav>
 
-<div class="part-nav">
-  <a href="../index.html" class="back">↩ Units</a>
-  <a href="part1.html">Part 1</a>
-  <a href="part2.html" class="active">Part 2</a>
-  <a href="part3.html">Part 3</a>
-</div>
-
-<div class="cover-page" style="background:linear-gradient(135deg,#4a148c 0%,#1a237e 100%);">
-  <div class="cover-subject">OPERATING SYSTEMS</div>
-  <div class="cover-title">Unit 2 — Part 2</div>
-  <div class="cover-unit">[ Awaiting Content ]</div>
-  <div class="cover-divider"></div>
+<div class="cover-page">
+  <div class="cover-holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="cover-subject">Operating Systems</div>
+  <div class="cover-title">Unit 2 Notes</div>
+  <div class="cover-unit">Unit 2 — Concurrent Processes</div>
+  <div class="cover-subtitle">Dekker's · Peterson's · Semaphores · Test-and-Set</div>
+  <div class="cover-part-badge">📒 Part 2 of 3 — Synchronization Solutions</div>
   <div class="cover-toc">
-    <div class="cover-toc-item" style="opacity:0.6;font-style:italic;justify-content:center;"><span>Content to be added</span></div>
+    <h3>Contents — Part 2</h3>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§1</span> Dekker's Solution</div><div class="toc-pages">3 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§2</span> Peterson's Solution</div><div class="toc-pages">3 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§3</span> Semaphores</div><div class="toc-pages">4 pages</div></div>
+    <div class="toc-row"><div class="toc-sec"><span class="toc-num">§4</span> Test and Set Operation</div><div class="toc-pages">2 pages</div></div>
   </div>
 </div>
 
-<!-- ================================================
-     ADD CONTENT SECTIONS BELOW THIS LINE
+<!-- §1 DEKKER'S SOLUTION -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 2</span><span class="unit-badge">SECTION 1</span></div>
+  <h1 class="section-title"><span class="sn">§1</span> Dekker's Solution</h1>
+  <hr class="divider">
 
-     Each section pattern:
+  <div class="def-box">
+    <strong>Dekker's Algorithm</strong> (1965) is the <strong>first correct software solution</strong> to the mutual exclusion problem for two processes. It was developed by Dutch mathematician Th. J. Dekker. It combines the "turn" variable and "flag" arrays to satisfy all three requirements: mutual exclusion, progress, and bounded waiting.
+  </div>
 
-     <div class="page">
-       <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
-       <div class="page-header">
-         <span class="date-tag">OS — Unit 2</span>
-         <span class="unit-badge">SECTION X</span>
-       </div>
-       <h1 class="section-title"><span class="sn">§X</span> Title Here</h1>
-       <hr class="divider">
-       ... content ...
-       <div class="page-num">1 / 1</div>
-     </div>
-     ================================================ -->
+  <h2 class="topic">Shared Variables</h2>
+  <div class="orange-box">
+    <span class="formula">boolean flag[2]</span> — flag[i]=true means Process i wants to enter CS<br>
+    <span class="formula">int turn</span> — whose turn it is when there's a conflict (0 or 1)<br><br>
+    Initially: <code>flag[0]=false, flag[1]=false, turn=0</code>
+  </div>
+
+  <h2 class="topic">Dekker's Algorithm Code</h2>
+  <pre class="code-block"><span class="cm">// Process P0:</span>
+<span class="kw">do</span> {
+    flag[<span class="nm">0</span>] = <span class="kw">true</span>;               <span class="cm">// P0 wants to enter CS</span>
+    <span class="kw">while</span> (flag[<span class="nm">1</span>]) {             <span class="cm">// if P1 also wants CS...</span>
+        <span class="kw">if</span> (turn == <span class="nm">1</span>) {          <span class="cm">// it's P1's turn</span>
+            flag[<span class="nm">0</span>] = <span class="kw">false</span>;      <span class="cm">// P0 temporarily withdraws</span>
+            <span class="kw">while</span> (turn == <span class="nm">1</span>);   <span class="cm">// wait for turn to change</span>
+            flag[<span class="nm">0</span>] = <span class="kw">true</span>;       <span class="cm">// P0 reasserts intention</span>
+        }
+    }
+    <span class="cm">// ===== CRITICAL SECTION =====</span>
+    turn = <span class="nm">1</span>;                      <span class="cm">// give turn to P1</span>
+    flag[<span class="nm">0</span>] = <span class="kw">false</span>;               <span class="cm">// P0 no longer wants CS</span>
+    <span class="cm">// remainder section</span>
+} <span class="kw">while</span> (<span class="kw">true</span>);</pre>
+
+  <div class="teal-box">
+    <strong>P1 is symmetric:</strong> Same code with indices swapped (flag[1] instead of flag[0], check turn==0 instead of turn==1, set turn=0 at exit).
+  </div>
+  <div class="page-num">1 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 2</span><span class="unit-badge">SECTION 1</span></div>
+
+  <h2 class="topic">How Dekker's Algorithm Works — Step by Step</h2>
+  <div class="step-card"><div class="step-head">1</div><div class="step-body">P0 sets <code>flag[0]=true</code> to indicate it wants to enter the critical section.</div></div>
+  <div class="step-card"><div class="step-head">2</div><div class="step-body">P0 checks if P1 also wants to enter (<code>flag[1]==true</code>). If NOT — P0 enters CS directly.</div></div>
+  <div class="step-card"><div class="step-head">3</div><div class="step-body">If P1 also wants CS: P0 checks the <code>turn</code> variable. If <code>turn==1</code> (it's P1's turn), P0 is polite — it temporarily withdraws (<code>flag[0]=false</code>) and waits until it's its turn.</div></div>
+  <div class="step-card"><div class="step-head">4</div><div class="step-body">Once <code>turn==0</code>, P0 re-asserts its intention (<code>flag[0]=true</code>) and retries.</div></div>
+  <div class="step-card"><div class="step-head">5</div><div class="step-body">P0 executes critical section, then sets <code>turn=1</code> (giving next priority to P1) and <code>flag[0]=false</code>.</div></div>
+
+  <h2 class="topic">Correctness Analysis</h2>
+  <table class="tt">
+    <tr><th>Requirement</th><th>Satisfied?</th><th>Why</th></tr>
+    <tr><td>Mutual Exclusion</td><td>✅ Yes</td><td>Only the process whose turn it is can enter when both want CS</td></tr>
+    <tr><td>Progress</td><td>✅ Yes</td><td>If only one process wants CS, it enters immediately (flag trick ensures this)</td></tr>
+    <tr><td>Bounded Waiting</td><td>✅ Yes</td><td>A process waits at most one CS execution by the other process before getting its turn</td></tr>
+  </table>
+
+  <h2 class="topic">Trace Example</h2>
+  <div class="qbox">
+    <div class="q-label">🧪 Dekker's Execution Trace (Both want CS simultaneously)</div>
+    <div class="q-step">Initial: flag=[F,F], turn=0</div>
+    <div class="q-step">P0: flag[0]=true. P1: flag[1]=true (both set flags simultaneously)</div>
+    <div class="q-step">P0 checks flag[1]==true → checks turn. turn=0 → NOT P1's turn → P0 doesn't withdraw</div>
+    <div class="q-step">P1 checks flag[0]==true → checks turn. turn=0 → it IS P1's turn (turn==1? No! turn==0 means it's P0's turn!) → P1 withdraws: flag[1]=false, waits while turn==0</div>
+    <div class="q-step">P0 sees flag[1]=false → enters Critical Section ✅</div>
+    <div class="q-step">P0 exits CS: sets turn=1, flag[0]=false</div>
+    <div class="q-step">P1: turn changed to 1, exits wait. Sets flag[1]=true again. Enters CS ✅</div>
+    <div class="q-ans">✓ Both processes get to execute CS — mutual exclusion maintained, no deadlock</div>
+  </div>
+  <div class="page-num">2 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 2</span><span class="unit-badge">SECTION 1</span></div>
+
+  <h2 class="topic">Key Insight: Why Dekker Works</h2>
+  <div class="purple-box">
+    The <strong>genius of Dekker's algorithm</strong> is combining two ideas that each fail alone:<br><br>
+    → <strong>Flag array alone:</strong> Can cause deadlock (both set flags, both wait for each other)<br>
+    → <strong>Turn variable alone:</strong> Works for mutex but violates progress (strict alternation)<br><br>
+    Dekker combines them: Flag shows <em>intention</em>. Turn breaks <em>ties</em> when both want CS simultaneously. When there's a conflict, the process that is NOT "in turn" politely backs off and waits. This eliminates both deadlock AND strict alternation.
+  </div>
+
+  <h2 class="topic">Limitations of Dekker's Algorithm</h2>
+  <ul class="plain">
+    <li>Only works for <strong>exactly 2 processes</strong> — does not generalize easily to N processes</li>
+    <li>Uses <strong>busy waiting (spin-lock)</strong> — wastes CPU cycles while waiting</li>
+    <li>Complex to understand and verify compared to Peterson's solution</li>
+    <li>Assumes <strong>atomic reads and writes</strong> to shared variables (may not hold on all hardware)</li>
+    <li>Not suitable for modern multi-core systems without memory barriers</li>
+  </ul>
+
+  <div class="note-box">
+    <strong>Dekker's = first correct software solution</strong> to mutual exclusion — always asked.<br>
+    <strong>Two shared variables:</strong> flag[2] (intention) + turn (tie-breaker). Remember both.<br>
+    <strong>Dekker vs Peterson:</strong> Dekker is older and more complex. Peterson is simpler and more elegant. Both work for 2 processes only.<br>
+    <strong>In exam:</strong> Write the code for P0 only — mention P1 is symmetric with indices swapped.
+  </div>
+  <div class="page-num">3 / 3</div>
+</div>
+
+<!-- §2 PETERSON'S SOLUTION -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 2</span><span class="unit-badge">SECTION 2</span></div>
+  <h1 class="section-title"><span class="sn">§2</span> Peterson's Solution</h1>
+  <hr class="divider">
+
+  <div class="def-box">
+    <strong>Peterson's Algorithm</strong> (1981) is a <strong>simpler and more elegant</strong> software solution to the critical section problem for two processes. Proposed by Gary L. Peterson. It uses only two shared variables and satisfies all three requirements: mutual exclusion, progress, and bounded waiting.
+  </div>
+
+  <h2 class="topic">Shared Variables</h2>
+  <div class="orange-box">
+    <span class="formula">boolean flag[2]</span> — flag[i]=true means Process i is ready to enter CS<br>
+    <span class="formula">int turn</span> — indicates whose turn it is to enter CS (0 or 1)<br><br>
+    Initially: <code>flag[0]=false, flag[1]=false, turn=0 (or 1)</code><br><br>
+    <strong>Key difference from Dekker:</strong> In Peterson's, a process sets <code>turn</code> to the OTHER process (being polite — "you go first"), whereas Dekker sets turn to self.
+  </div>
+
+  <h2 class="topic">Peterson's Algorithm Code</h2>
+  <pre class="code-block"><span class="cm">// Process P0 (i=0, j=1):</span>
+<span class="kw">do</span> {
+    flag[<span class="nm">0</span>] = <span class="kw">true</span>;           <span class="cm">// P0 wants to enter CS</span>
+    turn = <span class="nm">1</span>;                  <span class="cm">// give turn to P1 (be polite)</span>
+    <span class="kw">while</span> (flag[<span class="nm">1</span>] &amp;&amp; turn == <span class="nm">1</span>);  <span class="cm">// wait if P1 wants AND it's P1's turn</span>
+    <span class="cm">// ===== CRITICAL SECTION =====</span>
+    flag[<span class="nm">0</span>] = <span class="kw">false</span>;           <span class="cm">// P0 done with CS</span>
+    <span class="cm">// remainder section</span>
+} <span class="kw">while</span> (<span class="kw">true</span>);
+
+<span class="cm">// Process P1 (i=1, j=0):</span>
+<span class="kw">do</span> {
+    flag[<span class="nm">1</span>] = <span class="kw">true</span>;
+    turn = <span class="nm">0</span>;                  <span class="cm">// give turn to P0</span>
+    <span class="kw">while</span> (flag[<span class="nm">0</span>] &amp;&amp; turn == <span class="nm">0</span>);
+    <span class="cm">// ===== CRITICAL SECTION =====</span>
+    flag[<span class="nm">1</span>] = <span class="kw">false</span>;
+} <span class="kw">while</span> (<span class="kw">true</span>);</pre>
+  <div class="page-num">1 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 2</span><span class="unit-badge">SECTION 2</span></div>
+
+  <h2 class="topic">Peterson's Algorithm — Logic Explained</h2>
+  <div class="step-card"><div class="step-head">1</div><div class="step-body"><strong>Set flag[i]=true:</strong> "I (Process i) want to enter the critical section."</div></div>
+  <div class="step-card"><div class="step-head">2</div><div class="step-body"><strong>Set turn=j:</strong> "I yield — you (Process j) go first if you want." (Being polite — the last one to set turn loses the tie.)</div></div>
+  <div class="step-card"><div class="step-head">3</div><div class="step-body"><strong>while (flag[j] &amp;&amp; turn==j):</strong> Wait only if BOTH conditions are true — the other process wants to enter AND it's their turn. If either is false, we proceed.</div></div>
+  <div class="step-card"><div class="step-head">4</div><div class="step-body"><strong>Enter CS:</strong> Safe — mutual exclusion guaranteed.</div></div>
+  <div class="step-card"><div class="step-head">5</div><div class="step-body"><strong>Set flag[i]=false:</strong> "I'm done — others may enter."</div></div>
+
+  <h2 class="topic">Correctness Proof</h2>
+  <div class="rule-box">
+    <strong>Mutual Exclusion:</strong> Suppose both P0 and P1 are in CS simultaneously. P0 entered when <code>flag[1]=false OR turn=0</code>. P1 entered when <code>flag[0]=false OR turn=1</code>. But <code>turn</code> can only be 0 OR 1 — contradiction! Both cannot be in CS → ✅ ME holds.<br><br>
+    <strong>Progress:</strong> If P1 is not interested (<code>flag[1]=false</code>), P0's while loop exits immediately → P0 enters CS without waiting → ✅ Progress holds.<br><br>
+    <strong>Bounded Waiting:</strong> After P0 sets <code>turn=1</code>, P1 can enter CS at most once before P0 enters (turn then becomes 0) → ✅ Bounded wait.
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">🧪 Peterson's Trace: Both want CS at same time</div>
+    <div class="q-step">P0: flag[0]=true, turn=1. P1: flag[1]=true, turn=0</div>
+    <div class="q-step">After both execute: flag=[T,T]. What is turn? The LAST write wins. Say P1 wrote last → turn=0</div>
+    <div class="q-step">P0 checks: flag[1]=true AND turn==1? turn=0 ≠ 1 → condition FALSE → P0 enters CS ✅</div>
+    <div class="q-step">P1 checks: flag[0]=true AND turn==0? turn=0 → condition TRUE → P1 waits 🔄</div>
+    <div class="q-step">P0 finishes CS, sets flag[0]=false</div>
+    <div class="q-step">P1: flag[0]=false → condition FALSE → P1 enters CS ✅</div>
+    <div class="q-ans">✓ Perfect mutual exclusion. Whichever process sets turn last yields to the other.</div>
+  </div>
+  <div class="page-num">2 / 3</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 2</span><span class="unit-badge">SECTION 2</span></div>
+
+  <h2 class="topic">Dekker's vs Peterson's — Comparison</h2>
+  <table class="tt">
+    <tr><th>Feature</th><th>Dekker's (1965)</th><th>Peterson's (1981)</th></tr>
+    <tr><td>Year / Author</td><td>1965, Dekker (Dutch)</td><td>1981, Gary Peterson</td></tr>
+    <tr><td>Shared variables</td><td>flag[2] + turn</td><td>flag[2] + turn (same!)</td></tr>
+    <tr><td>Entry section lines</td><td>~8 lines (complex)</td><td>2 lines (elegant)</td></tr>
+    <tr><td>Key idea</td><td>Withdraw and retry when not your turn</td><td>Set turn to OTHER process (yield)</td></tr>
+    <tr><td>Mutual Exclusion</td><td>✅</td><td>✅</td></tr>
+    <tr><td>Progress</td><td>✅</td><td>✅</td></tr>
+    <tr><td>Bounded Waiting</td><td>✅</td><td>✅</td></tr>
+    <tr><td>No. of processes</td><td>2 only</td><td>2 only (extendable to N with Bakery)</td></tr>
+    <tr><td>Complexity</td><td>More complex</td><td>Simpler, more elegant</td></tr>
+    <tr><td>Busy waiting</td><td>Yes</td><td>Yes</td></tr>
+  </table>
+
+  <h2 class="topic">Limitation of Both Solutions</h2>
+  <div class="purple-box">
+    Both Dekker's and Peterson's:<br>
+    → Work only for <strong>2 processes</strong> (Peterson can be extended to N via Lamport's Bakery Algorithm)<br>
+    → Use <strong>busy waiting</strong> — wastes CPU cycles spinning in a loop<br>
+    → Assume <strong>sequential consistency</strong> of memory — may fail on modern CPUs with out-of-order execution without memory barriers/fences<br>
+    → Are purely <strong>software solutions</strong> — no OS or hardware support needed
+  </div>
+
+  <div class="note-box">
+    <strong>Peterson's is simpler than Dekker's</strong> — Peterson uses just 2 lines in entry section vs Dekker's nested if-while.<br>
+    <strong>The key Peterson insight:</strong> Set turn = j (the OTHER process). Last write to turn loses the race — if both processes set turn simultaneously, one will overwrite the other, and the one that wrote LAST will wait.<br>
+    <strong>For N processes:</strong> Use Lamport's Bakery Algorithm — takes a "ticket number" like a bakery. Not in syllabus but good to mention.
+  </div>
+  <div class="page-num">3 / 3</div>
+</div>
+
+<!-- §3 SEMAPHORES -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 2</span><span class="unit-badge">SECTION 3</span></div>
+  <h1 class="section-title"><span class="sn">§3</span> Semaphores</h1>
+  <hr class="divider">
+
+  <div class="def-box">
+    A <strong>Semaphore</strong> is an integer variable that, apart from initialization, is accessed only through two standard atomic operations: <strong>wait()</strong> (also called P or down) and <strong>signal()</strong> (also called V or up). Introduced by Edsger Dijkstra in 1965. Semaphores are used for both mutual exclusion AND synchronization.
+  </div>
+
+  <h2 class="topic">Semaphore Operations</h2>
+  <div class="two-col">
+    <div class="orange-box" style="margin:0">
+      <strong>wait(S) — also P(S), down(S)</strong><br><br>
+      <code>wait(S) {</code><br>
+      <code>&nbsp;&nbsp;while(S &lt;= 0);</code> <em>(busy wait)</em><br>
+      <code>&nbsp;&nbsp;S--;</code><br>
+      <code>}</code><br><br>
+      Decrements S. If S≤0, process waits until S becomes positive. "Request a resource."
+    </div>
+    <div class="orange-box" style="margin:0">
+      <strong>signal(S) — also V(S), up(S)</strong><br><br>
+      <code>signal(S) {</code><br>
+      <code>&nbsp;&nbsp;S++;</code><br>
+      <code>}</code><br><br>
+      Increments S. If processes are waiting, one is woken up. "Release a resource."
+    </div>
+  </div>
+
+  <div class="rule-box">
+    <strong>CRITICAL:</strong> Both wait() and signal() are <strong>atomic operations</strong> — they cannot be interrupted midway. The OS ensures atomicity by disabling interrupts (single CPU) or using hardware atomic instructions (multi-CPU).
+  </div>
+
+  <h2 class="topic">Types of Semaphores</h2>
+  <div class="vs-box">
+    <div class="vs-left"><strong>Binary Semaphore (Mutex)</strong>Value is only 0 or 1. Used for mutual exclusion. Initialized to 1. When locked (0), other processes wait. Example: mutex semaphore for a shared buffer.</div>
+    <div class="vs-right"><strong>Counting Semaphore</strong>Value ranges over unrestricted integer domain. Used to control access to a resource with multiple instances. Initialized to the number of available resources. Example: N-slot buffer.</div>
+  </div>
+  <div class="page-num">1 / 4</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 2</span><span class="unit-badge">SECTION 3</span></div>
+
+  <h2 class="topic">Semaphore for Mutual Exclusion</h2>
+  <pre class="code-block"><span class="cm">// Shared: semaphore mutex = 1</span>
+
+<span class="cm">// Process Pi:</span>
+<span class="kw">do</span> {
+    <span class="kw">wait</span>(mutex);        <span class="cm">// mutex-- ; if mutex was 0 → block</span>
+    <span class="cm">// ===== CRITICAL SECTION =====</span>
+    <span class="kw">signal</span>(mutex);      <span class="cm">// mutex++ ; wake up waiting process</span>
+    <span class="cm">// remainder section</span>
+} <span class="kw">while</span> (<span class="kw">true</span>);</pre>
+
+  <h2 class="topic">Semaphore for Synchronization</h2>
+  <pre class="code-block"><span class="cm">// Ensure S2 in P2 executes AFTER S1 in P1</span>
+<span class="cm">// Shared: semaphore sync = 0</span>
+
+<span class="cm">// Process P1:</span>
+S1;
+<span class="kw">signal</span>(sync);   <span class="cm">// sync++ → tells P2 that S1 is done</span>
+
+<span class="cm">// Process P2:</span>
+<span class="kw">wait</span>(sync);     <span class="cm">// sync-- ; waits until P1 signals</span>
+S2;             <span class="cm">// now safe to run after S1</span></pre>
+
+  <h2 class="topic">Producer-Consumer with Semaphores (Complete Solution)</h2>
+  <pre class="code-block"><span class="cm">// Three semaphores:</span>
+semaphore mutex = <span class="nm">1</span>;   <span class="cm">// mutual exclusion on buffer</span>
+semaphore empty = N;   <span class="cm">// counts empty slots (init = N)</span>
+semaphore full  = <span class="nm">0</span>;   <span class="cm">// counts filled slots (init = 0)</span>
+
+<span class="cm">// PRODUCER:</span>
+<span class="kw">do</span> {
+    produce_item(item);
+    <span class="kw">wait</span>(empty);        <span class="cm">// wait if no empty slot</span>
+    <span class="kw">wait</span>(mutex);        <span class="cm">// get exclusive access to buffer</span>
+    buffer[in] = item; in = (in+<span class="nm">1</span>)%N;
+    <span class="kw">signal</span>(mutex);      <span class="cm">// release buffer</span>
+    <span class="kw">signal</span>(full);       <span class="cm">// one more slot filled</span>
+} <span class="kw">while</span> (<span class="kw">true</span>);
+
+<span class="cm">// CONSUMER:</span>
+<span class="kw">do</span> {
+    <span class="kw">wait</span>(full);         <span class="cm">// wait if buffer empty</span>
+    <span class="kw">wait</span>(mutex);        <span class="cm">// get exclusive access</span>
+    item = buffer[out]; out = (out+<span class="nm">1</span>)%N;
+    <span class="kw">signal</span>(mutex);      <span class="cm">// release buffer</span>
+    <span class="kw">signal</span>(empty);      <span class="cm">// one more slot freed</span>
+    consume_item(item);
+} <span class="kw">while</span> (<span class="kw">true</span>);</pre>
+  <div class="page-num">2 / 4</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 2</span><span class="unit-badge">SECTION 3</span></div>
+
+  <h2 class="topic">Blocking Semaphore (No Busy Waiting)</h2>
+  <div class="def-box">
+    Instead of busy-waiting (spinning), a better semaphore implementation <strong>blocks</strong> the process by moving it to a waiting queue. The semaphore has an integer value AND a waiting queue (list).
+  </div>
+  <pre class="code-block"><span class="cm">// Semaphore structure:</span>
+<span class="kw">typedef struct</span> {
+    <span class="kw">int</span> value;
+    <span class="kw">struct</span> process *list;  <span class="cm">// waiting queue</span>
+} semaphore;
+
+<span class="cm">// wait(S):</span>
+S.value--;
+<span class="kw">if</span> (S.value &lt; <span class="nm">0</span>) {
+    add process to S.list;
+    <span class="kw">block</span>();    <span class="cm">// put process to sleep</span>
+}
+
+<span class="cm">// signal(S):</span>
+S.value++;
+<span class="kw">if</span> (S.value &lt;= <span class="nm">0</span>) {
+    remove process P from S.list;
+    <span class="kw">wakeup</span>(P);  <span class="cm">// wake it up</span>
+}</pre>
+
+  <div class="purple-box">
+    <strong>Semaphore value interpretation (blocking version):</strong><br>
+    → Value &gt; 0: Number of resources available<br>
+    → Value = 0: Resource taken, no one waiting<br>
+    → Value &lt; 0: |value| = number of processes waiting in queue<br><br>
+    Example: S = -3 means 3 processes are currently blocked waiting for this semaphore.
+  </div>
+
+  <div class="qbox">
+    <div class="q-label">🧪 Semaphore Value Tracing (N=3 buffer)</div>
+    <div class="q-step">Initial: mutex=1, empty=3, full=0</div>
+    <div class="q-step">Producer produces item 1: wait(empty)→empty=2, wait(mutex)→mutex=0, insert, signal(mutex)→mutex=1, signal(full)→full=1</div>
+    <div class="q-step">Producer produces item 2: empty=1, full=2</div>
+    <div class="q-step">Producer produces item 3: empty=0, full=3</div>
+    <div class="q-step">Producer tries item 4: wait(empty)→empty=-1 → BLOCKED (buffer full)</div>
+    <div class="q-step">Consumer consumes: wait(full)→full=2, take item, signal(empty)→empty=0, wakes up producer</div>
+    <div class="q-ans">✓ Semaphore values precisely track buffer state. Negative = number waiting.</div>
+  </div>
+  <div class="page-num">3 / 4</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 2</span><span class="unit-badge">SECTION 3</span></div>
+
+  <h2 class="topic">Semaphore Pitfalls</h2>
+  <table class="tt">
+    <tr><th>Mistake</th><th>Consequence</th></tr>
+    <tr><td><code>signal(mutex)</code> before <code>wait(mutex)</code></td><td>Mutual exclusion violated — multiple processes in CS</td></tr>
+    <tr><td><code>wait(mutex)</code> without <code>signal(mutex)</code></td><td>Deadlock — mutex never released, all other processes block forever</td></tr>
+    <tr><td>Both processes do <code>wait(S); wait(Q);</code> vs <code>wait(Q); wait(S);</code></td><td>Deadlock — circular wait on two semaphores</td></tr>
+    <tr><td>Omit <code>wait(mutex)</code> accidentally</td><td>Race condition on shared buffer</td></tr>
+  </table>
+
+  <h2 class="topic">Semaphore vs Other Solutions</h2>
+  <table class="tt">
+    <tr><th>Feature</th><th>Dekker/Peterson</th><th>Semaphore</th></tr>
+    <tr><td>Processes supported</td><td>2 only</td><td>N processes</td></tr>
+    <tr><td>Busy waiting</td><td>Always (spin loop)</td><td>Optional (blocking version)</td></tr>
+    <tr><td>OS support needed</td><td>No</td><td>Yes (atomic operations)</td></tr>
+    <tr><td>Used for sync?</td><td>Mutual exclusion only</td><td>Both ME and synchronization</td></tr>
+    <tr><td>Complexity</td><td>Complex code</td><td>Simple to use</td></tr>
+  </table>
+
+  <div class="note-box">
+    <strong>P = wait = down = decrement. V = signal = up = increment.</strong> All are the same operation.<br>
+    <strong>Order of wait() calls matters!</strong> In producer: always wait(empty) BEFORE wait(mutex). Reversing causes deadlock.<br>
+    <strong>Semaphore value &lt; 0</strong> means that many processes are waiting. Semaphore value &gt; 0 means that many resources are free.
+  </div>
+  <div class="page-num">4 / 4</div>
+</div>
+
+<!-- §4 TEST AND SET -->
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 2</span><span class="unit-badge">SECTION 4</span></div>
+  <h1 class="section-title"><span class="sn">§4</span> Test and Set Operation</h1>
+  <hr class="divider">
+
+  <div class="def-box">
+    The <strong>Test-and-Set (TSL / TAS)</strong> instruction is a <strong>hardware atomic instruction</strong> that atomically reads a memory location, sets it to 1 (true), and returns the original value — all as a single, indivisible operation. No interrupt can occur between the read and the write.
+  </div>
+
+  <h2 class="topic">TestAndSet() — Hardware Definition</h2>
+  <pre class="code-block"><span class="cm">// This executes ATOMICALLY (cannot be interrupted)</span>
+<span class="kw">boolean</span> TestAndSet(<span class="kw">boolean</span> *target) {
+    <span class="kw">boolean</span> rv = *target;   <span class="cm">// read current value</span>
+    *target = <span class="kw">true</span>;         <span class="cm">// set to true (locked)</span>
+    <span class="kw">return</span> rv;              <span class="cm">// return OLD value</span>
+}</pre>
+
+  <div class="purple-box">
+    <strong>How it works:</strong><br>
+    → If lock was <strong>false</strong> (unlocked): TestAndSet returns false (old value), sets lock=true → Process enters CS. <br>
+    → If lock was <strong>true</strong> (already locked): TestAndSet returns true, sets lock=true (no change) → Process keeps spinning.<br>
+    The magic: reading AND setting happen atomically — no race condition possible.
+  </div>
+
+  <h2 class="topic">Mutual Exclusion using TestAndSet</h2>
+  <pre class="code-block"><span class="cm">// Shared: boolean lock = false</span>
+
+<span class="cm">// Process Pi:</span>
+<span class="kw">do</span> {
+    <span class="kw">while</span> (TestAndSet(&amp;lock));  <span class="cm">// spin until lock was false</span>
+    <span class="cm">// ===== CRITICAL SECTION =====</span>
+    lock = <span class="kw">false</span>;               <span class="cm">// release lock</span>
+    <span class="cm">// remainder section</span>
+} <span class="kw">while</span> (<span class="kw">true</span>);</pre>
+
+  <div class="teal-box">
+    <strong>Correctness:</strong> Mutual Exclusion ✅ (only one process can see lock=false and set it to true atomically). Progress ✅ (if no process is in CS, lock=false and next process immediately enters). Bounded Waiting ❌ (standard TAS — starvation possible if one process keeps winning the race).
+  </div>
+  <div class="page-num">1 / 2</div>
+</div>
+
+<div class="page">
+  <div class="holes"><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div><div class="hole"></div></div>
+  <div class="page-header"><span class="date-tag">Operating Systems — Unit 2</span><span class="unit-badge">SECTION 4</span></div>
+
+  <h2 class="topic">TestAndSet with Bounded Waiting</h2>
+  <div class="orange-box">
+    To fix starvation, use a <strong>waiting array</strong>:<br>
+    → <code>boolean waiting[n]</code> — waiting[i]=true if process i is waiting<br>
+    → <code>boolean lock</code> — the shared lock variable<br><br>
+    On exit from CS, a process checks if any other process is waiting and directly passes the lock to it (in order), ensuring bounded wait of at most n-1 turns.
+  </div>
+
+  <h2 class="topic">Compare-and-Swap (CAS)</h2>
+  <div class="def-box">
+    <strong>Compare-and-Swap (CAS)</strong> is another hardware atomic instruction. It atomically compares a memory value with an expected value, and if they match, replaces it with a new value. Used in modern lock-free data structures and OS kernels.
+  </div>
+  <pre class="code-block"><span class="kw">int</span> CompareAndSwap(<span class="kw">int</span> *value, <span class="kw">int</span> expected, <span class="kw">int</span> new_value) {
+    <span class="kw">int</span> temp = *value;
+    <span class="kw">if</span> (*value == expected)
+        *value = new_value;
+    <span class="kw">return</span> temp;
+}</pre>
+
+  <h2 class="topic">All Synchronization Approaches — Final Summary</h2>
+  <table class="tt">
+    <tr><th>Approach</th><th>ME</th><th>Progress</th><th>Bounded Wait</th><th>Busy Wait</th><th>N proc</th></tr>
+    <tr><td>Dekker's</td><td>✅</td><td>✅</td><td>✅</td><td>Yes</td><td>2</td></tr>
+    <tr><td>Peterson's</td><td>✅</td><td>✅</td><td>✅</td><td>Yes</td><td>2</td></tr>
+    <tr><td>TAS (basic)</td><td>✅</td><td>✅</td><td>❌</td><td>Yes</td><td>N</td></tr>
+    <tr><td>TAS + waiting[]</td><td>✅</td><td>✅</td><td>✅</td><td>Yes</td><td>N</td></tr>
+    <tr><td>Semaphore (blocking)</td><td>✅</td><td>✅</td><td>✅</td><td>No</td><td>N</td></tr>
+  </table>
+
+  <div class="note-box">
+    <strong>TAS is hardware — Dekker/Peterson are software.</strong> TAS cannot be interrupted mid-operation. Software solutions assume atomic reads/writes only.<br>
+    <strong>TAS returns OLD value of lock.</strong> If it returns false → lock was free → you got it. If returns true → lock was taken → keep trying.<br>
+    <strong>CAS vs TAS:</strong> CAS is more general — used in modern lock-free programming. TAS is simpler — just checks if 0 and sets to 1.
+  </div>
+  <div class="page-num">2 / 2</div>
+</div>
 
 <script>
-(function(){
-  var pages = document.querySelectorAll('.page');
-  var secPages = [];
-  pages.forEach(function(p){ if(p.querySelector('h1.section-title')) secPages.push(p); });
-  secPages.forEach(function(p,i){ p.id = 'sec-'+(i+1); });
-  var tocItems = document.querySelectorAll('.cover-toc-item');
-  tocItems.forEach(function(item, i){
-    if(i >= secPages.length) return;
-    item.style.cursor = 'pointer';
-    item.style.borderRadius = '4px';
-    item.style.transition = 'background 0.18s';
-    item.setAttribute('title', 'Click to jump to this section');
-    item.addEventListener('mouseenter', function(){ item.style.background='rgba(255,255,255,0.18)'; });
-    item.addEventListener('mouseleave', function(){ item.style.background=''; });
-    item.addEventListener('click', function(){ secPages[i].scrollIntoView({behavior:'smooth'}); });
-  });
-})();
+  document.querySelectorAll('.part-nav a').forEach(a=>{if(a.href===window.location.href)a.classList.add('active');});
 </script>
 </body>
 </html>
