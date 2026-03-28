@@ -15,12 +15,11 @@
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'Patrick Hand',cursive;background:#cec5af;min-height:100vh;padding-bottom:60px;}
-.part-nav{position:sticky;top:0;z-index:100;background:#2c2c2c;display:flex;align-items:center;padding:0 20px;height:44px;box-shadow:0 2px 8px rgba(0,0,0,.4);font-family:'Special Elite',serif;font-size:13px;letter-spacing:.5px;}
-.part-nav .brand{color:#f0e6d0;margin-right:20px;opacity:.7;font-size:11px;}
-.part-nav a{color:#aaa;text-decoration:none;padding:0 16px;height:44px;display:flex;align-items:center;border-bottom:3px solid transparent;transition:all .2s;}
-.part-nav a:hover{color:#fff;background:rgba(255,255,255,.07);}
-.part-nav a.active{color:#ffd54f;border-bottom-color:#ffd54f;}
-.part-nav .sep{color:#555;margin:0 2px;}
+.part-nav{display:flex;justify-content:center;gap:10px;margin:16px auto 24px;flex-wrap:wrap;padding:8px 16px;max-width:840px;}
+.part-nav a{font-family:'Caveat',cursive;font-size:1rem;font-weight:600;padding:7px 20px;border-radius:20px;text-decoration:none;background:rgba(0,0,0,.07);color:#444;border:2px solid rgba(0,0,0,.12);transition:all .2s;}
+.part-nav a.active{background:#1565c0;color:#fff;border-color:#1565c0;box-shadow:0 4px 12px rgba(21,101,192,.35);}
+.part-nav a:hover:not(.active){background:rgba(0,0,0,.13);color:#222;}
+@media(max-width:600px){.part-nav{padding:0 10px;gap:6px;}.part-nav a{padding:5px 12px;font-size:.85rem;}}
 .notebook{max-width:840px;margin:28px auto;display:flex;flex-direction:column;}
 .cover-page{width:840px;max-width:98vw;margin:0 auto 28px;
   background:linear-gradient(135deg,#0a3d0a 0%,#1b5e20 50%,#388e3c 100%);
@@ -115,13 +114,10 @@ table.tt tr:nth-child(even) td{background:#f5f5f5;}
 </head>
 <body>
 <nav class="part-nav">
-  <a href="../index.html" class="back">↩ Units</a>
-  <span class="brand">DSD / Unit 3</span>
-  <a href="part1.html">Part 1 — MSI Devices I</a>
-  <span class="sep">|</span>
-  <a href="part2.html" class="active">Part 2 — Decoders, Encoders &amp; Display</a>
-  <span class="sep">|</span>
-  <a href="part3.html">Part 3 — Adders &amp; Revision</a>
+  <a href="../index.html">↩ Units</a>
+  <a href="part1.html">Part 1</a>
+  <a href="part2.html" class="active">Part 2</a>
+  <a href="part3.html">Part 3</a>
 </nav>
 <div class="notebook">
 

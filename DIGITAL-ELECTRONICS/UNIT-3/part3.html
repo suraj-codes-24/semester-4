@@ -21,12 +21,11 @@
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   body{background:#e8e4dc;font-family:'Kalam',cursive;color:var(--ink);min-height:100vh;}
-  .part-nav{position:sticky;top:0;z-index:100;background:#2d2d44;display:flex;align-items:center;padding:10px 20px;gap:10px;box-shadow:0 2px 8px rgba(0,0,0,.4);flex-wrap:wrap;}
-  .part-nav .nav-label{color:#aaa;font-size:.85rem;font-family:sans-serif;margin-right:6px;}
-  .part-nav a{color:#ccc;text-decoration:none;font-family:sans-serif;font-size:.85rem;padding:5px 14px;border-radius:20px;border:1px solid #555;transition:.2s;}
-  .part-nav a.active{background:#dc2626;color:#fff;border-color:#dc2626;}
-  .part-nav a:hover:not(.active){background:#444;color:#fff;}
-  .part-nav .subject-tag{margin-left:auto;color:#7c9ec9;font-family:sans-serif;font-size:.8rem;font-weight:700;letter-spacing:1px;}
+  .part-nav{display:flex;justify-content:center;gap:10px;margin:16px auto 24px;flex-wrap:wrap;padding:8px 16px;max-width:840px;}
+  .part-nav a{font-family:'Caveat',cursive;font-size:1rem;font-weight:600;padding:7px 20px;border-radius:20px;text-decoration:none;background:rgba(0,0,0,.07);color:#444;border:2px solid rgba(0,0,0,.12);transition:all .2s;}
+  .part-nav a.active{background:#1565c0;color:#fff;border-color:#1565c0;box-shadow:0 4px 12px rgba(21,101,192,.35);}
+  .part-nav a:hover:not(.active){background:rgba(0,0,0,.13);color:#222;}
+  @media(max-width:600px){.part-nav{padding:0 10px;gap:6px;}.part-nav a{padding:5px 12px;font-size:.85rem;}}
   .book{max-width:760px;margin:30px auto;padding:0 15px 60px;}
   .cover-page{width:760px;max-width:98vw;margin:0 auto 28px;
     background:linear-gradient(135deg,#7f1d1d 0%,#991b1b 50%,#dc2626 100%);
@@ -120,12 +119,10 @@
 <body>
 
 <nav class="part-nav">
-  <a href="../index.html" class="back">↩ Units</a>
-  <span class="nav-label">UNIT 3 ›</span>
+  <a href="../index.html">↩ Units</a>
   <a href="part1.html">Part 1</a>
   <a href="part2.html">Part 2</a>
   <a href="part3.html" class="active">Part 3</a>
-  <span class="subject-tag">DIGITAL ELECTRONICS</span>
 </nav>
 
 <div class="book">
