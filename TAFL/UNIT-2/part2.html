@@ -809,33 +809,38 @@ nav.part-nav{padding:0 10px;gap:6px;}
   <div class="qbox">
     <div class="q-label">Q1 — Find RE for FSA with states q₁, q₂, q₃ over Σ = {a, b}</div>
     <div class="nfa-wrap">
-      <svg class="nfa-svg" viewBox="0 0 420 90">
+      <svg class="nfa-svg" viewBox="0 0 420 120">
         <defs><marker id="c1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M2 2L8 5L2 8" fill="none" stroke="#1565C0" stroke-width="1.5"/></marker></defs>
-        <line x1="5" y1="45" x2="45" y2="45" stroke="#1565C0" stroke-width="1.5" marker-end="url(#c1)"/>
-        <circle cx="65" cy="45" r="20" fill="#e8f4fd" stroke="#1565C0" stroke-width="1.5"/>
-        <text x="65" y="49" text-anchor="middle" font-family="Kalam" font-size="13" fill="#1565C0">q₁</text>
-        <!-- self loop a -->
-        <path d="M50 26 Q65 6 80 26" fill="none" stroke="#b71c1c" stroke-width="1.5" marker-end="url(#c1)"/>
-        <text x="65" y="8" text-anchor="middle" font-family="Patrick Hand" font-size="13" fill="#b71c1c">a</text>
-        <!-- q1->q2 on b -->
-        <line x1="85" y1="45" x2="155" y2="45" stroke="#1565C0" stroke-width="1.5" marker-end="url(#c1)"/>
-        <text x="120" y="36" text-anchor="middle" font-family="Patrick Hand" font-size="13" fill="#b71c1c">b</text>
+        <!-- initial arrow -->
+        <line x1="5" y1="60" x2="48" y2="60" stroke="#1565C0" stroke-width="1.5" marker-end="url(#c1)"/>
+        <!-- q1 -->
+        <circle cx="68" cy="60" r="20" fill="#e8f4fd" stroke="#1565C0" stroke-width="1.5"/>
+        <text x="68" y="65" text-anchor="middle" font-family="Kalam" font-size="13" fill="#1565C0">q₁</text>
+        <!-- q1 self-loop a -->
+        <path d="M54 42 Q68 22 82 42" fill="none" stroke="#b71c1c" stroke-width="1.5" marker-end="url(#c1)"/>
+        <text x="68" y="20" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#b71c1c">a</text>
+        <!-- q1->q2 on a -->
+        <line x1="88" y1="60" x2="178" y2="60" stroke="#1565C0" stroke-width="1.5" marker-end="url(#c1)"/>
+        <text x="133" y="52" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#1565C0">a</text>
         <!-- q2 -->
-        <circle cx="175" cy="45" r="20" fill="#e8f4fd" stroke="#1565C0" stroke-width="1.5"/>
-        <text x="175" y="49" text-anchor="middle" font-family="Kalam" font-size="13" fill="#1565C0">q₂</text>
-        <!-- q2->q1 on a (bottom arc) -->
-        <path d="M165 65 Q120 85 75 65" fill="none" stroke="#1565C0" stroke-width="1.5" marker-end="url(#c1)"/>
-        <text x="120" y="84" text-anchor="middle" font-family="Patrick Hand" font-size="13" fill="#b71c1c">a</text>
+        <circle cx="198" cy="60" r="20" fill="#e8f4fd" stroke="#1565C0" stroke-width="1.5"/>
+        <text x="198" y="65" text-anchor="middle" font-family="Kalam" font-size="13" fill="#1565C0">q₂</text>
+        <!-- q2 self-loop b -->
+        <path d="M184 42 Q198 22 212 42" fill="none" stroke="#b71c1c" stroke-width="1.5" marker-end="url(#c1)"/>
+        <text x="198" y="20" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#b71c1c">b</text>
+        <!-- q2->q1 on b (bottom arc) -->
+        <path d="M188 78 Q128 102 78 78" fill="none" stroke="#1565C0" stroke-width="1.5" marker-end="url(#c1)"/>
+        <text x="133" y="106" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#1565C0">b</text>
         <!-- q2->q3 on a -->
-        <line x1="195" y1="45" x2="265" y2="45" stroke="#1565C0" stroke-width="1.5" marker-end="url(#c1)"/>
-        <text x="230" y="36" text-anchor="middle" font-family="Patrick Hand" font-size="13" fill="#b71c1c">a</text>
+        <line x1="218" y1="60" x2="308" y2="60" stroke="#1565C0" stroke-width="1.5" marker-end="url(#c1)"/>
+        <text x="263" y="52" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#1565C0">a</text>
         <!-- q3 final -->
-        <circle cx="285" cy="45" r="20" fill="#e8f5e9" stroke="#1b5e20" stroke-width="1.5"/>
-        <circle cx="285" cy="45" r="16" fill="none" stroke="#1b5e20" stroke-width="1.2"/>
-        <text x="285" y="49" text-anchor="middle" font-family="Kalam" font-size="13" fill="#1b5e20">q₃</text>
-        <!-- q3 self loop on a -->
-        <path d="M270 26 Q285 6 300 26" fill="none" stroke="#b71c1c" stroke-width="1.5" marker-end="url(#c1)"/>
-        <text x="285" y="8" text-anchor="middle" font-family="Patrick Hand" font-size="13" fill="#b71c1c">a</text>
+        <circle cx="328" cy="60" r="20" fill="#e8f5e9" stroke="#1b5e20" stroke-width="1.5"/>
+        <circle cx="328" cy="60" r="16" fill="none" stroke="#1b5e20" stroke-width="1.2"/>
+        <text x="328" y="65" text-anchor="middle" font-family="Kalam" font-size="13" fill="#1b5e20">q₃</text>
+        <!-- q3->q2 on a (bottom arc) -->
+        <path d="M318 78 Q263 102 208 78" fill="none" stroke="#1565C0" stroke-width="1.5" marker-end="url(#c1)"/>
+        <text x="263" y="106" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#1565C0">a</text>
       </svg>
     </div>
     <div class="q-text"><strong>Write equations:</strong></div>
@@ -876,26 +881,26 @@ nav.part-nav{padding:0 10px;gap:6px;}
         <text x="62" y="54" text-anchor="middle" font-family="Kalam" font-size="13" fill="#1b5e20">q₁</text>
         <!-- self loop 0 -->
         <path d="M47 31 Q62 11 77 31" fill="none" stroke="#b71c1c" stroke-width="1.5" marker-end="url(#c2)"/>
-        <text x="62" y="12" text-anchor="middle" font-family="Patrick Hand" font-size="13" fill="#b71c1c">0</text>
+        <text x="62" y="12" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#b71c1c">0</text>
         <!-- q1->q2 on 1 -->
         <line x1="82" y1="50" x2="148" y2="50" stroke="#1565C0" stroke-width="1.5" marker-end="url(#c2)"/>
-        <text x="115" y="42" text-anchor="middle" font-family="Patrick Hand" font-size="13" fill="#b71c1c">1</text>
+        <text x="115" y="42" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#1565C0">1</text>
         <!-- q2 final -->
         <circle cx="168" cy="50" r="20" fill="#e8f5e9" stroke="#1b5e20" stroke-width="1.5"/>
         <circle cx="168" cy="50" r="16" fill="none" stroke="#1b5e20" stroke-width="1.2"/>
         <text x="168" y="54" text-anchor="middle" font-family="Kalam" font-size="13" fill="#1b5e20">q₂</text>
         <!-- q2 self loop 1 -->
         <path d="M153 31 Q168 11 183 31" fill="none" stroke="#b71c1c" stroke-width="1.5" marker-end="url(#c2)"/>
-        <text x="168" y="12" text-anchor="middle" font-family="Patrick Hand" font-size="13" fill="#b71c1c">1</text>
+        <text x="168" y="12" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#b71c1c">1</text>
         <!-- q2->q3 on 0 -->
         <line x1="188" y1="50" x2="258" y2="50" stroke="#1565C0" stroke-width="1.5" marker-end="url(#c2)"/>
-        <text x="223" y="42" text-anchor="middle" font-family="Patrick Hand" font-size="13" fill="#b71c1c">0</text>
+        <text x="223" y="42" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#1565C0">0</text>
         <!-- q3 -->
         <circle cx="278" cy="50" r="20" fill="#e8f4fd" stroke="#1565C0" stroke-width="1.5"/>
         <text x="278" y="54" text-anchor="middle" font-family="Kalam" font-size="13" fill="#1565C0">q₃</text>
         <!-- q3 self loop 0,1 -->
         <path d="M263 31 Q278 11 293 31" fill="none" stroke="#b71c1c" stroke-width="1.5" marker-end="url(#c2)"/>
-        <text x="278" y="12" text-anchor="middle" font-family="Patrick Hand" font-size="12" fill="#b71c1c">0,1</text>
+        <text x="278" y="12" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#b71c1c">0,1</text>
       </svg>
     </div>
     <div class="proof-box" style="padding:10px 14px;">
