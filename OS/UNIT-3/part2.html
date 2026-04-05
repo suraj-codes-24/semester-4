@@ -500,12 +500,16 @@
   <h2 class="topic">Priority Scheduling — With Different Arrival Times (PDF)</h2>
   <div class="qbox">
     <div class="q-label">🧪 Non-Preemptive Priority — Different Arrival Times (PDF)</div>
-    <div class="q-step">P1(AT=0,BT=11,Priority=2), P2(AT=5,BT=28,Priority=0), P3(AT=12,BT=2,Priority=3), P4(AT=2,BT=10,Priority=1), P5(AT=9,BT=16,Priority=4)</div>
-    <div class="q-step">t=0: Only P1 arrived (priority=2) → run P1. Finishes at t=11.</div>
-    <div class="q-step">t=11: Available: P4(pr=1), P2(pr=0). Best priority=P2(0) → run P2(BT=28). Finishes at t=39... wait, let me re-check from PDF: Gantt shows P1|P4|P2|P5|P3 → 0,11,21,49,65,67</div>
-    <div class="q-step">At t=11: P2(pr=0),P4(pr=1) available. P2 has higher priority. Run P2? No — PDF shows P4 runs first. PDF Gantt: P1→P4→P2→P5→P3.</div>
-    <div class="q-step">Actually checking PDF: lower number = higher priority. P4(priority=1) runs after P1(priority=2). That means at t=11, only P4 has arrived (AT=2)? Actually P2 arrives at AT=5, P4 at AT=2. Both available at t=11. P2 has priority 0 (highest!) but PDF runs P4 first. Likely P0 = lowest in this PDF's convention.</div>
-    <div class="q-ans">✓ Following PDF: Avg CT=42.6, Avg TAT=37, Avg WT=23.6</div>
+    <div class="q-step">P1(AT=0,BT=11,Priority=2), P2(AT=5,BT=28,Priority=3), P3(AT=12,BT=2,Priority=5), P4(AT=2,BT=10,Priority=1), P5(AT=9,BT=16,Priority=4)</div>
+    <div class="q-step">Convention: lower number = higher priority.</div>
+    <div class="q-step">t=0: Only P1 arrived (PR=2) → run P1. Finishes at t=11.</div>
+    <div class="q-step">t=11: Available: P4(PR=1), P2(PR=3), P5(PR=4). Best = P4(1) → run P4. Finishes at t=21.</div>
+    <div class="q-step">t=21: Available: P2(PR=3), P5(PR=4), P3(PR=5). Best = P2(3) → run P2. Finishes at t=49.</div>
+    <div class="q-step">t=49: Available: P5(PR=4), P3(PR=5). Best = P5(4) → run P5. Finishes at t=65.</div>
+    <div class="q-step">t=65: P3(PR=5) remaining → run P3. Finishes at t=67.</div>
+    <div class="q-step">Gantt: P1|P4|P2|P5|P3 → 0,11,21,49,65,67</div>
+    <div class="q-step">CT: P1=11, P4=21, P2=49, P5=65, P3=67 | TAT: 11,19,44,56,55 | WT: 0,9,16,40,53</div>
+    <div class="q-ans">✓ Avg CT=42.6, Avg TAT=37, Avg WT=23.6</div>
   </div>
   <div class="page-num">1 / 3</div>
 </div>
